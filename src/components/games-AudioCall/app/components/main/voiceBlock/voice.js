@@ -1,8 +1,9 @@
 export default class Voice {
   static render() {
     const wrapper = document.querySelector('.wrapper');
-    const answerBlock = document.createElement('div');
-    answerBlock.classList.add('answerBlock');
+    // const answerBlock = document.createElement('div');
+    // answerBlock.classList.add('answerBlock');
+    const answerBlock = document.querySelector('.answerBlock');
 
     const audio = document.createElement('div');
     audio.classList.add('audio');

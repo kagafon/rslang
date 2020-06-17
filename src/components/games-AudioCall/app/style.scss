@@ -65,6 +65,10 @@ p {
   background-color: #08e3f3;
 }
 
+.progress-bar {
+  height: 10px;
+}
+
 // Answer-Block_____________________________
 
 .answerBlock {
@@ -191,8 +195,8 @@ p {
 .material-icons.md-24 {
   font-size: 24px;
 }
-.material-icons.md-36 {
-  font-size: 36px;
+.material-icons.md-48 {
+  font-size: 48px;
 }
 .material-icons.md-100 {
   font-size: 100px;
@@ -200,7 +204,64 @@ p {
 
 // Button______________________________
 
+.btnBlock {
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  margin-top: 50px;
+}
+
 .btn {
   width: 100px;
-  margin: 100px auto;
+  height: 40px;
 }
+
+.next {
+ display: none;
+}
+
+.hint {
+  // display: none;
+}
+
+// Result ______________________________________________
+
+.resultBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-word {
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px;
+  max-width: 1440px;
+  position: relative;
+}
+
+.result-audio {
+  position: absolute;
+  padding-right: 20px;
+  top: -25%;
+  left: -35%;
+}
+
+.words-img {
+  width: 100px;
+  height: 100px;
+  background-color: rgba(34, 247, 6, 0.726);
+  border-radius: 100px;
+}
+
+.translate-block {
+  position: relative;
+  text-align: start;
+  color: #ffffff;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+

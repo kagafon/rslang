@@ -1,11 +1,13 @@
 export default class Button {
   static render() {
     const wrapper = document.querySelector('.wrapper');
-    const button = document.createElement('button');
-    button.classList.add('btn');
-    button.classList.add('btn-primary');
-    button.textContent = 'Не знаю';
-    wrapper.append(button);
+    const btnBlock = document.createElement('div');
+    btnBlock.classList.add('btnBlock');
+    btnBlock.innerHTML = `
+     <button class='btn btn-primary hint'>Не знаю</button>
+     <button class='btn btn-primary next'>Дальше</button>
+    `;
+    wrapper.append(btnBlock);
   }
 
   static btnClick() {

@@ -26,7 +26,9 @@ export default class Words {
     const arrWords = document.querySelectorAll('.words');
     arrWords.forEach((item) => {
       item.addEventListener('click', () => {
-        console.log(item.textContent);
+        const progress = document.querySelector('.progress-bar');
+        const width = String(progress.style.width).slice(0, -1);
+        progress.style.width = `${+width + 10}%`;
       });
     });
   }
