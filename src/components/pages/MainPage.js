@@ -1,6 +1,9 @@
 import { createElement } from 'helpers/dom';
 
 class MainPage {
+  
+
+
   init() {
     return createElement(
       document.body,
