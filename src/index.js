@@ -1,17 +1,12 @@
-import Router from 'components/Router/Router';
-import MainPage from 'components/pages/MainPage';
-
+import router from 'components/Router/';
+import menu from 'components/menu/'
 import 'stylesheets/main.scss';
 
-const routes = [
-  {
-    name: 'main-page',
-    ClassConstructor: MainPage,
-  },
-];
 
-const container = document.querySelector('#main-container');
+
+
 
 window.addEventListener('load', () => {
-  new Router(routes, container).draw('main-page');
+  menu.init()
+  router.draw('main-page');
 });
