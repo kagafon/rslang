@@ -1,14 +1,17 @@
-// @import 'bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 
 body {
   display: flex;
+  flex-direction: column;
   margin: 0 auto;
   padding: 0px;
   max-width: 1440px;
   width: 100%;
   height: 100vh;
-  // background-image: url('./components/img/background.jpg');
-  background-image: linear-gradient(to top right, rgb(99, 109, 255), rgb(105, 103, 237), rgb(111, 97, 219), rgb(116, 91, 201), rgb(122, 85, 183), rgb(128, 79, 165), rgb(134, 72, 146), rgb(140, 66, 128), rgb(146, 60, 110), rgb(151, 54, 92), rgb(157, 48, 74), rgb(163, 42, 56));
+  background-color: #08291e83;
+  font-family: 'Roboto', sans-serif;
 }
 
 h1,
@@ -31,11 +34,11 @@ p {
 
 .wrapper {
   display: flex;
+  justify-content: center;
   flex-direction: column;
+  width: 100%;
   max-width: 1440px;
-  position: relative;
-  margin: 0 auto;
-  background-color: #ffffff;
+  margin: 100px auto;
 }
 
 // Header _____________________________
@@ -57,21 +60,147 @@ p {
 
 .navBar {
   width: 10%;
-  height: 10px;
+  height: 5px;
   border-right: 1px solid #08e3f3;
   background-color: #08e3f3;
 }
 
-// Btn-ogout____________________________
+// Answer-Block_____________________________
 
-.logout {
-  position: absolute;
-  right: 10px;
-  top: 40px;
-  width: 30px;
-  height: 30px;
-  background: transparent;
-  background-image: url('./components/img/logout.svg');
-  background-size: cover;
+.answerBlock {
+  display: flex;
+  justify-content: center;
+}
+
+// Audio____________________________________
+
+.audio {
+  width: 100px;
+  height: 100px;
+  // background-image: url('./components/img/sound.png');
+  // background-size: cover;
+  margin: 50px auto;
+  border-radius: 100px;
+  box-shadow: 0px 0px 15px 30px rgba(99, 109, 255, 0.486);
+  transition: 0.3s linear;
+  &:hover {
+    box-shadow: 0px 0px 15px 30px rgba(146, 60, 110, 0.616);
+  }
+  cursor: pointer;
+}
+
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.54);
+}
+.material-icons.md-correct {
+  color: rgba(34, 247, 6, 0.726);
+}
+.material-icons.md-cancel {
+  color: rgba(250, 6, 6, 0.712);
+}
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 1);
+}
+.material-icons.md-light.md-inactive {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
   outline: none;
+  user-select: none;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+
+// Words block______________________________
+
+.wordsblock {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.wrapper-words {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin:50px 50px 0px 50px;
+  outline: none;
+}
+
+.words {
+  color: #ffffff;
+  font-size: 24px;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.number-words {
+  // display: none;
+  position: absolute;
+  color: #ffffff;
+  font-size: 18px;
+  top: 8px;
+  left: -10px;
+}
+
+.correct {
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: -18px;
+}
+
+.cancel {
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: -18px;
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-100 {
+  font-size: 100px;
+}
+
+// Button______________________________
+
+.btn {
+  width: 100px;
+  margin: 100px auto;
 }
