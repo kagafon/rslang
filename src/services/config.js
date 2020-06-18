@@ -1,8 +1,6 @@
 const DATA_BASE_URL = 'https://afternoon-falls-25894.herokuapp.com';
-const IMAGE_BASE_URL =
-  'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/';
-const AUDIO_BASE_URL =
+const FILE_BASE_URL =
   'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/';
 const APPLICATION = 'rslang';
 
-export { DATA_BASE_URL, AUDIO_BASE_URL, IMAGE_BASE_URL, APPLICATION };
+export { DATA_BASE_URL, FILE_BASE_URL, APPLICATION };
