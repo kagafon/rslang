@@ -1,5 +1,6 @@
 import router from 'components/Router/';
 import menu from 'components/menu/'
+import todaystatistic from 'components/statisticPage/'
 import 'stylesheets/main.scss';
 
 
@@ -8,5 +9,6 @@ import 'stylesheets/main.scss';
 
 window.addEventListener('load', () => {
   menu.init()
-  router.draw('main-page');
+  // router.draw('today-statistic');
+  todaystatistic.init();
 });

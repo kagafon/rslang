@@ -6,7 +6,7 @@ class MainPage {
 
   init() {
     return createElement(
-      document.body,
+      document.body.nav,
       'div',
       ['class1', 'class2'],
       { style: 'width:100%' },
