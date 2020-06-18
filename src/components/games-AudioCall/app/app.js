@@ -15,8 +15,8 @@ export default class App {
   static run() {
     Header.init();
     this.render();
-    // Voice.init();
-    Results.init();
+    Voice.init();
+    // Results.init();
     Words.init();
     Button.init();
   }

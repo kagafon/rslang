@@ -10,7 +10,8 @@ body {
   max-width: 1440px;
   width: 100%;
   height: 100vh;
-  background-color: #08291e83;
+  background-image: url('https://cdn.discordapp.com/attachments/720542468520673301/722870699370479659/3643a446463165.585530c44d950.jpg');
+  background-position: center;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -58,15 +59,11 @@ p {
   width: 100%;
 }
 
-.navBar {
-  width: 10%;
-  height: 5px;
-  border-right: 1px solid #08e3f3;
-  background-color: #08e3f3;
-}
 
 .progress-bar {
   height: 10px;
+  background-color: #09f1d2;
+  height: 5px;
 }
 
 // Answer-Block_____________________________
@@ -74,6 +71,7 @@ p {
 .answerBlock {
   display: flex;
   justify-content: center;
+  height: 200px;
 }
 
 // Audio____________________________________
@@ -81,14 +79,12 @@ p {
 .audio {
   width: 100px;
   height: 100px;
-  // background-image: url('./components/img/sound.png');
-  // background-size: cover;
   margin: 50px auto;
   border-radius: 100px;
-  box-shadow: 0px 0px 15px 30px rgba(99, 109, 255, 0.486);
+  box-shadow: 0px 0px 15px 30px #f85307ad;
   transition: 0.3s linear;
   &:hover {
-    box-shadow: 0px 0px 15px 30px rgba(146, 60, 110, 0.616);
+    box-shadow: 0px 0px 15px 30px #09f1d285;
   }
   cursor: pointer;
 }
@@ -107,10 +103,10 @@ p {
 
 /* Rules for using icons as white on a dark background. */
 .material-icons.md-light {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.678);
 }
 .material-icons.md-light.md-inactive {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.678);
 }
 
 .material-icons {
@@ -214,6 +210,10 @@ p {
 .btn {
   width: 100px;
   height: 40px;
+  background-color: #f85307;
+  &:hover {
+    background-color: #09f1d2;
+  }
 }
 
 .next {
@@ -231,22 +231,22 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.about-word {
-  display: inline-flex;
-  justify-content: center;
-  text-align: center;
-  margin-top: 20px;
-  max-width: 1440px;
   position: relative;
 }
 
 .result-audio {
   position: absolute;
   padding-right: 20px;
-  top: -25%;
-  left: -35%;
+  border-radius: 100px;
+  padding: 0px;
+  bottom: 7%;
+  left: -50%;
+  box-shadow: 0px 0px 30px 15px #f8530783;
+  transition: 0.3s linear;
+  &:hover {
+    box-shadow: 0px 0px 30px 15px #09f1d285;
+  }
+  cursor: pointer;
 }
 
 .words-img {
@@ -257,10 +257,10 @@ p {
 }
 
 .translate-block {
-  position: relative;
   text-align: start;
   color: #ffffff;
   font-size: 20px;
+  margin-top: 20px;
   vertical-align: middle;
 }
 

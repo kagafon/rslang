@@ -1,14 +1,12 @@
 export default class Voice {
   static render() {
     const wrapper = document.querySelector('.wrapper');
-    // const answerBlock = document.createElement('div');
-    // answerBlock.classList.add('answerBlock');
     const answerBlock = document.querySelector('.answerBlock');
 
     const audio = document.createElement('div');
     audio.classList.add('audio');
     audio.innerHTML = `
-      <span class="material-icons md-100 md-dark">
+      <span class="material-icons md-100 md-light">
        volume_up
       </span>
       <audio src="#"></audio>
