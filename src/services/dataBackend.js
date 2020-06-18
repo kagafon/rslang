@@ -64,8 +64,8 @@ const addUser = (email, password) => {
 const getWords = (
   group,
   page,
-  maxWordsInSentence = 1000,
-  wordsPerPage = 20
+  wordsPerPage = 20,
+  maxWordsInSentence = 1000
 ) => {
   return fetch(
     `${DATA_BASE_URL}/words?page=${page}&group=${group}&wordsPerExampleSentenceLTE=${maxWordsInSentence}&wordsPerPage=${wordsPerPage}`,
