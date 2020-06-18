@@ -1,14 +1,58 @@
 export default {
-  'main-page': {image:'https://i.pinimg.com/originals/63/a4/cc/63a4ccd23d1d2af0b29fae82a4db5ec0.jpg', color: 'rgba(83, 140, 173, 0.49)'},
-  'dictionary-page':  {image:'https://i.lensdump.com/i/ihSkvx.jpg', color: 'rgba(101, 99, 209, 0.78)'},
-  'game-page':  {image:'https://s2.best-wallpaper.net/wallpaper/2880x1800/1904/Bear-and-deers-mountains-sunset-art-picture_2880x1800.jpg', color: 'rgba(69, 28, 78, 0.66)'},
-  'statistics-page':  {image:'https://w.wallhaven.cc/full/ox/wallhaven-oxeo25.jpg', color: 'rgba(146, 85, 215, 0.57)'},
-  'authorization-page':  {image:'https://img2.akspic.ru/image/21467-prostranstvo-zvezda-minimalizm-kosmos-atmosfera-3840x2160.jpg', color: 'rgba(182, 74, 90, 0.66)'},
-  'settings-page':  {image:'https://storge.pic2.me/upload/214/5bfd40aca5bef.jpg', color: 'rgba(121, 42, 121, 0.69)'},
-  'promo-page':  {image:'https://i.pinimg.com/originals/c7/92/3d/c7923d1606c73cdf880d37094708a497.jpg', color: 'rgba(124, 55, 73, 0.79)'},
-  'team-page':  {image:'https://i.pinimg.com/originals/a7/67/d0/a767d090f220e688e19d2d8e2c4abd3f.jpg', color: 'rgba(255, 108, 64, 0.57)'},
-  // x1:  {image:'https://cs4.pikabu.ru/post_img/big/2016/07/07/5/1467876110119553427.jpg', color: '#538cad'},
-  // x2:  {image:'https://mir-s3-cdn-cf.behance.net/project_modules/1400/c1ee8c46463165.585530c44ffb2.png', color: '#538cad'},
-  // x3:  {image:'https://img5.goodfon.ru/wallpaper/nbig/5/fd/viaduk-poezd-transport-zvezdy-liudi-peizazh-minimalizm-gory.jpg', color: '#538cad'},
-  // x4:  {image:'https://storge.pic2.me/upload/312/57d92f3657b3a.jpg', color: '#538cad'},
-}
+  'main-page': {
+    image: 'assets/images/background/main-page.jpg',
+    color: 'rgba(83, 140, 173, 0.49)',
+  },
+  'dictionary-page': {
+    image: 'assets/images/background/dictionary-page.jpg',
+    color: 'rgba(101, 99, 209, 0.78)',
+  },
+  'game-page': {
+    image: 'assets/images/background/game-page.jpg',
+    color: 'rgba(69, 28, 78, 0.66)',
+  },
+  'statistics-page': {
+    image: 'assets/images/background/statistics-page.jpg',
+    color: 'rgba(146, 85, 215, 0.57)',
+  },
+  'authorization-page': {
+    image: 'assets/images/background/authorization-page.jpg',
+    color: 'rgba(182, 74, 90, 0.66)',
+  },
+  'settings-page': {
+    image: 'assets/images/background/settings-page.jpg',
+    color: 'rgba(121, 42, 121, 0.69)',
+  },
+  'promo-page': {
+    image: 'assets/images/background/promo-page.jpg',
+    color: 'rgba(124, 55, 73, 0.79)',
+  },
+  'team-page': {
+    image: 'assets/images/background/team-page.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  'game1-page': {
+    image: 'assets/images/background/game1.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  'game2-page': {
+    image: 'assets/images/background/game2.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  'game3-page': {
+    image: 'assets/images/background/game3.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  'game4-page': {
+    image: 'assets/images/background/game4.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  'game5-page': {
+    image: 'assets/images/background/game5.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  'game6-page': {
+    image: 'assets/images/background/game6.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+};

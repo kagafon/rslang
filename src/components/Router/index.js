@@ -1,10 +1,15 @@
-import MainPage from 'components/pages/MainPage';
+import MainPage from 'components/pages/MainPage/MainPage';
+import MainPageGame from 'components/pages/MainPage/MainPageGame';
 import Router from 'components/Router/Router';
 
 const routes = [
   {
     name: 'main-page',
     ClassConstructor: MainPage,
+  },
+  {
+    name: 'main-page-game',
+    ClassConstructor: MainPageGame,
   },
 ];
 

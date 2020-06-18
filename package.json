@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "deploy": "npm run build && netlify deploy --prod",
-    "lint": "node node_modules/eslint/bin/eslint.js ./src",
+    "lint": "node node_modules/eslint/bin/eslint.js ./src --fix",
     "test": "jest --testMatch \"<rootDir>/test/*.test.js\""
   },
   "jest": {

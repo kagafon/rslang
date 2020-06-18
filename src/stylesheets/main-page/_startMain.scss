@@ -1,0 +1,32 @@
+.jumbotron {
+  width: 100%;
+  background-color: rgba(83, 140, 173, 0.49);
+  .div-level {
+    width: 100%;
+    margin-top: 10px;
+  }
+  p {
+    font-size: 18px;
+    color: #fff;
+    margin: 0 5px 0 0;
+  }
+  label {
+    color: #fff;
+  }
+}
+.dropdown-menu {
+  min-width: 0;
+}
+
+.drop_down-button {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+}
+
+.progress {
+  height: 25px;
+  width: 245px;
+  border-radius: 0.3rem;
+}
