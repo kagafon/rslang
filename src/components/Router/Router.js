@@ -10,7 +10,8 @@ export default class Router {
       const page = new route.ClassConstructor();
       this.container.textContent = '';
       this.container.appendChild(page.init());
-    } catch {
+    } catch (error) {
+      console.error(error);
       this.container.textContent = '';
     }
   }
