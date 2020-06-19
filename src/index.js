@@ -1,3 +1,4 @@
+import 'bootstrap';
 import router from 'components/Router/';
 import menu from 'components/menu/';
 import 'stylesheets/main.scss';
