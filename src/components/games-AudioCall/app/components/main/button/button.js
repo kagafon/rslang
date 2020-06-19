@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-restricted-imports
-import Results from '../results/results';
+import Results from 'components/games-AudioCall/app/components/main/results/results';
 
 export default class Button {
   static render() {

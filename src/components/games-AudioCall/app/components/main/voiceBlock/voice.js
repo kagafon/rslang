@@ -1,7 +1,11 @@
+import { createElement } from 'helpers/dom';
+import Service from 'components/games-AudioCall/app/service';
+
 export default class Voice {
   static render() {
     const wrapper = document.querySelector('.wrapper');
-    const answerBlock = document.querySelector('.answerBlock');
+
+    const answerBlock = createElement(wrapper, 'div', ['answerBlock']);
 
     const audio = document.createElement('div');
     audio.classList.add('audio');
@@ -15,10 +19,13 @@ export default class Voice {
     wrapper.append(answerBlock);
   }
 
-  static audioBtn() {
+  static async audioBtn() {
+    const audio = await Service.wordsRequest();
     const btnAudio = document.querySelector('.audio');
     btnAudio.addEventListener('click', () => {
-      console.log('play audio');
+      const playAudio = document.querySelector('audio');
+      playAudio.src = audio[0].audioSrc;
+      playAudio.play();
     });
   }
 

@@ -4,7 +4,7 @@
 
 body {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   margin: 0 auto;
   padding: 0px;
   max-width: 1440px;
@@ -41,6 +41,60 @@ p {
   max-width: 1440px;
   margin: 100px auto;
 }
+
+// Start Page ________________________________
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  margin-top: -150px;
+  height: 300px;
+  text-align: center;
+  right: 0;
+  left: 0;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 60px;
+  color: #6cffde;
+  opacity: .8;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 13px;
+}
+
+.subTitle {
+  max-width: 565px;
+  margin: 0 auto 30px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 300;
+  color: #fff;
+  opacity: .8;
+}
+
+.level-select {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 60px;
+  color: #6cffde;
+  opacity: .8;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 5px;
+}
+
+.start {
+  width: 120px;
+}
+
 
 // Header _____________________________
 

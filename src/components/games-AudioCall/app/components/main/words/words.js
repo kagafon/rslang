@@ -1,4 +1,6 @@
-export default class Words {
+import Service from 'components/games-AudioCall/app/service';
+
+export default class RusWords {
   static render() {
     const wrapper = document.querySelector('.wrapper');
     const wordsBlock = document.createElement('div');
@@ -33,8 +35,18 @@ export default class Words {
     });
   }
 
+  static async wordGeneration() {
+    const arrWords = await Service.wordsRequest();
+    const arrRusWords = [];
+    arrWords.forEach((item) => {
+      arrRusWords.push(item.wordTranslate);
+    });
+    console.log(arrRusWords);
+  }
+
   static init() {
     this.render();
     this.wordChoice();
+    this.wordGeneration();
   }
 }
