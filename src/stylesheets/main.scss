@@ -4,7 +4,7 @@
 body {
   background-image: url(https://i.pinimg.com/originals/63/a4/cc/63a4ccd23d1d2af0b29fae82a4db5ec0.jpg);
   background-repeat: no-repeat;
-  background-size: cover; 
+  background-size: cover;
   background-position: center center;
   width: 100%;
   height: 100vh;
@@ -13,9 +13,8 @@ body {
   transition: all 3s ease;
 }
 
-.main-container{
+.main-container {
   padding-top: 175px;
   width: 100%;
+  transition: 0.5s;
 }
-  
-  

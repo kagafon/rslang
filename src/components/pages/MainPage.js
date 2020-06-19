@@ -1,13 +1,10 @@
 import { createElement } from 'helpers/dom';
 
 class MainPage {
-  
-
-
   init() {
     return createElement(
       document.body,
-      'div',
+      'h3',
       ['class1', 'class2'],
       { style: 'width:100%' },
       'Main Page'
