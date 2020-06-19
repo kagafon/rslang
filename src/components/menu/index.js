@@ -1,6 +1,6 @@
 // import { createElement } from 'helpers/dom';
 import images from 'components/menu/backgroundImages';
-
+import router from 'components/Router/';
 class Menu {
   init() {
     const links = document.querySelector('#links');
@@ -15,6 +15,7 @@ class Menu {
       navbar.style.backgroundColor = `${
         images[event.target.dataset.link].color
       }`;
+      router.draw(`${event.target.dataset.link}`);
       event.target.classList.add('active');
     });
   }

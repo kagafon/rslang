@@ -1,5 +1,5 @@
 import { createElement } from 'helpers/dom';
-// import router from 'components/Router/';
+import router from 'components/Router/';
 
 class MainPage {
   create() {
@@ -42,48 +42,20 @@ class MainPage {
     const div2 = createElement(
       this.jumbotron,
       'div',
-      ['d-flex', 'justify-content-around', 'align-items-center', 'div-level'],
+      ['d-flex', 'align-items-center', 'div-level', 'flex-column'],
       {},
       ''
     );
 
-    const level = createElement(
+    const lang = createElement(
       div1,
       'p',
       ['d-flex', 'justify-content-between', 'align-items-center'],
       {},
       ''
     );
-    createElement(level, 'p', [], {}, 'Уровень');
-    this.divForMenu = createElement(
-      level,
-      'div',
-      ['btn-group'],
-      { role: 'group', 'aria-labelledby': 'Button group with nested dropdown' },
-      ''
-    );
-    this.dropDownMenuBtn = createElement(
-      this.divForMenu,
-      'button',
-      ['btn', 'btn-secondary', 'dropdown-toggle', 'drop_down-button'],
-      {
-        'data-toggle': 'dropdown',
-        'aria-haspopup': 'true',
-        'aria-expanded': 'false',
-      },
-      '1'
-    );
-    this.dropDownMenu = createElement(
-      this.divForMenu,
-      'div',
-      ['dropdown-menu'],
-      { 'aria-labelledby': 'btnGroupDrop1' },
-      ''
-    );
-    const levels = ['1', '2', '3', '4', '5', '6'];
-    levels.forEach((level) => {
-      createElement(this.dropDownMenu, 'a', ['dropdown-item'], {}, `${level}`);
-    });
+    createElement(lang, 'div', ['lang-image'], {}, '');
+    createElement(lang, 'p', [], {}, 'Английский язык');
 
     const progressDiv = createElement(div1, 'div', [], {}, '');
     createElement(progressDiv, 'p', [], {}, 'Выучено слов : 25%');
@@ -112,7 +84,12 @@ class MainPage {
       const div = createElement(
         div2,
         'div',
-        ['custom-control', 'custom-radio', 'custom-control-inline'],
+        [
+          'custom-control',
+          'custom-radio',
+          'custom-control-inline',
+          `control-m${index + 1}`,
+        ],
         {},
         ''
       );
@@ -122,7 +99,7 @@ class MainPage {
         ['custom-control-input'],
         {
           type: 'radio',
-          id: `customRadioInline${index}`,
+          id: `customRadioInline${index + 1}`,
           name: 'customRadioInline1',
         },
         ''
@@ -131,29 +108,29 @@ class MainPage {
         div,
         'label',
         ['custom-control-label'],
-        { for: `customRadioInline${index}` },
+        { for: `customRadioInline${index + 1}` },
         `${el}`
       );
     });
 
-    // this.startButton = createElement(
-    //   this.jumbotron,
-    //   'button',
-    //   ['btn', 'btn-primary', 'btn_start_main'],
-    //   {},
-    //   'Начать обучение'
-    // );
+    this.startButton = createElement(
+      this.container,
+      'button',
+      ['btn', 'btn-primary', 'btn_start_main'],
+      {},
+      'Начать обучение'
+    );
   }
 
-  // addHandlers() {
-  //   this.startButton.addEventListener('click', () => {
-  //     router.draw('main-page-game');
-  //   });
-  // }
+  addHandlers() {
+    this.startButton.addEventListener('click', () => {
+      router.draw('main-page-game');
+    });
+  }
 
   init() {
     this.create();
-    // this.addHandlers();
+    this.addHandlers();
     return this.container;
   }
 }
