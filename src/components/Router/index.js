@@ -5,6 +5,7 @@ const routes = [
   {
     name: 'main-page',
     ClassConstructor: MainPage,
+    
   },
 ];
 
