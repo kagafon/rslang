@@ -1,8 +1,8 @@
 @import '~bootstrap';
+@import 'variables';
 @import './main-page/navbar';
 
 body {
-  background-image: url(https://i.pinimg.com/originals/63/a4/cc/63a4ccd23d1d2af0b29fae82a4db5ec0.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -10,11 +10,17 @@ body {
   height: 100vh;
   position: relative;
   box-sizing: border-box;
-  transition: all 3s ease;
+  transition: background-image $page-transition-delay ease,
+    opacity $page-transition-delay ease;
+  opacity: 1;
+
+  &.hidden {
+    opacity: 0;
+  }
 }
 
 .main-container {
   padding-top: 175px;
   width: 100%;
-  transition: 0.5s;
+  transition: $page-transition-delay / 2;
 }
