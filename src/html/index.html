@@ -23,36 +23,51 @@
         </ul>
       </div>
     </nav>
-<<<<<<< HEAD
     <div id="main-container" class="main-container">
-      <div id="today-statistic" class="today-statistic">
-        <h2 class="today-statistic_title">Сегодня</h2>
-        <div class="today-statistic-container">
-          <div class="today-statistic_passedCards">
-            <h3>Пройдено карточек</h3>
-            <h3 id="today-passedCards" class="today-value">33</h3>
+      <div class="game-statistic">
+        <div class="game-statistic-header">
+          <h2 class="game-statistic-title">Статистика мини-игр</h2>
+          <ul class="period-switcher">
+            <li class="period active">7 дней</li>
+            <li class="period">30 дней</li>
+            <li class="period">100 дней</li>
+          </ul>
+        </div>
+        
+        <div class="game-statistic-container">
+          <div class="games-container">
+            <div class="game-button active-game-button" id="speakIt">
+              <span class="material-icons">record_voice_over</span>
+              <h3 class="game-title">SpeakIt</h3>
+            </div>
+            <div class="game-button" id="englishPuzzle">
+              <span class="material-icons">extension</span>
+              <h3 class="game-title">English puzzle</h3>
+            </div>
+            <div class="game-button" id="Savanna">
+              <span class="material-icons">school</span>
+              <h3 class="game-title">Саванна</h3>
+            </div>
+            <div class="game-button" id="audioCall">
+              <span class="material-icons">volume_up</span>
+              <h3 class="game-title">Аудиовызов</h3>
+            </div>
+            <div class="game-button" id="sprint">
+              <span class="material-icons">alarm</span>
+              <h3 class="game-title">Спринт</h3>
+            </div>
+            <div class="game-button" id="ownGame">
+              <span class="material-icons">menu_book</span>
+              <h3 class="game-title">Своя игра</h3>
+            </div>
           </div>
-          <div class="today-statistic_bestSeria">
-            <h3>Лучшая серия</h3>
-            <h3 id="today-bestSeria" class="today-value">15</h3>
-          </div>
-          <div class="today-statistic_rightAnswers">
-            <h3>Правильные ответы</h3>
-            <h3 id="today-rightAnswers" class="today-value">100%</h3>
-          </div>
-          <div class="today-statistic_rightAnswers">
-            <h3>Изучено новых слов</h3>
-            <h3 id="today-rightAnswers" class="today-value">25</h3>
+          <div class="games-chart-container">
+            <div class="games-chart"></div>
           </div>
   
         </div>
+
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-=======
-    <div id="main-container" class="main-container"></div>
->>>>>>> develop
   </body>
 </html>

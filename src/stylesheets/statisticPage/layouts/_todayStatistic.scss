@@ -6,8 +6,12 @@
     padding-top: 10px;
     margin-left: 3%;
     line-height: 55px;
-    font-size: 55px;
+    font-size: 3rem;
     font-weight: bold;
+    @include media-phone {
+        font-size: 2rem;
+        line-height: 30px;
+    }
 }
 
 .today-statistic-container {
@@ -30,8 +34,10 @@
         }
 
         h3 {
+            font-size: 1.5rem;
             align-self: center;
             margin: 5px;
+            font-weight: bold;
         }
     }
 }
