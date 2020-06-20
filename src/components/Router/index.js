@@ -1,6 +1,6 @@
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
-import StatisticPage from 'components/statisticPage/TodayStatistic';
+import StatisticsPage from 'components/statisticPage/StatisticsPage';
 
 const routes = [
   {
@@ -8,8 +8,8 @@ const routes = [
     ClassConstructor: MainPage,
   },
   {
-    name: 'stasistic-page',
-    ClassConstructor: StatisticPage,
+    name: 'statistics-page',
+    ClassConstructor: StatisticsPage,
   },
 ];
 

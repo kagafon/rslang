@@ -1,47 +1,16 @@
-// import todaystatistic from 'components/statisticPage/'
-
-// window.addEventListener('load', () => {
-//   menu.init();
-//   todaystatistic.init();
-//   router.draw('main-page');
-// });
-
- 
-import { createElement } from 'helpers/dom';
-// import router from 'components/Router/';
-
-class TodayStatistic {
-  create() {
-    this.container = createElement(
-      '',
-      'div',
-      [
-        'd-flex',
-        'justify-content-center',
-        'align-items-center',
-        'flex-column',
-        'mx-4',
-      ],
-      {},
-      ''
-    );
-  }
-
+class StatisticsPageEvents {
   init() {
-    this.create();
-    return this.container;
+    console.log('111');
+    const period = document.querySelector('.period');
+    period.addEventListener('click', () => {
+      document.querySelectorAll('.period').forEach(element => {
+        element.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    })
+    
   }
-
-  // init() {
-  //   const TodayStatisticBlock = document.createElement('div');
-  //   TodayStatisticBlock.classList.add('today-statistic');
-  //   TodayStatisticBlock.setAttribute('id', 'today-statistic');
-  //   document.getElementById('main-container').append(TodayStatisticBlock);
-  //   const TodayStatisticTitle = document.createElement('h2');
-  //   TodayStatisticTitle.classList.add('today-statistic_title');
-  //   TodayStatisticTitle.innerText = 'Сегодня';
-  //   TodayStatisticBlock.append(TodayStatisticBlock);
-  //   }
 }
 
-export default new TodayStatistic();
+
+export default new StatisticsPageEvents();

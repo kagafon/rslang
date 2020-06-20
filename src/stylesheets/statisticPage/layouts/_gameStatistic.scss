@@ -42,7 +42,7 @@
     align-self: flex-end;
     width: fit-content;
     @include media-phone {
-        margin: 0 auto;
+        margin: 0;
     }
     :hover {
         font-weight: bold;
