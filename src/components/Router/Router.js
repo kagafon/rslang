@@ -41,7 +41,7 @@ export default class Router {
             item.classList.add('hidden');
           } else {
             item.classList.remove('hidden');
-            if (item.dataset.link === route.name) {
+            if (item.dataset.link === (route.menuItem || route.name)) {
               item.classList.add('active');
             } else {
               item.classList.remove('active');
@@ -118,19 +118,21 @@ export default class Router {
       this.draw(pageName);
     };
 
-    this.menuItems = this.routes.map((x) => {
-      const link = createElement(
-        createElement(menuItemsArea, 'li', ['nav-item', 'mr-auto'], {
-          id: 'menuItems',
-        }),
-        'a',
-        ['nav-link'],
-        { 'data-link': x.name },
-        x.title
-      );
-      link.addEventListener('click', onClickHandler.bind(this, x.name));
-      return link;
-    });
+    this.menuItems = this.routes
+      .filter((x) => !x.excludeFromMenu)
+      .map((x) => {
+        const link = createElement(
+          createElement(menuItemsArea, 'li', ['nav-item', 'mr-auto'], {
+            id: 'menuItems',
+          }),
+          'a',
+          ['nav-link'],
+          { 'data-link': x.name },
+          x.title
+        );
+        link.addEventListener('click', onClickHandler.bind(this, x.name));
+        return link;
+      });
     this.container = createElement(document.body, 'div', ['main-container'], {
       id: 'main-container',
     });

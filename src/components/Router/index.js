@@ -19,6 +19,16 @@ const routes = [
     color: 'rgba(69, 28, 78, 0.66)',
   },
   {
+    name: 'speakit-page',
+    title: 'Speak It',
+    ClassConstructor: MainPage,
+    needAuthorization: false,
+    excludeFromMenu: true,
+    menuItem: 'game-page',
+    image: 'assets/images/backgrounds/game-page.jpg',
+    color: 'rgba(69, 28, 78, 0.66)',
+  },
+  {
     name: 'statistics-page',
     title: 'Статистика',
     ClassConstructor: MainPage,
