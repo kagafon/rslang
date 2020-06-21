@@ -4,9 +4,7 @@ import store from 'components/games-AudioCall/app/components/storage';
 
 export default class Voice {
   static render() {
-    const wrapper = document.querySelector('.wrapper');
-
-    const answerBlock = createElement(wrapper, 'div', ['answerBlock']);
+    const answerBlock = document.querySelector('.answerBlock');
 
     const audio = document.createElement('div');
     audio.classList.add('audio');
@@ -16,8 +14,8 @@ export default class Voice {
       </span>
       <audio data-id='' src="#"></audio>
     `;
+
     answerBlock.append(audio);
-    wrapper.append(answerBlock);
   }
 
   static async audioBtn() {
@@ -39,7 +37,7 @@ export default class Voice {
         playAudio.src = stageRound.word.audioSrc;
         playAudio.play();
       }
-    }, 0);
+    }, 1000);
 
     btnAudio.addEventListener('click', () => {
       const stageRound = store.getState();

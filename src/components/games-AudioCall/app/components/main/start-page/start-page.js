@@ -7,7 +7,6 @@ import store from 'components/games-AudioCall/app/components/storage';
 
 export default class StartPage {
   static render() {
-    const wrapper = document.querySelector('.wrapper');
     const intro = document.createElement('div');
     intro.classList.add('intro');
     intro.innerHTML = `
@@ -29,11 +28,11 @@ export default class StartPage {
         <button type="button" class="btn btn-primary start learn">изучаемые слова</button>
      </div>
     `;
-    wrapper.append(intro);
+    document.body.append(intro);
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', () => {
-        wrapper.innerHTML = '';
+        intro.remove();
         Service.wordsRequest(item.textContent);
         store.setState({ groupe: +item.textContent });
         store.setState({ round: 0 });

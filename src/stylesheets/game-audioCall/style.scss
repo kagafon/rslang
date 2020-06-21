@@ -4,7 +4,7 @@
 
 body {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   margin: 0 auto;
   padding: 0px;
   max-width: 1440px;
@@ -42,6 +42,19 @@ p {
   margin: 100px auto;
 }
 
+.spinner {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 100%;
+  background-color: rgba(32, 34, 34, 0.637);
+}
+
+
 // Start Page ________________________________
 
 .intro {
@@ -62,7 +75,7 @@ p {
   line-height: 1;
   margin-bottom: 60px;
   color: #6cffde;
-  opacity: .8;
+  opacity: 0.8;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   letter-spacing: 13px;
@@ -75,7 +88,7 @@ p {
   line-height: 24px;
   font-weight: 300;
   color: #fff;
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .level-select {
@@ -85,7 +98,7 @@ p {
   line-height: 1;
   margin-bottom: 60px;
   color: #6cffde;
-  opacity: .8;
+  opacity: 0.8;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   letter-spacing: 5px;
@@ -99,13 +112,13 @@ p {
   width: 190px !important;
 }
 
-
 // Header _____________________________
 
 .header {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 1440px;
   height: 20px;
   position: relative;
 }
@@ -114,10 +127,9 @@ p {
 
 .navBarBlock {
   display: flex;
+  position: fixed;
   width: 100%;
-  margin-top: -6px;
 }
-
 
 .progress-bar {
   height: 10px;
@@ -147,7 +159,6 @@ p {
   }
   cursor: pointer;
 }
-
 
 /* Rules for using icons as black on a light background. */
 .material-icons.md-dark {
@@ -195,7 +206,6 @@ p {
   font-feature-settings: 'liga';
 }
 
-
 // Words block______________________________
 
 .wordsblock {
@@ -209,7 +219,7 @@ p {
   display: flex;
   flex-direction: row;
   position: relative;
-  margin:50px 50px 0px 50px;
+  margin: 50px 50px 0px 50px;
   outline: none;
 }
 
@@ -233,15 +243,19 @@ p {
 .correct {
   display: none;
   position: absolute;
-  top: 5px;
+  top: 2px;
   left: -20px;
 }
 
 .cancel {
   display: none;
   position: absolute;
-  top: 5px;
+  top: 2px;
   left: -20px;
+}
+
+.words-opacity {
+  opacity: 50%;
 }
 
 /* Rules for sizing the icon. */
@@ -277,11 +291,7 @@ p {
 }
 
 .next {
- display: none;
-}
-
-.hint {
-  // display: none;
+  display: none;
 }
 
 // Result ______________________________________________
@@ -312,8 +322,8 @@ p {
 .words-img {
   width: 100px;
   height: 100px;
-  background-color: rgba(34, 247, 6, 0.726);
   border-radius: 100px;
+  background-size: cover;
 }
 
 .translate-block {
@@ -323,5 +333,3 @@ p {
   margin-top: 20px;
   vertical-align: middle;
 }
-
-

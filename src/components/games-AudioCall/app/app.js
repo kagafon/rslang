@@ -4,9 +4,11 @@ import StartPage from 'components/games-AudioCall/app/components/main/start-page
 
 export default class App {
   static render() {
+    createElement(document.body, 'div', ['spinner']);
+    // createElement(document.querySelector('.spinner'), 'div', ['loader']);
+    createElement(document.body, 'div', ['header']);
     createElement(document.body, 'div', ['wrapper']);
-    localStorage.removeItem('round');
-    localStorage.removeItem('level');
+    createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
   }
 
   static run() {

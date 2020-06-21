@@ -1,5 +1,7 @@
 import Results from 'components/games-AudioCall/app/components/main/results/results';
-import Service from 'components/games-AudioCall/app/service';
+import RusWords from 'components/games-AudioCall/app/components/main/words/words';
+import store from 'components/games-AudioCall/app/components/storage';
+import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 
 export default class Button {
   static render() {
@@ -14,14 +16,52 @@ export default class Button {
   }
 
   static btnClick() {
-    const btn = document.querySelector('.btn');
-    btn.addEventListener('click', () => {
+    const stage = store.getState();
+    const answerBlock = document.querySelector('.answerBlock');
+
+    const btnHint = document.querySelector('.hint');
+    btnHint.addEventListener('click', () => {
       document.querySelector('.answerBlock').innerHTML = '';
       Results.init();
       document.querySelector('.hint').style.display = 'none';
       document.querySelector('.next').style.display = 'block';
-      Service.localStage();
+      const state = store.getState();
+      store.setState({ round: state.round + 1 });
+      const progress = document.querySelector('.progress-bar');
+      const width = String(progress.style.width).slice(0, -1);
+      progress.style.width = `${+width + 10}%`;
+      RusWords.rightChoice(state.correct);
     });
+
+    if (stage.round < 9) {
+      const btnNext = document.querySelector('.next');
+      btnNext.addEventListener('click', () => {
+        const correctIcon = document.querySelectorAll('.icon');
+        correctIcon.forEach((item) => {
+          item.style.display = 'none';
+        });
+        const numberWords = document.querySelectorAll('.number-words');
+        const arrWordsCard = document.querySelectorAll('.words');
+
+        arrWordsCard.forEach((item) => {
+          item.textContent = '';
+          item.classList.remove('words-opacity');
+        })
+
+        numberWords.forEach((item) => {
+          item.style.display = 'block';
+          item.classList.remove('words-opacity');
+        });
+
+        answerBlock.innerHTML = '';
+        RusWords.wordGeneration();
+        Voice.render();
+        Voice.audioBtn();
+
+        document.querySelector('.hint').style.display = 'block';
+        document.querySelector('.next').style.display = 'none';
+      });
+    }
   }
 
   static init() {
