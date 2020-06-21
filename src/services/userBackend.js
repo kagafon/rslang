@@ -12,6 +12,11 @@ import { APPLICATION } from './config';
 
 let user = null;
 
+const getToday = () => {
+  const now = new Date();
+  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+};
+
 export default class User {
   static getCurrentUser() {
     return user;
@@ -26,28 +31,7 @@ export default class User {
     return authUser(email, password)
       .then(async (userInfo) => {
         localStorage.setItem(`${APPLICATION}.auth`, JSON.stringify(userInfo));
-        try {
-          const settings = await getSettings(userInfo.userId, userInfo.token);
-          user = {
-            id: userInfo.userId,
-            email,
-            settings: settings.optional.user
-              ? JSON.parse(settings.optional.user)
-              : {},
-          };
-        } catch (err) {
-          if (err.code === 404) {
-            user = {
-              id: userInfo.userId,
-              email,
-              settings: {},
-            };
-          } else {
-            localStorage.setItem(`${APPLICATION}.auth`, '');
-            user = null;
-            throw err;
-          }
-        }
+        await User.fillUser({ ...userInfo, email });
         return user;
       })
       .catch((err) => {
@@ -73,12 +57,7 @@ export default class User {
     if (!userInfo) throw Error('Нет информации для авто-логина');
     userInfo = JSON.parse(userInfo);
     return getUser(userInfo.userId, userInfo.token).then(async (userData) => {
-      const settings = await getSettings(userInfo.userId, userInfo.token);
-      user = {
-        id: userInfo.userId,
-        email: userData.email,
-        settings: JSON.parse(settings.optional.user),
-      };
+      await User.fillUser({ ...userInfo, email: userData.email });
       return user;
     });
   }
@@ -139,26 +118,120 @@ export default class User {
       });
   }
 
-  static async saveGameStatistics(game, date, correct, total) {
+  static async saveMainStatistics(newStats) {
     let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
     let stats = {};
     try {
-      stats = await getStatistics(userInfo.userId, userInfo.token, game);
+      stats = await getStatistics(userInfo.userId, userInfo.token);
     } catch (err) {
       if (err.code === 404) {
-        stats = { learnedWords: 0, optional: { results: '[]' } };
+        stats = {
+          learnedWords: 0,
+          optional: {},
+        };
       } else throw err;
     }
+    if (!stats.optional.main) {
+      stats.optional.main = { d: [] };
+    } else {
+      stats.optional.main = JSON.parse(stats.optional.main);
+    }
+    Object.assign(user.stats, newStats);
 
-    stats.optional.results = JSON.stringify([
-      ...JSON.parse(stats.optional.results),
-      { [date]: { correct, total } },
-    ]);
-    return setStatistics(userInfo.userId, userInfo.token, game, {
-      learnedWords: stats.learnedWords,
-      optional: stats.optional,
+    const today = getToday();
+    const foundDate = stats.optional.main.d.find((x) => x.d === today);
+
+    if (!foundDate) stats.optional.main.d.push({ d: today, ...newStats });
+    else Object.assign(foundDate, newStats);
+
+    stats.optional.main = JSON.stringify(stats.optional.main);
+    delete stats.id;
+    return setStatistics(userInfo.userId, userInfo.token, stats);
+  }
+
+  static getMainStatistics(isGetAll = false) {
+    if (isGetAll) {
+      return User.getGameStatistics('main');
+    }
+    const today = getToday();
+
+    return User.getGameStatistics('main').then((mainStat) =>
+      mainStat.d ? mainStat.d.find((x) => x.d === today) : {}
+    );
+  }
+
+  static async saveGameStatistics(game, d, c, t) {
+    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
+    if (!userInfo) throw Error('Пользователь не найден');
+    userInfo = JSON.parse(userInfo);
+    let stats = {};
+    try {
+      stats = await getStatistics(userInfo.userId, userInfo.token);
+    } catch (err) {
+      if (err.code === 404) {
+        stats = {
+          learnedWords: 0,
+          optional: {},
+        };
+      } else throw err;
+    }
+    if (!stats.optional[game]) {
+      stats.optional[game] = { r: [] };
+    } else {
+      stats.optional[game] = JSON.parse(stats.optional[game]);
+    }
+
+    stats.optional[game].r.push({ d, c, t });
+
+    stats.optional[game] = JSON.stringify(stats.optional[game]);
+    delete stats.id;
+    return setStatistics(userInfo.userId, userInfo.token, stats);
+  }
+
+  static getGameStatistics(game) {
+    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
+    if (!userInfo) throw Error('Пользователь не найден');
+    userInfo = JSON.parse(userInfo);
+    return getStatistics(userInfo.userId, userInfo.token).then((stats) => {
+      return JSON.parse(stats.optional[game]);
     });
+  }
+
+  static async fillUser(userInfo) {
+    try {
+      const settings = await getSettings(userInfo.userId, userInfo.token);
+      user = {
+        id: userInfo.userId,
+        email: userInfo.email,
+        settings: settings.optional.user
+          ? JSON.parse(settings.optional.user)
+          : {},
+      };
+    } catch (err) {
+      if (err.code === 404) {
+        user = {
+          id: userInfo.userId,
+          email: userInfo.email,
+          settings: {},
+        };
+      } else {
+        localStorage.setItem(`${APPLICATION}.auth`, '');
+        user = null;
+        throw err;
+      }
+    }
+    try {
+      user.stats = await User.getMainStatistics();
+    } catch (err) {
+      if (err.code === 404) {
+        user.stats = {};
+      } else {
+        localStorage.setItem(`${APPLICATION}.auth`, '');
+        user = null;
+        throw err;
+      }
+    }
   }
 }

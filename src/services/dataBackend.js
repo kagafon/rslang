@@ -104,8 +104,8 @@ const setSettings = (id, token, settings) => {
   }).then(wrapResponse);
 };
 
-const getStatistics = (id, token, game) => {
-  return fetch(`${DATA_BASE_URL}/users/${id}/statistics/${game}`, {
+const getStatistics = (id, token) => {
+  return fetch(`${DATA_BASE_URL}/users/${id}/statistics`, {
     method: 'GET',
     withCredentials: true,
     headers: {
@@ -116,8 +116,8 @@ const getStatistics = (id, token, game) => {
   }).then(wrapResponse);
 };
 
-const setStatistics = (id, token, game, statistics) => {
-  return fetch(`${DATA_BASE_URL}/users/${id}/statistics/${game}`, {
+const setStatistics = (id, token, statistics) => {
+  return fetch(`${DATA_BASE_URL}/users/${id}/statistics`, {
     method: 'PUT',
     withCredentials: true,
     headers: {
