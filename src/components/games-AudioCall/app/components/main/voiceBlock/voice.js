@@ -1,5 +1,6 @@
 import { createElement } from 'helpers/dom';
 import Service from 'components/games-AudioCall/app/service';
+import store from 'components/games-AudioCall/app/components/storage';
 
 export default class Voice {
   static render() {
@@ -13,19 +14,43 @@ export default class Voice {
       <span class="material-icons md-100 md-light">
        volume_up
       </span>
-      <audio src="#"></audio>
+      <audio data-id='' src="#"></audio>
     `;
     answerBlock.append(audio);
     wrapper.append(answerBlock);
   }
 
   static async audioBtn() {
-    const audio = await Service.wordsRequest();
+    const stage = await store.getState();
+    const audio = await Service.wordsRequest(stage.groupe);
+
+    audio.sort(() => {
+      return Math.random() - 0.5;
+    });
+
     const btnAudio = document.querySelector('.audio');
-    btnAudio.addEventListener('click', () => {
+
+    setTimeout(() => {
+      const stageRound = store.getState();
       const playAudio = document.querySelector('audio');
-      playAudio.src = audio[0].audioSrc;
-      playAudio.play();
+
+      if (stageRound.round <= 9) {
+        playAudio.dataset.text = stageRound.word.wordTranslate;
+        playAudio.src = stageRound.word.audioSrc;
+        playAudio.play();
+      }
+    }, 0);
+
+    btnAudio.addEventListener('click', () => {
+      const stageRound = store.getState();
+      const playAudio = document.querySelector('audio');
+
+      if (stageRound.round <= 9) {
+        playAudio.dataset.text = stageRound.word.wordTranslate;
+        playAudio.src = stageRound.word.audioSrc;
+        playAudio.play();
+      }
+      console.log(stageRound);
     });
   }
 

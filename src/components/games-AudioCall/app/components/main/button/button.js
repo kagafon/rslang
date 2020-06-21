@@ -1,4 +1,5 @@
 import Results from 'components/games-AudioCall/app/components/main/results/results';
+import Service from 'components/games-AudioCall/app/service';
 
 export default class Button {
   static render() {
@@ -19,7 +20,7 @@ export default class Button {
       Results.init();
       document.querySelector('.hint').style.display = 'none';
       document.querySelector('.next').style.display = 'block';
-      console.log('click');
+      Service.localStage();
     });
   }
 
