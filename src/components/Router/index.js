@@ -14,7 +14,7 @@ const routes = [
   {
     name: 'game-page',
     title: 'Мини-игры',
-    ClassConstructor: MainPage,
+    ClassConstructor: GamesPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/game-page.jpg',
     color: 'rgba(69, 28, 78, 0.66)',
@@ -70,15 +70,6 @@ const routes = [
     image: 'assets/images/backgrounds/team-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
   },
-<<<<<<< HEAD
-  {
-    name: 'game-page',
-    ClassConstructor: GamesPage,
-  },
-];
-=======
->>>>>>> develop
-
   {
     name: 'dictionary-page',
     title: 'Словарь',
