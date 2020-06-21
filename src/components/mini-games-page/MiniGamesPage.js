@@ -13,7 +13,7 @@ class GamesPage {
         link: 'engPuz-page'
       },
       {
-        name: 'Савана',
+        name: 'Саванна',
         link: 'savannah-page'
       },
       {
@@ -39,13 +39,17 @@ class GamesPage {
     createCards(miniGames);
     function createCards (cardsGames) {
       cardsGames.forEach(element => {
-        createElement(
-          document.querySelector('.box-games'),
-          'a',
-          ['game-card'],
-          { style: 'cursor:pointer'},
-          element.name
+        const gameItem = createElement(
+            document.querySelector('.box-games'),
+            'a',
+            ['game-card'],
+            { style: 'cursor:pointer'},
+            element.name
         );
+        const imageCard = document.createElement("img");
+        imageCard.src = 'assets/images/' + element.link + '.jpg';
+        imageCard.alt = element.name;
+        gameItem.append(imageCard);
       });
     }
     return gameBox; 
