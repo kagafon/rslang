@@ -1,4 +1,7 @@
 import { createElement } from 'helpers/dom';
+import MainChart from 'components/statisticPage/MainChart.js'
+import GameChart from 'components/statisticPage/GameChart.js'
+import { controllers } from 'chart.js';
 // import { StatisticsPageEvents } from 'components/statisticPage/'
 
 class StatisticsPage {
@@ -145,7 +148,7 @@ class StatisticsPage {
         {},
         'Изучено новых слов'
     );
-
+    
     this.newWordsValue = createElement(
         this.newWords,
         'h3',
@@ -179,7 +182,7 @@ class StatisticsPage {
         'Общая статистика'
     );
 
-    this.mainStatisticChart = createElement(
+    this.mainStatisticChartContainer = createElement(
         this.mainStatisticContainer,
         'div',
         [
@@ -187,6 +190,16 @@ class StatisticsPage {
         ],
         {},
         ''
+    );
+
+    this.mainStatisticChart = createElement(
+      this.mainStatisticChartContainer,
+      'canvas',
+      [
+        'main-chart',
+      ],
+      {id: 'myChart'},
+      ''
     );
     }
 
@@ -471,19 +484,19 @@ class StatisticsPage {
         ''
       );
 
-      this.gamesChart = createElement(
+      this.gameStatisticChart = createElement(
         this.gamesChartContainer,
-        'div',
+        'canvas',
         [
-          'games-chart',
+          'game-chart-canvas',
         ],
-        {},
+        {id: 'gameChart'},
         ''
       );
     }
 
     addHandlers() {
-      this.gameStatisticPeriodSwitcher.addEventListener('click', () => {
+        this.gameStatisticPeriodSwitcher.addEventListener('click', () => {
         document.querySelectorAll('.period').forEach(element => {
           element.classList.remove('active');
         });
@@ -492,7 +505,7 @@ class StatisticsPage {
         }
       })
 
-      this.gameStatisticContainer.addEventListener('click', () => {
+      this.gamesContainer.addEventListener('click', () => {
         document.querySelectorAll('.game-button').forEach(element => {
           element.classList.remove('active-game-button');
         });
@@ -500,64 +513,18 @@ class StatisticsPage {
           event.target.closest('div').classList.add('active-game-button');
         }
       })
-
     }
-    
 
   init() {
     this.create();
     this.todayStatisticCreate();
     this.mainStatisticCreate();
     this.gameStatisticCreate();
-    this.addHandlers()
+    this.addHandlers();
+    MainChart.create(this.mainStatisticChart);
+    GameChart.create(this.gameStatisticChart);
     return this.container;
   }
-
-
 }
+
 export default StatisticsPage;
-
-{/* <div class="game-statistic"> */}
-  {/* <div class="game-statistic-header">
-    <h2 class="game-statistic-title">Статистика мини-игр</h2>
-    <ul class="period-switcher">
-      <li class="period active">7 дней</li>
-      <li class="period">30 дней</li>
-      <li class="period">100 дней</li>
-    </ul>
-  </div> */}
-
-  // <div class="game-statistic-container">
-  //   <div class="games-container">
-      {/* <div class="game-button active-game-button" id="speakIt">
-        <span class="material-icons">record_voice_over</span>
-        <h3 class="game-title">SpeakIt</h3>
-      </div> */}
-      {/* <div class="game-button" id="englishPuzzle">
-        <span class="material-icons">extension</span>
-        <h3 class="game-title">English puzzle</h3>
-      </div> */}
-      {/* <div class="game-button" id="savanna">
-        <span class="material-icons">school</span>
-        <h3 class="game-title">Саванна</h3>
-      </div> */}
-      {/* <div class="game-button" id="audioCall">
-        <span class="material-icons">volume_up</span>
-        <h3 class="game-title">Аудиовызов</h3>
-      </div> */}
-      {/* <div class="game-button" id="sprint">
-        <span class="material-icons">alarm</span>
-        <h3 class="game-title">Спринт</h3>
-      </div> */}
-      {/* <div class="game-button" id="ownGame">
-        <span class="material-icons">menu_book</span>
-        <h3 class="game-title">Своя игра</h3>
-      </div> */}
-//     </div>
-//     <div class="games-chart-container">
-//       <div class="games-chart"></div>
-//     </div>
-
-//   </div>
-
-// </div>
