@@ -1,3 +1,7 @@
+.navbar {
+  transition: background-color $page-transition-delay ease;
+  user-select: none;
+}
 
 .navbar-main {
   position: fixed;
@@ -8,13 +12,23 @@
 .navbar-brand {
   user-select: none;
 }
+
 .nav-link {
+  transition: color $page-transition-delay ease;
   cursor: pointer;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255,255,255,0.55);
+  color: $menu-inactive-color;
+
+  &:hover {
+    color: $menu-hover-color;
+  }
 }
 .navbar-dark .navbar-nav .nav-link.active {
-  color: #ffffff;
+  color: $menu-active-color;
 }
