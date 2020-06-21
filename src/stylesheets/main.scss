@@ -13,6 +13,7 @@ body {
   transition: background-image $page-transition-delay ease,
     opacity $page-transition-delay ease;
   opacity: 1;
+  background-attachment: fixed;
 
   &.hidden {
     opacity: 0;
