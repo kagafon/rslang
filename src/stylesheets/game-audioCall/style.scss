@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+@import 'bootstrap';
 
 body {
   display: flex;
@@ -49,11 +50,27 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1;
   height: 100%;
-  background-color: rgba(32, 34, 34, 0.637);
+  // background-color: rgba(243, 201, 152, 0.637);
 }
 
+.sr-only {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 4rem;
+  height: 4rem;
+  z-index: 100;
+}
+
+.spinner-border {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 75px;
+  height: 75px;
+}
 
 // Start Page ________________________________
 
@@ -152,12 +169,27 @@ p {
   height: 100px;
   margin: 50px auto;
   border-radius: 100px;
-  box-shadow: 0px 0px 15px 30px #f85307ad;
+  // box-shadow: 0px 0px 15px 30px #f85307ad;
+  background-color: #f853077c;
   transition: 0.3s linear;
   &:hover {
     box-shadow: 0px 0px 15px 30px #09f1d285;
   }
   cursor: pointer;
+}
+
+.audio-animation {
+  animation: radial-pulse 1s infinite;
+}
+
+@keyframes radial-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.5);
+  }
+ 
+  100% {
+    box-shadow: 0 0 0 40px rgba(0, 0, 0, 0);
+  }
 }
 
 /* Rules for using icons as black on a light background. */

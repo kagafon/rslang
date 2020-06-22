@@ -9,7 +9,7 @@ export default class Results {
      <div class='words-img'></div>
       <span class="material-icons md-48 md-light result-audio">volume_up</span>
       <audio src="#"></audio>
-      <div class='translate-block'>Привет</div>
+      <div class='translate-block'></div>
     `;
     answerBlock.innerHTML = '';
     answerBlock.append(resultBlock);

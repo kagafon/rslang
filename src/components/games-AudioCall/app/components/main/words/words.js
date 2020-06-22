@@ -1,6 +1,7 @@
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 import Results from 'components/games-AudioCall/app/components/main/results/results';
+import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 
 export default class RusWords {
   static render() {
@@ -94,6 +95,12 @@ export default class RusWords {
           this.incorrectChoice(item);
           Results.init();
         }
+
+        setTimeout(() => {
+          if (state.round === 9) {
+            Statisctic.init();
+          }
+        }, 2000);
       });
     });
   }
@@ -123,7 +130,6 @@ export default class RusWords {
       return item.wordTranslate !== arrWords[stage.round].wordTranslate;
     });
 
-    console.log(wordsCardFilter);
     wordsCard.forEach((item) => {
       const rndNum = this.randomInteger(0, wordsCardFilter.length - 1);
 

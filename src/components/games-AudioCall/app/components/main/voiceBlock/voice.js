@@ -31,11 +31,15 @@ export default class Voice {
     setTimeout(() => {
       const stageRound = store.getState();
       const playAudio = document.querySelector('audio');
-
+      playAudio.src = '';
       if (stageRound.round <= 9) {
         playAudio.dataset.text = stageRound.word.wordTranslate;
         playAudio.src = stageRound.word.audioSrc;
         playAudio.play();
+        btnAudio.classList.add('audio-animation');
+        playAudio.onended = () => {
+          btnAudio.classList.remove('audio-animation');
+        };
       }
     }, 1000);
 
@@ -48,7 +52,6 @@ export default class Voice {
         playAudio.src = stageRound.word.audioSrc;
         playAudio.play();
       }
-      console.log(stageRound);
     });
   }
 

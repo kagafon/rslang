@@ -2,6 +2,8 @@ import Results from 'components/games-AudioCall/app/components/main/results/resu
 import RusWords from 'components/games-AudioCall/app/components/main/words/words';
 import store from 'components/games-AudioCall/app/components/storage';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
+import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
+import Service from 'components/games-AudioCall/app/service';
 
 export default class Button {
   static render() {
@@ -16,7 +18,6 @@ export default class Button {
   }
 
   static btnClick() {
-    const stage = store.getState();
     const answerBlock = document.querySelector('.answerBlock');
 
     const btnHint = document.querySelector('.hint');
@@ -31,11 +32,19 @@ export default class Button {
       const width = String(progress.style.width).slice(0, -1);
       progress.style.width = `${+width + 10}%`;
       RusWords.rightChoice(state.correct);
+
+      setTimeout(() => {
+        if (state.round === 9) {
+          Service.spinnerOn();
+          Statisctic.init();
+        }
+      }, 2000);
     });
 
-    if (stage.round < 9) {
-      const btnNext = document.querySelector('.next');
-      btnNext.addEventListener('click', () => {
+    const btnNext = document.querySelector('.next');
+    btnNext.addEventListener('click', () => {
+      const stage = store.getState();
+      if (stage.round <= 9) {
         const correctIcon = document.querySelectorAll('.icon');
         correctIcon.forEach((item) => {
           item.style.display = 'none';
@@ -46,7 +55,7 @@ export default class Button {
         arrWordsCard.forEach((item) => {
           item.textContent = '';
           item.classList.remove('words-opacity');
-        })
+        });
 
         numberWords.forEach((item) => {
           item.style.display = 'block';
@@ -60,8 +69,8 @@ export default class Button {
 
         document.querySelector('.hint').style.display = 'block';
         document.querySelector('.next').style.display = 'none';
-      });
-    }
+      }
+    });
   }
 
   static init() {
