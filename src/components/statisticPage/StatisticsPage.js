@@ -250,7 +250,7 @@ class StatisticsPage {
         [
           'period','active'
         ],
-        {},
+        {id: 'seven-days'},
         '7 дней'
       );
 
@@ -260,7 +260,7 @@ class StatisticsPage {
         [
           'period',
         ],
-        {},
+        {id: 'thirty-days'},
         '30 дней'
       );
 
@@ -270,7 +270,7 @@ class StatisticsPage {
         [
           'period',
         ],
-        {},
+        {id: 'hundred-days'},
         '100 дней'
       );
 
@@ -501,7 +501,9 @@ class StatisticsPage {
           element.classList.remove('active');
         });
         if (event.target.closest('li')) {
+          console.log(event.target.closest('li').getAttribute('id'));
           event.target.closest('li').classList.add('active');
+          GameChart.create(this.gameStatisticChart);
         }
       })
 
@@ -510,7 +512,9 @@ class StatisticsPage {
           element.classList.remove('active-game-button');
         });
         if (event.target.closest('div')) {
+          console.log(event.target.closest('div').getAttribute('id'));
           event.target.closest('div').classList.add('active-game-button');
+          GameChart.create(this.gameStatisticChart);
         }
       })
     }
