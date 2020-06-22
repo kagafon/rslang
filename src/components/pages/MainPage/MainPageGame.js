@@ -1,8 +1,12 @@
 import { createElement } from 'helpers/dom';
 import words from 'components/pages/MainPage/constant';
-import swiper from 'components/pages/MainPage/Swiper';
+import Swiper from 'swiper';
+// import swiper from 'components/pages/MainPage/Swiper';
 
 class MainPageGame {
+  constructor() {
+    this.addAction = this.addAction.bind(this);
+  }
   create() {
     this.container = createElement(
       '',
@@ -95,11 +99,20 @@ class MainPageGame {
   }
 
   addAction() {
-    swiper.update();
+    new Swiper('.swiper-container', {
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    // Now you can use all slider methods like
+    // mySwiper.slideNext();
     // this.audio = new Audio();
     this.container.addEventListener('submit', (event) => {
       event.preventDefault();
       console.error(swiper);
+      swiper.slideNext.bind(swiper)();
       // const word = words.find((el) => {
       //   if (el.id === Number(this.input.id)) {
       //     return true;
@@ -126,7 +139,8 @@ class MainPageGame {
   init() {
     this.create();
     this.createCarusel();
-    this.addAction();
+    // this.addAction();
+    setTimeout(this.addAction, 3000);
     return this.container;
   }
 }

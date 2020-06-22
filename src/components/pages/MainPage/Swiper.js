@@ -1,6 +1,6 @@
 import Swiper from 'swiper';
 
-export default new Swiper('.swiper-container', {
+new Swiper('.swiper-container', {
   // slidesPerGroup: 2,
   // updateOnWindowResize: true,
   // roundLengths: true,
@@ -21,20 +21,22 @@ export default new Swiper('.swiper-container', {
   //   enabled: true,
   //   onlyInViewport: true,
   // },
-  // breakpoints: {
-  //   640: {
-  //     slidesPerView: 1,
-  //     spaceBetween: 10,
-  //     slidesPerGroup: 1,
-  //   },
-  //   768: {
-  //     slidesPerView: 2,
-  //     spaceBetween: 10,
-  //     slidesPerGroup: 1,
-  //   },
-  //   1024: {
-  //     slidesPerView: 3,
-  //     spaceBetween: 25,
-  //   },
-  // },
+  breakpoints: {
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      slidesPerGroup: 1,
+    },
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 10,
+      slidesPerGroup: 1,
+    },
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 25,
+    },
+  },
 });
+
+export default Swiper;
