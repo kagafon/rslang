@@ -12,6 +12,15 @@ const routes = [
     color: 'rgba(83, 140, 173, 0.49)',
   },
   {
+    name: 'main-page-game',
+    title: 'Main Game',
+    excludeFromMenu: true,
+    ClassConstructor: MainPageGame,
+    needAuthorization: false,
+    image: 'assets/images/backgrounds/main-page.jpg',
+    color: 'rgba(83, 140, 173, 0.49)',
+  },
+  {
     name: 'game-page',
     title: 'Мини-игры',
     ClassConstructor: MainPage,

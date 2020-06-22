@@ -1,99 +1,132 @@
 import { createElement } from 'helpers/dom';
+import words from 'components/pages/MainPage/constant';
+import swiper from 'components/pages/MainPage/Swiper';
 
 class MainPageGame {
   create() {
     this.container = createElement(
       '',
-      'div',
-      ['d-flex', 'justify-content-center', 'align-items-center', 'flex-column'],
+      'form',
+      [
+        'd-flex',
+        'justify-content-center',
+        'align-items-center',
+        'flex-column',
+        'swipper-form',
+      ],
       {},
       ''
     );
   }
 
   createCarusel() {
-    const words = ['hello', 'green', 'winter'];
-    const controls = ['prev', 'next'];
-    const carousel = createElement(
+    this.swiperContainer = createElement(
       this.container,
       'div',
-      ['carousel', 'slide', 'carousel-fade', 'carousel-width'],
-      {
-        id: 'carouselExampleFade',
-        'data-ride': 'carousel',
-        'data-interval': 'false',
-        'data-touch': 'true',
-        'data-wrap': 'false',
-      },
-      ''
-    );
-    const carouselInner = createElement(
-      carousel,
-      'div',
-      ['carousel-inner'],
+      ['swiper-container'],
       {},
       ''
     );
-    words.forEach((word, index) => {
-      const item = '';
-      if (index === 0) {
-        const item = createElement(
-          carouselInner,
-          'div',
-          ['carousel-item', 'active'],
-          {},
-          ''
-        );
-        item.appendChild(this.createCard(word));
-      } else {
-        const item = createElement(
-          carouselInner,
-          'div',
-          ['carousel-item'],
-          {},
-          ''
-        );
-        item.appendChild(this.createCard(word));
-      }
-    });
-    controls.forEach((control) => {
-      const arrow = createElement(
-        carousel,
-        'a',
-        [`carousel-control-${control}`],
-        {
-          href: '#carouselExampleFade',
-          role: 'button',
-          'data-slide': `${control}`,
-        },
+    this.swiperWrapper = createElement(
+      this.swiperContainer,
+      'div',
+      ['swiper-wrapper'],
+      {},
+      ''
+    );
+    createElement(this.swiperContainer, 'div', ['swiper-button-prev'], {}, '');
+    createElement(this.swiperContainer, 'div', ['swiper-button-next'], {}, '');
+    words.forEach((word) => {
+      const item = createElement(
+        this.swiperWrapper,
+        'div',
+        ['swiper-slide'],
+        {},
         ''
       );
-      createElement(
-        arrow,
-        'span',
-        [`carousel-control-${control}-icon`],
-        {
-          'aria-hidden': 'true',
-        },
-        ''
-      );
-      createElement(arrow, 'span', [`sr-only`], {}, `${control}`);
+      const card = this.createCard(word);
+      item.appendChild(card);
     });
   }
 
-  createCard(word) {
+  createCard(wordInit) {
+    const {
+      word,
+      image,
+      audio,
+      audioMeaning,
+      audioExample,
+      textMeaning,
+      textExample,
+      transcription,
+      wordTranslate,
+      textMeaningTranslate,
+      textExampleTranslate,
+      id,
+    } = wordInit;
     const card = createElement('', 'div', ['card', 'card_size'], {}, '');
-    createElement(card, 'div', ['card-header'], {}, `${word}`);
+    createElement(card, 'div', ['card-header'], {}, `Новое слово`);
     const cardBody = createElement(card, 'div', ['card-body'], {}, ``);
-    createElement(cardBody, 'h5', ['card-title'], {}, `Hello`);
-    createElement(cardBody, 'p', ['card-text'], {}, `Hello world`);
-    createElement(cardBody, 'button', ['btn', 'btn-primary'], {}, `go`);
+    createElement(
+      cardBody,
+      'input',
+      ['form-control'],
+      {
+        type: 'text',
+        // placeholder: `${wordTranslate}`,
+        id: `${id}`,
+        'aria-label': `${word}`,
+        'aria-describedby': 'basic-addon1',
+        tabindex: 1,
+      },
+      `${word}`
+    );
+    createElement(cardBody, 'hr', ['my-4'], {}, ``);
+    createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
+    const cardFooter = createElement(card, 'div', ['card-footer'], {}, ``);
+    createElement(
+      cardFooter,
+      'button',
+      ['btn', 'btn-primary'],
+      { value: 1, tabindex: -1, type: 'submit' },
+      `Я не знаю`
+    );
     return card;
+  }
+
+  addAction() {
+    swiper.update();
+    // this.audio = new Audio();
+    this.container.addEventListener('submit', (event) => {
+      event.preventDefault();
+      console.error(swiper);
+      // const word = words.find((el) => {
+      //   if (el.id === Number(this.input.id)) {
+      //     return true;
+      //   }
+      // });
+      // if (this.input.value === word.word) {
+      //   this.audio.src = `https://raw.githubusercontent.com/CharlieBlbl/rslang-data/master/${word.audio}`;
+      //   this.audio.autoplay = true;
+      //   function ggg() {
+      //     document.querySelector('.carousel-control-next-icon').click();
+      //     this.form = this.container.querySelector(
+      //       '.carousel-item.active form'
+      //     );
+      //   }
+
+      //   setTimeout(ggg, 2000);
+      //   console.error('sss');
+      // } else {
+      //   console.error('error');
+      // }
+    });
   }
 
   init() {
     this.create();
     this.createCarusel();
+    this.addAction();
     return this.container;
   }
 }

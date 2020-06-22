@@ -1,8 +1,21 @@
 .card_size {
-  width: 300px;
+  max-width: 550px;
+  width: 75%;
+  height: 320px;
   margin: 0 auto;
 }
 
 .carousel-width {
+  max-width: 700px;
   width: 100%;
+}
+
+.carousel-control-next-icon {
+  display: none;
+  background-image: url('/assets/images/arrow_forward_ios-black-18dp.svg');
+}
+
+.carousel-control-prev-icon {
+  display: none;
+  background-image: url('/assets/images/arrow_back_ios-black-18dp.svg');
 }
