@@ -1,9 +1,8 @@
 import 'bootstrap';
-import router from 'components/Router/';
-import menu from 'components/menu/';
 import 'stylesheets/main.scss';
+import router from 'components/Router/';
 
 window.addEventListener('load', () => {
-  menu.init();
   router.draw('main-page');
+  document.body.classList.remove('hidden');
 });
