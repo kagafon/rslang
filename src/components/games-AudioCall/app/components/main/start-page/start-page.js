@@ -17,7 +17,7 @@ export default class StartPage {
        <span>Тренировка Аудиовызов развивает словарный запас.
        Чем больше слов ты знаешь, тем больше очков опыта получишь.</span>
      </div>
-     <span class="level-select">Выбирете уровень</span>
+     <span class="level-select">Выберете уровень</span>
      <div class="level-block">
         <button type="button" class="btn btn-primary start">1</button>
         <button type="button" class="btn btn-primary start">2</button>
@@ -36,6 +36,7 @@ export default class StartPage {
         Service.wordsRequest(item.textContent);
         store.setState({ groupe: +item.textContent });
         store.setState({ round: 0 });
+        store.setState({ correctChoice: 0 });
         Header.init();
         Voice.init();
         RusWords.init();

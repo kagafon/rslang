@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
 import { createElement } from 'helpers/dom';
 import StartPage from 'components/games-AudioCall/app/components/main/start-page/start-page';
+import Statistic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 
 export default class App {
   static render() {
@@ -27,5 +28,6 @@ export default class App {
   static run() {
     this.render();
     StartPage.init();
+    // Statisctic.init();
   }
 }

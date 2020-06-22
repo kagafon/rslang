@@ -37,11 +37,12 @@ export default class Voice {
         playAudio.src = stageRound.word.audioSrc;
         playAudio.play();
         btnAudio.classList.add('audio-animation');
+
         playAudio.onended = () => {
           btnAudio.classList.remove('audio-animation');
         };
       }
-    }, 1000);
+    }, 500);
 
     btnAudio.addEventListener('click', () => {
       const stageRound = store.getState();

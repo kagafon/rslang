@@ -87,6 +87,7 @@ export default class RusWords {
         progress.style.width = `${+width + 10}%`;
 
         store.setState({ round: state.round + 1 });
+        store.setState({ correctChoice: state.correctChoice + 1 });
 
         if (item.children[3].textContent === state.word.wordTranslate) {
           this.rightChoice(item);
@@ -119,10 +120,6 @@ export default class RusWords {
     const arrWords = await Service.wordsRequest(stage.groupe);
     const wordsCard = document.querySelectorAll('.words');
 
-    // arrWords.sort(() => {
-    //   return Math.random() - 0.5;
-    // });
-
     store.setState({ word: arrWords[stage.round] });
     this.wordsTranslate(arrWords[stage.round].wordTranslate);
 
@@ -136,10 +133,9 @@ export default class RusWords {
       if (item.textContent !== arrWords[stage.round].wordTranslate) {
         item.textContent = wordsCardFilter[rndNum].wordTranslate;
         wordsCardFilter.splice(rndNum, 1);
-
-        // console.log( wordsCardFilter[rndNum].wordTranslate)
       }
     });
+    Service.spinnerOff();
     // console.log(wordsCardFilter);
   }
 

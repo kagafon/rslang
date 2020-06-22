@@ -64,8 +64,7 @@ export default class Button {
 
         answerBlock.innerHTML = '';
         RusWords.wordGeneration();
-        Voice.render();
-        Voice.audioBtn();
+        Voice.init();
 
         document.querySelector('.hint').style.display = 'block';
         document.querySelector('.next').style.display = 'none';

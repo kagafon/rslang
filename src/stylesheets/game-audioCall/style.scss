@@ -41,6 +41,7 @@ p {
   width: 100%;
   max-width: 1440px;
   margin: 100px auto;
+  transition: .2s linear;
 }
 
 .spinner {
@@ -123,6 +124,7 @@ p {
 
 .start {
   width: 120px;
+  margin-left: 10px;
 }
 
 .learn {
@@ -365,3 +367,33 @@ p {
   margin-top: 20px;
   vertical-align: middle;
 }
+
+
+// Statistic_______________________________________
+
+.statistic-block {
+  height: 400px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: rgba(252, 249, 249, 0.747);
+  margin: 0 auto;
+}
+
+.statistic {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.statistic-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #00000098;
+  width: 100%;
+}
+
+.statistic-subtitle {
+  font-size: 1.2rem;
+  color: #00000098;
+}
+
