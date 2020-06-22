@@ -1,16 +1,16 @@
 import { createElement } from 'helpers/dom';
-
-class GamesPage {
+import Router from 'components/Router/';
+export default class GamesPage {
 
   init() {
     const miniGames = [
       {
         name: 'SpeakIt',
-        link: 'speakIt-page'
+        link: 'speakit-page'
       },
       {
         name: 'English puzzle',
-        link: 'engPuz-page'
+        link: 'engpuz-page'
       },
       {
         name: 'Саванна',
@@ -18,7 +18,7 @@ class GamesPage {
       },
       {
         name: 'Аудиовызов',
-        link: 'audioCall-page'
+        link: 'audiocall-page'
       },
       {
         name: 'Спринт',
@@ -26,7 +26,7 @@ class GamesPage {
       },
       {
         name: 'Мастер фраз',
-        link: 'phraseWizard-page'
+        link: 'phrasewizard-page'
       }
     ]
     
@@ -41,7 +41,7 @@ class GamesPage {
       cardsGames.forEach(element => {
         const gameItem = createElement(
             document.querySelector('.box-games'),
-            'a',
+            'div',
             ['game-card'],
             { style: 'cursor:pointer'},
             element.name
@@ -50,10 +50,12 @@ class GamesPage {
         imageCard.src = 'assets/images/' + element.link + '.jpg';
         imageCard.alt = element.name;
         gameItem.append(imageCard);
+        gameItem.addEventListener('click',  clickGame.bind(null, element.link));
       });
+    }
+    function clickGame(link) {
+      Router.draw(link);
     }
     return gameBox; 
   }
 }
-
-export default GamesPage;
