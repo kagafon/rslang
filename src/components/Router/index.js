@@ -117,7 +117,7 @@ const routes = [
   {
     name: 'team-page',
     title: 'О команде',
-    ClassConstructor: teamPage,
+    ClassConstructor: MainPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/team-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
