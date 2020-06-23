@@ -4,7 +4,10 @@ export default class componentTeam {
   init() {
     const teamBlock = document.createElement('div');
     teamBlock.innerHTML = `
+                    <div class="header">
+                        <img class="svg" src="../../assets/images/team-page/rs_school.svg">
                         <h1 class="title"><a href="https://github.com/rolling-scopes-school">Наша команда</a></h1>   
+                    </div>
                     <div class="team">   
                         <div class="person">
                             <img class="person__image" src="../../assets/images/team-page/konstantin.jpg" alt="Konstantin">
@@ -61,6 +64,9 @@ export default class componentTeam {
                                 <p class="person__contribution">Отвечает за страницы авторизации и "О команде", промо-страницу.</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="footer">
+                    <h4 class="footer-title"><a href="https://rollingscopes.com/">© 2020 The Rolling Scopes</a></h4>
                     </div>`;
     return teamBlock;
   }
