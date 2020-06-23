@@ -239,6 +239,7 @@ export default class authorizationPage {
     this.checkPassword(button);
     this.callAutoLogin(errorLogin);
     this.toLogin(inputLoginEmail, inputLoginPassword, buttonLogin, errorLogin);
+    this.toRegistrate(inputEmail, inputPassword, inputUsername, button, error);
     return parent;
   }
 
@@ -281,5 +282,26 @@ export default class authorizationPage {
       }
       getLog();
     });
-    }
+  }
+
+  toRegistrate(email, password, name, button, err) {
+    button.addEventListener('submit', function sendFormRegistrate() {
+      const mail = email.value;
+      const pass = password.value;
+      console.log(mail);
+      async function getRegistration() {
+        try {
+          const userInfo = await User.createUserAndLogin(mail, pass, {
+            username: name.value,
+          });
+          console.log(userInfo);
+          Router.draw('main-page');
+        } catch (error) {
+          err.textContent =
+            'Что-то пошло не так. Повторите процедуру регистрации';
+        }
+      }
+      getRegistration();
+    });
+  }
 }
