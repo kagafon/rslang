@@ -44,6 +44,7 @@ export default class authorizationPage {
         type: 'email',
         placeholder: 'email@gmail.com',
         autocomplete: 'off',
+        autofocus: 'false',
         required: 'true',
       },
       ''
@@ -70,6 +71,7 @@ export default class authorizationPage {
         type: 'text',
         placeholder: 'Username',
         autocomplete: 'off',
+        autofocus: 'false',
         required: 'true',
       },
       ''
@@ -96,6 +98,7 @@ export default class authorizationPage {
         type: 'password',
         placeholder: '********',
         autocomplete: 'off',
+        autofocus: 'false',
         id: 'psw',
         title:
           'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
@@ -125,6 +128,7 @@ export default class authorizationPage {
         type: 'password',
         placeholder: '********',
         autocomplete: 'off',
+        autofocus: 'false',
         id: 'confirmPsw',
         title:
           'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
@@ -143,7 +147,7 @@ export default class authorizationPage {
     const button = createElement(
       center,
       'button',
-      ['button'],
+      ['button', 'btn-reg'],
       { style: '' },
       'Sign Up'
     );
@@ -183,6 +187,7 @@ export default class authorizationPage {
         type: 'email',
         placeholder: 'email@gmail.com',
         autocomplete: 'off',
+        autofocus: 'false',
         required: 'true',
       },
       ''
@@ -209,6 +214,7 @@ export default class authorizationPage {
         type: 'password',
         placeholder: '********',
         autocomplete: 'off',
+        autofocus: 'false',
         id: 'pswLogin',
         title:
           'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
@@ -226,7 +232,7 @@ export default class authorizationPage {
     const buttonLogin = createElement(
       centerLogin,
       'button',
-      ['button'],
+      ['button', 'btn-log'],
       { style: '' },
       'Log In'
     );
@@ -237,20 +243,60 @@ export default class authorizationPage {
       { id: 'error-login' },
       ''
     );
-    this.checkPassword(button);
-    this.toLogin(inputLoginEmail, inputLoginPassword, buttonLogin, errorLogin);
-    this.toRegistrate(inputEmail, inputPassword, inputUsername, button, error);
-    // this.callAutoLogin(errorLogin);
+    const divSpinner = createElement(
+      center,
+      'div',
+      ['spinner-border', 'spin-reg'],
+      { role: 'status' },
+      ''
+    );
+    const spanSpinner = createElement(
+      divSpinner,
+      'span',
+      ['sr-only'],
+      { id: 'spinner' },
+      'Loading...'
+    );
+    const divLoginSpinner = createElement(
+      centerLogin,
+      'div',
+      ['spinner-border', 'spin-log'],
+      { role: 'status' },
+      ''
+    );
+    const spanLoginSpinner = createElement(
+      divLoginSpinner,
+      'span',
+      ['sr-only'],
+      { id: 'spinner' },
+      'Loading...'
+    );
+
+    this.checkPassword(inputPassword, inputConfirmPassword, button);
+    this.toLogin(
+      inputLoginEmail,
+      inputLoginPassword,
+      buttonLogin,
+      errorLogin,
+      divLoginSpinner
+    );
+    this.toRegistrate(
+      inputEmail,
+      inputPassword,
+      inputUsername,
+      button,
+      error,
+      divSpinner
+    );
+    this.callAutoLogin(errorLogin);
     return parent;
   }
 
-  checkPassword(button) {
+  checkPassword(password, confirmPassword, button) {
     button.addEventListener('click', () => {
-      const psw = document.querySelector('#psw');
-      const confirmPsw = document.querySelector('#confirmPsw');
       const error = document.querySelector('.error');
       const regex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
-      if (psw.value !== confirmPsw.value) {
+      if (password.value !== confirmPassword.value) {
         error.textContent = `Пароли не совпадают. Введите идентичные пароли!`;
       } else if (!regex.test(psw.value)) {
         error.textContent = `Пароль не соответствует требованию. Введите новый пароль`;
@@ -267,9 +313,10 @@ export default class authorizationPage {
     }
   }
 
-  toLogin(email, password, button, err) {
+  toLogin(email, password, button, err, spinner) {
     button.addEventListener('click', function send(event) {
       event.preventDefault();
+      spinner.style.display = 'block';
       const mail = email.value;
       const pass = password.value;
       async function getLogin() {
@@ -277,6 +324,7 @@ export default class authorizationPage {
           const userInfo = await User.login(mail, pass);
           Router.draw('main-page');
         } catch (error) {
+          spinner.style.display = 'none';
           err.textContent =
             'Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз, или пройдите процедуру регистрации';
         }
@@ -285,9 +333,10 @@ export default class authorizationPage {
     });
   }
 
-  toRegistrate(email, password, name, button, err) {
+  toRegistrate(email, password, name, button, err, spinner) {
     button.addEventListener('click', function sendFormRegistrate(event) {
       event.preventDefault();
+      spinner.style.display = 'block';
       const mail = email.value;
       const pass = password.value;
       async function getRegistration() {
@@ -298,6 +347,7 @@ export default class authorizationPage {
           console.log(userInfo);
           Router.draw('main-page');
         } catch (error) {
+          spinner.style.display = 'none';
           err.textContent =
             'Что-то пошло не так. Повторите процедуру регистрации';
         }
