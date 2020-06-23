@@ -237,6 +237,8 @@ export default class authorizationPage {
       ''
     );
     this.checkPassword(button);
+    this.callAutoLogin(errorLogin);
+    return parent;
   }
 
   checkPassword(button) {
@@ -251,5 +253,14 @@ export default class authorizationPage {
         error.textContent = `Пароль не соответствует требованию. Введите новый пароль`;
       }
     });
+  }
+
+  async callAutoLogin(err) {
+    try {
+      const login = await User.autoLogin();
+      Router.draw('main-page');
+    } catch (error) {
+      err.textContent = 'Пользователь не авторизовался';
+    }
   }
 }
