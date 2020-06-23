@@ -1,8 +1,9 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
 import 'stylesheets/autorization-page/style.scss';
 import { User } from 'services/backend';
-import Router from 'components/Router/Router';
+import Router from 'components/Router';
 
 export default class authorizationPage {
   init() {
@@ -237,9 +238,9 @@ export default class authorizationPage {
       ''
     );
     this.checkPassword(button);
-    this.callAutoLogin(errorLogin);
     this.toLogin(inputLoginEmail, inputLoginPassword, buttonLogin, errorLogin);
     this.toRegistrate(inputEmail, inputPassword, inputUsername, button, error);
+    // this.callAutoLogin(errorLogin);
     return parent;
   }
 
@@ -267,28 +268,28 @@ export default class authorizationPage {
   }
 
   toLogin(email, password, button, err) {
-    button.addEventListener('click', function send() {
+    button.addEventListener('click', function send(event) {
+      event.preventDefault();
       const mail = email.value;
       const pass = password.value;
-      async function getLog() {
+      async function getLogin() {
         try {
           const userInfo = await User.login(mail, pass);
-          console.log(userInfo);
           Router.draw('main-page');
         } catch (error) {
           err.textContent =
             'Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз, или пройдите процедуру регистрации';
         }
       }
-      getLog();
+      getLogin();
     });
   }
 
   toRegistrate(email, password, name, button, err) {
-    button.addEventListener('submit', function sendFormRegistrate() {
+    button.addEventListener('click', function sendFormRegistrate(event) {
+      event.preventDefault();
       const mail = email.value;
       const pass = password.value;
-      console.log(mail);
       async function getRegistration() {
         try {
           const userInfo = await User.createUserAndLogin(mail, pass, {

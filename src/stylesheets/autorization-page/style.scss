@@ -3,7 +3,9 @@
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 @import '~bootstrap';
 
-
+.title {
+    font-size: 30px;
+}
 .form {
     display: flex; 
     justify-content: center;
@@ -17,11 +19,12 @@ h1 {
     border-bottom: 3px solid #53025a;
 }
 form {
-    color: white;
-    background: rgba(182, 74, 90, 0.4);
+    font-weight: 500;
+    background: rgba(72, 222, 248, 0.4);
     margin: 0  10px 20px 10px;
     width: 35%;
-    height: 450px;
+    min-height: 470px;
+    height: 100%;
     padding: 3px 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
@@ -77,4 +80,17 @@ button:hover {
     font-weight: 500;
     display: block;
     color: red;
+}
+@media all and (max-width: 767px) {
+    .form {
+        display: flex; 
+        flex-direction: column;
+    }
+    form {
+        width: 70%;
+        min-height: 470px;
+        height: 100%;
+        margin: 5px auto;
+        padding: 3px 10px;
+    }
 }
