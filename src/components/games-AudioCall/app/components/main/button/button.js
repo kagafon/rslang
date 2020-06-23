@@ -4,6 +4,7 @@ import store from 'components/games-AudioCall/app/components/storage';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Service from 'components/games-AudioCall/app/service';
+import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
 
 export default class Button {
   static render() {
@@ -27,7 +28,10 @@ export default class Button {
       document.querySelector('.hint').style.display = 'none';
       document.querySelector('.next').style.display = 'block';
       const state = store.getState();
+
       store.setState({ round: state.round + 1 });
+      statisticStore.setUnexploredState([state.word]);
+
       const progress = document.querySelector('.progress-bar');
       const width = String(progress.style.width).slice(0, -1);
       progress.style.width = `${+width + 10}%`;
@@ -46,9 +50,11 @@ export default class Button {
       const stage = store.getState();
       if (stage.round <= 9) {
         const correctIcon = document.querySelectorAll('.icon');
+
         correctIcon.forEach((item) => {
           item.style.display = 'none';
         });
+
         const numberWords = document.querySelectorAll('.number-words');
         const arrWordsCard = document.querySelectorAll('.words');
 

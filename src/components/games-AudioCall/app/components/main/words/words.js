@@ -2,6 +2,8 @@ import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 import Results from 'components/games-AudioCall/app/components/main/results/results';
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
+import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
+import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage';
 
 export default class RusWords {
   static render() {
@@ -33,6 +35,7 @@ export default class RusWords {
 
     item.children[0].style.display = 'none';
     item.children[1].style.display = 'block';
+
     document.querySelector('.hint').style.display = 'none';
     document.querySelector('.next').style.display = 'block';
 
@@ -87,18 +90,23 @@ export default class RusWords {
         progress.style.width = `${+width + 10}%`;
 
         store.setState({ round: state.round + 1 });
-        store.setState({ correctChoice: state.correctChoice + 1 });
 
         if (item.children[3].textContent === state.word.wordTranslate) {
+          store.setState({ correctChoice: state.correctChoice + 1 });
+          statiscticStore.setLearnedState([state.word]);
+
           this.rightChoice(item);
           Results.init();
         } else {
+          statiscticStore.setUnexploredState([state.word]);
+
           this.incorrectChoice(item);
           Results.init();
         }
 
         setTimeout(() => {
           if (state.round === 9) {
+            Service.spinnerOn();
             Statisctic.init();
           }
         }, 2000);
@@ -136,7 +144,7 @@ export default class RusWords {
       }
     });
     Service.spinnerOff();
-    // console.log(wordsCardFilter);
+    Voice.autoPlayAudio();
   }
 
   static randomInteger(min, max) {

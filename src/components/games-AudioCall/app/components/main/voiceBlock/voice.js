@@ -1,4 +1,3 @@
-import { createElement } from 'helpers/dom';
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 
@@ -28,6 +27,21 @@ export default class Voice {
 
     const btnAudio = document.querySelector('.audio');
 
+    btnAudio.addEventListener('click', () => {
+      const stageRound = store.getState();
+      const playAudio = document.querySelector('audio');
+
+      if (stageRound.round <= 9) {
+        playAudio.dataset.text = stageRound.word.wordTranslate;
+        playAudio.src = stageRound.word.audioSrc;
+        playAudio.play();
+      }
+    });
+  }
+
+  static autoPlayAudio() {
+    const btnAudio = document.querySelector('.audio');
+
     setTimeout(() => {
       const stageRound = store.getState();
       const playAudio = document.querySelector('audio');
@@ -43,17 +57,6 @@ export default class Voice {
         };
       }
     }, 500);
-
-    btnAudio.addEventListener('click', () => {
-      const stageRound = store.getState();
-      const playAudio = document.querySelector('audio');
-
-      if (stageRound.round <= 9) {
-        playAudio.dataset.text = stageRound.word.wordTranslate;
-        playAudio.src = stageRound.word.audioSrc;
-        playAudio.play();
-      }
-    });
   }
 
   static init() {

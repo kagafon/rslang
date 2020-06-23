@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import RusWords from 'components/games-AudioCall/app/components/main/words/words';
 import Button from 'components/games-AudioCall/app/components/main/button/button';
 import Header from 'components/games-AudioCall/app/components/main/header/header';

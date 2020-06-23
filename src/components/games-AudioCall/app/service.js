@@ -8,7 +8,6 @@ export default class Service {
       'image',
       'audio',
     ]);
-    // this.spinnerOff();
     return words;
   }
 
