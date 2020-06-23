@@ -238,6 +238,7 @@ export default class authorizationPage {
     );
     this.checkPassword(button);
     this.callAutoLogin(errorLogin);
+    this.toLogin(inputLoginEmail, inputLoginPassword, buttonLogin, errorLogin);
     return parent;
   }
 
@@ -263,4 +264,22 @@ export default class authorizationPage {
       err.textContent = 'Пользователь не авторизовался';
     }
   }
+
+  toLogin(email, password, button, err) {
+    button.addEventListener('click', function send() {
+      const mail = email.value;
+      const pass = password.value;
+      async function getLog() {
+        try {
+          const userInfo = await User.login(mail, pass);
+          console.log(userInfo);
+          Router.draw('main-page');
+        } catch (error) {
+          err.textContent =
+            'Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз, или пройдите процедуру регистрации';
+        }
+      }
+      getLog();
+    });
+    }
 }
