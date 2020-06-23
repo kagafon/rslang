@@ -236,5 +236,20 @@ export default class authorizationPage {
       { id: 'error-login' },
       ''
     );
+    this.checkPassword(button);
+  }
+
+  checkPassword(button) {
+    button.addEventListener('click', () => {
+      const psw = document.querySelector('#psw');
+      const confirmPsw = document.querySelector('#confirmPsw');
+      const error = document.querySelector('.error');
+      const regex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
+      if (psw.value !== confirmPsw.value) {
+        error.textContent = `Пароли не совпадают. Введите идентичные пароли!`;
+      } else if (!regex.test(psw.value)) {
+        error.textContent = `Пароль не соответствует требованию. Введите новый пароль`;
+      }
+    });
   }
 }
