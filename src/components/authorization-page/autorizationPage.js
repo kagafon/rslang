@@ -146,5 +146,95 @@ export default class authorizationPage {
       { style: '' },
       'Sign Up'
     );
+    const formLogin = createElement(
+      parent,
+      'form',
+      ['login'],
+      { action: '' },
+      ''
+    );
+    const titleLogin = createElement(
+      formLogin,
+      'h1',
+      ['title'],
+      { title: 'Форма входа на сайт' },
+      'Вход'
+    );
+    const divLoginEmail = createElement(
+      formLogin,
+      'div',
+      ['group'],
+      { style: '' },
+      ''
+    );
+    const labelLoginEmail = createElement(
+      divLoginEmail,
+      'label',
+      ['label'],
+      { for: 'email' },
+      'Email'
+    );
+    const inputLoginEmail = createElement(
+      divLoginEmail,
+      'input',
+      ['email-login'],
+      {
+        type: 'email',
+        placeholder: 'email@gmail.com',
+        autocomplete: 'off',
+        required: 'true',
+      },
+      ''
+    );
+    const divLoginPassword = createElement(
+      formLogin,
+      'div',
+      ['group'],
+      { style: '' },
+      ''
+    );
+    const labelLoginPassword = createElement(
+      divLoginPassword,
+      'label',
+      ['label'],
+      { for: 'pswLogin' },
+      'Password'
+    );
+    const inputLoginPassword = createElement(
+      divLoginPassword,
+      'input',
+      ['password'],
+      {
+        type: 'password',
+        placeholder: '********',
+        autocomplete: 'off',
+        id: 'pswLogin',
+        title:
+          'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
+        required: 'true',
+      },
+      ''
+    );
+    const centerLogin = createElement(
+      formLogin,
+      'center',
+      ['button'],
+      { style: '' },
+      ''
+    );
+    const buttonLogin = createElement(
+      centerLogin,
+      'button',
+      ['button'],
+      { style: '' },
+      'Log In'
+    );
+    const errorLogin = createElement(
+      divLoginPassword,
+      'p',
+      ['error-login'],
+      { id: 'error-login' },
+      ''
+    );
   }
 }
