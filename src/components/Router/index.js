@@ -1,6 +1,7 @@
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
+import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 
 const routes = [
   {
@@ -72,7 +73,7 @@ const routes = [
   {
     name: 'phrasewizard-page',
     title: 'Мастер фраз',
-    ClassConstructor: MainPage,
+    ClassConstructor: PhraseWizard,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
