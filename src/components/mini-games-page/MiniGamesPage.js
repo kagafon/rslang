@@ -1,5 +1,6 @@
 import { createElement } from 'helpers/dom';
 import Router from 'components/Router/';
+
 export default class GamesPage {
 
   init() {

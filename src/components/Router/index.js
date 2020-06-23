@@ -1,5 +1,6 @@
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import teamPage from 'components/team-page/component-team';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 
 const routes = [
@@ -115,7 +116,7 @@ const routes = [
   {
     name: 'team-page',
     title: 'О команде',
-    ClassConstructor: MainPage,
+    ClassConstructor: teamPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/team-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
