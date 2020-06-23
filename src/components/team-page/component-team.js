@@ -26,6 +26,26 @@ export default class componentTeam {
                                 <p class="person__contribution">Отвечает за весь дизайн проекта. Главная страница полностью на её совести</p>
                             </div>
                         </div>    
+                        <div class="person">
+                            <img class="person__image" src="../../assets/images/team-page/vlad.jpg" alt="Vlad">
+                            <div class="describe-person">
+                                <h3 class="person__title"><a href="https://github.com/furrrmanov">Влад Фурманов</a></h3>
+                                <h5 class="person__position">Ведущий разработчик</h5>
+                                <p class="person__phrase">"Всё быстро, качественно и в срок" - его лозунг.</p>
+                                <p class="person__contribution">Отвечает за разработку мини-игр "Саванна" и "Аудиовызов"</p>
+
+                            </div>
+                        </div>
+                        <div class="person">
+                            <img class="person__image" src="../../assets/images/team-page/ura.jpg" alt="Yury">
+                            <div class="describe-person">
+                                <h3 class="person__title"><a href="https://github.com/KotdenGit">Юрий Вощенчук</a></h3>
+                                <h5 class="person__position">Разработчик</h5>
+                                <p class="person__phrase">Мастер вопросов и любознательная личность.</p>
+                                <p class="person__contribution">Отвечает за разработку мини-игры "Спринт" и "Мастер фраз"</p>
+                            </div>
+                        </div>    
+                     
                     </div>`;
     return teamBlock;
   }
