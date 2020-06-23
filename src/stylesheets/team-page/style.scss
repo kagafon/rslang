@@ -14,9 +14,7 @@ html, body {
     margin: 0;
     padding: 0;
   }
-  .wrapper {
-    background-size: cover;
-  }
+  
   .title {
     font-family: 'roboto', sans-serif;
     font-weight: 900;
@@ -25,6 +23,7 @@ html, body {
     color: rgb(243, 162, 11);
   }
   .team {
+    margin-top: -50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
