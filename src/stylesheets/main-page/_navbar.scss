@@ -1,6 +1,7 @@
 .navbar {
   transition: background-color $page-transition-delay ease;
   user-select: none;
+  z-index: 1000;
 }
 
 .navbar-main {

@@ -46,4 +46,18 @@ const words = [
   },
 ];
 
-export default words;
+const settings = {
+  delebeButton: true,
+  answerButton: true,
+  complexButton: true,
+  showWordTranslate: true,
+  showTextMeaning: true,
+  showTextExample: true,
+  showTranscription: true,
+  showImage: true,
+  newWordNumber: 3,
+  cardsNumber: 3,
+};
+const URL = 'https://raw.githubusercontent.com/CharlieBlbl/rslang-data/master/';
+const constans = { words, settings, URL };
+export default constans;
