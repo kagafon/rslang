@@ -4,6 +4,29 @@ export default class componentTeam {
   init() {
     const teamBlock = document.createElement('div');
     teamBlock.classList.add('team');
+    teamBlock.innerHTML = `
+                    <img src="../../assets/images/team-page/rs_school_js.svg" alt="RSschool">
+                    <h1 class="title"><a href="https://github.com/rolling-scopes-school">Наша команда</a></h1>   
+                    <div class="team">   
+                        <div class="person">
+                            <img class="person__image" src="../../assets/images/team-page/konstantin.jpg" alt="Konstantin">
+                            <div class="describe-person">
+                                <h3 class="person__title"><a href="https://github.com/kagafon">Константин Aгафонов</a></h3>
+                                <h5 class="person__position">Team Lead</h5>
+                                <p class="person__phrase">Суровый руководитель и "мозг" проекта.</p>
+                                <p class="person__contribution">Руководит проектом, весь back-end держится на нём, а также игра "SpeakIt"</p>
+                            </div>
+                        </div>    
+                        <div class="person">
+                            <img class="person__image" src="../../assets/images/team-page/ira.jpg" alt="Ira">
+                            <div class="describe-person">
+                                <h3 class="person__title"><a href="https://github.com/irinainina">Ирина Блоцкая</a></h3>
+                                <h5 class="person__position">Дизайнер-разработчик</h5>
+                                <p class="person__phrase">Красота стилевых форм и упорядоченность одним взмахом.</p>
+                                <p class="person__contribution">Отвечает за весь дизайн проекта. Главная страница полностью на её совести</p>
+                            </div>
+                        </div>    
+                    </div>`;
     return teamBlock;
   }
 }
