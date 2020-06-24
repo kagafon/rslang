@@ -139,6 +139,214 @@ export default class promoPage {
       {},
       ''
     );
+    const describeGame = createElement(
+      this.parent,
+      'div',
+      ['discribe-game'],
+      {},
+      ''
+    );
+    const divRule = createElement(describeGame, 'div', ['learn'], {}, '');
+    const imgRule = createElement(
+      divRule,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleRule = createElement(
+      divRule,
+      'h3',
+      ['title'],
+      {},
+      'Правило интервального повторения'
+    );
+    const pRule = createElement(
+      titleRule,
+      'p',
+      ['describe'],
+      {},
+      'Изучение новых слов.'
+    );
+    const olRule = createElement(pRule, 'ul', ['describe'], {}, '');
+    const liRule = createElement(
+      olRule,
+      'li',
+      ['describe'],
+      { type: 'circle' },
+      'Угадали - слово повториться(для закрепления материала):'
+    );
+    const olliRule = createElement(liRule, 'ol', ['describe'], {}, '');
+    const olliRule1 = createElement(
+      olliRule,
+      'li',
+      ['describe'],
+      { type: 'square' },
+      'Сложное слово - через день'
+    );
+    const olliRule3 = createElement(
+      olliRule,
+      'li',
+      ['describe'],
+      { type: 'square' },
+      'Среднее - через три дня'
+    );
+    const olliRule5 = createElement(
+      olliRule,
+      'li',
+      ['describe'],
+      { type: 'square' },
+      'Легкое - через семь дней'
+    );
+    const olliRule4 = createElement(
+      olRule,
+      'li',
+      ['describe'],
+      { type: 'circle' },
+      'Не угадали - слово повториться через час.'
+    );
+    const divLearn = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgLearn = createElement(
+      divLearn,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleLearn = createElement(
+      divLearn,
+      'h3',
+      ['title'],
+      {},
+      'Изучение новых слов'
+    );
+    const pLearn = createElement(
+      titleLearn,
+      'p',
+      ['describe'],
+      {},
+      'В настройках приложения пользователь указывает интенсивность ежедневного обучения. Карточки с обучающими словами содержат перевод слова, произношение и пример использования.'
+    );
+    const divSpeakit = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgSpeakIt = createElement(
+      divSpeakit,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleSpeakIt = createElement(
+      divSpeakit,
+      'h3',
+      ['title'],
+      {},
+      'SpeakIt'
+    );
+    const pSpeakIt = createElement(
+      titleSpeakIt,
+      'p',
+      ['describe'],
+      {},
+      `Игрок нажимает на слово, чтобы услышать его звучание. Затем произносит это слово в микрофон до достижения правильного варианта.`
+    );
+    const divPuzzle = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgPuzzle = createElement(
+      divPuzzle,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titlePuzzle = createElement(
+      divPuzzle,
+      'h3',
+      ['title'],
+      {},
+      'English Puzzle'
+    );
+    const pPuzzle = createElement(
+      titlePuzzle,
+      'p',
+      ['describe'],
+      {},
+      'Игроку дано предложение на русском языке. Необходимо сделать его перевод из приведенных слов на английском.'
+    );
+    const divSavanna = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgSavanna = createElement(
+      divSavanna,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleSavanna = createElement(
+      divSavanna,
+      'h3',
+      ['title'],
+      {},
+      'Саванна'
+    );
+    const pSavanna = createElement(
+      titleSavanna,
+      'p',
+      ['describe'],
+      {},
+      'Дано слово. Игрок должен выбрать правильный перевод за определенное время.'
+    );
+    const divCall = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgCall = createElement(
+      divCall,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleCall = createElement(divCall, 'h3', ['title'], {}, 'Аудиовызов');
+    const pCall = createElement(
+      titleCall,
+      'p',
+      ['describe'],
+      {},
+      'В игре подбираем произнесённому на английском языке слову русский перевод.'
+    );
+    const divMaster = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgMaster = createElement(
+      divMaster,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleMaster = createElement(
+      divMaster,
+      'h3',
+      ['title'],
+      {},
+      'Мастер фраз'
+    );
+    const pMaster = createElement(
+      titleMaster,
+      'p',
+      ['describe'],
+      {},
+      'Составьте фразу по первым буквам произнесенных слов.'
+    );
+    const divSprint = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgSprint = createElement(
+      divSprint,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleSprint = createElement(divSprint, 'h3', ['title'], {}, 'Sprint');
+    const pSprint = createElement(
+      titleSprint,
+      'p',
+      ['describe'],
+      {},
+      'Дано слово и перевод, а также два варианта ответа - верно или нет. Игрок выбирает один из них.'
+    );
     this.postInit();
     this.slideNext(btnNext);
     this.slidePrev(btnPrev);
