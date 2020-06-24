@@ -271,14 +271,49 @@ export default class authorizationPage {
       { id: 'spinner' },
       'Loading...'
     );
+    const divToast = createElement(
+      form,
+      'div',
+      ['alert', 'alert-warning', 'alert-dismissible', 'fade', 'show'],
+      { role: 'alert' },
+      ''
+    );
+    const divLoginToast = createElement(
+      formLogin,
+      'div',
+      ['alert', 'alert-warning', 'alert-dismissible', 'fade', 'show'],
+      { role: 'alert' },
+      ''
+    );
 
-    this.checkPassword(inputPassword, inputConfirmPassword, button);
+    const buttonToast = createElement(
+      divToast,
+      'button',
+      ['close'],
+      {
+        type: 'button',
+        'data-dismiss': 'alert',
+        'aria-label': 'Close',
+      },
+      ''
+    );
+    const spanToast = createElement(
+      buttonToast,
+      'span',
+      ['span-close'],
+      { 'aria-hidden': 'true' },
+      '&times;'
+    );
+    this.hideToast(spanToast, divToast);
+    this.hideToast(spanToast, divLoginToast);
+    this.checkPassword(inputPassword, inputConfirmPassword, button, divToast);
     this.toLogin(
       inputLoginEmail,
       inputLoginPassword,
       buttonLogin,
       errorLogin,
-      divLoginSpinner
+      divLoginSpinner,
+      divLoginToast
     );
     this.toRegistrate(
       inputEmail,
@@ -286,34 +321,38 @@ export default class authorizationPage {
       inputUsername,
       button,
       error,
-      divSpinner
+      divSpinner,
+      divToast
     );
-    this.callAutoLogin(errorLogin);
+    this.callAutoLogin(errorLogin, divToast);
     return parent;
   }
 
-  checkPassword(password, confirmPassword, button) {
+  checkPassword(password, confirmPassword, button, toast) {
     button.addEventListener('click', () => {
-      const error = document.querySelector('.error');
       const regex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
       if (password.value !== confirmPassword.value) {
-        error.textContent = `Пароли не совпадают. Введите идентичные пароли!`;
-      } else if (!regex.test(psw.value)) {
-        error.textContent = `Пароль не соответствует требованию. Введите новый пароль`;
+        toast.innerHTML = `<p>Пароли не совпадают. Введите идентичные пароли!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else if (!regex.test(password.value)) {
+        toast.innerHTML = `<p>Пароль не соответствует требованию. Введите новый пароль</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
       }
     });
   }
 
-  async callAutoLogin(err) {
+  async callAutoLogin(err, toast) {
     try {
       const login = await User.autoLogin();
       Router.draw('main-page');
     } catch (error) {
-      err.textContent = 'Пользователь не авторизовался';
+      console.log(error);
     }
   }
 
-  toLogin(email, password, button, err, spinner) {
+  toLogin(email, password, button, err, spinner, toast) {
     button.addEventListener('click', function send(event) {
       event.preventDefault();
       spinner.style.display = 'block';
@@ -325,15 +364,17 @@ export default class authorizationPage {
           Router.draw('main-page');
         } catch (error) {
           spinner.style.display = 'none';
-          err.textContent =
-            'Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз, или пройдите процедуру регистрации';
+          toast.style.display = 'block';
+          toast.innerHTML = `<p>Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз, или пройдите процедуру регистрации</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true" class="span-close">&times;</span></button>`;
         }
       }
       getLogin();
     });
   }
 
-  toRegistrate(email, password, name, button, err, spinner) {
+  toRegistrate(email, password, name, button, err, spinner, toast) {
     button.addEventListener('click', function sendFormRegistrate(event) {
       event.preventDefault();
       spinner.style.display = 'block';
@@ -348,11 +389,19 @@ export default class authorizationPage {
           Router.draw('main-page');
         } catch (error) {
           spinner.style.display = 'none';
-          err.textContent =
-            'Что-то пошло не так. Повторите процедуру регистрации';
+          toast.style.display = 'block';
+          toast.innerHTML = `<p>Что-то пошло не так. Повторите процедуру регистрации</p>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" class="span-close">&times;</span></button>`;
         }
       }
       getRegistration();
+    });
+  }
+
+  hideToast(button, toast) {
+    button.addEventListener('click', () => {
+      toast.style.display = 'none';
     });
   }
 }

@@ -23,7 +23,7 @@ form {
     background: rgba(72, 222, 248, 0.4);
     margin: 0  10px 20px 10px;
     width: 35%;
-    min-height: 470px;
+    min-height: 525px;
     height: 100%;
     padding: 3px 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
@@ -62,16 +62,17 @@ button {
     height: 40px;
     width: 100px;
     color: #fff;
-    background: #5200a5; 
+    background:blue; 
     border: none;
     text-transform: uppercase;
     font-size: 18px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    opacity: 0.7;
 }
 button:hover {
-    opacity: 0.8;
-    font-weight: 900;
-    transform: scale(1.1);
+    font-weight: 700;
+    transform: scale(1.2);
+    opacity: 1;
 }
 .error,
 .password-error, 
@@ -87,6 +88,26 @@ button:hover {
 .spin-log {
     display: none;
     margin: -30px -140px 0 0;
+}
+.close {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    padding: 0px;
+    text-align: center;
+    color: red;
+}
+.alert {
+    margin: 10px auto;
+    display: none;
+}
+.span-close {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    font-size: 40px;
+    font-weight: 500;
 }
 @media all and (max-width: 767px) {
     .form {
