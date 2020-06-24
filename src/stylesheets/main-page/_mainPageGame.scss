@@ -1,3 +1,7 @@
+.swiper-container {
+  max-width: 700px;
+  width: 100%;
+}
 .card_size {
   max-width: 550px;
   width: 75%;
@@ -11,9 +15,13 @@
   }
 }
 
-.swiper-container {
-  max-width: 700px;
-  width: 100%;
+.volume {
+  cursor: pointer;
+  color: #35c8c7;
+  transition: opacity $page-transition-delay ease;
+  &.off {
+    opacity: 0.3;
+  }
 }
 
 .card-img_div {
@@ -22,6 +30,10 @@
 .card_img {
   width: 70%;
   height: 70%;
+}
+
+.card-text {
+  transition: font-size $page-transition-delay ease;
 }
 
 .input-background,
@@ -39,7 +51,8 @@
 
 .input-word {
   z-index: 500;
-  color: green;
+  transition: opacity $page-transition-delay ease;
+  overflow: hidden;
   &.hidden1 {
     opacity: 0.5;
   }
@@ -49,11 +62,11 @@
 }
 
 .letter_error {
-  color: red;
+  color: #f97070;
   font-size: inherit;
 }
 .letter_success {
-  color: green;
+  color: hsl(106, 62%, 30%);
   font-size: inherit;
 }
 

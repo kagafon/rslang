@@ -1,5 +1,7 @@
 import { createElement } from 'helpers/dom';
+import { showWord, hideWord, playAudio } from 'helpers/helpersForMainPage';
 import constans from 'components/pages/MainPage/constant';
+import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
 
@@ -22,6 +24,8 @@ class MainPageGame {
     this.addSubmitHandler = this.addSubmitHandler.bind(this);
     this.focusInputNext = this.focusInputNext.bind(this);
     this.addInputHandler = this.addInputHandler.bind(this);
+    this.addVolumeHandler = this.addVolumeHandler.bind(this);
+    this.addContainerHandler = this.addContainerHandler.bind(this);
   }
   create() {
     this.container = createElement(
@@ -98,7 +102,7 @@ class MainPageGame {
         cardHeaderButtons,
         'button',
         ['btn', 'btn-danger'],
-        {},
+        { 'data-btn': 'delete', type: 'button' },
         `удалить слово`
       );
     if (complexButton)
@@ -106,14 +110,14 @@ class MainPageGame {
         cardHeaderButtons,
         'button',
         ['btn', 'btn-warning'],
-        {},
+        { 'data-btn': 'complex', type: 'button' },
         `сложное слово`
       );
     createElement(
       cardHeader,
       'span',
-      ['material-icons', 'md-100', 'md-light'],
-      {},
+      ['material-icons', 'md-100', 'volume'],
+      { 'data-btn': 'volume' },
       `volume_up`
     );
     const cardBody = createElement(
@@ -154,7 +158,6 @@ class MainPageGame {
       {
         type: 'text',
         autocomplete: 'off',
-        // placeholder: `${word}`,
         id: `${id}`,
         style: `width:${(word.length + 1) * 13}px`,
         'aria-label': `${word}`,
@@ -166,10 +169,26 @@ class MainPageGame {
     createElement(cardBody, 'hr', ['my-4'], {}, ``);
     if (showWordTranslate)
       createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
-    if (showTextMeaning)
-      createElement(cardBody, 'p', ['card-text'], {}, `${textMeaning}`);
-    if (showTextExample)
-      createElement(cardBody, 'p', ['card-text'], {}, `${textExample}`);
+    if (showTextMeaning) {
+      const sentence = hideWord(word, textMeaning);
+      createElement(
+        cardBody,
+        'p',
+        ['card-text', 'card-text-meaning'],
+        {},
+        `${sentence}`
+      );
+    }
+    if (showTextExample) {
+      const sentence = hideWord(word, textExample);
+      createElement(
+        cardBody,
+        'p',
+        ['card-text', 'card-text-example'],
+        {},
+        `${sentence}`
+      );
+    }
     if (showTranscription)
       createElement(cardBody, 'p', ['card-text'], {}, `${transcription}`);
     if (showImage) {
@@ -201,7 +220,7 @@ class MainPageGame {
         cardFooter,
         'button',
         ['btn', 'btn-info'],
-        { value: 1, tabindex: -1, type: 'button' },
+        { value: 1, tabindex: -1, type: 'submit', 'data-btn': 'answer' },
         `Показать ответ`
       );
     createElement(
@@ -219,8 +238,16 @@ class MainPageGame {
   }
 
   focusInput() {
-    this.input = document.querySelector('.swiper-slide-active input');
     this.input.focus();
+  }
+
+  findActiveCardWord() {
+    const word = words.find((el) => {
+      if (el.id === Number(this.input.id)) {
+        return true;
+      }
+    });
+    return word;
   }
 
   focusInputNext() {
@@ -230,9 +257,9 @@ class MainPageGame {
     // this.input.focus();
   }
 
-  addSubmitHandler() {
+  async addSubmitHandler() {
     event.preventDefault();
-    const wordInput = words.find((el) => {
+    this.wordInput = words.find((el) => {
       if (el.id === Number(this.input.id)) {
         return true;
       }
@@ -246,12 +273,19 @@ class MainPageGame {
       textExample,
       wordTranslate,
       id,
-    } = wordInput;
+    } = this.wordInput;
+
     this.inputBackground = document.querySelector(
       '.swiper-slide-active span.input-background'
     );
     this.inputWord = document.querySelector(
       '.swiper-slide-active span.input-word'
+    );
+    this.textMeaning = document.querySelector(
+      '.swiper-slide-active p.card-text-meaning'
+    );
+    this.textExample = document.querySelector(
+      '.swiper-slide-active p.card-text-example'
     );
     this.inputWord.innerHTML = '';
     this.inputWord.classList.remove('hidden1', 'hidden2');
@@ -259,7 +293,23 @@ class MainPageGame {
     if (this.input.value === word) {
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
-      setTimeout(this.focusInputNext, 2000);
+      if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
+        store.setState({ isAudioPlay: true });
+        await playAudio(audio);
+        if (this.textMeaning) {
+          this.textMeaning.textContent = `${textMeaning}`;
+          await playAudio(audioMeaning);
+        }
+        if (this.textExample) {
+          this.textExample.textContent = `${textExample}`;
+          await playAudio(audioExample);
+        }
+        store.setState({ isAudioPlay: false });
+      } else {
+        if (this.textMeaning) this.textMeaning.textContent = `${textMeaning}`;
+        if (this.textExample) this.textExample.textContent = `${textExample}`;
+      }
+      setTimeout(() => this.focusInputNext(), 2000);
     } else {
       this.inputBackground.classList.add('answer_error');
 
@@ -289,20 +339,81 @@ class MainPageGame {
         this.inputWord.classList.add('hidden1');
       }, 3000);
       this.input.blur();
+
+      if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
+        store.setState({ isAudioPlay: true });
+        await playAudio(audio);
+        if (this.textMeaning) await playAudio(audioMeaning);
+        if (this.textExample) await playAudio(audioExample);
+        store.setState({ isAudioPlay: false });
+      }
     }
   }
 
   addInputHandler() {
-    this.inputBackground.classList.remove('answer_success', 'answer_error');
-    this.inputWord.classList.remove('hidden1');
-    this.inputWord.classList.add('hidden2');
+    if (this.inputBackground || this.inputWord) {
+      this.inputBackground.classList.remove('answer_success', 'answer_error');
+      this.inputWord.classList.remove('hidden1');
+      this.inputWord.classList.add('hidden2');
+    }
+  }
+
+  addContainerHandler(event) {
+    if (event.target.dataset.btn === 'volume') {
+      this.volumeBtn = event.target;
+      this.addVolumeHandler();
+    }
+    if (event.target.dataset.btn === 'answer') {
+      this.answerBtn = event.target;
+      this.addAnswerHandler();
+    }
+    if (event.target.dataset.btn === 'delete') {
+      this.deleteBtn = event.target;
+      this.addDeleteHandler();
+    }
+    if (event.target.dataset.btn === 'complex') {
+      this.complexBtn = event.target;
+      this.addComplexHandler();
+    }
+  }
+
+  addVolumeHandler() {
+    if (store.getState().isAudioPlayButton) {
+      store.setState({ isAudioPlayButton: false });
+      this.volumeBtn.classList.add('off');
+    } else {
+      store.setState({ isAudioPlayButton: true });
+      this.volumeBtn.classList.remove('off');
+    }
+  }
+
+  addAnswerHandler() {
+    const answerInput = this.findActiveCardWord();
+    this.input.value = `${answerInput.word}`;
+  }
+
+  addDeleteHandler() {
+    const answerInput = this.findActiveCardWord();
+    const deleteWordsArr = store.getState().deleteWords || [];
+    deleteWordsArr.push(answerInput);
+    store.setState({ deleteWords: deleteWordsArr });
+    console.error(`Слова, которые удалили`, store.getState().deleteWords);
+  }
+
+  addComplexHandler() {
+    const answerInput = this.findActiveCardWord();
+    const complexWordsArr = store.getState().complexWords || [];
+    complexWordsArr.push(answerInput);
+    store.setState({ complexWords: complexWordsArr });
+    console.error(`Сложные слова`, store.getState().complexWords);
   }
 
   addAction() {
-    this.audio = new Audio();
+    this.input = document.querySelector('.swiper-slide-active input');
     this.focusInput();
     this.container.addEventListener('submit', this.addSubmitHandler);
     this.input.addEventListener('input', this.addInputHandler);
+    this.container.addEventListener('click', this.addContainerHandler);
   }
 
   init() {
