@@ -2,6 +2,7 @@
 import { createElement } from 'helpers/dom';
 import Swiper from 'swiper';
 import optionsForSwiper from './optionsForSwiper';
+import 'stylesheets/promo-page/style.scss';
 
 export default class promoPage {
   init() {
