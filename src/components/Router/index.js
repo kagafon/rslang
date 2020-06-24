@@ -1,5 +1,6 @@
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import promoPage from 'components/promo-page/promo-page';
 
 const routes = [
   {
@@ -56,7 +57,7 @@ const routes = [
   {
     name: 'promo-page',
     title: 'Промо',
-    ClassConstructor: MainPage,
+    ClassConstructor: promoPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/promo-page.jpg',
     color: 'rgba(124, 55, 73, 0.79)',
