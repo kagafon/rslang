@@ -140,6 +140,8 @@ export default class promoPage {
       ''
     );
     this.postInit();
+    this.slideNext(btnNext);
+    this.slidePrev(btnPrev);
     return this.parent;
   }
 
@@ -149,5 +151,17 @@ export default class promoPage {
 
   postInit() {
     this.initSwiper();
+  }
+  
+  slidePrev(btn) {
+    btn.addEventListener('click', () => {
+      this.swiper.slidePrev();
+    });
+  }
+
+  slideNext(button) {
+    button.addEventListener('click', () => {
+      this.swiper.slideNext();
+    });
   }
 }
