@@ -140,8 +140,14 @@ export default class promoPage {
       ''
     );
     this.postInit();
-    this.slideNext(btnNext);
-    this.slidePrev(btnPrev);
     return this.parent;
+  }
+
+  initSwiper() {
+    this.swiper = new Swiper(this.swiperContainer, optionsForSwiper);
+  }
+
+  postInit() {
+    this.initSwiper();
   }
 }
