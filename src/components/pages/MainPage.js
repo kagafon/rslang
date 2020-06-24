@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
 
 class MainPage {
