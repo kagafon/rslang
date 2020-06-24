@@ -31,22 +31,23 @@ export default class PhraseWizard {
     const intro = document.createElement('div');
         intro.classList.add('intro');
         intro.innerHTML = `
-         <div class="title">
-           <span>Аудиовызов</span>
+         <div class="title ph-wiz">
+           <span>Мастер фраз</span>
          </div>
-         <div class="subTitle">
-           <span>Тренировка Аудиовызов развивает словарный запас.
-           Чем больше слов ты знаешь, тем больше очков опыта получишь.</span>
+         <div class="subTitle ph-wiz">
+           <span>Прослушайте фразу и определите слова. 
+           Вводите на клавиатуре первые буквы каждого слова, 
+           пока вся фраза не будет открыта. Время не важно, важна точность!</span>
          </div>
-         <span class="level-select">Выберете уровень</span>
+         <span class="level-select ph-wiz">Выберете уровень</span>
          <div class="level-block">
-            <button type="button" class="btn btn-primary start">1</button>
-            <button type="button" class="btn btn-primary start">2</button>
-            <button type="button" class="btn btn-primary start">3</button>
-            <button type="button" class="btn btn-primary start">4</button>
-            <button type="button" class="btn btn-primary start">5</button>
-            <button type="button" class="btn btn-primary start">6</button>
-            <button type="button" class="btn btn-primary start learn">изучаемые слова</button>
+            <button type="button" class="btn btn-primary start ph-wiz">1</button>
+            <button type="button" class="btn btn-primary start ph-wiz">2</button>
+            <button type="button" class="btn btn-primary start ph-wiz">3</button>
+            <button type="button" class="btn btn-primary start ph-wiz">4</button>
+            <button type="button" class="btn btn-primary start ph-wiz">5</button>
+            <button type="button" class="btn btn-primary start ph-wiz">6</button>
+            <button type="button" class="btn btn-primary start ph-wiz learn">изучаемые слова</button>
          </div>
         `;
         gameBox.append(intro);

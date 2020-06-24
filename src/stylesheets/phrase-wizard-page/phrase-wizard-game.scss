@@ -86,35 +86,35 @@ p {
   left: 0;
 }
 
-.title {
+.title.ph-wiz {
   font-size: 40px;
   font-weight: 300;
   line-height: 1;
   margin-bottom: 60px;
-  color: #6cffde;
+  color: #9e2ba8;
   opacity: 0.8;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   letter-spacing: 13px;
 }
 
-.subTitle {
+.subTitle.ph-wiz {
   max-width: 565px;
   margin: 0 auto 30px;
   font-size: 18px;
   line-height: 24px;
   font-weight: 300;
-  color: #fff;
+  color: rgb(0, 2, 150);
   opacity: 0.8;
 }
 
-.level-select {
+.level-select.ph-wiz {
   margin-top: 10px;
   font-size: 16px;
   font-weight: 300;
   line-height: 1;
   margin-bottom: 60px;
-  color: #6cffde;
+  color: #9e2ba8;
   opacity: 0.8;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
@@ -314,9 +314,13 @@ p {
   margin-top: 50px;
 }
 
-.btn {
+.btn.ph-wiz{
   width: 100px;
   height: 40px;
+  background-color: #070bf8;
+  &:hover {
+    background-color: #16018d;
+  }
 }
 
 .next {
