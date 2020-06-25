@@ -1,3 +1,5 @@
+@import './main-page/toats';
+
 .swiper-container {
   max-width: 700px;
   width: 100%;
@@ -86,5 +88,12 @@
   }
   &.success {
     color: hsl(106, 62%, 30%);
+  }
+}
+
+@media (max-width: 472px) {
+  .input-background,
+  .input-word {
+    top: 141px;
   }
 }

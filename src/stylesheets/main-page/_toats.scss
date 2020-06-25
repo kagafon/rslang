@@ -1,0 +1,12 @@
+.modal-close {
+  cursor: pointer;
+}
+
+.modal {
+  &.show {
+    display: block;
+  }
+  &.hide {
+    display: none;
+  }
+}

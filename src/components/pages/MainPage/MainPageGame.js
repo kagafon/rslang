@@ -1,9 +1,15 @@
 import { createElement } from 'helpers/dom';
-import { showWord, hideWord, playAudio } from 'helpers/helpersForMainPage';
+import {
+  showWord,
+  hideWord,
+  playAudio,
+  letters,
+} from 'helpers/helpersForMainPage';
 import constans from 'components/pages/MainPage/constant';
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
+import modal from 'components/pages/MainPage/modal';
 
 const { words, settings, URL } = constans;
 const {
@@ -215,6 +221,13 @@ class MainPageGame {
       {},
       ``
     );
+    createElement(
+      cardFooter,
+      'button',
+      ['btn', 'btn-primary'],
+      { value: 1, tabindex: -1, type: 'submit' },
+      `Далее`
+    );
     if (answerButton)
       createElement(
         cardFooter,
@@ -223,13 +236,7 @@ class MainPageGame {
         { value: 1, tabindex: -1, type: 'submit', 'data-btn': 'answer' },
         `Показать ответ`
       );
-    createElement(
-      cardFooter,
-      'button',
-      ['btn', 'btn-primary'],
-      { value: 1, tabindex: -1, type: 'submit' },
-      `Далее`
-    );
+
     return card;
   }
 
@@ -313,27 +320,8 @@ class MainPageGame {
     } else {
       this.inputBackground.classList.add('answer_error');
 
-      const errorAnswer = this.input.value.split('');
-      const correctAnswer = word.split('');
-      errorAnswer.forEach((letter, index) => {
-        if (letter === correctAnswer[index]) {
-          createElement(
-            this.inputWord,
-            'span',
-            ['letter_success'],
-            {},
-            `${letter}`
-          );
-        } else {
-          createElement(
-            this.inputWord,
-            'span',
-            ['letter_error'],
-            {},
-            `${letter}`
-          );
-        }
-      });
+      letters(word, this.input.value, this.inputWord);
+
       this.input.value = '';
       setTimeout(() => {
         this.inputWord.classList.add('hidden1');
@@ -398,6 +386,9 @@ class MainPageGame {
     deleteWordsArr.push(answerInput);
     store.setState({ deleteWords: deleteWordsArr });
     console.error(`Слова, которые удалили`, store.getState().deleteWords);
+    modal.setText('Вы удалили слово из изучаемых');
+    modal.show();
+    setTimeout(() => modal.hide(), 3000);
   }
 
   addComplexHandler() {
@@ -406,6 +397,9 @@ class MainPageGame {
     complexWordsArr.push(answerInput);
     store.setState({ complexWords: complexWordsArr });
     console.error(`Сложные слова`, store.getState().complexWords);
+    modal.setText('Вы поместили слово в категорию Сложные');
+    modal.show();
+    setTimeout(() => modal.hide(), 3000);
   }
 
   addAction() {
@@ -423,6 +417,7 @@ class MainPageGame {
   }
 
   postInit() {
+    modal.create();
     this.initSwiper();
     this.addAction();
   }
