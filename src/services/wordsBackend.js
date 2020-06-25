@@ -33,11 +33,17 @@ const preloadData = async (words, preloadFields) => {
 };
 export default class Words {
   static getWordsForRound(group, page, wordsPerPage, preload) {
-    return getWords(group, page, wordsPerPage).then(async (words) => {
+    return (group >= 0
+      ? getWords(group, page, wordsPerPage)
+      : Words.getTodayUserWords()
+    ).then(async (words) => {
+      const wordsToReturn = words
+        .sort(() => Math.random() - 0.5)
+        .slice(0, wordsPerPage);
       if (preload && preload.length > 0) {
-        return preloadData(words, preload);
+        return preloadData(wordsToReturn, preload);
       }
-      return words;
+      return wordsToReturn;
     });
   }
 
