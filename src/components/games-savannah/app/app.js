@@ -21,7 +21,7 @@ export default class App {
 
     createElement(document.body, 'div', ['header']);
     createElement(document.body, 'div', ['wrapper']);
-    createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
+    createElement(document.querySelector('.header'), 'div', ['answerBlock']);
   }
 
   static run() {

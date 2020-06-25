@@ -1,4 +1,6 @@
 import Timer from 'components/games-savannah/app/components/main/start-page/timer';
+import Service from 'components/games-savannah/app/service';
+import store from 'components/games-savannah/app/components/storage';
 
 export default class StartPage {
   static render() {
@@ -29,6 +31,9 @@ export default class StartPage {
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', () => {
+        store.setState({ groupe: +item.textContent });
+        store.setState({ round: 0 });
+        store.setState({ correctChoice: 0 });
         intro.remove();
         Timer.init();
       });

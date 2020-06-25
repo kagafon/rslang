@@ -184,3 +184,128 @@ p {
   margin-top: 65px;
   font-size: 35px;
 }
+
+// Header_________________________________________
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  width: 100%;
+}
+
+.volume-block {
+  position: absolute;
+  left: 0%;
+  margin: 30px 0px 0px 20px;
+}
+
+.volume-on,
+.volume-off {
+  font-size: 28px;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.volume-off {
+  display: none;
+}
+
+.health-bar {
+  color: #ffffff;
+  position: absolute;
+  right: 0%;
+  margin: 30px 20px 0px 0px;
+}
+
+// Answer-block ____________________________________
+
+.answerBlock {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  margin: 0px auto;
+  transition: 4.5s linear;
+  color: #6cffde;
+  font-size: 24px;
+  // opacity: 0;
+}
+
+// .animation {
+//   animation: drop 5s linear infinite;
+// }
+
+// @keyframes drop {
+//   0% {
+//     transform: translateY(0px);
+//   }
+//   75% {
+//     transform: translateY(400px);
+//   }
+//   100% {
+//     transform: translateY(400px);
+//   }
+// }
+
+
+
+.transition {
+  transition: 4.5s linear;
+  opacity: 100;
+  transform: translateY(400px);
+}
+
+
+// Words block______________________________
+
+.wordsblock {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 180px;
+}
+
+.wrapper-words {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 30px;
+  max-width: 270px;
+  padding: 20px 15px 20px 30px;
+  color: #fff;
+  transition: all 0.15s ease;
+  border-radius: 2px;
+  cursor: pointer;
+  margin: 0 20px;
+}
+
+.words {
+  color: #ffffff;
+  font-size: 18px;
+  background: transparent;
+  text-align: center;
+  outline: none !important;
+  cursor: pointer;
+  &::before {
+    content: attr(data-number);
+    margin-right: 10px;
+  }
+}
+
+.number-words {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.correct {
+  background-color: #2ff8072c;
+  background-size: 2rem;
+}
+
+.cancel {
+  background-color: #f823072c;
+}
+
+// <div class="ll-leokit__trainings-savannah__answer">загрязнитель<span class="ll-leokit__trainings-savannah__number">2</span></div>
