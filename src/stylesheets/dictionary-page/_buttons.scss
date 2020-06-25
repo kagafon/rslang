@@ -1,12 +1,14 @@
-%icon-button {
+/* %icon-button {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   height: 30px;
   width: 50px;
-}
-.dictionary.container {
-  & .play-button {
+} */
+  .btn.playing{
+    color: $playing-btn-color;
+  }
+/*   & .play-button {
     background-image: url('/assets/images/icons/volume_up-24px-white.svg');
     @extend %icon-button;
     &:hover,
@@ -25,5 +27,5 @@
     &.active {
       background-image: url('/assets/images/icons/create-24px-gray.svg');
     }
-  }
-}
+  } */
+

@@ -75,9 +75,9 @@ export default class Words {
     ).then(async (words) => {
       const wordsToReturn = words[0].paginatedResults.map((x) => {
         const word = {
-          ...x,
           ...x.userWord,
           ...x.userWord.optional,
+          ...x,
         };
         delete word.optional;
         delete word.userWord;

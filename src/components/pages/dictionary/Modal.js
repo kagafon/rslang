@@ -64,12 +64,15 @@ export default class WordDetails {
     });
 
     const playBtn = createElement(modalHeader, 'button', [
+      'btn',
+      'btn-sm',
       'btn-secondary',
-      'play-button',
       'ml-auto',
+      'd-flex',
     ]);
+    createElement(playBtn, 'i', ['material-icons'], {}, 'volume_up');
     playBtn.addEventListener('click', (evt) =>
-      playSound(this.word, evt.target)
+      playSound(this.word, evt.currentTarget)
     );
 
     const easyBtn = createElement(

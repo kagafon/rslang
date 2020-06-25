@@ -67,9 +67,10 @@ export default class Table {
           { type: 'button' },
           btn.text
         );
+        createElement(btnElement, 'i', ['material-icons'], {}, btn.icon);
         btnElement.addEventListener('click', (evt) => {
           evt.preventDefault();
-          btn.action(x, evt.target);
+          btn.action(x, evt.currentTarget);
         });
       });
     });

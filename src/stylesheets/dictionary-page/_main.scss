@@ -1,23 +1,25 @@
 @import 'variables';
-@import 'scrollbar';
-@import 'buttons';
-@import 'modal';
 
 .dictionary.container {
-  & .table-container {
+  @import 'scrollbar';
+  @import 'buttons';
+  @import 'modal';
+  @import 'table';
+
+  .table-container {
     max-height: calc(100vh - #{$main-container-padding-top});
     width: min-content;
     background-color: $dictionary-page-color;
     margin: 0 auto;
   }
-  & th {
+  th {
     &.sortable {
       cursor: pointer;
     }
-    &.sort-asc::after{
+    &.sort-asc::after {
       content: 'A';
     }
-    &.sort-desc::after{
+    &.sort-desc::after {
       content: 'D';
     }
   }

@@ -42,16 +42,16 @@ class Dictionary {
     ];
     this.actions = [
       {
-        icon: 'assets/images/icons/volume_up-24px.svg',
         text: '',
         action: (x, target) => this.playSound(x, target),
-        className: ['btn-secondary', 'play-button'],
+        className: ['btn-secondary', 'd-flex'],
+        icon: 'volume_up',
       },
       {
-        icon: 'assets/images/icons/create-24px.svg',
         text: '',
         action: (x) => this.showDetails(x),
-        className: ['btn-info', 'edit-button'],
+        className: ['btn-info', 'd-flex'],
+        icon: 'create',
       },
     ];
     this.container = createElement(null, 'div', ['container', 'dictionary']);
@@ -71,13 +71,7 @@ class Dictionary {
   }
 
   async loadWords() {
-    this.words = await Words.getWordsForRound(0, 0, 30);
-    //TO REMOVE
-    this.words.forEach((x) => {
-      x.learnLevel = Math.floor(Math.random() * 100);
-      const rnd = Math.random();
-      x.difficulty = rnd > 0.5 ? 'difficult' : rnd < 0.2 ? 'new' : 'easy';
-    });
+    this.words = await Words.getAllUserWords();
     this.table.reloadRows(this.words);
   }
 
