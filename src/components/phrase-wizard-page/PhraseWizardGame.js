@@ -1,6 +1,12 @@
 import { createElement } from 'helpers/dom';
-import StartGame from 'components/phrase-wizard-page/StartGamePage';
-
+/*import StartGame from 'components/phrase-wizard-page/StartGamePage';
+import RusWords from 'components/games-AudioCall/app/components/main/words/words';
+import Button from 'components/games-AudioCall/app/components/main/button/button';
+import Header from 'components/games-AudioCall/app/components/main/header/header';
+import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
+import Service from 'components/games-AudioCall/app/service';
+import store from 'components/games-AudioCall/app/components/storage';
+*/
 export default class PhraseWizard {
   init() {
     const gameBox = createElement(
@@ -29,28 +35,48 @@ export default class PhraseWizard {
     createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
 
     const intro = document.createElement('div');
-        intro.classList.add('intro');
-        intro.innerHTML = `
-         <div class="title ph-wiz">
-           <span>Мастер фраз</span>
-         </div>
-         <div class="subTitle ph-wiz">
-           <span>Прослушайте фразу и определите слова. 
-           Вводите на клавиатуре первые буквы каждого слова, 
-           пока вся фраза не будет открыта. Время не важно, важна точность!</span>
-         </div>
-         <span class="level-select ph-wiz">Выберете уровень</span>
-         <div class="level-block">
-            <button type="button" class="btn btn-primary start ph-wiz">1</button>
-            <button type="button" class="btn btn-primary start ph-wiz">2</button>
-            <button type="button" class="btn btn-primary start ph-wiz">3</button>
-            <button type="button" class="btn btn-primary start ph-wiz">4</button>
-            <button type="button" class="btn btn-primary start ph-wiz">5</button>
-            <button type="button" class="btn btn-primary start ph-wiz">6</button>
-            <button type="button" class="btn btn-primary start ph-wiz learn">изучаемые слова</button>
-         </div>
-        `;
-        gameBox.append(intro);
+    intro.classList.add('intro');
+
+    const title = createElement(intro, 'div', ['title', 'ph-wiz']);
+    createElement(title, 'span', [], {}, 'Мастер фраз');
+    
+    const subTitle = createElement(intro, 'div', ['subTitle', 'ph-wiz']);
+    createElement(
+      subTitle, 'span', [], {}, 
+      'Прослушайте фразу и определите слова. Вводите на клавиатуре первые буквы каждого слова, пока вся фраза не будет открыта. Время не важно, важна точность!'
+    );
+    
+    createElement(intro, 'div', ['level-select', 'ph-wiz'], {}, 'Выберете уровень');
+    const LevelBlock = createElement(intro, 'div', ['level-block']);
+    const level = [ '1', '2', '3', '4', '5', '6', 'изучаемые слова'];
+
+    createButton(level);
+    function createButton (buttons) {
+      buttons.forEach(level => {
+        const buttonItem = createElement(
+          LevelBlock,
+          'button',
+          ['btn', 'btn-primary', 'start', 'ph-wiz'],
+          {},
+          level
+        );
+        buttonItem.addEventListener('click', clickLevel.bind(null, level));
+      });
+    } 
+    
+    function clickLevel(levelRound) {
+      intro.remove();
+      console.log(levelRound);
+            /*Service.wordsRequest(item.textContent);
+            store.setState({ groupe: +item.textContent });
+            store.setState({ round: 0 });
+            store.setState({ correctChoice: 0 });
+            Header.init();
+            Voice.init();
+            RusWords.init();
+            Button.init(); */ 
+    }
+    gameBox.append(intro);
 
     return gameBox;
   } 

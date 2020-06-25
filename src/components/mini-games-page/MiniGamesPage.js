@@ -40,7 +40,7 @@ export default class GamesPage {
     function createCards (cardsGames) {
       cardsGames.forEach(element => {
         const gameItem = createElement(
-            document.querySelector('.box-games'),
+          gameBox,
             'div',
             ['game-card'],
             { style: 'cursor:pointer'},
