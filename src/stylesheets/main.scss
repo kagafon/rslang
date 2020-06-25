@@ -2,6 +2,8 @@
 @import 'variables';
 @import './main-page/navbar';
 @import './game-page/_allgames';
+@import './dictionary-page/main';
+
 
 body {
   background-repeat: no-repeat;
@@ -22,7 +24,7 @@ body {
 }
 
 .main-container {
-  padding-top: 175px;
+  padding-top: $main-container-padding-top;
   width: 100%;
   transition: $page-transition-delay / 2;
 }

@@ -1,6 +1,7 @@
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
+import Dictionary from 'components/pages/dictionary';
 
 const routes = [
   {
@@ -125,7 +126,7 @@ const routes = [
     title: 'Словарь',
     image: 'assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgba(101, 99, 209, 0.78)',
-    ClassConstructor: MainPage,
+    ClassConstructor: Dictionary,
     needAuthorization: false,
   },
 ];

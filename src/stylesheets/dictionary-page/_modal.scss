@@ -1,0 +1,19 @@
+.dictionary.container {
+  .modal-body {
+    display: grid;
+    grid-template-columns: 120px auto;
+    gap: 5px;
+
+    & .word-image {
+      grid-column: 1 /3;
+      height: 200px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    & .progress {
+      margin: auto 0;
+    }
+  }
+}
