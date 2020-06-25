@@ -41,20 +41,46 @@ export default class Words {
     });
   }
 
-  static addUserWord(wordId) {
+  static addUserWord(
+    wordId,
+    settings = {
+      creationDate: `${TODAY}`,
+      lastRepeat: 'null',
+      repeatTimes: '0',
+      nextRepeat: `${TODAY}`,
+      correctAnswers: '0',
+      totalAnswers: '1',
+    }
+  ) {
     let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
 
-    return addUserWord(userInfo.userId, userInfo.token, wordId);
+    return addUserWord(userInfo.userId, userInfo.token, wordId, settings);
   }
 
   static updateUserWord(word) {
     let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
-
-    return updateUserWord(userInfo.userId, userInfo.token, word);
+    const {
+      difficulty,
+      creationDate,
+      lastRepeat,
+      repeatTimes,
+      nextRepeat,
+      correctAnswers,
+      totalAnswers,
+    } = word;
+    return updateUserWord(userInfo.userId, userInfo.token, word.id, {
+      difficulty,
+      creationDate,
+      lastRepeat,
+      repeatTimes,
+      nextRepeat,
+      correctAnswers,
+      totalAnswers,
+    });
   }
 
   static async addUserWordsFromGroup(group, page, count) {
@@ -75,9 +101,10 @@ export default class Words {
     ).then(async (words) => {
       const wordsToReturn = words[0].paginatedResults.map((x) => {
         const word = {
-          ...x,
           ...x.userWord,
           ...x.userWord.optional,
+          ...x,
+          id: x.userWord.word,
         };
         delete word.optional;
         delete word.userWord;
