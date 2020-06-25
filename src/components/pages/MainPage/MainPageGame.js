@@ -143,20 +143,10 @@ class MainPageGame {
       cardBody,
       'span',
       ['input-background', 'input-background_back'],
-      {
-        style: `width:${(word.length + 1) * 13}px`,
-      },
-      ``
+      {},
+      ` ${word} `
     );
-    createElement(
-      cardBody,
-      'span',
-      ['input-word', 'form-control'],
-      {
-        style: `width:${(word.length + 1) * 13}px`,
-      },
-      ``
-    );
+    createElement(cardBody, 'span', ['input-word', 'form-control'], {}, ``);
     createElement(
       cardBody,
       'input',
@@ -165,7 +155,6 @@ class MainPageGame {
         type: 'text',
         autocomplete: 'off',
         id: `${id}`,
-        style: `width:${(word.length + 1) * 13}px`,
         'aria-label': `${word}`,
         'aria-describedby': 'basic-addon1',
         tabindex: 1,
@@ -248,6 +237,13 @@ class MainPageGame {
     this.input.focus();
   }
 
+  setLongWord() {
+    const backWord = this.card.querySelector('.input-background_back');
+    const inputWord = this.card.querySelector('.input-word');
+    inputWord.style.width = `${backWord.offsetWidth}px`;
+    this.input.style.width = `${backWord.offsetWidth}px`;
+  }
+
   findActiveCardWord() {
     const word = words.find((el) => {
       if (el.id === Number(this.input.id)) {
@@ -261,7 +257,9 @@ class MainPageGame {
     this.swiper.slideNext();
     this.input = document.querySelector('.swiper-slide-active input');
     this.input.addEventListener('input', this.addInputHandler);
-    // this.input.focus();
+
+    this.card = document.querySelector('.swiper-slide-active');
+    this.setLongWord();
   }
 
   async addSubmitHandler() {
@@ -281,7 +279,7 @@ class MainPageGame {
       wordTranslate,
       id,
     } = this.wordInput;
-
+    this.audio = new Audio();
     this.inputBackground = document.querySelector(
       '.swiper-slide-active span.input-background'
     );
@@ -302,14 +300,14 @@ class MainPageGame {
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
         store.setState({ isAudioPlay: true });
-        await playAudio(audio);
+        await playAudio(this.audio, audio);
         if (this.textMeaning) {
           this.textMeaning.textContent = `${textMeaning}`;
-          await playAudio(audioMeaning);
+          await playAudio(this.audio, audioMeaning);
         }
         if (this.textExample) {
           this.textExample.textContent = `${textExample}`;
-          await playAudio(audioExample);
+          await playAudio(this.audio, audioExample);
         }
         store.setState({ isAudioPlay: false });
       } else {
@@ -330,9 +328,9 @@ class MainPageGame {
 
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
         store.setState({ isAudioPlay: true });
-        await playAudio(audio);
-        if (this.textMeaning) await playAudio(audioMeaning);
-        if (this.textExample) await playAudio(audioExample);
+        await playAudio(this.audio, audio);
+        if (this.textMeaning) await playAudio(this.audio, audioMeaning);
+        if (this.textExample) await playAudio(this.audio, audioExample);
         store.setState({ isAudioPlay: false });
       }
     }
@@ -369,9 +367,17 @@ class MainPageGame {
     if (store.getState().isAudioPlayButton) {
       store.setState({ isAudioPlayButton: false });
       this.volumeBtn.classList.add('off');
+      this.volumeBtn.textContent = 'volume_off';
+      if (this.audio) {
+        this.audio.muted = true;
+      }
     } else {
       store.setState({ isAudioPlayButton: true });
       this.volumeBtn.classList.remove('off');
+      this.volumeBtn.textContent = 'volume_up';
+      if (this.audio) {
+        this.audio.muted = false;
+      }
     }
   }
 
@@ -403,6 +409,7 @@ class MainPageGame {
   }
 
   addAction() {
+    this.card = document.querySelector('.swiper-slide-active');
     this.input = document.querySelector('.swiper-slide-active input');
     this.focusInput();
     this.container.addEventListener('submit', this.addSubmitHandler);
@@ -420,6 +427,7 @@ class MainPageGame {
     modal.create();
     this.initSwiper();
     this.addAction();
+    this.setLongWord();
   }
 }
 

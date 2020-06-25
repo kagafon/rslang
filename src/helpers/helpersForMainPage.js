@@ -9,10 +9,10 @@ export function hideWord(word, sentence) {
   return sentence.toLowerCase().replace(word, '[...]');
 }
 
-export const playAudio = (audioSrc) =>
+export const playAudio = (audio, audioSrc) =>
   new Promise((resolve, reject) => {
     try {
-      const audio = new Audio();
+      // const audio = new Audio();
       audio.src = `${constans.URL}${audioSrc}`;
       audio.play();
       audio.onended = () => resolve();

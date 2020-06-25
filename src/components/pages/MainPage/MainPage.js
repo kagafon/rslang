@@ -80,9 +80,17 @@ class MainPage {
       'изучать все слова',
     ];
 
+    const radioDiv = createElement(
+      div2,
+      'div',
+      ['d-flex', 'justify-content-start', 'align-items-start', 'flex-column'],
+      {},
+      ''
+    );
+
     words.forEach((el, index) => {
       const div = createElement(
-        div2,
+        radioDiv,
         'div',
         [
           'custom-control',
@@ -93,6 +101,10 @@ class MainPage {
         {},
         ''
       );
+      let check = false;
+      if (index === 0) {
+        check = true;
+      }
       createElement(
         div,
         'input',
@@ -101,6 +113,7 @@ class MainPage {
           type: 'radio',
           id: `customRadioInline${index + 1}`,
           name: 'customRadioInline1',
+          checked: `${check}`,
         },
         ''
       );
