@@ -10,7 +10,7 @@ export default class authorizationPage {
     const parent = createElement(
       null,
       'div',
-      ['form'],
+      ['form', 'authorization-page'],
       { style: 'width:100%' },
       ''
     );
