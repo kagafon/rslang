@@ -1,14 +1,19 @@
 import { Words } from 'services/backend';
+import GameWords from 'components/phrase-wizard-page/app/words';
 
 export default class Service {
-  static async wordsRequest(level = 0) {
+  static async wordsRequest(level) {
     this.spinnerOn();
     const rndPage = this.randomInteger(0, 59);
-    const words = await Words.getWordsForRound(+level - 1, rndPage, 10, [
-      'image',
-      'audio',
-    ]);
-    return words;
+     
+      const words = Object.assign(await Words.getWordsForRound((+level - 1), rndPage, 10, [
+          'image',,
+          'audioMeaning',
+          ])
+      ); 
+    await Promise.all(words);
+    GameWords.init(words);
+    //this.spinnerOff();
   }
 
   static randomInteger(min, max) {

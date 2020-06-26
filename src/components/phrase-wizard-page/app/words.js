@@ -1,31 +1,38 @@
-import Service from 'components/games-AudioCall/app/service';
+/*import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 import Results from 'components/games-AudioCall/app/components/main/results/results';
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
-import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage';
+import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage'; */
+import Service from 'components/phrase-wizard-page/app/service';
+import { createElement } from 'helpers/dom';
 
-export default class RusWords {
-  static render() {
+export default class GameWords {
+  static init(words){
+    console.log(words[0]);
+    this.render(words[0]);
+    Service.spinnerOff();
+  }
+
+  static render(word) {
     const wrapper = document.querySelector('.wrapper');
-    const wordsBlock = document.createElement('div');
-    wordsBlock.classList.add('wordsblock');
+    const wordsBlock = createElement(wrapper, 'div', ['wordsblock']);
+    let phraseRound = word.textExample.replace(/[/]/, "");
+    phraseRound = phraseRound.replace(/<b>/g, "");
+    phraseRound.substring(phraseRound.length - 1, phraseRound.length) == "." ? phraseRound = phraseRound.substring(0, phraseRound.length - 1) : true;
+    const wordsArray = phraseRound.split(' ');
+    const imagePhrase = document.createElement("img");
+    imagePhrase.src = word.imageSrc;
+    imagePhrase.alt = word.word;
+    wrapper.append(imagePhrase);
+    //createElement(wrapper, 'img', [''], {src = word.image, alt = word.word});
 
-    for (let i = 1; i < 6; i += 1) {
-      const wrapperWords = document.createElement('div');
-      wrapperWords.classList.add('wrapper-words');
-      wrapperWords.innerHTML = `
-      <span class="number-words">${i}</span>
-      <span class="material-icons md-correct correct icon">
-      check_circle
-      </span>
-      <span class="material-icons md-cancel cancel icon">
-      cancel
-      </span>
-      <button class='words'></button>
-      `;
-      wordsBlock.append(wrapperWords);
-    }
+    wordsArray.forEach(template => {
+      this.template = template.replace(/[a-zA-Z]/g, "•");
+      createElement(wordsBlock, 'span', ['temlate-words'], {style: 'color: black'}, this.template);
+
+    });
+    
     wrapper.append(wordsBlock);
   }
 
@@ -152,9 +159,9 @@ export default class RusWords {
     return Math.floor(rand);
   }
 
-  static init() {
-    this.render();
-    this.wordChoice();
-    this.wordGeneration();
-  }
+  //static init() {
+    //this.render();
+    //this.wordChoice();
+    //this.wordGeneration();
+  //}
 }

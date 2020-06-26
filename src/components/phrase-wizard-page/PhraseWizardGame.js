@@ -1,12 +1,6 @@
 import { createElement } from 'helpers/dom';
-/*import StartGame from 'components/phrase-wizard-page/StartGamePage';
-import RusWords from 'components/games-AudioCall/app/components/main/words/words';
-import Button from 'components/games-AudioCall/app/components/main/button/button';
-import Header from 'components/games-AudioCall/app/components/main/header/header';
-import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
-import Service from 'components/games-AudioCall/app/service';
-import store from 'components/games-AudioCall/app/components/storage';
-*/
+import Service from 'components/phrase-wizard-page/app/service';
+
 export default class PhraseWizard {
   init() {
     const gameBox = createElement(
@@ -66,7 +60,13 @@ export default class PhraseWizard {
     
     function clickLevel(levelRound) {
       intro.remove();
-      console.log(levelRound);
+      if (levelRound === 'изучаемые слова') {
+        levelRound = '0';
+      }
+      Service.wordsRequest(levelRound);
+      //console.log(gameWords);
+      
+      //console.log(await Words.getWordsForRound(0, 0, 10, ['image', 'textMeaning', 'audioMeaning', 'textExampleTranslate']));
             /*Service.wordsRequest(item.textContent);
             store.setState({ groupe: +item.textContent });
             store.setState({ round: 0 });
