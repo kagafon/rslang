@@ -94,8 +94,7 @@ const getUserWords = (id, token, filter, wordsPerPage = 50) => {
   ).then(wrapResponse);
 };
 
-const addUserWord = (id, token, wordId) => {
-  const today = Math.floor(Date.now() / (3600 * 1000 * 24));
+const addUserWord = (id, token, wordId, optional) => {
   return fetch(`${DATA_BASE_URL}/users/${id}/words/${wordId}`, {
     method: 'POST',
     withCredentials: true,
@@ -106,18 +105,13 @@ const addUserWord = (id, token, wordId) => {
     },
     body: JSON.stringify({
       difficulty: 'new',
-      optional: {
-        creationDate: `${today}`,
-        lastRepeat: 'null',
-        repeatTimes: '0',
-        nextRepeat: `${today}`,
-      },
+      optional,
     }),
   }).then(wrapResponse);
 };
 
-const updateUserWord = (id, token, word) => {
-  return fetch(`${DATA_BASE_URL}/users/${id}/words/${word.word}`, {
+const updateUserWord = (id, token, wordId, optional) => {
+  return fetch(`${DATA_BASE_URL}/users/${id}/words/${wordId}`, {
     method: 'PUT',
     withCredentials: true,
     headers: {
@@ -126,12 +120,8 @@ const updateUserWord = (id, token, word) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      difficulty: word.difficulty,
-      optional: {
-        lastRepeat: word.lastRepeat,
-        repeatTimes: word.repeatTimes,
-        nextRepeat: word.nextRepeat,
-      },
+      difficulty: optional.difficulty,
+      optional,
     }),
   }).then(wrapResponse);
 };
