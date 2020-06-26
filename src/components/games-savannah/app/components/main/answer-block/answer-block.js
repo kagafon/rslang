@@ -1,21 +1,35 @@
 import store from 'components/games-savannah/app/components/storage';
-import { createElement } from 'helpers/dom';
+// eslint-disable-next-line import/no-cycle
+import RusWords from 'components/games-savannah/app/components/main/words/words';
 
 export default class Answer {
   static render() {
     const stage = store.getState();
-    // createElement(document.querySelector('.header'), 'div', ['answerBlock']);
     const answerBlock = document.querySelector('.answerBlock');
     answerBlock.textContent = stage.word.word;
-    // answerBlock.classList.add('transition');
-    this.answertTimer();
+
+    this.animate();
   }
 
-  static answertTimer() {
+  static animate() {
     const answer = document.querySelector('.answerBlock');
-    answer.classList.add('transition');
-    answer.addEventListener('transitionend', () => {
-    });
+    const stage = store.getState();
+
+    const keyFrames = new KeyframeEffect(
+      answer,
+      [{ transform: 'translateY(0px)' }, { transform: 'translateY(400px)' }],
+      {
+        duration: 4500,
+      }
+    );
+    const anim = new Animation(keyFrames);
+    anim.onfinish = () => {
+      store.setState({ round: stage.round + 1 });
+      RusWords.wordGeneration();
+      console.log('end');
+    };
+
+    anim.play();
   }
 
   static init() {
