@@ -5,6 +5,15 @@ import { FILE_BASE_URL } from 'services/config';
 import Table from './Table';
 import Modal from './Modal';
 
+const LEARN_LEVEL_CUP = 20;
+
+const getLearnLevel = (word) => {
+  const answers = word.correctAnswers * 2 - word.totalAnswers;
+  return answers > LEARN_LEVEL_CUP
+    ? 100
+    : Math.floor((answers * 100) / LEARN_LEVEL_CUP);
+};
+
 class Dictionary {
   constructor() {
     this.columnsToShow = [
@@ -17,9 +26,11 @@ class Dictionary {
             createElement(parent, 'div', ['progress']),
             'div',
             ['progress-bar', 'progress-bar-striped', 'bg-info'],
-            { style: `width: ${x.learnLevel || 0}%;` }
+            {
+              style: `width: ${getLearnLevel(x)}%;`,
+            }
           ),
-        sort: (a, b) => a.learnLevel - b.learnLevel,
+        sort: (a, b) => getLearnLevel(a) - getLearnLevel(b),
       },
       {
         name: 'word',
@@ -55,6 +66,21 @@ class Dictionary {
       },
     ];
     this.container = createElement(null, 'div', ['container', 'dictionary']);
+
+    this.spinner = createElement(null, 'div', ['spinner-container']);
+    createElement(this.spinner, 'div', ['modal-backdrop', 'fade', 'show']);
+    createElement(
+      createElement(this.spinner, 'div', ['spinner-border'], {
+        role: 'status',
+      }),
+      'span',
+      ['sr-only']
+    );
+    this.spinner.addEventListener('transitionend', (evt) => {
+      if (!this.spinnerShown) evt.currentTarget.remove();
+    });
+    this.showSpinner();
+
     this.audio = new Audio();
     this.audioButtonsToClear = [];
     this.audio.addEventListener('ended', () => {
@@ -67,22 +93,47 @@ class Dictionary {
     this.modal = new Modal(this.container, this.playSound.bind(this));
 
     this.loadWords();
-//    this.drawModal();
   }
 
   async loadWords() {
-    this.words = await Words.getAllUserWords();
-    this.table.reloadRows(this.words);
+    this.showSpinner();
+    try {
+      this.words = await Words.getAllUserWords();
+      this.table.reloadRows(this.words);
+    } catch (err) {
+      console.log(err);
+    }
+    this.hideSpinner();
   }
 
-  showDetails(word) {
-    this.modal.show(word);
+  async showDetails(word) {
+    this.showSpinner();
+    try {
+      this.modal.show(await Words.getUserWordById(word.id, ['image', 'audio']));
+    } catch (err) {
+      console.log(err);
+    }
+    this.hideSpinner();
   }
 
   playSound(x, target) {
     this.audioButtonsToClear.push(target);
     this.audio.src = `${FILE_BASE_URL}${x.audio}`;
     target.classList.add('playing');
+  }
+
+  showSpinner() {
+    if (!this.spinnerShown) {
+      this.spinnerShown = true;
+      this.spinner.classList.add('hidden');
+      this.container.appendChild(this.spinner);
+      this.spinner.classList.remove('hidden');
+    }
+  }
+
+  hideSpinner() {
+    this.spinnerShown = false;
+    this.spinner.classList.add('hidden');
   }
 
   init() {

@@ -11,7 +11,9 @@ export default class WordDetails {
         title: null,
         element: (parent, word) =>
           createElement(parent, 'div', ['word-image'], {
-            style: `background-image:url(${FILE_BASE_URL}${word.image});`,
+            style: `background-image:url(${
+              word.imageSrc ? word.imageSrc : `${FILE_BASE_URL}${word.image}`
+            });`,
           }),
         hide: !user.settings.prompts.image,
       },

@@ -4,14 +4,15 @@ export default class Table {
   constructor(container, columnsToShow, actions) {
     this.columnsToShow = columnsToShow;
     this.actions = actions;
-    const tableDiv = createElement(container, 'div', [
+    this.container = createElement(container, 'div', [
       'overflow-auto',
       'd-flex',
       'align-center',
       'justify-content-center',
       'table-container',
+      'hidden',
     ]);
-    this.table = createElement(tableDiv, 'table', [
+    this.table = createElement(this.container, 'table', [
       'table',
       'table-striped',
       'table-hover',
@@ -74,5 +75,6 @@ export default class Table {
         });
       });
     });
+    this.container.classList.remove('hidden');
   }
 }

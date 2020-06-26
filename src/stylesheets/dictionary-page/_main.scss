@@ -5,22 +5,5 @@
   @import 'buttons';
   @import 'modal';
   @import 'table';
-
-  .table-container {
-    max-height: calc(100vh - #{$main-container-padding-top});
-    width: min-content;
-    background-color: $dictionary-page-color;
-    margin: 0 auto;
-  }
-  th {
-    &.sortable {
-      cursor: pointer;
-    }
-    &.sort-asc::after {
-      content: 'A';
-    }
-    &.sort-desc::after {
-      content: 'D';
-    }
-  }
+  @import 'spinner';
 }
