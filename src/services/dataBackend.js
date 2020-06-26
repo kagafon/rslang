@@ -79,6 +79,63 @@ const getWords = (
   ).then(wrapResponse);
 };
 
+const getUserWords = (id, token, filter, wordsPerPage = 50) => {
+  return fetch(
+    `${DATA_BASE_URL}/users/${id}/aggregatedWords?filter=${filter}&wordsPerPage=${wordsPerPage}`,
+    {
+      method: 'GET',
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then(wrapResponse);
+};
+
+const addUserWord = (id, token, wordId) => {
+  const today = Math.floor(Date.now() / (3600 * 1000 * 24));
+  return fetch(`${DATA_BASE_URL}/users/${id}/words/${wordId}`, {
+    method: 'POST',
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      difficulty: 'new',
+      optional: {
+        creationDate: `${today}`,
+        lastRepeat: 'null',
+        repeatTimes: '0',
+        nextRepeat: `${today}`,
+      },
+    }),
+  }).then(wrapResponse);
+};
+
+const updateUserWord = (id, token, word) => {
+  return fetch(`${DATA_BASE_URL}/users/${id}/words/${word.word}`, {
+    method: 'PUT',
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      difficulty: word.difficulty,
+      optional: {
+        lastRepeat: word.lastRepeat,
+        repeatTimes: word.repeatTimes,
+        nextRepeat: word.nextRepeat,
+      },
+    }),
+  }).then(wrapResponse);
+};
+
 const getSettings = (id, token) => {
   return fetch(`${DATA_BASE_URL}/users/${id}/settings`, {
     method: 'GET',
@@ -138,4 +195,7 @@ export {
   setSettings,
   getStatistics,
   setStatistics,
+  addUserWord,
+  updateUserWord,
+  getUserWords,
 };
