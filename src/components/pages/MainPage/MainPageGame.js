@@ -4,26 +4,20 @@ import {
   hideWord,
   playAudio,
   letters,
+  volumeUp,
+  volumeOff,
+  changeProgressBar,
+  createLoader,
 } from 'helpers/helpersForMainPage';
-import constans from 'components/pages/MainPage/constant';
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
 import modal from 'components/pages/MainPage/modal';
+import {
+  getSettings,
+  getUserWords,
+} from 'components/pages/MainPage/dataForMain';
 
-const { words, settings, URL } = constans;
-const {
-  delebeButton,
-  answerButton,
-  complexButton,
-  showWordTranslate,
-  showTextMeaning,
-  showTextExample,
-  showTranscription,
-  showImage,
-  newWordNumber,
-  cardsNumber,
-} = settings;
 class MainPageGame {
   constructor() {
     this.addAction = this.addAction.bind(this);
@@ -33,7 +27,7 @@ class MainPageGame {
     this.addVolumeHandler = this.addVolumeHandler.bind(this);
     this.addContainerHandler = this.addContainerHandler.bind(this);
   }
-  create() {
+  async create() {
     this.container = createElement(
       '',
       'form',
@@ -43,17 +37,27 @@ class MainPageGame {
         'align-items-center',
         'flex-column',
         'swipper-form',
+        'main-page-game',
       ],
       {},
       ''
     );
+    const preloads = ['image', 'audio', 'audioExample', 'audioMeaning'];
+    const loader = createLoader();
+    console.error(loader);
+
+    const data = await Promise.all([getSettings(), getUserWords(preloads)]);
+    // document.querySelector('body').removeChild(loader);
+    loader.parentNode.removeChild(loader);
+    this.settings = data[0];
+    this.words = data[1];
   }
 
   createSwiper() {
     this.swiperContainer = createElement(
       this.container,
       'div',
-      ['swiper-container'],
+      ['swiper-container', 'swiper-container-main'],
       {},
       ''
     );
@@ -64,9 +68,24 @@ class MainPageGame {
       {},
       ''
     );
+    createElement(this.container, 'div', ['swiper-pagination'], {}, '');
+    const progress = createElement(this.container, 'div', ['progress'], {}, '');
+    this.progressBar = createElement(
+      progress,
+      'div',
+      ['progress-bar'],
+      {
+        role: 'progressbar',
+        style: `width: ${(1 / this.words.length) * 100}%`,
+        'aria-valuenow': `${(1 / this.words.length) * 100}`,
+        'aria-valuemin': '0',
+        'aria-valuemax': '300',
+      },
+      ''
+    );
     // createElement(this.swiperContainer, 'div', ['swiper-button-prev'], {}, '');
     // createElement(this.swiperContainer, 'div', ['swiper-button-next'], {}, '');
-    words.forEach((word) => {
+    this.words.forEach((word) => {
       const item = createElement(
         this.swiperWrapper,
         'div',
@@ -80,12 +99,12 @@ class MainPageGame {
   }
 
   createCard(wordInit) {
+    const { buttons, prompts } = this.settings;
     const {
       word,
       image,
-      audio,
-      audioMeaning,
-      audioExample,
+      audioSrc,
+      imageSrc,
       textMeaning,
       textExample,
       transcription,
@@ -103,20 +122,20 @@ class MainPageGame {
       ``
     );
     const cardHeaderButtons = createElement(cardHeader, 'div', [], {}, ``);
-    if (delebeButton)
+    if (buttons.removeWord)
       createElement(
         cardHeaderButtons,
         'button',
         ['btn', 'btn-danger'],
-        { 'data-btn': 'delete', type: 'button' },
+        { 'data-btn': 'delete', type: 'button', tabindex: -1 },
         `удалить слово`
       );
-    if (complexButton)
+    if (buttons.gradeWord)
       createElement(
         cardHeaderButtons,
         'button',
         ['btn', 'btn-warning'],
-        { 'data-btn': 'complex', type: 'button' },
+        { 'data-btn': 'complex', type: 'button', tabindex: -1 },
         `сложное слово`
       );
     createElement(
@@ -144,7 +163,7 @@ class MainPageGame {
       'span',
       ['input-background', 'input-background_back'],
       {},
-      ` ${word} `
+      `${word}`
     );
     createElement(cardBody, 'span', ['input-word', 'form-control'], {}, ``);
     createElement(
@@ -157,14 +176,14 @@ class MainPageGame {
         id: `${id}`,
         'aria-label': `${word}`,
         'aria-describedby': 'basic-addon1',
-        tabindex: 1,
+        tabindex: -1,
       },
       `${word}`
     );
     createElement(cardBody, 'hr', ['my-4'], {}, ``);
-    if (showWordTranslate)
+    if (prompts.translation)
       createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
-    if (showTextMeaning) {
+    if (prompts.meaning) {
       const sentence = hideWord(word, textMeaning);
       createElement(
         cardBody,
@@ -174,7 +193,7 @@ class MainPageGame {
         `${sentence}`
       );
     }
-    if (showTextExample) {
+    if (prompts.example) {
       const sentence = hideWord(word, textExample);
       createElement(
         cardBody,
@@ -184,9 +203,9 @@ class MainPageGame {
         `${sentence}`
       );
     }
-    if (showTranscription)
+    if (prompts.transcription)
       createElement(cardBody, 'p', ['card-text'], {}, `${transcription}`);
-    if (showImage) {
+    if (prompts.image) {
       const cardImage = createElement(
         cardBody,
         'div',
@@ -194,13 +213,7 @@ class MainPageGame {
         {},
         ``
       );
-      createElement(
-        cardImage,
-        'img',
-        ['card-img'],
-        { src: `${URL}${image}` },
-        ``
-      );
+      createElement(cardImage, 'img', ['card-img'], { src: `${imageSrc}` }, ``);
     }
 
     const cardFooter = createElement(
@@ -217,7 +230,7 @@ class MainPageGame {
       { value: 1, tabindex: -1, type: 'submit' },
       `Далее`
     );
-    if (answerButton)
+    if (buttons.showAnswer)
       createElement(
         cardFooter,
         'button',
@@ -245,8 +258,8 @@ class MainPageGame {
   }
 
   findActiveCardWord() {
-    const word = words.find((el) => {
-      if (el.id === Number(this.input.id)) {
+    const word = this.words.find((el) => {
+      if (el.id === this.input.id) {
         return true;
       }
     });
@@ -256,24 +269,30 @@ class MainPageGame {
   focusInputNext() {
     this.swiper.slideNext();
     this.input = document.querySelector('.swiper-slide-active input');
+    this.volumeBtn = document.querySelector('.swiper-slide-active span.volume');
     this.input.addEventListener('input', this.addInputHandler);
-
     this.card = document.querySelector('.swiper-slide-active');
     this.setLongWord();
+    if (store.getState().isAudioPlayButton) {
+      volumeUp(this.volumeBtn);
+    } else {
+      volumeOff(this.volumeBtn);
+    }
+    this.progressBar = document.querySelector('.progress-bar');
+    this.pagination = document.querySelector(
+      '.swiper-pagination.swiper-pagination-fraction'
+    );
+    changeProgressBar(this.progressBar, this.pagination);
   }
 
   async addSubmitHandler() {
     event.preventDefault();
-    this.wordInput = words.find((el) => {
-      if (el.id === Number(this.input.id)) {
-        return true;
-      }
-    });
+    this.wordInput = this.findActiveCardWord();
     const {
       word,
-      audio,
-      audioMeaning,
-      audioExample,
+      audioSrc,
+      audioMeaningSrc,
+      audioExampleSrc,
       textMeaning,
       textExample,
       wordTranslate,
@@ -300,14 +319,14 @@ class MainPageGame {
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
         store.setState({ isAudioPlay: true });
-        await playAudio(this.audio, audio);
+        await playAudio(this.audio, audioSrc);
         if (this.textMeaning) {
           this.textMeaning.textContent = `${textMeaning}`;
-          await playAudio(this.audio, audioMeaning);
+          await playAudio(this.audio, audioMeaningSrc);
         }
         if (this.textExample) {
           this.textExample.textContent = `${textExample}`;
-          await playAudio(this.audio, audioExample);
+          await playAudio(this.audio, audioExampleSrc);
         }
         store.setState({ isAudioPlay: false });
       } else {
@@ -328,9 +347,9 @@ class MainPageGame {
 
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
         store.setState({ isAudioPlay: true });
-        await playAudio(this.audio, audio);
-        if (this.textMeaning) await playAudio(this.audio, audioMeaning);
-        if (this.textExample) await playAudio(this.audio, audioExample);
+        await playAudio(this.audio, audioSrc);
+        if (this.textMeaning) await playAudio(this.audio, audioMeaningSrc);
+        if (this.textExample) await playAudio(this.audio, audioExampleSrc);
         store.setState({ isAudioPlay: false });
       }
     }
@@ -366,15 +385,13 @@ class MainPageGame {
   addVolumeHandler() {
     if (store.getState().isAudioPlayButton) {
       store.setState({ isAudioPlayButton: false });
-      this.volumeBtn.classList.add('off');
-      this.volumeBtn.textContent = 'volume_off';
+      volumeOff(this.volumeBtn);
       if (this.audio) {
         this.audio.muted = true;
       }
     } else {
       store.setState({ isAudioPlayButton: true });
-      this.volumeBtn.classList.remove('off');
-      this.volumeBtn.textContent = 'volume_up';
+      volumeUp(this.volumeBtn);
       if (this.audio) {
         this.audio.muted = false;
       }
@@ -417,8 +434,8 @@ class MainPageGame {
     this.container.addEventListener('click', this.addContainerHandler);
   }
 
-  init() {
-    this.create();
+  async init() {
+    await this.create();
     this.createSwiper();
     return this.container;
   }

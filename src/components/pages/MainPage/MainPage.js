@@ -12,6 +12,7 @@ class MainPage {
         'align-items-center',
         'flex-column',
         'mx-4',
+        'main-page',
       ],
       {},
       ''

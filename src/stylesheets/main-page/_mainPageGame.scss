@@ -1,104 +1,119 @@
 @import './main-page/toats';
 
-.swiper-container {
-  max-width: 700px;
-  width: 100%;
-}
-.card_size {
-  max-width: 550px;
-  width: 75%;
-  height: 100%;
-  margin: 0 auto;
-  button {
-    margin: 5px;
-  }
-  hr {
+.main-page-game {
+  .swiper-container-main {
+    max-width: 700px;
     width: 100%;
   }
-}
-
-.volume {
-  cursor: pointer;
-  color: #35c8c7;
-  transition: opacity $page-transition-delay ease;
-  &.off {
-    opacity: 0.3;
+  .swiper-pagination {
+    position: relative;
+    margin-top: 45px;
   }
-}
 
-.card-img_div {
-  border-radius: 0.25rem;
-}
-.card_img {
-  width: 70%;
-  height: 70%;
-}
-
-.card-text {
-  transition: font-size $page-transition-delay ease;
-}
-
-.input-background,
-.input-word {
-  height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.385rem 0.85rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #fff0;
-  position: absolute;
-  font-size: 20px;
-  top: 93px;
-  border-radius: 0.25rem;
-  transition: background-color $page-transition-delay ease;
-}
-
-.input-background_back {
-  background-color: #e0f3f9;
-}
-
-.input-word {
-  z-index: 500;
-  transition: opacity $page-transition-delay ease;
-  overflow: hidden;
-  &.hidden1 {
-    opacity: 0.5;
+  .progress {
+    width: 300px;
   }
-  &.hidden2 {
-    opacity: 0;
+
+  .card_size {
+    max-width: 550px;
+    width: 75%;
+    height: 100%;
+    margin: 0 auto;
+    button {
+      margin: 5px;
+    }
+    hr {
+      width: 100%;
+    }
   }
-}
-
-.letter_error {
-  color: #f97070;
-  font-size: inherit;
-}
-.letter_success {
-  color: hsl(106, 62%, 30%);
-  font-size: inherit;
-}
-
-.answer_success {
-  background-color: #d7f5e4;
-}
-.answer_error {
-  background-color: #f5d7d7;
-}
-
-.form-control {
-  background: transparent;
-  z-index: 1000;
-  font-size: 20px;
-  &:focus {
-    background-color: #fff0;
+  .volume {
+    cursor: pointer;
+    color: #35c8c7;
+    transition: opacity $page-transition-delay ease;
+    &.off {
+      opacity: 0.3;
+    }
   }
-  &.success {
-    color: hsl(106, 62%, 30%);
+  .card-img_div {
+    border-radius: 0.25rem;
   }
-}
+  .card_img {
+    width: 70%;
+    height: 70%;
+  }
 
-@media (max-width: 472px) {
+  .card-text {
+    transition: font-size $page-transition-delay ease;
+  }
+
   .input-background,
   .input-word {
-    top: 141px;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.385rem 0.85rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff0;
+    position: absolute;
+    font-size: 20px;
+    top: 93px;
+    border-radius: 0.25rem;
+    transition: background-color $page-transition-delay ease;
+  }
+
+  .input-background_back {
+    background-color: #e0f3f9;
+  }
+
+  .input-word {
+    padding-right: 0.55rem;
+    padding-left: 0.67rem;
+    z-index: 500;
+    transition: opacity $page-transition-delay ease;
+    overflow: hidden;
+    &.hidden1 {
+      opacity: 0.5;
+    }
+    &.hidden2 {
+      opacity: 0;
+    }
+  }
+
+  .letter_error {
+    color: #f97070;
+    font-size: inherit;
+  }
+  .letter_success {
+    color: hsl(106, 62%, 30%);
+    font-size: inherit;
+  }
+
+  .answer_success {
+    background-color: #d7f5e4;
+  }
+  .answer_error {
+    background-color: #f5d7d7;
+  }
+
+  .form-control {
+    background: transparent;
+    z-index: 1000;
+    font-size: 20px;
+    &:focus {
+      background-color: #fff0;
+    }
+    &.success {
+      color: hsl(106, 62%, 30%);
+    }
+  }
+
+  @media (max-width: 472px) {
+    .input-background,
+    .input-word {
+      top: 141px;
+    }
+
+    .card-footer {
+      flex-direction: column;
+    }
   }
 }

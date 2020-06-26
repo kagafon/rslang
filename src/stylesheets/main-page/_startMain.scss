@@ -1,45 +1,47 @@
-.jumbotron {
-  width: 100%;
-  background-color: rgba(83, 140, 173, 0.49);
-  .div-level {
+.main-page {
+  .jumbotron {
     width: 100%;
-    margin-top: 10px;
+    background-color: rgba(83, 140, 173, 0.49);
+    .div-level {
+      width: 100%;
+      margin-top: 10px;
+    }
+    p {
+      font-size: 18px;
+      color: #fff;
+      margin: 0 5px 0 5px;
+    }
+    label {
+      color: #fff;
+    }
   }
-  p {
-    font-size: 18px;
-    color: #fff;
-    margin: 0 5px 0 5px;
+
+  .progress {
+    height: 25px;
+    width: 245px;
+    border-radius: 0.3rem;
   }
-  label {
-    color: #fff;
+
+  .lang-image {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-image: url('/assets/images/united-states-of-america-flag-button-square-xs.png');
   }
-}
+  .control-m1 {
+  }
 
-.progress {
-  height: 25px;
-  width: 245px;
-  border-radius: 0.3rem;
-}
+  .control-m2 {
+    margin-right: 4.6rem;
+  }
 
-.lang-image {
-  width: 50px;
-  height: 50px;
-  background-size: cover;
-  background-image: url('/assets/images/united-states-of-america-flag-button-square-xs.png');
-}
-.control-m1 {
-}
+  .control-m3 {
+    margin-right: 4.9rem;
+  }
 
-.control-m2 {
-  margin-right: 4.6rem;
-}
-
-.control-m3 {
-  margin-right: 4.9rem;
-}
-
-@media (max-width: 550px) {
-  .div-level {
-    flex-direction: column;
+  @media (max-width: 550px) {
+    .div-level {
+      flex-direction: column;
+    }
   }
 }

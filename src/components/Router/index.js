@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import MainPage from 'components/pages/MainPage/MainPage';
 import MainPageGame from 'components/pages/MainPage/MainPageGame';
-=======
-/* eslint-disable import/no-cycle */
-import MainPage from 'components/pages/MainPage';
->>>>>>> develop
 import Router from 'components/Router/Router';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';

@@ -4,4 +4,9 @@ export default {
     prevEl: '.swiper-button-prev',
   },
   simulateTouch: false,
+  pagination: {
+    el: '.swiper-pagination',
+    type: 'fraction',
+  },
+  preventInteractionOnTransition: true,
 };

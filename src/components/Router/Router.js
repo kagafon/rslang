@@ -65,14 +65,14 @@ export default class Router {
     }
   }
 
-  transitionEndCallback() {
+  async transitionEndCallback() {
     this.container.removeEventListener(
       'transitionend',
       this.transitionEndHandler
     );
     this.container.textContent = '';
     const route = new this.currentRoute.ClassConstructor();
-    this.container.appendChild(route.init());
+    this.container.appendChild(await route.init());
     if (route.postInit) route.postInit();
     this.container.style.opacity = '1';
   }
