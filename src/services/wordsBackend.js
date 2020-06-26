@@ -33,28 +33,60 @@ const preloadData = async (words, preloadFields) => {
 };
 export default class Words {
   static getWordsForRound(group, page, wordsPerPage, preload) {
-    return getWords(group, page, wordsPerPage).then(async (words) => {
+    return (group >= 0
+      ? getWords(group, page, wordsPerPage)
+      : Words.getTodayUserWords()
+    ).then(async (words) => {
+      const wordsToReturn = words
+        .sort(() => Math.random() - 0.5)
+        .slice(0, wordsPerPage);
       if (preload && preload.length > 0) {
-        return preloadData(words, preload);
+        return preloadData(wordsToReturn, preload);
       }
-      return words;
+      return wordsToReturn;
     });
   }
 
-  static addUserWord(wordId) {
+  static addUserWord(
+    wordId,
+    settings = {
+      creationDate: `${TODAY}`,
+      lastRepeat: 'null',
+      repeatTimes: '0',
+      nextRepeat: `${TODAY}`,
+      correctAnswers: '0',
+      totalAnswers: '1',
+    }
+  ) {
     let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
 
-    return addUserWord(userInfo.userId, userInfo.token, wordId);
+    return addUserWord(userInfo.userId, userInfo.token, wordId, settings);
   }
 
   static updateUserWord(word) {
     let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
-
-    return updateUserWord(userInfo.userId, userInfo.token, word);
+    const {
+      difficulty,
+      creationDate,
+      lastRepeat,
+      repeatTimes,
+      nextRepeat,
+      correctAnswers,
+      totalAnswers,
+    } = word;
+    return updateUserWord(userInfo.userId, userInfo.token, word.id, {
+      difficulty,
+      creationDate,
+      lastRepeat,
+      repeatTimes,
+      nextRepeat,
+      correctAnswers,
+      totalAnswers,
+    });
   }
 
   static async addUserWordsFromGroup(group, page, count) {
@@ -78,6 +110,7 @@ export default class Words {
           ...x.userWord,
           ...x.userWord.optional,
           ...x,
+          id: x.userWord.word,
         };
         delete word.optional;
         delete word.userWord;
