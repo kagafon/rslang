@@ -1,9 +1,14 @@
 @import '~bootstrap';
 @import 'variables';
 @import './main-page/navbar';
+<<<<<<< HEAD
 @import './main-page/startMain';
 @import './main-page/mainPageGame';
 @import 'swiper/css/swiper';
+=======
+@import './game-page/_allgames';
+@import './team-page/style.scss';
+>>>>>>> develop
 
 body {
   background-repeat: no-repeat;
