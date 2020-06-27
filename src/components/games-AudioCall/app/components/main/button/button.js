@@ -24,9 +24,12 @@ export default class Button {
     const btnHint = document.querySelector('.hint');
     btnHint.addEventListener('click', () => {
       document.querySelector('.answerBlock').innerHTML = '';
+
       Results.init();
+
       document.querySelector('.hint').style.display = 'none';
       document.querySelector('.next').style.display = 'block';
+
       const state = store.getState();
 
       store.setState({ round: state.round + 1 });
@@ -34,6 +37,7 @@ export default class Button {
 
       const progress = document.querySelector('.progress-bar');
       const width = String(progress.style.width).slice(0, -1);
+
       progress.style.width = `${+width + 10}%`;
       RusWords.rightChoice(state.correct);
 
@@ -48,6 +52,7 @@ export default class Button {
     const btnNext = document.querySelector('.next');
     btnNext.addEventListener('click', () => {
       const stage = store.getState();
+
       if (stage.round <= 9) {
         const correctIcon = document.querySelectorAll('.icon');
 

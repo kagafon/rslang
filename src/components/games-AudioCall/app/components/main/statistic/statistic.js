@@ -18,22 +18,22 @@ export default class Statisctic {
     const statisticBlock = document.querySelector('.statistic-block');
     statisticBlock.innerHTML = `
      <div class="statistic">
-        <span class="statistic-title">${description}</span>
-        <span class="statistic-subtitle">${stage.correctChoice} слов изучено, ${
-      10 - stage.correctChoice
-    } не изучено</span>
-        <div class="final-slider">
-        <div class="final-error">
-        <span> ОШИБОК: </span>
+         <span class="statistic-title">${description}</span>
+         <span class="statistic-subtitle">${
+           stage.correctChoice
+         } слов изучено, ${10 - stage.correctChoice} не изучено</span>
+         <div class="final-slider">
+         <div class="final-error">
+         <span> ОШИБОК: </span>
         ${10 - stage.correctChoice}
-      </div>
+        </div>
         <div class="final invalid"></div>
         <div class="final-line"></div>
         <div class="final-correct">ЗНАЮ: 
           <span> ${stage.correctChoice}</span>
         </div>
         <div class="final valid"></div>
-      </div>
+        </div>
         <button type="button" class="btn btn-primary final-btn">начать заново</button>
      </div>
      

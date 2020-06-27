@@ -30,6 +30,7 @@ const preloadData = async (words, preloadFields) => {
       words[x.value.idx] = { ...words[x.value.idx], ...x.value };
     }
   });
+  return words;
 };
 export default class Words {
   static getWordsForRound(group, page, wordsPerPage, preload) {

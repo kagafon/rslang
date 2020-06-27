@@ -18,25 +18,27 @@ export default class Voice {
   }
 
   static async audioBtn() {
-    const stage = await store.getState();
-    const audio = await Service.wordsRequest(stage.groupe);
+    try {
+      const stage = await store.getState();
+      const audio = await Service.wordsRequest(stage.groupe);
 
-    audio.sort(() => {
-      return Math.random() - 0.5;
-    });
+      audio.sort(() => {
+        return Math.random() - 0.5;
+      });
 
-    const btnAudio = document.querySelector('.audio');
+      const btnAudio = document.querySelector('.audio');
 
-    btnAudio.addEventListener('click', () => {
-      const stageRound = store.getState();
-      const playAudio = document.querySelector('audio');
+      btnAudio.addEventListener('click', () => {
+        const stageRound = store.getState();
+        const playAudio = document.querySelector('audio');
 
-      if (stageRound.round <= 9) {
-        playAudio.dataset.text = stageRound.word.wordTranslate;
-        playAudio.src = stageRound.word.audioSrc;
-        playAudio.play();
-      }
-    });
+        if (stageRound.round <= 9) {
+          playAudio.dataset.text = stageRound.word.wordTranslate;
+          playAudio.src = stageRound.word.audioSrc;
+          playAudio.play();
+        }
+      });
+    } catch (error) {}
   }
 
   static autoPlayAudio() {
