@@ -27,15 +27,28 @@ export default class Animate {
       health.remove();
       answer.textContent = '';
 
-      const audio = new Audio();
-      audio.src =
-        'https://zvukipro.com/uploads/files/2018-10/1540309251_jg-032316-sfx-feedback-incorrect-25.mp3';
-      audio.play();
+      if (stage.volume !== 'off') {
+        const audio = new Audio();
+        audio.src =
+          'https://zvukipro.com/uploads/files/2018-10/1540309251_jg-032316-sfx-feedback-incorrect-25.mp3';
+        audio.play();
+      }
 
-      // if (stage.round === 9) {
-      //   Statistic.init();
-      // }
-      RusWords.wordGeneration();
+      const correctWord = document.querySelectorAll('.wrapper-words');
+
+      correctWord.forEach((item) => {
+        if (item.children[0].textContent === stage.word.wordTranslate) {
+          item.classList.add('correct');
+        }
+      });
+
+      if (stage.round === 9 || stage.health === 1) {
+        Statistic.init();
+      }
+      setTimeout(() => {
+        RusWords.clearWords();
+        RusWords.wordGeneration();
+      }, 1000);
     };
 
     anim.play();

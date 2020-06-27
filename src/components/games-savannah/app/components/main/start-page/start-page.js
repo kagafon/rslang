@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import Timer from 'components/games-savannah/app/components/main/start-page/timer';
 import store from 'components/games-savannah/app/components/storage';
+import Service from 'components/games-savannah/app/service';
 
 export default class StartPage {
   static render() {
@@ -30,12 +31,14 @@ export default class StartPage {
     wrapper.append(intro);
 
     document.querySelectorAll('.start').forEach((item) => {
-      item.addEventListener('click', () => {
+      item.addEventListener('click', async () => {
+        const words = await Service.wordsRequest(+item.dataset.num);
+        store.setState({ requestWords: words });
         store.setState({ groupe: +item.dataset.num });
-        console.log(item.dataset.num);
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
         store.setState({ health: 5 });
+        store.setState({ volume: 'on' });
         intro.remove();
         Timer.init();
       });

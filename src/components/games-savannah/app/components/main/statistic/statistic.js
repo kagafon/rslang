@@ -42,9 +42,25 @@ export default class Statistic {
   }
 
   static unexploredWords() {
-    const learnedWords = statisticStore.getState();
+    const learned = statisticStore.getState();
+    const learnedWords = learned.learned;
+    const unexploredWords = learned.unexplored;
+    let arr;
+    const arrLearnedWords = store.getState();
 
-    learnedWords.unexplored.forEach((item) => {
+    console.log(learned);
+    console.log(learnedWords.length);
+    console.log(unexploredWords.length);
+
+    if (unexploredWords.length === 0 && learnedWords.length === 0) {
+      arr = arrLearnedWords.requestWords.filter(function filter(item, index) {
+        return index <= 9;
+      });
+    } else {
+      arr = unexploredWords;
+    }
+
+    arr.forEach((item) => {
       const invalidBlock = document.querySelector('.invalid');
       const itemBlock = document.createElement('div');
       itemBlock.classList.add('final-answer');
@@ -114,6 +130,8 @@ export default class Statistic {
 
     bntReboot.addEventListener('click', () => {
       document.body.innerHTML = '';
+      statisticStore.clearState();
+      statisticStore.getState();
       App.run();
     });
   }

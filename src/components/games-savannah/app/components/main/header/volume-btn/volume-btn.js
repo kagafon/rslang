@@ -1,4 +1,5 @@
 import { createElement } from 'helpers/dom';
+import store from 'components/games-savannah/app/components/storage';
 
 export default class VolumeBtn {
   static render() {
@@ -23,9 +24,11 @@ export default class VolumeBtn {
       item.addEventListener('click', () => {
         if (item.classList.contains('volume-on')) {
           item.style.display = 'none';
+          store.setState({ volume: 'off' });
           document.querySelector('.volume-off').style.display = 'block';
         } else {
           item.style.display = 'none';
+          store.setState({ volume: 'on' });
           document.querySelector('.volume-on').style.display = 'block';
         }
       });

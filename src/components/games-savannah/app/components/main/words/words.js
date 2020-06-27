@@ -16,7 +16,7 @@ export default class RusWords {
       const wrapperWords = document.createElement('div');
       wrapperWords.classList.add('wrapper-words');
       wrapperWords.innerHTML = `
-      <div data-number='${i}' class='words'>Hello</div>
+      <div data-number='${i}' class='words'></div>
       `;
       wordsBlock.append(wrapperWords);
     }
@@ -30,9 +30,11 @@ export default class RusWords {
     answer.classList.remove('transition');
     answer.textContent = '';
 
-    const audio = new Audio();
-    audio.src = 'https://pic.pikbest.com/00/43/23/41F888piC5fv.mp3';
-    audio.play();
+    if (stage.volume !== 'off') {
+      const audio = new Audio();
+      audio.src = 'https://pic.pikbest.com/00/43/23/41F888piC5fv.mp3';
+      audio.play();
+    }
 
     if (stage.round <= 9 && stage.health !== 0) {
       setTimeout(() => {
@@ -70,7 +72,6 @@ export default class RusWords {
     arrWords.forEach((item) => {
       item.addEventListener('click', () => {
         const state = store.getState();
-
         store.setState({ round: state.round + 1 });
 
         if (item.children[0].textContent === state.word.wordTranslate) {
@@ -102,11 +103,12 @@ export default class RusWords {
     wordsCard[randNum].textContent = text;
   }
 
-  static async wordGeneration() {
+  static wordGeneration() {
     try {
       const stage = store.getState();
-      const arrWords = await Service.wordsRequest(stage.groupe);
       const wordsCard = document.querySelectorAll('.words');
+
+      const arrWords = stage.requestWords;
 
       if (arrWords.length < 10) {
         Popap.init();
