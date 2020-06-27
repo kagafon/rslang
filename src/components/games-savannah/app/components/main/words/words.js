@@ -4,6 +4,7 @@ import store from 'components/games-savannah/app/components/storage';
 import statiscticStore from 'components/games-savannah/app/components/statistic-storage';
 import Answer from 'components/games-savannah/app/components/main/answer-block/answer-block';
 import Statistic from 'components/games-savannah/app/components/main/statistic/statistic';
+import Popap from 'components/games-savannah/app/components/main/popap-error/popap-error';
 
 export default class RusWords {
   static render() {
@@ -106,6 +107,10 @@ export default class RusWords {
       const stage = store.getState();
       const arrWords = await Service.wordsRequest(stage.groupe);
       const wordsCard = document.querySelectorAll('.words');
+
+      if (arrWords.length < 10) {
+        Popap.init();
+      }
 
       store.setState({ word: arrWords[stage.round] });
       this.wordsTranslate(arrWords[stage.round].wordTranslate);

@@ -21,6 +21,16 @@ export default class Animate {
 
     anim.onfinish = () => {
       store.setState({ round: stage.round + 1 });
+      store.setState({ health: stage.health - 1 });
+
+      const health = document.querySelector('.health');
+      health.remove();
+      answer.textContent = '';
+
+      const audio = new Audio();
+      audio.src =
+        'https://zvukipro.com/uploads/files/2018-10/1540309251_jg-032316-sfx-feedback-incorrect-25.mp3';
+      audio.play();
 
       // if (stage.round === 9) {
       //   Statistic.init();

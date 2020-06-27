@@ -230,29 +230,7 @@ p {
   transition: 4.5s linear;
   color: #6cffde;
   font-size: 24px;
-  // animation: drop 4.5s linear;
-  // animation-play-state: running;
 }
-
-// .animation {
-//   animation: drop 4.5s linear;
-// }
-
-// @keyframes drop {
-//   0% {
-//     transform: translateY(0px);
-//   }
-
-//   100% {
-//     transform: translateY(400px);
-//   }
-// }
-
-// .transition {
-//   transition: 4.5s linear;
-//   opacity: 100;
-//   transform: translateY(400px);
-// }
 
 // Words block______________________________
 
@@ -275,6 +253,9 @@ p {
   border-radius: 2px;
   cursor: pointer;
   margin: 0 20px;
+  &:hover {
+    background-color: #2ff8072c;
+  }
 }
 
 .words {
@@ -297,7 +278,6 @@ p {
 
 .correct {
   background-color: #2ff8072c;
-  background-size: 2rem;
 }
 
 .cancel {

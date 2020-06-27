@@ -31,7 +31,7 @@ export default class StartPage {
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', () => {
-        store.setState({ groupe: item.dataset.num });
+        store.setState({ groupe: +item.dataset.num });
         console.log(item.dataset.num);
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
