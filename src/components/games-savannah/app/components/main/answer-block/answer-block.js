@@ -26,7 +26,6 @@ export default class Answer {
     anim.onfinish = () => {
       store.setState({ round: stage.round + 1 });
       RusWords.wordGeneration();
-      console.log('end');
     };
 
     anim.play();

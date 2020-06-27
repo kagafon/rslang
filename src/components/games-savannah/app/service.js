@@ -11,11 +11,13 @@ export default class Service {
       'audio',
     ]);
 
-    if (words.length < 10) {
-      Popap.init();
-    } else {
-      return words;
-    }
+    // if (words.length < 10) {
+    //   Popap.init();
+    //   console.log('popap');
+    // } else {
+    //   return words;
+    // }
+    return words;
   }
 
   static randomInteger(min, max) {
