@@ -1,8 +1,16 @@
 import { Modal } from 'bootstrap';
 import { createElement } from 'helpers/dom';
 import { FILE_BASE_URL } from 'services/config';
-import { User } from 'services/backend';
+import { User, Words } from 'services/backend';
 
+const classMap = {
+  new: 'info',
+  easy: 'success',
+  medium: 'secondary',
+  hard: 'warning',
+  deleted: 'danger',
+};
+const titleBadgeClasses = ['badge'];
 export default class WordDetails {
   constructor(container, playSound) {
     const user = User.getCurrentUser();
@@ -34,8 +42,32 @@ export default class WordDetails {
           ),
       },
       { title: 'Повторов', name: 'repeatTimes' },
-      { title: 'Посл. показ', name: 'lastTimeShown' },
-      { title: 'След. показ', name: 'nextTimeShown' },
+      {
+        title: 'Посл. показ',
+        name: 'lastRepeat',
+        element: (parent, word) =>
+          createElement(
+            parent,
+            'div',
+            [],
+            {},
+            word.lastRepeat ? word.lastRepeat.toLocaleString() : 'Не определено'
+          ),
+        defaultValue: 'Не определено',
+      },
+      {
+        title: 'След. показ',
+        name: 'nextRepeat',
+        element: (parent, word) =>
+          createElement(
+            parent,
+            'div',
+            [],
+            {},
+            word.nextRepeat ? word.nextRepeat.toLocaleString() : 'Не определено'
+          ),
+        defaultValue: 'Не определено',
+      },
       {
         title: 'Значение',
         name: 'textMeaningTranslate',
@@ -55,12 +87,19 @@ export default class WordDetails {
       }
     );
     const modalContent = createElement(modalDialog, 'div', ['modal-content']);
-    const modalHeader = createElement(modalContent, 'div', ['modal-header']);
-    this.title = createElement(modalHeader, 'h5', ['text-capitalize']);
+    const modalHeader = createElement(modalContent, 'div', [
+      'modal-header',
+      'align-items-center',
+    ]);
+
+    this.title = createElement(modalHeader, 'h3', ['text-capitalize', 'mb-0']);
 
     this.modalBody = createElement(modalContent, 'div', ['modal-body']);
 
-    const modalFooter = createElement(modalContent, 'div', ['modal-footer']);
+    const modalFooter = createElement(modalContent, 'div', [
+      'modal-footer',
+      'justify-content-around',
+    ]);
     const buttonGroup = createElement(modalFooter, 'div', ['btn-group'], {
       role: 'group',
     });
@@ -76,7 +115,7 @@ export default class WordDetails {
     playBtn.addEventListener('click', (evt) =>
       playSound(this.word, evt.currentTarget)
     );
-
+    this.controlButtons = [];
     const easyBtn = createElement(
       buttonGroup,
       'button',
@@ -84,6 +123,11 @@ export default class WordDetails {
       { type: 'button' },
       'Легко'
     );
+    easyBtn.addEventListener(
+      'click',
+      this.setWordDifficulty.bind(this, 'easy')
+    );
+    this.controlButtons.push(easyBtn);
 
     const mediumBtn = createElement(
       buttonGroup,
@@ -92,6 +136,11 @@ export default class WordDetails {
       { type: 'button' },
       'Хорошо'
     );
+    mediumBtn.addEventListener(
+      'click',
+      this.setWordDifficulty.bind(this, 'medium')
+    );
+    this.controlButtons.push(mediumBtn);
 
     const hardBtn = createElement(
       buttonGroup,
@@ -100,28 +149,47 @@ export default class WordDetails {
       { type: 'button' },
       'Сложно'
     );
+    hardBtn.addEventListener(
+      'click',
+      this.setWordDifficulty.bind(this, 'hard')
+    );
+    this.controlButtons.push(hardBtn);
 
     const deleteBtn = createElement(
       modalFooter,
       'button',
-      ['btn', 'btn-danger', 'btn-sm', 'ml-auto'],
+      ['btn', 'btn-danger', 'btn-sm'],
       { type: 'button' },
       'Удалить'
     );
+    deleteBtn.addEventListener(
+      'click',
+      this.setWordDifficulty.bind(this, 'deleted')
+    );
+    this.controlButtons.push(deleteBtn);
 
-    const closeBtn = createElement(
+    createElement(
       modalFooter,
       'button',
-      ['btn', 'btn-info', 'btn-sm', 'ml-auto'],
+      ['btn', 'btn-info', 'btn-sm'],
       { type: 'button', 'data-dismiss': 'modal' },
       'Закрыть'
     );
+
+    this.buttonSpinner = createElement(null, 'div');
+    createElement(this.buttonSpinner, 'span', [
+      'spinner-border',
+      'spinner-border-sm',
+    ]);
+    createElement(this.buttonSpinner, 'span', [], {}, 'Сохр...');
+
     this.modal = new Modal(this.modal);
   }
 
   show(word) {
     this.word = word;
     this.title.innerText = word.word;
+    this.addTitleBadge();
     this.modalBody.innerText = '';
     this.fieldsToShow.forEach((fld) => {
       if (!fld.hide) {
@@ -132,14 +200,51 @@ export default class WordDetails {
         } else {
           createElement(this.modalBody, 'div', [], {
             'data-name': fld.name,
-          }).innerHTML = this.word[fld.name];
+          }).innerHTML =
+            this.word[fld.name] === undefined || this.word[fld.name] === null
+              ? fld.defaultValue
+              : this.word[fld.name];
         }
       }
     });
     this.modal.show();
   }
 
-  setWordDifficulty(difficulty) {
-    this.word.difficulty = difficulty;
+  enableControlButtons() {
+    this.controlButtons.forEach((x) => x.removeAttribute('disabled'));
+  }
+
+  disableControlButtons() {
+    this.controlButtons.forEach((x) => x.setAttribute('disabled', ''));
+  }
+
+  addTitleBadge() {
+    this.titleBadge = createElement(
+      this.title,
+      'span',
+      [...titleBadgeClasses, `badge-${classMap[this.word.difficulty]}`],
+      {},
+      this.word.difficulty
+    );
+  }
+
+  async setWordDifficulty(difficulty, evt) {
+    this.disableControlButtons();
+    const btn = evt.currentTarget;
+    const btnText = btn.innerText;
+    btn.innerText = '';
+    btn.appendChild(this.buttonSpinner);
+
+    try {
+      await Words.updateUserWord({ ...this.word, difficulty });
+      this.word.difficulty = difficulty;
+      this.title.innerText = this.word.word;
+      this.addTitleBadge();
+    } catch (err) {
+      console.log(err);
+    }
+    this.buttonSpinner.remove();
+    btn.innerText = btnText;
+    this.enableControlButtons();
   }
 }

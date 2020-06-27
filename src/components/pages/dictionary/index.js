@@ -5,20 +5,11 @@ import { FILE_BASE_URL } from 'services/config';
 import Table from './Table';
 import Modal from './Modal';
 
-const LEARN_LEVEL_CUP = 20;
-
-const getLearnLevel = (word) => {
-  const answers = word.correctAnswers * 2 - word.totalAnswers;
-  return answers > LEARN_LEVEL_CUP
-    ? 100
-    : Math.floor((answers * 100) / LEARN_LEVEL_CUP);
-};
-
 class Dictionary {
   constructor() {
     this.columnsToShow = [
       {
-        name: 'learnLevel',
+        name: 'progress',
         title: 'Прогресс',
         className: ['col-2'],
         element: (parent, x) =>
@@ -27,10 +18,10 @@ class Dictionary {
             'div',
             ['progress-bar', 'progress-bar-striped', 'bg-info'],
             {
-              style: `width: ${getLearnLevel(x)}%;`,
+              style: `width: ${x.progress}%;`,
             }
           ),
-        sort: (a, b) => getLearnLevel(a) - getLearnLevel(b),
+        sort: (a, b) => a.progress - b.progress,
       },
       {
         name: 'word',
@@ -38,17 +29,17 @@ class Dictionary {
         className: ['col-2'],
         sort: (a, b) => a.word.localeCompare(b.word),
       },
-      {
+/*       {
         name: 'wordTranslate',
         title: 'Перевод',
         className: ['d-none', 'd-sm-table-cell', 'col-2'],
         sort: (a, b) => a.wordTranslate.localeCompare(b.wordTranslate),
-      },
-      {
+      }, */
+/*       {
         name: 'transcription',
         title: 'Транскрипция',
         className: ['d-none', 'd-md-table-cell', 'col-2'],
-      },
+      }, */
       { name: 'action', title: '', className: ['col-1'] },
     ];
     this.actions = [

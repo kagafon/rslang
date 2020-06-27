@@ -47,7 +47,7 @@ export default class Table {
     this.words.forEach((x) => {
       const row = createElement(this.tbody, 'tr');
       this.columnsToShow.forEach((col) => {
-        if (x[col.name]) {
+        if (x[col.name] !== undefined) {
           const td = createElement(row, 'td', col.className, {});
           if (col.element) {
             col.element(td, x);
