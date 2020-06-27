@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import RusWords from 'components/games-AudioCall/app/components/main/words/words';
+// eslint-disable-next-line import/no-cycle
 import Button from 'components/games-AudioCall/app/components/main/button/button';
 import Header from 'components/games-AudioCall/app/components/main/header/header';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
@@ -20,13 +21,13 @@ export default class StartPage {
      </div>
      <span class="level-select">Выберете уровень</span>
      <div class="level-block">
-        <button type="button" class="btn btn-primary start">1</button>
-        <button type="button" class="btn btn-primary start">2</button>
-        <button type="button" class="btn btn-primary start">3</button>
-        <button type="button" class="btn btn-primary start">4</button>
-        <button type="button" class="btn btn-primary start">5</button>
-        <button type="button" class="btn btn-primary start">6</button>
-        <button type="button" class="btn btn-primary start learn">изучаемые слова</button>
+       <button data-num="0" type="button" class="btn btn-primary start">1</button>
+       <button data-num="1" type="button" class="btn btn-primary start">2</button>
+       <button data-num="2" type="button" class="btn btn-primary start">3</button>
+       <button data-num="3" type="button" class="btn btn-primary start">4</button>
+       <button data-num="4" type="button" class="btn btn-primary start">5</button>
+       <button data-num="5" type="button" class="btn btn-primary start">6</button>
+       <button data-num="-1" type="button" class="btn btn-primary start learn">изучаемые слова</button>
      </div>
     `;
     document.body.append(intro);
@@ -34,7 +35,7 @@ export default class StartPage {
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', () => {
         intro.remove();
-        Service.wordsRequest(item.textContent);
+        Service.wordsRequest(item.dataset.num);
         store.setState({ groupe: +item.textContent });
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
