@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+@import '~bootstrap';
+
+.title {
+    font-size: 30px;
+}
+.form {
+    display: flex; 
+    justify-content: center;
+    margin-top: -150px;
+    background-size: cover;
+}
+h1 {
+    cursor: help;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #53025a;
+}
+form {
+    font-weight: 500;
+    background: rgba(72, 222, 248, 0.4);
+    margin: 0  10px 20px 10px;
+    width: 35%;
+    min-height: 525px;
+    height: 100%;
+    padding: 3px 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+.group {
+    margin: 3px 10px;
+    padding: 3px;
+}
+
+label {
+    padding-left: 10px;
+    text-transform: uppercase;
+}
+input {
+    margin-top: 3px;
+    height: 35px;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding-left: 15px;
+    font-size: 18px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+input:focus {
+    border: 2px solid #6c00ff;
+    transform: translateX(15px);
+    max-width: 385px;
+    width: 100%;
+}
+button {
+    margin-top: 10px;
+    cursor: pointer;
+    padding: 10px;
+    height: 40px;
+    width: 100px;
+    color: #fff;
+    background:blue; 
+    border: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    opacity: 0.7;
+}
+button:hover {
+    font-weight: 700;
+    transform: scale(1.2);
+    opacity: 1;
+}
+.error,
+.password-error, 
+.error-login {
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    color: red;
+}
+.spin-reg, 
+.spin-log {
+    display: none;
+    margin: -30px -140px 0 0;
+}
+.close {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    padding: 0px;
+    text-align: center;
+    color: red;
+}
+.alert {
+    margin: 10px auto;
+    display: none;
+}
+.span-close {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    font-size: 40px;
+    font-weight: 500;
+}
+@media all and (max-width: 767px) {
+    .form {
+        display: flex; 
+        flex-direction: column;
+    }
+    form {
+        width: 70%;
+        min-height: 470px;
+        height: 100%;
+        margin: 5px auto;
+        padding: 3px 10px;
+    }
+}

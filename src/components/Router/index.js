@@ -1,5 +1,8 @@
+/* eslint-disable import/no-cycle */
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import authorizationPage from 'components/authorization-page/autorizationPage';
+import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 
 const routes = [
@@ -7,7 +10,7 @@ const routes = [
     name: 'main-page',
     title: 'Учить слова',
     ClassConstructor: MainPage,
-    needAuthorization: false,
+    needAuthorization: true,
     image: 'assets/images/backgrounds/main-page.jpg',
     color: 'rgba(83, 140, 173, 0.49)',
   },
@@ -90,7 +93,7 @@ const routes = [
   {
     name: 'authorization-page',
     title: 'Вход/Регистрация',
-    ClassConstructor: MainPage,
+    ClassConstructor: authorizationPage,
     needAuthorization: false,
     hideWhenAuthorized: true,
     image: 'assets/images/backgrounds/authorization-page.jpg',
@@ -115,7 +118,7 @@ const routes = [
   {
     name: 'team-page',
     title: 'О команде',
-    ClassConstructor: MainPage,
+    ClassConstructor: teamPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/team-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
