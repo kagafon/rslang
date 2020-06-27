@@ -18,20 +18,21 @@ export default class StartPage {
      </div>
      <span class="level-select">Выберете уровень</span>
      <div class="level-block">
-        <button data-num="1" type="button" class="btn btn-primary start">1</button>
-        <button data-num="2" type="button" class="btn btn-primary start">2</button>
-        <button data-num="3" type="button" class="btn btn-primary start">3</button>
-        <button data-num="4" type="button" class="btn btn-primary start">4</button>
-        <button data-num="5" type="button" class="btn btn-primary start">5</button>
-        <button data-num="6" type="button" class="btn btn-primary start">6</button>
-        <button data-num="0" type="button" class="btn btn-primary start learn">изучаемые слова</button>
+        <button data-num="0" type="button" class="btn btn-primary start">1</button>
+        <button data-num="1" type="button" class="btn btn-primary start">2</button>
+        <button data-num="2" type="button" class="btn btn-primary start">3</button>
+        <button data-num="3" type="button" class="btn btn-primary start">4</button>
+        <button data-num="4" type="button" class="btn btn-primary start">5</button>
+        <button data-num="5" type="button" class="btn btn-primary start">6</button>
+        <button data-num="-1" type="button" class="btn btn-primary start learn">изучаемые слова</button>
      </div>
     `;
     wrapper.append(intro);
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', () => {
-        store.setState({ groupe: +item.dataset.num });
+        store.setState({ groupe: item.dataset.num });
+        console.log(item.dataset.num);
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
         store.setState({ health: 5 });
