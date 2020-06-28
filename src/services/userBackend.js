@@ -14,7 +14,7 @@ let user = null;
 
 const getToday = () => {
   const now = new Date();
-  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
 };
 
 export default class User {
@@ -138,6 +138,7 @@ export default class User {
     } else {
       stats.optional.main = JSON.parse(stats.optional.main);
     }
+    if (!user.stats) user.stats = {};
     Object.assign(user.stats, newStats);
 
     const today = getToday();
@@ -195,7 +196,9 @@ export default class User {
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
     return getStatistics(userInfo.userId, userInfo.token).then((stats) => {
-      return JSON.parse(stats.optional[game]);
+      return stats.optional[game]
+        ? JSON.parse(stats.optional[game])
+        : { r: [] };
     });
   }
 

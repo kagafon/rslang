@@ -6,4 +6,3 @@ window.addEventListener('load', () => {
   router.draw('main-page');
   document.body.classList.remove('hidden');
 });
-

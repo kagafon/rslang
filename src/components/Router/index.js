@@ -32,7 +32,7 @@ const routes = [
   {
     name: 'statistics-page',
     title: 'Статистика',
-    ClassConstructor: MainPage,
+    ClassConstructor: StatisticsPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/statistics-page.jpg',
     color: 'rgba(146, 85, 215, 0.57)',

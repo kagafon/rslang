@@ -55,7 +55,6 @@
         margin: 5px;
         font-weight: normal;
         text-align: center;
-        width: calc(100% + 10px);
     }
 
     .active {
@@ -125,7 +124,7 @@
     }
 }
 
-#ownGame {
+#phraseWizard {
     border-radius: 0 0 0 10px;
     border-bottom: none;
     @include media-phone {
