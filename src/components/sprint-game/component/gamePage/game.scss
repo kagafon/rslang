@@ -1,6 +1,6 @@
 @import '~bootstrap';
 
-body {
+.main {
     text-align: center;
     font-family: 'roboto', sans-serif;
   }
@@ -52,15 +52,19 @@ body {
     justify-content: center;
 }
 .button-false {
-    border-radius: 10px;
-    width: 100px;
-    height: 40px;
     margin-right: 40px;
 }
+.button-false,
 .button-true {
     border-radius: 10px;
     width: 100px;
     height: 40px;
+    background: blue;
+    opacity: 1;
+}
+.button-false:hover,
+.button-true:hover {
+    opacity: 0.7;
 }
 .btn-key {
     margin: 20px auto; 
@@ -72,6 +76,11 @@ body {
     height: 40px;
     background: whitesmoke;
     margin: -20px 20px 0;
+    opacity: 0.7;
+}
+.btn-false:hover,
+.btn-true:hover {
+    opacity: 1;
 }
 
 .btn-true {

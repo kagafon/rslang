@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
-// import Service from 'components/sprint-game/component/service';
 // import Voice from 'components/sprint-game/component/words/voice';
 // import store from 'components/sprint-game/component/storage';
 import { Words } from 'services/backend';
@@ -72,8 +71,7 @@ export default class gamePage {
       'volume_up'
     );
     this.timer(timer);
-    this.wordsRequest(0);
-    this.wordGeneration();
+    this.getUserWords();
     return main;
   }
 
@@ -103,22 +101,38 @@ export default class gamePage {
     return this.timer;
   }
 
-  async wordsRequest(level = 0) {
+  async getUserWords(level, preloads) {
     try {
-      // this.spinnerOn();
       const rndPage = this.randomInteger(0, 59);
-      const words = await Words.getWordsForRound(+level, rndPage, 10, [
-        'image',
-        'audio',
-      ]);
-      console.log(words);
-    } catch (error) {}
+      const wordsForRound = await Words.getWordsForRound(
+        4,
+        rndPage,
+        10,
+        preloads
+      );
+      console.log(wordsForRound);
+      for (let i = 0; i < wordsForRound.length; i += 1) {
+        document.querySelector('.engWord').textContent = wordsForRound[i].word;
+        document.querySelector('.rusWord').textContent =
+          wordsForRound[i].wordTranslate;
+      }
+      return wordsForRound;
+    } catch (e) {
+      console.error('error');
+      return 'd';
+    }
   }
 
-  async wordGeneration() {
+  randomInteger(min, max) {
+    const rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  }
+
+  /*
+  async wordGeneration(preload) {
     try {
       // const stage = store.getState();
-      const arrWords = await this.wordsRequest(0);
+      const arrWords = await Service.getUserWords(0, preload);
 
       console.log(arrWords);
       /*
@@ -143,7 +157,7 @@ export default class gamePage {
           wordsCardFilter.splice(rndNum, 1);
         }
       });
-      Voice.autoPlayAudio(); */
+      Voice.autoPlayAudio(); 
     } catch (error) {}
-  }
+  } */
 }
