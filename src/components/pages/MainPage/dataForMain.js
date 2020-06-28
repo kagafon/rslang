@@ -1,7 +1,7 @@
 import { User, Words } from 'services/backend';
 
 export async function getSettings() {
-  let settings = {
+  const settings = {
     buttons: {
       gradeWord: true,
       removeWord: true,
@@ -18,7 +18,7 @@ export async function getSettings() {
     },
   };
   try {
-    const user = await dUser.getCurrentUser();
+    const user = await User.getCurrentUser();
     return user.settings;
   } catch (e) {
     return settings;
@@ -27,10 +27,9 @@ export async function getSettings() {
 
 export async function getUserWords(preloads) {
   try {
-    const wordsForRound = await Words.getWordsForRound(3, 1, 40, preloads);
-    console.error(wordsForRound);
-    return wordsForRound;
+    const wordsToday = await ыWords.getTodayUserWords(preloads);
+    return wordsToday;
   } catch (e) {
-    return 'd';
+    return null;
   }
 }

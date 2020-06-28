@@ -1,16 +1,17 @@
 import { createElement } from 'helpers/dom';
 
-export function showWord(word, sentence) {
+function showWord(word, sentence) {
   return sentence.replace('[...]', word);
 }
 
-export function hideWord(word, sentence) {
+function hideWord(word, sentence) {
   return sentence.toLowerCase().replace(word, '[...]');
 }
 
-export const playAudio = (audio, audioSrc) =>
+const playAudio = (audioMain, audioSrc) =>
   new Promise((resolve, reject) => {
     try {
+      const audio = audioMain;
       audio.src = `${audioSrc}`;
       audio.play();
       audio.onended = () => resolve();
@@ -19,10 +20,10 @@ export const playAudio = (audio, audioSrc) =>
     }
   });
 
-export function letters(word, answer, wordContainer) {
+function letters(word, answer, wordContainer) {
   let inputAnswer = answer.split('');
   let correctLetter = [];
-  let correctAnswer = word.split('');
+  const correctAnswer = word.split('');
   correctAnswer.forEach((letter) => {
     inputAnswer.forEach((el) => {
       if (letter === el) {
@@ -41,16 +42,19 @@ export function letters(word, answer, wordContainer) {
   });
 }
 
-export function volumeOff(volumeBtn) {
-  volumeBtn.classList.add('off');
-  volumeBtn.textContent = 'volume_off';
+function volumeOff(volumeBtn) {
+  const btn = volumeBtn;
+  btn.classList.add('off');
+  btn.textContent = 'volume_off';
 }
-export function volumeUp(volumeBtn) {
-  volumeBtn.classList.remove('off');
-  volumeBtn.textContent = 'volume_up';
+function volumeUp(volumeBtn) {
+  const btn = volumeBtn;
+  btn.classList.remove('off');
+  btn.textContent = 'volume_up';
 }
 
-export function changeProgressBar(progressBar, pagination) {
+function changeProgressBar(progressBarMain, pagination) {
+  const progressBar = progressBarMain;
   const current = pagination.querySelector('.swiper-pagination-current')
     .textContent;
   const total = pagination.querySelector('.swiper-pagination-total')
@@ -59,7 +63,7 @@ export function changeProgressBar(progressBar, pagination) {
   progressBar.style.width = `${pres}%`;
 }
 
-export function createLoader() {
+function createLoader() {
   const divLoad = createElement(
     document.querySelector('body'),
     'div',
@@ -78,3 +82,14 @@ export function createLoader() {
 
   return loader;
 }
+
+export {
+  showWord,
+  hideWord,
+  playAudio,
+  letters,
+  volumeOff,
+  volumeUp,
+  changeProgressBar,
+  createLoader,
+};

@@ -17,6 +17,10 @@ import {
   getSettings,
   getUserWords,
 } from 'components/pages/MainPage/dataForMain';
+import { User, Words } from 'services/backend';
+
+import Toaster from 'components/Toaster';
+import router from 'components/Router/';
 
 class MainPageGame {
   constructor() {
@@ -27,6 +31,7 @@ class MainPageGame {
     this.addVolumeHandler = this.addVolumeHandler.bind(this);
     this.addContainerHandler = this.addContainerHandler.bind(this);
   }
+
   async create() {
     this.container = createElement(
       '',
@@ -44,12 +49,18 @@ class MainPageGame {
     );
     const preloads = ['image', 'audio', 'audioExample', 'audioMeaning'];
     const loader = createLoader();
-    console.error(loader);
+    // console.error(loader);
 
     const data = await Promise.all([getSettings(), getUserWords(preloads)]);
     loader.parentNode.removeChild(loader);
     this.settings = data[0];
     this.words = data[1];
+
+    if (!this.words) {
+      Toaster.createToast(`На сегодня нет слов`, 'danger');
+      router.draw('main-page');
+      throw new Error();
+    }
   }
 
   createSwiper() {
@@ -285,7 +296,9 @@ class MainPageGame {
   }
 
   async addSubmitHandler() {
+    // console.error(event.submitter.innerText);
     event.preventDefault();
+
     this.wordInput = this.findActiveCardWord();
     const {
       word,
@@ -434,16 +447,24 @@ class MainPageGame {
   }
 
   async init() {
-    await this.create();
-    this.createSwiper();
-    return this.container;
+    try {
+      await this.create();
+      this.createSwiper();
+      return this.container;
+    } catch (e) {
+      return this.container;
+    }
   }
 
   postInit() {
-    modal.create();
-    this.initSwiper();
-    this.addAction();
-    this.setLongWord();
+    try {
+      modal.create();
+      this.initSwiper();
+      this.addAction();
+      this.setLongWord();
+    } catch (e) {
+      console.error('kkk');
+    }
   }
 }
 

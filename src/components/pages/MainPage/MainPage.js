@@ -2,6 +2,9 @@ import { createElement } from 'helpers/dom';
 import router from 'components/Router/';
 
 class MainPage {
+  constructor() {
+    this.controlHandler = this.controlHandler.bind(this);
+  }
   create() {
     this.container = createElement(
       '',
@@ -81,7 +84,7 @@ class MainPage {
       'изучать все слова',
     ];
 
-    const radioDiv = createElement(
+    this.radioDiv = createElement(
       div2,
       'div',
       ['d-flex', 'justify-content-start', 'align-items-start', 'flex-column'],
@@ -91,7 +94,7 @@ class MainPage {
 
     words.forEach((el, index) => {
       const div = createElement(
-        radioDiv,
+        this.radioDiv,
         'div',
         [
           'custom-control',
@@ -137,9 +140,23 @@ class MainPage {
   }
 
   addHandlers() {
+    const control = document.querySelector('#control');
     this.startButton.addEventListener('click', () => {
       router.draw('main-page-game');
     });
+    this.radioDiv.addEventListener('click', this.controlHandler);
+  }
+
+  controlHandler(event) {
+    if (event.target.id === 'customRadioInline1') {
+      console.error('1');
+    }
+    if (event.target.id === 'customRadioInline2') {
+      console.error('2');
+    }
+    if (event.target.id === 'customRadioInline3') {
+      console.error('3');
+    }
   }
 
   init() {

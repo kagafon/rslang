@@ -49,6 +49,7 @@ class Modal {
     const p = this.modal.querySelector('.modal-body p');
     p.textContent = text;
   }
+
   show() {
     this.modal.classList.add('show');
   }
