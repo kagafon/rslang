@@ -370,14 +370,10 @@ export default class promoPage {
       {},
       'Дано слово и перевод, а также два варианта ответа - верно или нет. Игрок выбирает один из них.'
     );
-    this.initSwiper();
+    this.swiper = new Swiper(this.swiperContainer, optionsForSwiper);
     this.slideNext(btnNext);
     this.slidePrev(btnPrev);
     return this.parent;
-  }
-
-  initSwiper() {
-    this.swiper = new Swiper(this.swiperContainer, optionsForSwiper);
   }
 
   slidePrev(btn) {
