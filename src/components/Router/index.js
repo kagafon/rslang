@@ -4,6 +4,9 @@ import Router from 'components/Router/Router';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
+import startPage from 'components/sprint-game/component/start-page/start-page';
+import RusWords from 'components/sprint-game/component/words/words';
+import GamePage from 'components/sprint-game/component/gamePage/game-page';
 
 const routes = [
   {
@@ -85,7 +88,7 @@ const routes = [
   {
     name: 'statistics-page',
     title: 'Статистика',
-    ClassConstructor: MainPage,
+    ClassConstructor: GamePage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/statistics-page.jpg',
     color: 'rgba(146, 85, 215, 0.57)',
@@ -102,7 +105,7 @@ const routes = [
   {
     name: 'settings-page',
     title: 'Настройки',
-    ClassConstructor: MainPage,
+    ClassConstructor: RusWords,
     needAuthorization: false,
     image: 'assets/images/backgrounds/settings-page.jpg',
     color: 'rgba(121, 42, 121, 0.69)',
@@ -110,7 +113,7 @@ const routes = [
   {
     name: 'promo-page',
     title: 'Промо',
-    ClassConstructor: MainPage,
+    ClassConstructor: startPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/promo-page.jpg',
     color: 'rgba(124, 55, 73, 0.79)',
