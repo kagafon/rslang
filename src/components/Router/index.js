@@ -1,20 +1,24 @@
+/* eslint-disable import/no-cycle */
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
 import StatisticsPage from 'components/statisticPage/StatisticsPage';
+import authorizationPage from 'components/authorization-page/autorizationPage';
+import teamPage from 'components/team-page/team-page';
+import GamesPage from 'components/mini-games-page/MiniGamesPage';
 
 const routes = [
   {
     name: 'main-page',
     title: 'Учить слова',
     ClassConstructor: MainPage,
-    needAuthorization: false,
+    needAuthorization: true,
     image: 'assets/images/backgrounds/main-page.jpg',
     color: 'rgba(83, 140, 173, 0.49)',
   },
   {
     name: 'game-page',
     title: 'Мини-игры',
-    ClassConstructor: MainPage,
+    ClassConstructor: GamesPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/game-page.jpg',
     color: 'rgba(69, 28, 78, 0.66)',
@@ -26,8 +30,58 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/game-page.jpg',
+    image: 'assets/images/backgrounds/speakit-page.jpg',
     color: 'rgba(69, 28, 78, 0.66)',
+  },
+  {
+    name: 'engpuz-page',
+    title: 'English puzzle',
+    ClassConstructor: MainPage,
+    needAuthorization: false,
+    excludeFromMenu: true,
+    menuItem: 'game-page',
+    image: 'assets/images/backgrounds/engpuz-page.jpg',
+    color: 'rgba(255, 108, 64, 0.57)',
+  },
+  {
+    name: 'savannah-page',
+    title: 'Саванна',
+    ClassConstructor: MainPage,
+    needAuthorization: false,
+    excludeFromMenu: true,
+    menuItem: 'game-page',
+    image: 'assets/images/backgrounds/savannah-page.jpg',
+    color: 'rgba(69, 28, 78, 0.66)',
+  },
+  {
+    name: 'audiocall-page',
+    title: 'Аудиовызов',
+    ClassConstructor: MainPage,
+    needAuthorization: false,
+    excludeFromMenu: true,
+    menuItem: 'game-page',
+    image: 'assets/images/backgrounds/audiocall-page.jpg',
+    color: 'rgba(124, 55, 73, 0.79)',
+  },
+  {
+    name: 'sprint-page',
+    title: 'Спринт',
+    ClassConstructor: MainPage,
+    needAuthorization: false,
+    excludeFromMenu: true,
+    menuItem: 'game-page',
+    image: 'assets/images/backgrounds/sprint-page.jpg',
+    color: 'rgba(146, 85, 215, 0.57)',
+  },
+  {
+    name: 'phrasewizard-page',
+    title: 'Мастер фраз',
+    ClassConstructor: MainPage,
+    needAuthorization: false,
+    excludeFromMenu: true,
+    menuItem: 'game-page',
+    image: 'assets/images/backgrounds/phrasewizard-page.jpg',
+    color: 'rgba(83, 140, 173, 0.49)',
   },
   {
     name: 'statistics-page',
@@ -40,7 +94,7 @@ const routes = [
   {
     name: 'authorization-page',
     title: 'Вход/Регистрация',
-    ClassConstructor: MainPage,
+    ClassConstructor: authorizationPage,
     needAuthorization: false,
     hideWhenAuthorized: true,
     image: 'assets/images/backgrounds/authorization-page.jpg',
@@ -65,12 +119,11 @@ const routes = [
   {
     name: 'team-page',
     title: 'О команде',
-    ClassConstructor: MainPage,
+    ClassConstructor: teamPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/team-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
   },
-
   {
     name: 'dictionary-page',
     title: 'Словарь',
