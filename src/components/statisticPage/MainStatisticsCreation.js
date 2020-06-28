@@ -10,7 +10,6 @@ class MainStatisticsCreation {
     const newWordData = [];
     async function getMainStat() {
       try {
-        await User.login('roman@te.st', '!Qazxsw2');
         await User.autoLogin();
         const response = await User.getMainStatistics(true);
         const todayStatistic = response.d[response.d.length - 1];
