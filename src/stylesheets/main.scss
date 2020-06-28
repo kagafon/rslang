@@ -1,12 +1,12 @@
-@import 'bootstrap';
-// @import './game-audioCall/style';
-// @import './bootstrap.min.css';
 @import '~bootstrap';
 @import 'variables';
+@import 'toaster/toaster';
 @import './main-page/navbar';
 @import './statisticPage/statisticPage';
 @import './game-page/_allgames';
 @import './team-page/style.scss';
+@import './autorization-page/style.scss';
+@import 'game-AudioCall/style.scss';
 
 body {
   background-repeat: no-repeat;
@@ -26,6 +26,5 @@ body {
 }
 
 .main-container {
-  padding-top: 175px;
   width: 100%;
 }
