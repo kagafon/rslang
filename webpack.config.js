@@ -99,7 +99,7 @@ module.exports = (env, options) => {
       }),
       new HtmlWebpackPlugin({
         title: 'RS Lang',
-        template: 'src/html/index.html',
+        template: './src/html/index.html',
         /* favicon: 'src/html/favicon.ico', */
         meta: {
           charset: 'UTF-8',

@@ -47,7 +47,6 @@ class MainPageGame {
     console.error(loader);
 
     const data = await Promise.all([getSettings(), getUserWords(preloads)]);
-    // document.querySelector('body').removeChild(loader);
     loader.parentNode.removeChild(loader);
     this.settings = data[0];
     this.words = data[1];
