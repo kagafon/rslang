@@ -13,8 +13,7 @@ import { APPLICATION } from './config';
 let user = null;
 
 const getToday = () => {
-  const now = new Date();
-  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  return new Date().getTime() / (3600 * 1000 * 24);
 };
 
 const DEFAULT_USER_SETTINGS = {
