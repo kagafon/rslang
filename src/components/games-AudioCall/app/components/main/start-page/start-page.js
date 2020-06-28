@@ -6,6 +6,8 @@ import Header from 'components/games-AudioCall/app/components/main/header/header
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
+// eslint-disable-next-line import/no-cycle
+import Popap from 'components/games-AudioCall/app/components/main/popap-error/popap-error';
 
 export default class StartPage {
   static render() {
@@ -33,16 +35,23 @@ export default class StartPage {
     document.body.append(intro);
 
     document.querySelectorAll('.start').forEach((item) => {
-      item.addEventListener('click', () => {
-        intro.remove();
-        Service.wordsRequest(+item.dataset.num);
+      item.addEventListener('click', async () => {
+        const words = await Service.wordsRequest(+item.dataset.num);
+        store.setState({ requestWords: words });
+
         store.setState({ groupe: item.dataset.num });
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
-        Header.init();
-        Voice.init();
-        RusWords.init();
-        Button.init();
+
+        if (words.length < 10) {
+          Popap.init();
+        } else {
+          intro.remove();
+          Header.init();
+          Voice.init();
+          RusWords.init();
+          Button.init();
+        }
       });
     });
   }

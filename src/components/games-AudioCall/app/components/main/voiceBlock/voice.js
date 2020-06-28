@@ -17,15 +17,8 @@ export default class Voice {
     answerBlock.append(audio);
   }
 
-  static async audioBtn() {
+  static audioBtn() {
     try {
-      const stage = await store.getState();
-      const audio = await Service.wordsRequest(stage.groupe);
-
-      audio.sort(() => {
-        return Math.random() - 0.5;
-      });
-
       const btnAudio = document.querySelector('.audio');
 
       btnAudio.addEventListener('click', () => {
@@ -52,6 +45,7 @@ export default class Voice {
         playAudio.dataset.text = stageRound.word.wordTranslate;
         playAudio.src = stageRound.word.audioSrc;
         playAudio.play();
+        console.log(btnAudio)
         btnAudio.classList.add('audio-animation');
 
         playAudio.onended = () => {

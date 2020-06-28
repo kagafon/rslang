@@ -6,7 +6,7 @@ export default class Service {
     try {
       this.spinnerOn();
       const rndPage = this.randomInteger(0, 59);
-      const words = await Words.getWordsForRound(+level, rndPage, 10, [
+      const words = await Words.getWordsForRound(+level, rndPage, 20, [
         'image',
         'audio',
       ]);

@@ -74,8 +74,12 @@ export default class Button {
         });
 
         answerBlock.innerHTML = '';
-        RusWords.wordGeneration();
-        Voice.init();
+        Service.spinnerOn();
+
+        setTimeout(() => {
+          RusWords.wordGeneration();
+          Voice.init();
+        }, 1000);
 
         document.querySelector('.hint').style.display = 'block';
         document.querySelector('.next').style.display = 'none';

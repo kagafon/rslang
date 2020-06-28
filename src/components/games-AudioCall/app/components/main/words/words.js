@@ -5,7 +5,6 @@ import Results from 'components/games-AudioCall/app/components/main/results/resu
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage';
-import Popap from 'components/games-AudioCall/app/components/main/popap-error/popap-error';
 
 export default class RusWords {
   static render() {
@@ -125,15 +124,11 @@ export default class RusWords {
     store.setState({ correct: cardsWrapper[randNum] });
   }
 
-  static async wordGeneration() {
+  static wordGeneration() {
     try {
       const stage = store.getState();
-      const arrWords = await Service.wordsRequest(stage.groupe);
       const wordsCard = document.querySelectorAll('.words');
-      arrWords.length = 3;
-      if (arrWords.length < 10) {
-        Popap.init();
-      }
+      const arrWords = stage.requestWords;
 
       store.setState({ word: arrWords[stage.round] });
       this.wordsTranslate(arrWords[stage.round].wordTranslate);
@@ -150,8 +145,9 @@ export default class RusWords {
           wordsCardFilter.splice(rndNum, 1);
         }
       });
-      Service.spinnerOff();
       Voice.autoPlayAudio();
+      Service.spinnerOff();
+     
     } catch (error) {}
   }
 
