@@ -206,6 +206,28 @@ export default class promoPage {
       { type: 'circle' },
       'Не угадали - слово повториться через час.'
     );
+    const divAllRule = createElement(describeGame, 'div', ['game'], {}, '');
+    const imgAllRule = createElement(
+      divAllRule,
+      'img',
+      ['img-game'],
+      { src: 'assets/images/promo-page/russia-flag-button-square-xs.png' },
+      ''
+    );
+    const titleAllRule = createElement(
+      divAllRule,
+      'h3',
+      ['title'],
+      {},
+      'Правила игры'
+    );
+    const pAllRule = createElement(
+      titleAllRule,
+      'p',
+      ['describe'],
+      {},
+      'На стартовой странице каждой игры пользователь выбирает уровень сложности. В "изучаемые слова" можно играть только, если количество изученных слов больше 10.'
+    );
     const divLearn = createElement(describeGame, 'div', ['game'], {}, '');
     const imgLearn = createElement(
       divLearn,
@@ -348,7 +370,7 @@ export default class promoPage {
       {},
       'Дано слово и перевод, а также два варианта ответа - верно или нет. Игрок выбирает один из них.'
     );
-    this.postInit();
+    this.initSwiper();
     this.slideNext(btnNext);
     this.slidePrev(btnPrev);
     return this.parent;
@@ -358,10 +380,6 @@ export default class promoPage {
     this.swiper = new Swiper(this.swiperContainer, optionsForSwiper);
   }
 
-  postInit() {
-    this.initSwiper();
-  }
-  
   slidePrev(btn) {
     btn.addEventListener('click', () => {
       this.swiper.slidePrev();
