@@ -1,0 +1,117 @@
+@import '~bootstrap';
+
+body {
+    text-align: center;
+    font-family: 'roboto', sans-serif;
+  }
+.points {
+    font-size: 70px;
+    color: green;
+    margin: 0 auto;
+}
+.game-timer {
+    width: 500px;
+    height: 450px;
+    background: white;
+    font-size: 50px;
+    margin: -20px auto 0;
+    border-radius: 20px;
+}
+.dot {
+    width: 100px;
+    height: 20px;
+    display: flex;
+    margin: 0 auto;
+}
+.dots {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: gray;
+    margin: 30px 5px 15px;
+}
+.game-img {
+    width: 100px;
+    height: 100px;
+    margin: 50px auto 20px;
+}
+.engWord,
+.rusWord {
+    font-family: 'roboto', sans-serif;
+    height: 50px;
+    font-size: 50px;
+    font-weight: 500; 
+}
+.engWord {
+    margin: 0 auto 20px;
+}
+.button {
+    font-size: 20px;
+    display: flex;
+    margin: 60px auto 10px;
+    justify-content: center;
+}
+.button-false {
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+    margin-right: 40px;
+}
+.button-true {
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+}
+.btn-key {
+    margin: 20px auto; 
+}
+.btn-false,
+.btn-true {
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    background: whitesmoke;
+    margin: -20px 20px 0;
+}
+
+.btn-true {
+    margin-right: 0px;
+}
+.btn-false:before {
+    content: '\2B05';
+    line-height: 40px;
+}
+.btn-true:before {
+    content: '\27A1';
+    line-height: 40px;
+}
+.countdown {
+   
+}
+.countdown {
+    position: relative;
+    top: -400px;
+    right: -310px;
+    font-family: 'roboto', sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+  }
+   
+  .countdown-number {
+    padding: 5px;
+    border-radius: 3px;
+    background: #6757fd;
+    display: inline-block;
+  }
+   
+  .countdown-time {
+    font-size: 30px;
+    padding: 5px;
+    border-radius: 3px;
+    color: black;
+    background: lightblue;
+    display: inline-block;
+  }
