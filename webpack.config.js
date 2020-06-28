@@ -15,7 +15,7 @@ module.exports = (env, options) => {
     mode: options.mode,
     devtool: 'inline-source-map',
     entry: {
-      script: './src/components/games-AudioCall/index.js',
+      script: './src/index.js',
     },
     output: {
       path: PATHS.dist,
@@ -99,7 +99,7 @@ module.exports = (env, options) => {
       }),
       new HtmlWebpackPlugin({
         title: 'RS Lang',
-        template: './src/components/games-AudioCall/index.html',
+        template: './src/html/index.html',
         /* favicon: 'src/html/favicon.ico', */
         meta: {
           charset: 'UTF-8',
