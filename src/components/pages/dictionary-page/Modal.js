@@ -1,15 +1,10 @@
 import { Modal } from 'bootstrap';
 import { createElement } from 'helpers/dom';
+import Toaster from 'components/Toaster';
 import { FILE_BASE_URL } from 'services/config';
 import { User, Words } from 'services/backend';
+import classMap from './wordTypes';
 
-const classMap = {
-  new: 'info',
-  easy: 'success',
-  medium: 'secondary',
-  hard: 'warning',
-  deleted: 'danger',
-};
 const titleBadgeClasses = ['badge'];
 export default class WordDetails {
   constructor(container, playSound) {
@@ -132,7 +127,7 @@ export default class WordDetails {
     const mediumBtn = createElement(
       buttonGroup,
       'button',
-      ['btn', 'btn-sm', 'btn-secondary'],
+      ['btn', 'btn-sm', 'btn-info'],
       { type: 'button' },
       'Хорошо'
     );
@@ -155,23 +150,15 @@ export default class WordDetails {
     );
     this.controlButtons.push(hardBtn);
 
-    const deleteBtn = createElement(
-      modalFooter,
-      'button',
-      ['btn', 'btn-danger', 'btn-sm'],
-      { type: 'button' },
-      'Удалить'
-    );
-    deleteBtn.addEventListener(
-      'click',
-      this.setWordDifficulty.bind(this, 'deleted')
-    );
-    this.controlButtons.push(deleteBtn);
+    this.deleteBtn = createElement(modalFooter, 'button', [], {
+      type: 'button',
+    });
+    this.controlButtons.push(this.deleteBtn);
 
     createElement(
       modalFooter,
       'button',
-      ['btn', 'btn-info', 'btn-sm'],
+      ['btn', 'btn-secondary', 'btn-sm'],
       { type: 'button', 'data-dismiss': 'modal' },
       'Закрыть'
     );
@@ -184,6 +171,24 @@ export default class WordDetails {
     createElement(this.buttonSpinner, 'span', [], {}, 'Сохр...');
 
     this.modal = new Modal(this.modal);
+  }
+
+  styleDeleteButton() {
+    if (this.deleteBtnListener) {
+      this.deleteBtn.removeEventListener('click', this.deleteBtnListener);
+    }
+    if (this.word.difficulty === 'deleted') {
+      this.deleteBtn.className = '';
+      this.deleteBtn.classList.add('btn', 'btn-primary', 'btn-sm');
+      this.deleteBtn.innerText = 'Вернуть';
+      this.deleteBtnListener = this.setWordDifficulty.bind(this, 'new');
+    } else {
+      this.deleteBtn.className = '';
+      this.deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+      this.deleteBtn.innerText = 'Удалить';
+      this.deleteBtnListener = this.setWordDifficulty.bind(this, 'deleted');
+    }
+    this.deleteBtn.addEventListener('click', this.deleteBtnListener);
   }
 
   show(word) {
@@ -207,6 +212,7 @@ export default class WordDetails {
         }
       }
     });
+    this.styleDeleteButton();
     this.modal.show();
   }
 
@@ -222,29 +228,33 @@ export default class WordDetails {
     this.titleBadge = createElement(
       this.title,
       'span',
-      [...titleBadgeClasses, `badge-${classMap[this.word.difficulty]}`],
+      [...titleBadgeClasses, `badge-${classMap[this.word.difficulty].class}`],
       {},
-      this.word.difficulty
+      classMap[this.word.difficulty].title
     );
   }
 
   async setWordDifficulty(difficulty, evt) {
-    this.disableControlButtons();
-    const btn = evt.currentTarget;
-    const btnText = btn.innerText;
-    btn.innerText = '';
-    btn.appendChild(this.buttonSpinner);
+    if (difficulty !== this.word.difficulty) {
+      this.disableControlButtons();
+      const btn = evt.currentTarget;
+      const btnText = btn.innerText;
+      btn.innerText = '';
+      btn.appendChild(this.buttonSpinner);
 
-    try {
-      await Words.updateUserWord({ ...this.word, difficulty });
-      this.word.difficulty = difficulty;
-      this.title.innerText = this.word.word;
-      this.addTitleBadge();
-    } catch (err) {
-      console.log(err);
+      try {
+        await Words.updateUserWord({ ...this.word, difficulty });
+        this.word.difficulty = difficulty;
+        this.title.innerText = this.word.word;
+        this.addTitleBadge();
+        this.word.updateWordColor(); // Update color on main page
+      } catch (err) {
+        Toaster.createToast(`Ошибка сохранения: ${err}`, 'danger');
+      }
+      this.buttonSpinner.remove();
+      btn.innerText = btnText;
+      this.styleDeleteButton();
+      this.enableControlButtons();
     }
-    this.buttonSpinner.remove();
-    btn.innerText = btnText;
-    this.enableControlButtons();
   }
 }

@@ -4,7 +4,7 @@ import Router from 'components/Router/Router';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
-import Dictionary from 'components/pages/dictionary';
+import Dictionary from 'components/pages/dictionary-page';
 
 const routes = [
   {
