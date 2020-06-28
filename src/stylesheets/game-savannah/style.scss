@@ -253,9 +253,6 @@ p {
   border-radius: 5px;
   cursor: pointer;
   margin: 0 20px;
-  &:hover {
-    background-color: #2ff8072c;
-  }
 }
 
 .words {
@@ -414,4 +411,30 @@ p {
   margin-bottom: 20px;
   width: 150px;
   background-color: #f85307;
+}
+
+// Popap-error ____________________________________
+
+.popap {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  top: 25%;
+  left: 35%;
+  height: 200px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: rgba(252, 249, 249, 0.747);
+  margin: 0 auto;
+}
+
+.popap-title {
+  color: #000000;
+  text-align: center;
+  font-size: 24px;
+}
+
+.popap-btn {
+  margin: 20px auto
 }

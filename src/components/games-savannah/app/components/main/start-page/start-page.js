@@ -2,6 +2,8 @@
 import Timer from 'components/games-savannah/app/components/main/start-page/timer';
 import store from 'components/games-savannah/app/components/storage';
 import Service from 'components/games-savannah/app/service';
+// eslint-disable-next-line import/no-cycle
+import Popap from 'components/games-savannah/app/components/main/popap-error/popap-error';
 
 export default class StartPage {
   static render() {
@@ -39,8 +41,13 @@ export default class StartPage {
         store.setState({ correctChoice: 0 });
         store.setState({ health: 5 });
         store.setState({ volume: 'on' });
-        intro.remove();
-        Timer.init();
+
+        if (words.length < 10) {
+          Popap.init();
+        } else {
+          intro.remove();
+          Timer.init();
+        }
       });
     });
   }
