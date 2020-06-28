@@ -18,7 +18,7 @@ export async function getSettings() {
     },
   };
   try {
-    const user = await User.getCurrentUser();
+    const user = await dUser.getCurrentUser();
     return user.settings;
   } catch (e) {
     return settings;
@@ -31,7 +31,6 @@ export async function getUserWords(preloads) {
     console.error(wordsForRound);
     return wordsForRound;
   } catch (e) {
-    console.error('error');
     return 'd';
   }
 }
