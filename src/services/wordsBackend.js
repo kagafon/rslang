@@ -27,7 +27,7 @@ const userWordFields = [
   { name: 'repeatTimes', default: '0' },
   {
     name: 'nextRepeat',
-    get: (x) => (x ?  new Date(x) : null),
+    get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
     default: `${new Date().getTime()}`,
   },
