@@ -5,14 +5,16 @@ export default class Service {
   static async wordsRequest(level = 0) {
     try {
       this.spinnerOn();
-      const rndPage = this.randomInteger(0, 59);
+      const rndPage = this.randomInteger(0, 29);
       const words = await Words.getWordsForRound(+level, rndPage, 20, [
         'image',
         'audio',
       ]);
 
       return words;
-    } catch (error) {}
+    } catch (error) {
+      Service.spinnerOff();
+    }
   }
 
   static randomInteger(min, max) {

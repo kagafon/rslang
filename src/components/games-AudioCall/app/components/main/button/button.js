@@ -79,8 +79,8 @@ export default class Button {
         Service.spinnerOn();
 
         setTimeout(() => {
-          RusWords.wordGeneration();
           Voice.init();
+          RusWords.wordGeneration();
         }, 1000);
 
         document.querySelector('.hint').style.display = 'block';

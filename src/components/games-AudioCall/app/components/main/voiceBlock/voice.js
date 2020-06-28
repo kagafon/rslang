@@ -1,5 +1,4 @@
 import store from 'components/games-AudioCall/app/components/storage';
-import Service from 'components/games-AudioCall/app/service';
 
 export default class Voice {
   static render() {
@@ -11,7 +10,7 @@ export default class Voice {
       <span class="material-icons md-100 md-light">
        volume_up
       </span>
-      <audio data-id='' src="#"></audio>
+      <audio data-id='' src=""></audio>
     `;
 
     answerBlock.append(audio);
@@ -39,21 +38,22 @@ export default class Voice {
 
     const stageRound = store.getState();
     const playAudio = document.querySelector('audio');
+
     playAudio.src = '';
 
-    setTimeout(() => {
-      if (stageRound.round <= 9) {
-        playAudio.dataset.text = stageRound.word.wordTranslate;
-        playAudio.src = stageRound.word.audioSrc;
-        playAudio.play();
-        console.log(btnAudio);
-        btnAudio.classList.add('audio-animation');
+    if (stageRound.round <= 9) {
+      playAudio.dataset.text = stageRound.word.wordTranslate;
+      playAudio.src = stageRound.word.audioSrc;
 
-        playAudio.onended = () => {
-          btnAudio.classList.remove('audio-animation');
-        };
-      }
-    }, 1000);
+      setTimeout(() => {
+        btnAudio.classList.add('audio-animation');
+        playAudio.play();
+      }, 1000);
+
+      playAudio.onended = () => {
+        btnAudio.classList.remove('audio-animation');
+      };
+    }
   }
 
   static init() {

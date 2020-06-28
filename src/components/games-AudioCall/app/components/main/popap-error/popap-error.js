@@ -1,6 +1,5 @@
 import Service from 'components/games-AudioCall/app/service';
 // eslint-disable-next-line import/no-cycle
-import App from 'components/games-AudioCall/app/app';
 
 export default class Popap {
   static render() {
@@ -10,7 +9,7 @@ export default class Popap {
      <span class="popap-title">Минимальное количество изучаемых слов 10</span>
      <button data-num="4" type="button" class="btn btn-primary popap-btn">закрыть</button>
     `;
-    document.body.append(popap);
+    document.querySelector('.wrapper').append(popap);
     Service.spinnerOff();
   }
 
@@ -18,8 +17,7 @@ export default class Popap {
     const popapBtn = document.querySelector('.popap-btn');
 
     popapBtn.addEventListener('click', () => {
-      document.body.innerHTML = '';
-      App.run();
+      
     });
   }
 

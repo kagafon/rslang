@@ -6,9 +6,10 @@ import Header from 'components/games-AudioCall/app/components/main/header/header
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
+import Toaster from 'components/Toaster';
 
 export default class StartPage {
-  static render() {
+  static render(container) {
     const intro = document.createElement('div');
     intro.classList.add('intro');
     intro.innerHTML = `
@@ -30,7 +31,7 @@ export default class StartPage {
          <button data-num="-1" type="button" class="btn btn-primary start learn">изучаемые слова</button>
      </div>
     `;
-    document.body.append(intro);
+    container.append(intro);
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
@@ -41,16 +42,21 @@ export default class StartPage {
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
 
-        intro.remove();
-        Header.init();
-        Voice.init();
-        RusWords.init();
-        Button.init();
+        if (words.length < 10) {
+          Toaster.createToast('необходимое количество слов 10', 'danger');
+          Service.spinnerOff();
+        } else {
+          intro.remove();
+          Header.init();
+          Voice.init();
+          RusWords.init();
+          Button.init();
+        }
       });
     });
   }
 
-  static init() {
-    this.render();
+  static init(container) {
+    this.render(container);
   }
 }

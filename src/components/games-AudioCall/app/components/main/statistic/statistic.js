@@ -3,7 +3,9 @@ import { createElement } from 'helpers/dom';
 import store from 'components/games-AudioCall/app/components/storage';
 import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
 // eslint-disable-next-line import/no-cycle
-import App from 'components/games-AudioCall/app/app';
+import StartPage from 'components/games-AudioCall/app/components/main/start-page/start-page';
+// eslint-disable-next-line import/no-cycle
+import { User } from 'services/backend';
 
 export default class Statisctic {
   static render() {
@@ -14,8 +16,9 @@ export default class Statisctic {
 
     header.innerHTML = '';
     wrapper.innerHTML = '';
-    createElement(wrapper, 'div', ['statistic-block']);
-    const statisticBlock = document.querySelector('.statistic-block');
+
+    const statisticBlock = createElement(wrapper, 'div', ['statistic-block']);
+
     statisticBlock.innerHTML = `
      <div class="statistic">
          <span class="statistic-title">${description}</span>
@@ -125,11 +128,18 @@ export default class Statisctic {
     const bntReboot = document.querySelector('.final-btn');
 
     bntReboot.addEventListener('click', () => {
-      document.body.innerHTML = '';
+      document.querySelector('.wrapper').innerHTML = '';
+      createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
       statisticStore.clearState();
-      statisticStore.getState();
-      App.run();
+      StartPage.render(document.querySelector('.game-container'));
     });
+  }
+
+  static postGametStatistic() {
+    const stage = store.getState();
+    const date = new Date();
+    const { correctChoice } = stage;
+    User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
   }
 
   static init() {
@@ -138,5 +148,6 @@ export default class Statisctic {
     this.learnedWords();
     this.playAudio();
     this.reboot();
+    this.postGametStatistic();
   }
 }
