@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
-import 'stylesheets/autorization-page/style.scss';
 import { User } from 'services/backend';
 import Router from 'components/Router';
 
@@ -10,7 +9,7 @@ export default class authorizationPage {
     const parent = createElement(
       null,
       'div',
-      ['form'],
+      ['form', 'authorization-page'],
       { style: 'width:100%' },
       ''
     );

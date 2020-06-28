@@ -94,6 +94,18 @@ const getUserWords = (id, token, filter, wordsPerPage = 50) => {
   ).then(wrapResponse);
 };
 
+const getUserWordById = (id, token, wordId) => {
+  return fetch(`${DATA_BASE_URL}/users/${id}/aggregatedWords/${wordId}`, {
+    method: 'GET',
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then(wrapResponse);
+};
+
 const addUserWord = (id, token, wordId, optional) => {
   return fetch(`${DATA_BASE_URL}/users/${id}/words/${wordId}`, {
     method: 'POST',
@@ -188,4 +200,5 @@ export {
   addUserWord,
   updateUserWord,
   getUserWords,
+  getUserWordById,
 };
