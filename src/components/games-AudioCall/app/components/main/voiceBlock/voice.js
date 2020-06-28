@@ -1,5 +1,5 @@
-import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
+import Service from 'components/games-AudioCall/app/service';
 
 export default class Voice {
   static render() {
@@ -37,22 +37,23 @@ export default class Voice {
   static autoPlayAudio() {
     const btnAudio = document.querySelector('.audio');
 
+    const stageRound = store.getState();
+    const playAudio = document.querySelector('audio');
+    playAudio.src = '';
+
     setTimeout(() => {
-      const stageRound = store.getState();
-      const playAudio = document.querySelector('audio');
-      playAudio.src = '';
       if (stageRound.round <= 9) {
         playAudio.dataset.text = stageRound.word.wordTranslate;
         playAudio.src = stageRound.word.audioSrc;
         playAudio.play();
-        console.log(btnAudio)
+        console.log(btnAudio);
         btnAudio.classList.add('audio-animation');
 
         playAudio.onended = () => {
           btnAudio.classList.remove('audio-animation');
         };
       }
-    }, 500);
+    }, 1000);
   }
 
   static init() {

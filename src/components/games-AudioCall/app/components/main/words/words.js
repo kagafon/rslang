@@ -5,6 +5,8 @@ import Results from 'components/games-AudioCall/app/components/main/results/resu
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage';
+// eslint-disable-next-line import/no-cycle
+import Popap from 'components/games-AudioCall/app/components/main/popap-error/popap-error';
 
 export default class RusWords {
   static render() {
@@ -130,6 +132,11 @@ export default class RusWords {
       const wordsCard = document.querySelectorAll('.words');
       const arrWords = stage.requestWords;
 
+      if (arrWords.length < 10) {
+        document.querySelector('.wrapper').innerHTML = '';
+        Popap.init();
+      }
+
       store.setState({ word: arrWords[stage.round] });
       this.wordsTranslate(arrWords[stage.round].wordTranslate);
 
@@ -145,9 +152,9 @@ export default class RusWords {
           wordsCardFilter.splice(rndNum, 1);
         }
       });
-      Voice.autoPlayAudio();
+
       Service.spinnerOff();
-     
+      Voice.autoPlayAudio();
     } catch (error) {}
   }
 

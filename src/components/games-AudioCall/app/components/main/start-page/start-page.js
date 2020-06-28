@@ -6,8 +6,6 @@ import Header from 'components/games-AudioCall/app/components/main/header/header
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
-// eslint-disable-next-line import/no-cycle
-import Popap from 'components/games-AudioCall/app/components/main/popap-error/popap-error';
 
 export default class StartPage {
   static render() {
@@ -43,15 +41,11 @@ export default class StartPage {
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
 
-        if (words.length < 10) {
-          Popap.init();
-        } else {
-          intro.remove();
-          Header.init();
-          Voice.init();
-          RusWords.init();
-          Button.init();
-        }
+        intro.remove();
+        Header.init();
+        Voice.init();
+        RusWords.init();
+        Button.init();
       });
     });
   }

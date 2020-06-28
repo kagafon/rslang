@@ -1,7 +1,9 @@
 import Results from 'components/games-AudioCall/app/components/main/results/results';
+// eslint-disable-next-line import/no-cycle
 import RusWords from 'components/games-AudioCall/app/components/main/words/words';
 import store from 'components/games-AudioCall/app/components/storage';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
+// eslint-disable-next-line import/no-cycle
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Service from 'components/games-AudioCall/app/service';
 import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
