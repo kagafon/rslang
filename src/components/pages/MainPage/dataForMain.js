@@ -27,9 +27,23 @@ export async function getSettings() {
 
 export async function getUserWords(preloads) {
   try {
-    const wordsToday = await ыWords.getTodayUserWords(preloads);
+    const settingsForWords = await getSettings();
+    const { maxWordsPerDay, newWordsPerDay } = settingsForWords;
+    const wordsToday = await Words.getTodayUserWords(preloads);
+    wordsToday;
     return wordsToday;
   } catch (e) {
-    return null;
+    const group = 0;
+    const page = 1;
+    const wordsPerPage = 40;
+    const fieldsToCache = ['image', 'audio'];
+
+    const wordsForRound = await Words.getWordsForRound(
+      group,
+      page,
+      wordsPerPage,
+      fieldsToCache
+    );
+    return wordsForRound;
   }
 }

@@ -1,6 +1,5 @@
 import { createElement } from 'helpers/dom';
 import {
-  showWord,
   hideWord,
   playAudio,
   letters,
@@ -26,7 +25,7 @@ class MainPageGame {
   constructor() {
     this.addAction = this.addAction.bind(this);
     this.addSubmitHandler = this.addSubmitHandler.bind(this);
-    this.focusInputNext = this.focusInputNext.bind(this);
+    this.updateSlide = this.updateSlide.bind(this);
     this.addInputHandler = this.addInputHandler.bind(this);
     this.addVolumeHandler = this.addVolumeHandler.bind(this);
     this.addContainerHandler = this.addContainerHandler.bind(this);
@@ -100,7 +99,7 @@ class MainPageGame {
         this.swiperWrapper,
         'div',
         ['swiper-slide'],
-        {},
+        { id: word.id },
         ''
       );
       const card = this.createCard(word);
@@ -276,8 +275,7 @@ class MainPageGame {
     return word;
   }
 
-  focusInputNext() {
-    this.swiper.slideNext();
+  updateSlide() {
     this.input = document.querySelector('.swiper-slide-active input');
     this.volumeBtn = document.querySelector('.swiper-slide-active span.volume');
     this.input.addEventListener('input', this.addInputHandler);
@@ -295,10 +293,8 @@ class MainPageGame {
     changeProgressBar(this.progressBar, this.pagination);
   }
 
-  async addSubmitHandler() {
-    // console.error(event.submitter.innerText);
+  async addSubmitHandler(event) {
     event.preventDefault();
-
     this.wordInput = this.findActiveCardWord();
     const {
       word,
@@ -310,6 +306,13 @@ class MainPageGame {
       wordTranslate,
       id,
     } = this.wordInput;
+    const stat = (await User.getMainStatistics()) || { g: 10 };
+    console.error(stat);
+    // stat.passedCards = (stat && stat.passedCards) || 0;
+    // stat.correctAnswers = stat.passedCards || 0;
+    // stat.learnedWords = stat.learnedWords || 0;
+    // stat.answerSeries = stat.answerSeries || 0;
+    this.wordInput.lastRepeat = new Date().getTime();
     this.audio = new Audio();
     this.inputBackground = document.querySelector(
       '.swiper-slide-active span.input-background'
@@ -327,6 +330,14 @@ class MainPageGame {
     this.inputWord.classList.remove('hidden1', 'hidden2');
     this.inputBackground.classList.remove('answer_success', 'answer_error');
     if (this.input.value === word) {
+      if (event.submitter.innerText === 'Показать ответ') {
+        this.wordInput.totalAnswers += 1;
+        // stat.passedCards += 1;
+      } else {
+        // stat.correctAnswers += 1;
+        this.wordInput.correctAnswers += 1;
+        this.wordInput.totalAnswers += 1;
+      }
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
@@ -345,8 +356,12 @@ class MainPageGame {
         if (this.textMeaning) this.textMeaning.textContent = `${textMeaning}`;
         if (this.textExample) this.textExample.textContent = `${textExample}`;
       }
-      setTimeout(() => this.focusInputNext(), 2000);
+      setTimeout(() => {
+        this.swiper.slideNext();
+        this.updateSlide();
+      }, 2000);
     } else {
+      this.wordInput.totalAnswers += 1;
       this.inputBackground.classList.add('answer_error');
 
       letters(word, this.input.value, this.inputWord);
@@ -365,6 +380,10 @@ class MainPageGame {
         store.setState({ isAudioPlay: false });
       }
     }
+    Words.updateUserWord(this.wordInput);
+    User.saveMainStatistics(stat);
+    const sss = await User.getMainStatistics();
+    console.error(sss);
   }
 
   addInputHandler() {
@@ -416,25 +435,26 @@ class MainPageGame {
   }
 
   addDeleteHandler() {
-    const answerInput = this.findActiveCardWord();
-    const deleteWordsArr = store.getState().deleteWords || [];
-    deleteWordsArr.push(answerInput);
-    store.setState({ deleteWords: deleteWordsArr });
-    console.error(`Слова, которые удалили`, store.getState().deleteWords);
-    modal.setText('Вы удалили слово из изучаемых');
-    modal.show();
-    setTimeout(() => modal.hide(), 3000);
+    const word = this.findActiveCardWord();
+    word.difficulty = 'deleted';
+    Toaster.createToast(`слово удалено из изучаемых`, 'danger');
+    try {
+      Words.updateUserWord(word);
+    } catch (e) {
+      console.error(e);
+      Toaster.createToast(`ошибка сохранения`, 'danger');
+    }
   }
 
   addComplexHandler() {
-    const answerInput = this.findActiveCardWord();
-    const complexWordsArr = store.getState().complexWords || [];
-    complexWordsArr.push(answerInput);
-    store.setState({ complexWords: complexWordsArr });
-    console.error(`Сложные слова`, store.getState().complexWords);
-    modal.setText('Вы поместили слово в категорию Сложные');
-    modal.show();
-    setTimeout(() => modal.hide(), 3000);
+    const word = this.findActiveCardWord();
+    word.difficulty = 'hard';
+    Toaster.createToast(`слово добавлено в категорию 'сложные'`, 'danger');
+    try {
+      Words.updateUserWord(word);
+    } catch (e) {
+      Toaster.createToast(`ошибка сохранения`, 'danger');
+    }
   }
 
   addAction() {
@@ -463,7 +483,7 @@ class MainPageGame {
       this.addAction();
       this.setLongWord();
     } catch (e) {
-      console.error('kkk');
+      Toaster.createToast(`ошибка загрузки`, 'danger');
     }
   }
 }

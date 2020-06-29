@@ -18,6 +18,9 @@ class Store {
 const state = {
   isAudioPlay: false,
   isAudioPlayButton: true,
+  againWords: [],
+  complexWords: [],
+  easyWords: [],
 };
 
 export default new Store(state);
