@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+@import url('https://unpkg.com/swiper/css/swiper.min.css');
+  
+  .swiper-container {
+    margin: -160px auto 30px;
+    max-width: 700px;
+    width: 90%;
+    height: 300px;
+  }
+  .swiper-slide {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 18px;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    transform: scale(1.2);
+  }
+  .discribe-game{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .learn {
+    width: 90%;
+    max-width: 1300px;
+    min-height: 200px;
+    height: 100%;
+    color: white;
+    text-align: justify;
+    margin: 10px;
+    border-radius: 30px;
+    background: rgba(0.5,0.5,0.5,0.5);
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+  }
+  .game {
+    font-family: 'roboto';
+    color: #FFFFFF;
+    width: 45%;
+    min-height: 200px;
+    height: 100%;
+    text-align: justify;
+    margin: 10px;
+    border-radius: 30px;
+    background: rgba(0.5,0.5,0.5,0.5);
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+
+  }
+  .img-game {
+    margin: auto 10px;
+    width: 150px;
+    height: 150px;
+  }
+  .title {
+    margin: auto;
+    text-align: center;
+  }
+  .describe {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 5px 10px;
+  }
+  @media all and (max-width: 1100px) {
+    .game {
+      width: 45%;
+      min-height: 300px;
+      height: 100%;
+    }
+    .title {
+      margin: auto;
+    }
+  }
+  @media all and (max-width: 1000px) {
+   
+    .game {
+      width: 90%;
+      min-height: 180px;
+      height: 100%;
+    }
+  }
+  @media all and (max-width: 700px) {
+    .game {
+      width: 90%;
+      min-height: 250px;
+      height: 100%;
+      flex-direction: column;    
+    }
+    .img-game {
+      margin: 10px auto;
+    }
+    .learn {
+      width: 90%;
+      flex-direction: column;
+    }
+  }

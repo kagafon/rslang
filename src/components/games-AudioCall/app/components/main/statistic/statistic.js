@@ -3,7 +3,9 @@ import { createElement } from 'helpers/dom';
 import store from 'components/games-AudioCall/app/components/storage';
 import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
 // eslint-disable-next-line import/no-cycle
-import App from 'components/games-AudioCall/app/app';
+import StartPage from 'components/games-AudioCall/app/components/main/start-page/start-page';
+// eslint-disable-next-line import/no-cycle
+import { User } from 'services/backend';
 
 export default class Statisctic {
   static render() {
@@ -14,26 +16,27 @@ export default class Statisctic {
 
     header.innerHTML = '';
     wrapper.innerHTML = '';
-    createElement(wrapper, 'div', ['statistic-block']);
-    const statisticBlock = document.querySelector('.statistic-block');
+
+    const statisticBlock = createElement(wrapper, 'div', ['statistic-block']);
+
     statisticBlock.innerHTML = `
      <div class="statistic">
-        <span class="statistic-title">${description}</span>
-        <span class="statistic-subtitle">${stage.correctChoice} слов изучено, ${
-      10 - stage.correctChoice
-    } не изучено</span>
-        <div class="final-slider">
-        <div class="final-error">
-        <span> ОШИБОК: </span>
+         <span class="statistic-title">${description}</span>
+         <span class="statistic-subtitle">${
+           stage.correctChoice
+         } слов изучено, ${10 - stage.correctChoice} не изучено</span>
+         <div class="final-slider">
+         <div class="final-error">
+         <span> ОШИБОК: </span>
         ${10 - stage.correctChoice}
-      </div>
+        </div>
         <div class="final invalid"></div>
         <div class="final-line"></div>
         <div class="final-correct">ЗНАЮ: 
           <span> ${stage.correctChoice}</span>
         </div>
         <div class="final valid"></div>
-      </div>
+        </div>
         <button type="button" class="btn btn-primary final-btn">начать заново</button>
      </div>
      
@@ -42,9 +45,21 @@ export default class Statisctic {
   }
 
   static unexploredWords() {
-    const learnedWords = statisticStore.getState();
+    const learned = statisticStore.getState();
+    const learnedWords = learned.learned;
+    const unexploredWords = learned.unexplored;
+    let arr;
+    const arrLearnedWords = store.getState();
 
-    learnedWords.unexplored.forEach((item) => {
+    if (unexploredWords.length === 0 && learnedWords.length === 0) {
+      arr = arrLearnedWords.requestWords.filter(function filter(item, index) {
+        return index <= 9;
+      });
+    } else {
+      arr = unexploredWords;
+    }
+
+    arr.forEach((item) => {
       const invalidBlock = document.querySelector('.invalid');
       const itemBlock = document.createElement('div');
       itemBlock.classList.add('final-answer');
@@ -113,9 +128,18 @@ export default class Statisctic {
     const bntReboot = document.querySelector('.final-btn');
 
     bntReboot.addEventListener('click', () => {
-      document.body.innerHTML = '';
-      App.run();
+      document.querySelector('.wrapper').innerHTML = '';
+      createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
+      statisticStore.clearState();
+      StartPage.render(document.querySelector('.game-container'));
     });
+  }
+
+  static postGametStatistic() {
+    const stage = store.getState();
+    const date = new Date();
+    const { correctChoice } = stage;
+    User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
   }
 
   static init() {
@@ -124,5 +148,6 @@ export default class Statisctic {
     this.learnedWords();
     this.playAudio();
     this.reboot();
+    this.postGametStatistic();
   }
 }
