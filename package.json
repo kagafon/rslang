@@ -61,11 +61,8 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.0",
-<<<<<<< HEAD
     "chart.js": "^2.9.3",
-=======
     "bootswatch": "^4.5.0",
->>>>>>> develop
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "swiper": "^5.4.5"
