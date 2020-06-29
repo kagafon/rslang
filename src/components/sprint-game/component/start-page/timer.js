@@ -44,7 +44,6 @@ export default class Timer {
       if (current > to) {
         setTimeout(go, 1000);
       } else {
-        second.style.color = 'red';
         second.innerHTML = `Time is Up`;
       }
       current -= 1;
