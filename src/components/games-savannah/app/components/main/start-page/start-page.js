@@ -2,12 +2,10 @@
 import Timer from 'components/games-savannah/app/components/main/start-page/timer';
 import store from 'components/games-savannah/app/components/storage';
 import Service from 'components/games-savannah/app/service';
-// eslint-disable-next-line import/no-cycle
-import Popap from 'components/games-savannah/app/components/main/popap-error/popap-error';
+import Toaster from 'components/Toaster';
 
 export default class StartPage {
-  static render() {
-    const wrapper = document.querySelector('.wrapper');
+  static render(container) {
     const intro = document.createElement('div');
     intro.classList.add('intro');
 
@@ -30,11 +28,12 @@ export default class StartPage {
         <button data-num="-1" type="button" class="btn btn-primary start learn">изучаемые слова</button>
      </div>
     `;
-    wrapper.append(intro);
+    container.append(intro);
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
         const words = await Service.wordsRequest(+item.dataset.num);
+
         store.setState({ requestWords: words });
         store.setState({ groupe: +item.dataset.num });
         store.setState({ round: 0 });
@@ -43,7 +42,8 @@ export default class StartPage {
         store.setState({ volume: 'on' });
 
         if (words.length < 10) {
-          Popap.init();
+          Toaster.createToast('необходимое количество слов 10', 'danger');
+          Service.spinnerOff();
         } else {
           intro.remove();
           Timer.init();
@@ -52,7 +52,7 @@ export default class StartPage {
     });
   }
 
-  static init() {
-    this.render();
+  static init(container) {
+    this.render(container);
   }
 }

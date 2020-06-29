@@ -1,11 +1,10 @@
 import { Words } from 'services/backend';
-import store from 'components/games-savannah/app/components/storage';
 
 export default class Service {
   // eslint-disable-next-line consistent-return
   static async wordsRequest(level = 0) {
     this.spinnerOn();
-    const rndPage = this.randomInteger(0, 59);
+    const rndPage = this.randomInteger(0, 29);
     const words = await Words.getWordsForRound(+level, 1, 20, [
       'image',
       'audio',

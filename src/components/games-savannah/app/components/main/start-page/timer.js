@@ -1,4 +1,5 @@
 import { createElement } from 'helpers/dom';
+// eslint-disable-next-line import/no-cycle
 import StartGame from './start-game';
 
 export default class Timer {

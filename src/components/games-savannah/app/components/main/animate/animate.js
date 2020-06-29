@@ -58,5 +58,9 @@ export default class Animate {
         anim.cancel();
       });
     });
+
+    document.addEventListener('keypress', () => {
+      anim.cancel();
+    });
   }
 }

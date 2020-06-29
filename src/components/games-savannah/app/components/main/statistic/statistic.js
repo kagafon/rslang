@@ -3,7 +3,8 @@ import { createElement } from 'helpers/dom';
 import store from 'components/games-savannah/app/components/storage';
 import statisticStore from 'components/games-savannah/app/components/statistic-storage';
 // eslint-disable-next-line import/no-cycle
-import App from 'components/games-savannah/app/app';
+import StartPage from 'components/games-savannah/app/components/main/start-page/start-page';
+import { User } from 'services/backend';
 
 export default class Statistic {
   static render() {
@@ -14,6 +15,7 @@ export default class Statistic {
 
     header.innerHTML = '';
     wrapper.innerHTML = '';
+
     createElement(wrapper, 'div', ['statistic-block']);
     const statisticBlock = document.querySelector('.statistic-block');
     statisticBlock.innerHTML = `
@@ -47,10 +49,6 @@ export default class Statistic {
     const unexploredWords = learned.unexplored;
     let arr;
     const arrLearnedWords = store.getState();
-
-    console.log(learned);
-    console.log(learnedWords.length);
-    console.log(unexploredWords.length);
 
     if (unexploredWords.length === 0 && learnedWords.length === 0) {
       arr = arrLearnedWords.requestWords.filter(function filter(item, index) {
@@ -129,11 +127,19 @@ export default class Statistic {
     const bntReboot = document.querySelector('.final-btn');
 
     bntReboot.addEventListener('click', () => {
-      document.body.innerHTML = '';
+      document.querySelector('.wrapper').innerHTML = '';
+      createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
+
       statisticStore.clearState();
-      statisticStore.getState();
-      App.run();
+      StartPage.render(document.querySelector('.game-container'));
     });
+  }
+
+  static postGametStatistic() {
+    const stage = store.getState();
+    const date = new Date();
+    const { correctChoice } = stage;
+    User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
   }
 
   static init() {
@@ -142,5 +148,6 @@ export default class Statistic {
     this.learnedWords();
     this.playAudio();
     this.reboot();
+    this.postGametStatistic();
   }
 }

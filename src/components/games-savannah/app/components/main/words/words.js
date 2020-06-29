@@ -27,7 +27,7 @@ export default class RusWords {
     const answer = document.querySelector('.answerBlock');
     const stage = store.getState();
     item.classList.add('correct');
-    answer.classList.remove('transition');
+
     answer.textContent = '';
 
     if (stage.volume !== 'off') {
@@ -50,16 +50,15 @@ export default class RusWords {
     const health = document.querySelector('.health');
     const wordsCard = document.querySelectorAll('.wrapper-words');
 
-    wordsCard.forEach((item) => {
-      if (item.children[0].textContent === stage.word.wordTranslate) {
-        item.classList.add('correct');
+    wordsCard.forEach((i) => {
+      if (i.children[0].textContent === stage.word.wordTranslate) {
+        i.classList.add('correct');
       }
     });
 
     health.remove();
 
     item.classList.add('cancel');
-    answer.classList.remove('transition');
     answer.textContent = '';
 
     const audio = new Audio();
@@ -77,6 +76,7 @@ export default class RusWords {
 
   static wordChoice() {
     const arrWords = document.querySelectorAll('.wrapper-words');
+
     arrWords.forEach((item) => {
       item.addEventListener('click', () => {
         const state = store.getState();
@@ -90,6 +90,7 @@ export default class RusWords {
         } else {
           store.setState({ health: state.health - 1 });
           statiscticStore.setUnexploredState([state.word]);
+
           this.incorrectChoice(item);
         }
 
@@ -99,8 +100,51 @@ export default class RusWords {
             Statistic.init();
           }
         }, 1000);
-        console.log(state);
       });
+    });
+
+    document.addEventListener('keypress', (event) => {
+      const stage = store.getState();
+      const target = event.key;
+
+      store.setState({ round: stage.round + 1 });
+
+      let word;
+
+      switch (target) {
+        case '1':
+          word = arrWords[0].children[0].textContent;
+          break;
+        case '2':
+          word = arrWords[1].children[0].textContent;
+          break;
+        case '3':
+          word = arrWords[2].children[0].textContent;
+          break;
+        case '4':
+          word = arrWords[3].children[0].textContent;
+          break;
+        default:
+      }
+
+      if (word === stage.word.wordTranslate) {
+        store.setState({ correctChoice: stage.correctChoice + 1 });
+        statiscticStore.setLearnedState([stage.word]);
+
+        this.rightChoice(arrWords[+target - 1]);
+      } else {
+        store.setState({ health: stage.health - 1 });
+        statiscticStore.setUnexploredState([stage.word]);
+
+        this.incorrectChoice(arrWords[+target - 1]);
+      }
+
+      setTimeout(() => {
+        if (stage.round === 9 || stage.health === 1) {
+          Service.spinnerOn();
+          Statistic.init();
+        }
+      }, 1000);
     });
   }
 
