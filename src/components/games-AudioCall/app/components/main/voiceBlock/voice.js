@@ -1,4 +1,3 @@
-import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 
 export default class Voice {
@@ -11,52 +10,50 @@ export default class Voice {
       <span class="material-icons md-100 md-light">
        volume_up
       </span>
-      <audio data-id='' src="#"></audio>
+      <audio data-id='' src=""></audio>
     `;
 
     answerBlock.append(audio);
   }
 
-  static async audioBtn() {
-    const stage = await store.getState();
-    const audio = await Service.wordsRequest(stage.groupe);
+  static audioBtn() {
+    try {
+      const btnAudio = document.querySelector('.audio');
 
-    audio.sort(() => {
-      return Math.random() - 0.5;
-    });
+      btnAudio.addEventListener('click', () => {
+        const stageRound = store.getState();
+        const playAudio = document.querySelector('audio');
 
-    const btnAudio = document.querySelector('.audio');
-
-    btnAudio.addEventListener('click', () => {
-      const stageRound = store.getState();
-      const playAudio = document.querySelector('audio');
-
-      if (stageRound.round <= 9) {
-        playAudio.dataset.text = stageRound.word.wordTranslate;
-        playAudio.src = stageRound.word.audioSrc;
-        playAudio.play();
-      }
-    });
+        if (stageRound.round <= 9) {
+          playAudio.dataset.text = stageRound.word.wordTranslate;
+          playAudio.src = stageRound.word.audioSrc;
+          playAudio.play();
+        }
+      });
+    } catch (error) {}
   }
 
   static autoPlayAudio() {
     const btnAudio = document.querySelector('.audio');
 
-    setTimeout(() => {
-      const stageRound = store.getState();
-      const playAudio = document.querySelector('audio');
-      playAudio.src = '';
-      if (stageRound.round <= 9) {
-        playAudio.dataset.text = stageRound.word.wordTranslate;
-        playAudio.src = stageRound.word.audioSrc;
-        playAudio.play();
-        btnAudio.classList.add('audio-animation');
+    const stageRound = store.getState();
+    const playAudio = document.querySelector('audio');
 
-        playAudio.onended = () => {
-          btnAudio.classList.remove('audio-animation');
-        };
-      }
-    }, 500);
+    playAudio.src = '';
+
+    if (stageRound.round <= 9) {
+      playAudio.dataset.text = stageRound.word.wordTranslate;
+      playAudio.src = stageRound.word.audioSrc;
+
+      setTimeout(() => {
+        btnAudio.classList.add('audio-animation');
+        playAudio.play();
+      }, 1000);
+
+      playAudio.onended = () => {
+        btnAudio.classList.remove('audio-animation');
+      };
+    }
   }
 
   static init() {
