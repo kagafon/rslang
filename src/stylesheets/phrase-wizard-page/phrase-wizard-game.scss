@@ -255,6 +255,14 @@ p {
   justify-content: center;
 }
 
+.temlate-words.correct {
+  background-color: rgba(139, 248, 124, 0.726);
+}
+
+.temlate-words.incorrect {
+  background-color: rgba(248, 143, 124, 0.726);
+}
+
 .wrapper-words {
   display: flex;
   flex-direction: row;
@@ -280,12 +288,7 @@ p {
   left: -10px;
 }
 
-.correct {
-  display: none;
-  position: absolute;
-  top: 2px;
-  left: -20px;
-}
+
 
 .cancel {
   display: none;
