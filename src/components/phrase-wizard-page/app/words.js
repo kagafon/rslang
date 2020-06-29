@@ -1,15 +1,9 @@
-/*import Service from 'components/games-AudioCall/app/service';
-import store from 'components/games-AudioCall/app/components/storage';
-import Results from 'components/games-AudioCall/app/components/main/results/results';
-import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
-import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
-import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage'; */
 import Service from 'components/phrase-wizard-page/app/service';
 import { createElement } from 'helpers/dom';
+import Statisctic from 'components/phrase-wizard-page/app/statistic';
 
 export default class GameWords {
   static init(words){
-    console.log(words[0]);
     this.render(words[0]);
     Service.spinnerOff();
   }
@@ -39,8 +33,6 @@ export default class GameWords {
   }
 
   static game(gameWords) {
-    let correctWord = 0;
-    let incorrectWord = 0;
     let numberWords = 0;
     const wordsBlock = document.querySelector('.wordsblock');
 
@@ -52,13 +44,13 @@ export default class GameWords {
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('correct');
           ++numberWords;
-          ++correctWord;
+          Statisctic.count(0, 1);
         }else if(gameWords.length > numberWords){
           wordsBlock.children[numberWords].innerText = '';
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('incorrect'); 
           ++numberWords;
-          ++incorrectWord;
+          Statisctic.count(1, 0);
         }else {
           return
         }
@@ -117,82 +109,4 @@ export default class GameWords {
     });
   }
 
-  static wordChoice() {
-    const arrWords = document.querySelectorAll('.wrapper-words');
-    arrWords.forEach((item) => {
-      item.addEventListener('click', () => {
-        const state = store.getState();
-        const progress = document.querySelector('.progress-bar');
-
-        const width = String(progress.style.width).slice(0, -1);
-        progress.style.width = `${+width + 10}%`;
-
-        store.setState({ round: state.round + 1 });
-
-        if (item.children[3].textContent === state.word.wordTranslate) {
-          store.setState({ correctChoice: state.correctChoice + 1 });
-          statiscticStore.setLearnedState([state.word]);
-
-          this.rightChoice(item);
-          Results.init();
-        } else {
-          statiscticStore.setUnexploredState([state.word]);
-
-          this.incorrectChoice(item);
-          Results.init();
-        }
-
-        setTimeout(() => {
-          if (state.round === 9) {
-            Service.spinnerOn();
-            Statisctic.init();
-          }
-        }, 2000);
-      });
-    });
-  }
-
-  static wordsTranslate(text) {
-    const wordsCard = document.querySelectorAll('.words');
-    const cardsWrapper = document.querySelectorAll('.wrapper-words');
-
-    const randNum = this.randomInteger(0, 4);
-    wordsCard[randNum].textContent = text;
-    store.setState({ correct: cardsWrapper[randNum] });
-  }
-
-  static async wordGeneration() {
-    const stage = store.getState();
-    const arrWords = await Service.wordsRequest(stage.groupe);
-    const wordsCard = document.querySelectorAll('.words');
-
-    store.setState({ word: arrWords[stage.round] });
-    this.wordsTranslate(arrWords[stage.round].wordTranslate);
-
-    const wordsCardFilter = arrWords.filter(function filter(item) {
-      return item.wordTranslate !== arrWords[stage.round].wordTranslate;
-    });
-
-    wordsCard.forEach((item) => {
-      const rndNum = this.randomInteger(0, wordsCardFilter.length - 1);
-
-      if (item.textContent !== arrWords[stage.round].wordTranslate) {
-        item.textContent = wordsCardFilter[rndNum].wordTranslate;
-        wordsCardFilter.splice(rndNum, 1);
-      }
-    });
-    Service.spinnerOff();
-    Voice.autoPlayAudio();
-  }
-
-  static randomInteger(min, max) {
-    const rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
-  }
-
-  //static init() {
-    //this.render();
-    //this.wordChoice();
-    //this.wordGeneration();
-  //}
 }

@@ -1,12 +1,20 @@
-import Service from 'components/games-AudioCall/app/service';
+/*import Service from 'components/games-AudioCall/app/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-AudioCall/app/components/storage';
 import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
 // eslint-disable-next-line import/no-cycle
-import App from 'components/games-AudioCall/app/app';
+import App from 'components/games-AudioCall/app/app'; */
+import { createElement } from 'helpers/dom';
 
 export default class Statisctic {
-  static render() {
+
+  static count(mistake, correct) {
+    this.mistake = this.mistake + mistake;
+    this.correct = this.correct + correct;
+
+  }
+
+  /*static render() {
     const wrapper = document.querySelector('.wrapper');
     const header = document.querySelector('.header');
     const stage = store.getState();
@@ -38,7 +46,7 @@ export default class Statisctic {
      </div>
      
     `;
-    Service.spinnerOff();
+    //Service.spinnerOff();
   }
 
   static unexploredWords() {
@@ -124,5 +132,5 @@ export default class Statisctic {
     this.learnedWords();
     this.playAudio();
     this.reboot();
-  }
+  } */
 }

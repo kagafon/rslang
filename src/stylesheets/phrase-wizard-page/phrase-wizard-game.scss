@@ -37,11 +37,15 @@ p {
 .wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
-  width: 100%;
   max-width: 1440px;
-  margin: 100px auto;
   transition: 0.2s linear;
+}
+
+.wrapper img{
+  max-width: 400px;
+  border-radius: 8%;
 }
 
 .spinner {
@@ -146,9 +150,10 @@ p {
 .temlate-words {
   background-color: rgba(255, 255, 255, 0.35);
   margin-left: 1rem;
+  margin-top: 0.5rem;
   font-size: 2rem;
   letter-spacing: 0.7rem;
-  border-radius: 8%;
+  border-radius: 7%;
 }
 .navBarBlock {
   display: flex;
@@ -162,13 +167,6 @@ p {
   height: 5px;
 }
 
-// Answer-Block_____________________________
-
-.answerBlock {
-  display: flex;
-  justify-content: center;
-  height: 200px;
-}
 
 // Audio____________________________________
 
@@ -256,10 +254,12 @@ p {
 }
 
 .temlate-words.correct {
+  letter-spacing: 0.4rem;
   background-color: rgba(139, 248, 124, 0.726);
 }
 
 .temlate-words.incorrect {
+  letter-spacing: 0.4rem;
   background-color: rgba(248, 143, 124, 0.726);
 }
 
