@@ -1,12 +1,15 @@
 /* eslint-disable import/no-cycle */
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import startPage from 'components/sprint-game/component/start-page/start-page';
 import RusWords from 'components/sprint-game/component/words/words';
 import GamePage from 'components/sprint-game/component/gamePage/game-page';
+import Dictionary from 'components/pages/dictionary-page';
+import App from 'components/games-AudioCall/app/app';
 
 const routes = [
   {
@@ -58,7 +61,7 @@ const routes = [
   {
     name: 'audiocall-page',
     title: 'Аудиовызов',
-    ClassConstructor: MainPage,
+    ClassConstructor: App,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
@@ -113,7 +116,7 @@ const routes = [
   {
     name: 'promo-page',
     title: 'Промо',
-    ClassConstructor: startPage,
+    ClassConstructor: promoPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/promo-page.jpg',
     color: 'rgba(124, 55, 73, 0.79)',
@@ -131,7 +134,7 @@ const routes = [
     title: 'Словарь',
     image: 'assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgba(101, 99, 209, 0.78)',
-    ClassConstructor: MainPage,
+    ClassConstructor: Dictionary,
     needAuthorization: false,
   },
 ];

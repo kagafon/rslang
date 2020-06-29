@@ -11,6 +11,11 @@ class StatisticStore {
     };
   }
 
+  clearState() {
+    this.learned.length = 0;
+    this.unexplored.length = 0;
+  }
+
   setUnexploredState(unexplored) {
     this.unexplored = [...this.unexplored, ...unexplored];
   }

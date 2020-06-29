@@ -71,7 +71,9 @@ export default class Router {
       this.transitionEndHandler
     );
     this.container.textContent = '';
-    this.container.appendChild(new this.currentRoute.ClassConstructor().init());
+    const route = new this.currentRoute.ClassConstructor();
+    this.container.appendChild(route.init());
+    if (route.postInit) route.postInit();
     this.container.style.opacity = '1';
   }
 

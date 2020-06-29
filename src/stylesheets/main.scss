@@ -1,8 +1,11 @@
-@import '~bootstrap';
+@import '~bootswatch/dist/Materia/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/Materia/bootswatch';
 @import 'variables';
 @import 'toaster/toaster';
 @import './main-page/navbar';
 @import './game-page/_allgames';
+@import './dictionary-page/main';
 @import './team-page/style.scss';
 @import './autorization-page/style.scss';
 @import 'game-AudioCall/style.scss';
@@ -26,7 +29,6 @@ body {
 }
 
 .main-container {
-  padding-top: 175px;
   width: 100%;
   transition: $page-transition-delay / 2;
 }
