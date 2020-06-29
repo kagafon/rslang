@@ -1,0 +1,22 @@
+.spinner-border {
+  color: darken($dictionary-page-color, 20);
+}
+
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s linear;
+  opacity: 1;
+
+  &.hidden {
+    opacity: 0;
+  }
+}

@@ -3,6 +3,7 @@
 export default class componentTeam {
   init() {
     const teamBlock = document.createElement('div');
+    teamBlock.classList.add('team-page');
     teamBlock.innerHTML = `
                     <div class="header">
                         <img class="svg" src="../../assets/images/team-page/rs_school.svg">

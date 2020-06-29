@@ -1,9 +1,14 @@
-@import '~bootstrap';
+@import '~bootswatch/dist/Materia/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/Materia/bootswatch';
+@import '~swiper/swiper';
 @import 'variables';
 @import 'toaster/toaster';
 @import './main-page/navbar';
 @import './statisticPage/statisticPage';
+@import './promo-page/style.scss';
 @import './game-page/_allgames';
+@import './dictionary-page/main';
 @import './team-page/style.scss';
 @import './autorization-page/style.scss';
 @import 'game-AudioCall/style.scss';
@@ -26,5 +31,6 @@ body {
 }
 
 .main-container {
+  padding-top: $main-menu-height;
   width: 100%;
 }
