@@ -1,0 +1,16 @@
+@import 'variables';
+
+.dictionary {
+  &.container-fluid,
+  &.container {
+    max-height: calc(100vh - #{$main-menu-height});
+    overflow-y: auto;
+  }
+
+  @import 'scrollbar';
+  @import 'buttons';
+  @import 'modal';
+  @import 'spinner';
+  @import 'wordsBlock';
+  @import 'controlBlock';
+}

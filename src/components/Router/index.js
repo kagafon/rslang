@@ -5,6 +5,7 @@ import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
+import Dictionary from 'components/pages/dictionary-page';
 import App from 'components/games-AudioCall/app/app';
 
 const routes = [
@@ -130,7 +131,7 @@ const routes = [
     title: 'Словарь',
     image: 'assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgba(101, 99, 209, 0.78)',
-    ClassConstructor: MainPage,
+    ClassConstructor: Dictionary,
     needAuthorization: false,
   },
 ];

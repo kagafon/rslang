@@ -21,8 +21,9 @@ const DEFAULT_USER_SETTINGS = {
   maxWordsPerDay: 50,
   prompts: {
     translation: true,
-    meaning: false,
-    transcription: false,
+    example: true,
+    meaning: true,
+    transcription: true,
     image: true,
   },
   buttons: {
