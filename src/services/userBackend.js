@@ -217,7 +217,6 @@ export default class User {
 
     stats.optional[game] = JSON.stringify(stats.optional[game]);
     delete stats.id;
-    delete stats.date;
     return setStatistics(userInfo.userId, userInfo.token, stats);
   }
 
