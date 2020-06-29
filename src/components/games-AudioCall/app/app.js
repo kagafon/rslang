@@ -1,31 +1,35 @@
-// eslint-disable-next-line no-restricted-imports
 import { createElement } from 'helpers/dom';
 import StartPage from 'components/games-AudioCall/app/components/main/start-page/start-page';
 
 export default class App {
-  static render() {
-    createElement(document.body, 'div', ['spinner']);
+  init() {
+    this.gameContainer = document.createElement('div');
+    this.gameContainer.classList.add('game-container', 'audioCall');
+
     createElement(
-      document.querySelector('.spinner'),
-      'div',
-      ['spinner-border', 'text-warning'],
-      { role: 'status' }
-    );
-    createElement(
-      document.querySelector('.spinner-border'),
+      createElement(
+        createElement(this.gameContainer, 'div', ['spinner']),
+        'div',
+        ['spinner-border', 'text-warning'],
+        { role: 'status' }
+      ),
       'span',
       ['sr-only'],
       {},
       'Loading...'
     );
 
-    createElement(document.body, 'div', ['header']);
-    createElement(document.body, 'div', ['wrapper']);
-    createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
+    createElement(this.gameContainer, 'div', ['header']);
+    createElement(
+      createElement(this.gameContainer, 'div', ['wrapper']),
+      'div',
+      ['answerBlock']
+    );
+
+    return this.gameContainer;
   }
 
-  static run() {
-    this.render();
-    StartPage.init();
+  postInit() {
+    StartPage.init(this.gameContainer);
   }
 }

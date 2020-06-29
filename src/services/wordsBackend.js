@@ -3,13 +3,73 @@ import {
   getUserWords,
   addUserWord,
   updateUserWord,
+  getUserWordById,
 } from './dataBackend';
 import { APPLICATION, FILE_BASE_URL } from './config';
 
-const TODAY = Math.floor(Date.now() / (3600 * 1000 * 24));
-const USER_ONLY_WORDS_QUERY = '{"userWord":{"$ne":null}}';
-const TODAY_WORDS_QUERY = `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.nextRepeat" :{"$lte": "${TODAY}"}}]}`;
 const WORDS_TOTAL = 3600;
+const LEARN_LEVEL_CUP = 20;
+
+const userWordFields = [
+  { name: 'difficulty', default: 'new' },
+  {
+    name: 'creationDate',
+    get: (x) => (x ? null : new Date(x)),
+    set: (x) => x.getTime(),
+    default: `${new Date().getTime()}`,
+  },
+  {
+    name: 'lastRepeat',
+    get: (x) => (x ? new Date(x) : null),
+    set: (x) => x.getTime(),
+    default: 'null',
+  },
+  { name: 'repeatTimes', default: '0' },
+  {
+    name: 'nextRepeat',
+    get: (x) => (x ? new Date(x) : null),
+    set: (x) => x.getTime(),
+    default: `${new Date().getTime()}`,
+  },
+  { name: 'correctAnswers', default: '0' },
+  { name: 'totalAnswers', default: '0' },
+];
+
+const getUserInfo = () => {
+  const userInfo = localStorage.getItem(`${APPLICATION}.auth`);
+  if (!userInfo) throw Error('Пользователь не найден');
+  return JSON.parse(userInfo);
+};
+
+const unwindWord = (word) => {
+  const answers = (word.correctAnswers || 0) * 2 - (word.totalAnswers || 0);
+
+  const retValue = {
+    ...word.userWord,
+    ...word,
+    id: word.userWord.word,
+    progress:
+      answers > LEARN_LEVEL_CUP
+        ? 100
+        : Math.floor((answers * 100) / LEARN_LEVEL_CUP),
+  };
+  userWordFields.forEach((x) => {
+    if (word.userWord.optional[x.name] === undefined) {
+      retValue[x.name] = x.default;
+    } else {
+      let val = '';
+      try {
+        val = JSON.parse(word.userWord.optional[x.name]);
+      } catch (err) {
+        val = word.userWord.optional[x.name];
+      }
+      retValue[x.name] = x.get ? x.get(val) : val;
+    }
+  });
+  delete retValue.optional;
+  delete retValue.userWord;
+  return retValue;
+};
 
 const preloadData = async (words, preloadFields) => {
   const promises = preloadFields.reduce((acc, y) => {
@@ -48,46 +108,39 @@ export default class Words {
     });
   }
 
-  static addUserWord(
-    wordId,
-    settings = {
-      creationDate: `${TODAY}`,
-      lastRepeat: 'null',
-      repeatTimes: '0',
-      nextRepeat: `${TODAY}`,
-      correctAnswers: '0',
-      totalAnswers: '1',
-    }
-  ) {
-    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
-    if (!userInfo) throw Error('Пользователь не найден');
-    userInfo = JSON.parse(userInfo);
-
-    return addUserWord(userInfo.userId, userInfo.token, wordId, settings);
+  static addUserWord(wordId, settings) {
+    const { userId, token } = getUserInfo();
+    return settings
+      ? addUserWord(userId, token, wordId, settings)
+      : addUserWord(
+          userId,
+          token,
+          wordId,
+          userWordFields.reduce(
+            (acc, x) => Object.assign(acc, { [x.name]: x.default }),
+            {}
+          )
+        );
   }
 
   static updateUserWord(word) {
-    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
-    if (!userInfo) throw Error('Пользователь не найден');
-    userInfo = JSON.parse(userInfo);
-    const {
-      difficulty,
-      creationDate,
-      lastRepeat,
-      repeatTimes,
-      nextRepeat,
-      correctAnswers,
-      totalAnswers,
-    } = word;
-    return updateUserWord(userInfo.userId, userInfo.token, word.id, {
-      difficulty,
-      creationDate,
-      lastRepeat,
-      repeatTimes,
-      nextRepeat,
-      correctAnswers,
-      totalAnswers,
-    });
+    const { userId, token } = getUserInfo();
+
+    return updateUserWord(
+      userId,
+      token,
+      word.id,
+      userWordFields.reduce(
+        (acc, x) =>
+          Object.assign(acc, {
+            [x.name]:
+              word[x.name] !== undefined
+                ? JSON.stringify(word[x.name])
+                : x.default,
+          }),
+        {}
+      )
+    );
   }
 
   static async addUserWordsFromGroup(group, page, count) {
@@ -96,40 +149,43 @@ export default class Words {
   }
 
   static getUserWords(query, preload) {
-    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
-    if (!userInfo) throw Error('Пользователь не найден');
-    userInfo = JSON.parse(userInfo);
+    const { userId, token } = getUserInfo();
 
-    return getUserWords(
-      userInfo.userId,
-      userInfo.token,
-      query,
-      WORDS_TOTAL
-    ).then(async (words) => {
-      const wordsToReturn = words[0].paginatedResults.map((x) => {
-        const word = {
-          ...x.userWord,
-          ...x.userWord.optional,
-          ...x,
-          id: x.userWord.word,
-        };
-        delete word.optional;
-        delete word.userWord;
-        return word;
-      });
+    return getUserWords(userId, token, query, WORDS_TOTAL).then(
+      async (words) => {
+        const wordsToReturn = words[0].paginatedResults.map((x) =>
+          unwindWord(x)
+        );
 
-      if (preload && preload.length > 0) {
-        return preloadData(wordsToReturn, preload);
+        if (preload && preload.length > 0) {
+          return preloadData(wordsToReturn, preload);
+        }
+        return wordsToReturn;
       }
-      return wordsToReturn;
-    });
+    );
   }
 
   static getAllUserWords(preload) {
-    return Words.getUserWords(USER_ONLY_WORDS_QUERY, preload);
+    return Words.getUserWords('{"userWord":{"$ne":null}}', preload);
   }
 
   static getTodayUserWords(preload) {
-    return Words.getUserWords(TODAY_WORDS_QUERY, preload);
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}]}`,
+      preload
+    );
+  }
+
+  static getUserWordById(wordId, preload) {
+    const { userId, token } = getUserInfo();
+
+    return getUserWordById(userId, token, wordId).then(async (words) => {
+      if (preload && preload.length > 0) {
+        return preloadData(words, preload).then((preloadedWords) =>
+          unwindWord(preloadedWords[0])
+        );
+      }
+      return words[0];
+    });
   }
 }

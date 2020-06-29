@@ -1,9 +1,11 @@
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 import Results from 'components/games-AudioCall/app/components/main/results/results';
+// eslint-disable-next-line import/no-cycle
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
 import statiscticStore from 'components/games-AudioCall/app/components/statistic-storage';
+// eslint-disable-next-line import/no-cycle
 
 export default class RusWords {
   static render() {
@@ -123,28 +125,30 @@ export default class RusWords {
     store.setState({ correct: cardsWrapper[randNum] });
   }
 
-  static async wordGeneration() {
-    const stage = store.getState();
-    const arrWords = await Service.wordsRequest(stage.groupe);
-    const wordsCard = document.querySelectorAll('.words');
+  static wordGeneration() {
+    try {
+      const stage = store.getState();
+      const wordsCard = document.querySelectorAll('.words');
+      const arrWords = stage.requestWords;
 
-    store.setState({ word: arrWords[stage.round] });
-    this.wordsTranslate(arrWords[stage.round].wordTranslate);
+      store.setState({ word: arrWords[stage.round] });
+      this.wordsTranslate(arrWords[stage.round].wordTranslate);
 
-    const wordsCardFilter = arrWords.filter(function filter(item) {
-      return item.wordTranslate !== arrWords[stage.round].wordTranslate;
-    });
+      const wordsCardFilter = arrWords.filter(function filter(item) {
+        return item.wordTranslate !== arrWords[stage.round].wordTranslate;
+      });
 
-    wordsCard.forEach((item) => {
-      const rndNum = this.randomInteger(0, wordsCardFilter.length - 1);
+      wordsCard.forEach((item) => {
+        const rndNum = this.randomInteger(0, wordsCardFilter.length - 1);
 
-      if (item.textContent !== arrWords[stage.round].wordTranslate) {
-        item.textContent = wordsCardFilter[rndNum].wordTranslate;
-        wordsCardFilter.splice(rndNum, 1);
-      }
-    });
-    Service.spinnerOff();
-    Voice.autoPlayAudio();
+        if (item.textContent !== arrWords[stage.round].wordTranslate) {
+          item.textContent = wordsCardFilter[rndNum].wordTranslate;
+          wordsCardFilter.splice(rndNum, 1);
+        }
+      });
+      Service.spinnerOff();
+      Voice.autoPlayAudio();
+    } catch (error) {}
   }
 
   static randomInteger(min, max) {
