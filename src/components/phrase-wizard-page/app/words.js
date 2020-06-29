@@ -1,9 +1,11 @@
 import Service from 'components/phrase-wizard-page/app/service';
+import Voice from 'components/phrase-wizard-page/app/voice';
 import { createElement } from 'helpers/dom';
 import Statisctic from 'components/phrase-wizard-page/app/statistic';
 
 export default class GameWords {
   static init(words){
+    Voice.init();
     this.render(words[0]);
     Service.spinnerOff();
   }

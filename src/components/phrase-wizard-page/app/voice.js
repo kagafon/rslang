@@ -1,5 +1,4 @@
-import Service from 'components/games-AudioCall/app/service';
-import store from 'components/games-AudioCall/app/components/storage';
+//import Service from 'components/games-AudioCall/app/service';
 
 export default class Voice {
   static render() {
@@ -16,7 +15,7 @@ export default class Voice {
 
     answerBlock.append(audio);
   }
-
+/*
   static async audioBtn() {
     const stage = await store.getState();
     const audio = await Service.wordsRequest(stage.groupe);
@@ -57,10 +56,9 @@ export default class Voice {
         };
       }
     }, 500);
-  }
+  } */
 
   static init() {
     this.render();
-    this.audioBtn();
   }
 }

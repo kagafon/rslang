@@ -26,7 +26,7 @@ export default class PhraseWizard {
 
     createElement(gameBox, 'div', ['header']);
     createElement(gameBox, 'div', ['wrapper']);
-    
+    createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
 
     const intro = document.createElement('div');
     intro.classList.add('intro');
