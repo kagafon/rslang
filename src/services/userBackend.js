@@ -21,8 +21,9 @@ const DEFAULT_USER_SETTINGS = {
   maxWordsPerDay: 50,
   prompts: {
     translation: true,
-    meaning: false,
-    transcription: false,
+    example: true,
+    meaning: true,
+    transcription: true,
     image: true,
   },
   buttons: {
@@ -216,6 +217,7 @@ export default class User {
 
     stats.optional[game] = JSON.stringify(stats.optional[game]);
     delete stats.id;
+    delete stats.date;
     return setStatistics(userInfo.userId, userInfo.token, stats);
   }
 

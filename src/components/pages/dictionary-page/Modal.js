@@ -27,6 +27,16 @@ export default class WordDetails {
         hide: !user.settings.prompts.transcription,
       },
       {
+        title: 'Значение',
+        name: 'textMeaningTranslate',
+        hide: !user.settings.prompts.meaning,
+      },
+      {
+        title: 'Пример',
+        name: 'textExample',
+        hide: !user.settings.prompts.example,
+      },
+      {
         title: 'Прогресс',
         element: (parent, word) =>
           createElement(
@@ -63,12 +73,6 @@ export default class WordDetails {
           ),
         defaultValue: 'Не определено',
       },
-      {
-        title: 'Значение',
-        name: 'textMeaningTranslate',
-        hide: !user.settings.prompts.meaning,
-      },
-      { title: 'Пример', name: 'textExample' },
     ];
     this.modal = createElement(container, 'div', ['modal', 'fade'], {
       role: 'dialog',
