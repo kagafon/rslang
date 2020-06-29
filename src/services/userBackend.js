@@ -13,8 +13,27 @@ import { APPLICATION } from './config';
 let user = null;
 
 const getToday = () => {
-  const now = new Date();
-  return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  return new Date().getTime() / (3600 * 1000 * 24);
+};
+
+const DEFAULT_USER_SETTINGS = {
+  newWordsPerDay: 10,
+  maxWordsPerDay: 50,
+  prompts: {
+    translation: true,
+    meaning: false,
+    transcription: false,
+    image: true,
+  },
+  buttons: {
+    showAnswer: true,
+    removeWord: true,
+    gradeWord: true,
+  },
+};
+
+const DEFAULT_STATISTICS = {
+  wordsLearned: 0,
 };
 
 export default class User {
@@ -84,13 +103,16 @@ export default class User {
     return addUser(email, password)
       .then(() => authUser(email, password))
       .then(async (userInfo) => {
+        const settingsToUse = { ...DEFAULT_USER_SETTINGS, ...settings };
         await Promise.allSettled([
           setSettings(userInfo.userId, userInfo.token, {
             wordsPerDay: 1,
-            optional: { user: JSON.stringify(settings) },
+            optional: {
+              user: JSON.stringify(settingsToUse),
+            },
           }),
         ]);
-        user = { id: userInfo.userId, email, settings };
+        user = { id: userInfo.userId, email, settingsToUse };
         return user;
       })
       .catch((err) => {
@@ -138,6 +160,7 @@ export default class User {
     } else {
       stats.optional.main = JSON.parse(stats.optional.main);
     }
+    if (!user.stats) user.stats = {};
     Object.assign(user.stats, newStats);
 
     const today = getToday();
@@ -152,12 +175,18 @@ export default class User {
   }
 
   static getMainStatistics(isGetAll = false) {
-    if (isGetAll) {
-      return User.getGameStatistics('main');
-    }
     const today = getToday();
+    const defaultValue = [
+      {
+        d: today,
+        ...DEFAULT_STATISTICS,
+      },
+    ];
+    if (isGetAll) {
+      return User.getGameStatistics('main', defaultValue);
+    }
 
-    return User.getGameStatistics('main').then((mainStat) =>
+    return User.getGameStatistics('main', defaultValue).then((mainStat) =>
       mainStat.d ? mainStat.d.find((x) => x.d === today) : {}
     );
   }
@@ -190,13 +219,22 @@ export default class User {
     return setStatistics(userInfo.userId, userInfo.token, stats);
   }
 
-  static getGameStatistics(game) {
+  static getGameStatistics(game, defaultValue = { r: [] }) {
     let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
-    return getStatistics(userInfo.userId, userInfo.token).then((stats) => {
-      return JSON.parse(stats.optional[game]);
-    });
+    return getStatistics(userInfo.userId, userInfo.token)
+      .then((stats) => {
+        return stats.optional[game]
+          ? JSON.parse(stats.optional[game])
+          : defaultValue;
+      })
+      .catch((err) => {
+        if (err.code === 404) {
+          return defaultValue;
+        }
+        throw err;
+      });
   }
 
   static async fillUser(userInfo) {
@@ -214,7 +252,7 @@ export default class User {
         user = {
           id: userInfo.userId,
           email: userInfo.email,
-          settings: {},
+          settings: { ...DEFAULT_USER_SETTINGS },
         };
       } else {
         localStorage.setItem(`${APPLICATION}.auth`, '');
@@ -226,7 +264,7 @@ export default class User {
       user.stats = await User.getMainStatistics();
     } catch (err) {
       if (err.code === 404) {
-        user.stats = {};
+        user.stats = { ...DEFAULT_STATISTICS };
       } else {
         localStorage.setItem(`${APPLICATION}.auth`, '');
         user = null;

@@ -5,6 +5,7 @@ import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
+import App from 'components/games-AudioCall/app/app';
 
 const routes = [
   {
@@ -56,7 +57,7 @@ const routes = [
   {
     name: 'audiocall-page',
     title: 'Аудиовызов',
-    ClassConstructor: MainPage,
+    ClassConstructor: App,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
