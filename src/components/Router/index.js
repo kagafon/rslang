@@ -1,9 +1,11 @@
 /* eslint-disable import/no-cycle */
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
+import Dictionary from 'components/pages/dictionary-page';
 import App from 'components/games-AudioCall/app/app';
 import AppSavannah from 'components/games-savannah/app/app';
 
@@ -112,7 +114,7 @@ const routes = [
   {
     name: 'promo-page',
     title: 'Промо',
-    ClassConstructor: MainPage,
+    ClassConstructor: promoPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/promo-page.jpg',
     color: 'rgba(124, 55, 73, 0.79)',
@@ -130,7 +132,7 @@ const routes = [
     title: 'Словарь',
     image: 'assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgba(101, 99, 209, 0.78)',
-    ClassConstructor: MainPage,
+    ClassConstructor: Dictionary,
     needAuthorization: false,
   },
 ];
