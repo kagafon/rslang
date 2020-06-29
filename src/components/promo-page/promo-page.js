@@ -2,11 +2,10 @@
 import { createElement } from 'helpers/dom';
 import Swiper from 'swiper';
 import optionsForSwiper from './optionsForSwiper';
-import 'stylesheets/promo-page/style.scss';
 
 export default class promoPage {
   init() {
-    this.parent = createElement(null, 'div', ['parent'], {}, '');
+    this.parent = createElement(null, 'div', ['parent', 'promo-page'], {}, '');
     this.swiperContainer = createElement(
       this.parent,
       'div',
@@ -374,6 +373,10 @@ export default class promoPage {
     this.slideNext(btnNext);
     this.slidePrev(btnPrev);
     return this.parent;
+  }
+
+  postInit() {
+    this.swiper.update();
   }
 
   slidePrev(btn) {
