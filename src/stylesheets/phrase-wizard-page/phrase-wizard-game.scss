@@ -136,13 +136,15 @@ p {
 
 // Header _____________________________
 
-.header {
+.header.ph-wiz {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   max-width: 1440px;
   height: 20px;
   position: relative;
+  flex-direction: row;
+  justify-content: center;
 }
 
 // navBarBlock__________________________

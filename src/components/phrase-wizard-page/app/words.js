@@ -2,6 +2,7 @@ import Service from 'components/phrase-wizard-page/app/service';
 import Voice from 'components/phrase-wizard-page/app/voice';
 import { createElement } from 'helpers/dom';
 import Statisctic from 'components/phrase-wizard-page/app/statistic';
+import Button from 'components/phrase-wizard-page/app/button';
 
 export default class GameWords {
   static init(words){
@@ -9,6 +10,7 @@ export default class GameWords {
     this.startPrase = words[0];
     this.render(this.startPrase);
     Voice.init();
+    Button.init();
     Service.spinnerOff();
     console.log(this.startPrase);
   }
@@ -56,7 +58,7 @@ export default class GameWords {
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('incorrect'); 
           ++numberWords;
-          Statisctic.count(1, 0);  
+          Statisctic.count(1, 0);
         }else if(numberWords = gameWords.length) {
           const wordsTranslate = document.querySelector('.translate');
           wordsTranslate.classList.add('show-oneself');

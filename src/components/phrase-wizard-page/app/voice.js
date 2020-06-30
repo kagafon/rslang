@@ -48,5 +48,6 @@ export default class Voice {
     this.render();
     this.autoPlayAudio();
     this.audioBtn();
+    
   }
 }

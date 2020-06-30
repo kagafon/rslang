@@ -1,13 +1,13 @@
-
+import { createElement } from 'helpers/dom';
 
 export default class Button {
   static render() {
-    const btnBlock = document.querySelector('.header');
-    createElement(btnBlock, 'button', ['btn', 'btn-primary', 'ph-wiz'], {}, 'Следующая');
+    const btnBlock = document.querySelector('.header.ph-wiz');
+    createElement(btnBlock, 'button', ['btn', 'btn-primary', 'ph-wiz'], {}, 'Дальше');
     
   }
 
-  static btnClick() {
+  /*static btnClick() {
     const nextButton = document.querySelector('.btn-primary');
     btnHint.addEventListener('click', () => {
       document.querySelector('.answerBlock').innerHTML = '';
@@ -63,10 +63,10 @@ export default class Button {
         document.querySelector('.next').style.display = 'none';
       }
     });
-  }
+  } */
 
   static init() {
     this.render();
-    this.btnClick();
+    //this.btnClick();
   }
 }

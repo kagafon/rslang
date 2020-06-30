@@ -6,7 +6,7 @@ export default class PhraseWizard {
     const gameBox = createElement(
       document.getElementById('main-container'),
       'contaner',
-      ['box-games']
+      ['box-games', 'ph-wiz']
       );
 
     createElement(gameBox, 'div', ['spinner']);
@@ -24,7 +24,7 @@ export default class PhraseWizard {
       'Loading...'
     );
 
-    createElement(gameBox, 'div', ['header']);
+    createElement(gameBox, 'div', ['header', 'ph-wiz']);
     createElement(gameBox, 'div', ['wrapper', 'ph-wiz']);
     createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
 
