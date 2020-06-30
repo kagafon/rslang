@@ -1,0 +1,15 @@
+.control-block {
+  position: fixed;
+  right: 20px;
+  display: flex;
+  width: fit-content;
+  margin-top: 10px;
+  background-color: transparentize(theme-color('light'), 0.5);
+  border-radius: 5px;
+  padding: 5px;
+
+  label.btn:not(.active) {
+   opacity: 0.4;
+   color: theme-color('dark');
+  }
+}

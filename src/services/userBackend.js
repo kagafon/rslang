@@ -22,8 +22,9 @@ const DEFAULT_USER_SETTINGS = {
   prompts: {
     example: true,
     translation: true,
-    meaning: false,
-    transcription: false,
+    example: true,
+    meaning: true,
+    transcription: true,
     image: true,
   },
   buttons: {

@@ -1,7 +1,9 @@
 import Results from 'components/games-AudioCall/app/components/main/results/results';
+// eslint-disable-next-line import/no-cycle
 import RusWords from 'components/games-AudioCall/app/components/main/words/words';
 import store from 'components/games-AudioCall/app/components/storage';
 import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
+// eslint-disable-next-line import/no-cycle
 import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 import Service from 'components/games-AudioCall/app/service';
 import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
@@ -24,9 +26,12 @@ export default class Button {
     const btnHint = document.querySelector('.hint');
     btnHint.addEventListener('click', () => {
       document.querySelector('.answerBlock').innerHTML = '';
+
       Results.init();
+
       document.querySelector('.hint').style.display = 'none';
       document.querySelector('.next').style.display = 'block';
+
       const state = store.getState();
 
       store.setState({ round: state.round + 1 });
@@ -34,6 +39,7 @@ export default class Button {
 
       const progress = document.querySelector('.progress-bar');
       const width = String(progress.style.width).slice(0, -1);
+
       progress.style.width = `${+width + 10}%`;
       RusWords.rightChoice(state.correct);
 
@@ -48,6 +54,7 @@ export default class Button {
     const btnNext = document.querySelector('.next');
     btnNext.addEventListener('click', () => {
       const stage = store.getState();
+
       if (stage.round <= 9) {
         const correctIcon = document.querySelectorAll('.icon');
 
@@ -69,8 +76,12 @@ export default class Button {
         });
 
         answerBlock.innerHTML = '';
-        RusWords.wordGeneration();
-        Voice.init();
+        Service.spinnerOn();
+
+        setTimeout(() => {
+          Voice.init();
+          RusWords.wordGeneration();
+        }, 1000);
 
         document.querySelector('.hint').style.display = 'block';
         document.querySelector('.next').style.display = 'none';

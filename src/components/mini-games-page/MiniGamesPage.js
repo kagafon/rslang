@@ -47,7 +47,11 @@ export default class GamesPage {
           element.name
         );
         const imageCard = document.createElement('img');
+<<<<<<< HEAD
         imageCard.src = `assets/images/${element.link}.jpg`;
+=======
+        imageCard.src = 'assets/images/' + element.link + '.jpg';
+>>>>>>> develop
         imageCard.alt = element.name;
         gameItem.append(imageCard);
         gameItem.addEventListener('click', clickGame.bind(null, element.link));
