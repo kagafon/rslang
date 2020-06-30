@@ -30,20 +30,21 @@ export async function getUserWords(preloads) {
     const settingsForWords = await getSettings();
     const { maxWordsPerDay, newWordsPerDay } = settingsForWords;
     const wordsToday = await Words.getTodayUserWords(preloads);
-    wordsToday;
+    if (wordsToday.length === 0) throw new Error();
+    // console.error(wordsToday);
     return wordsToday;
   } catch (e) {
     const group = 0;
     const page = 1;
-    const wordsPerPage = 40;
+    const wordsPerPage = 30;
     const fieldsToCache = ['image', 'audio'];
-
-    const wordsForRound = await Words.getWordsForRound(
+    const words = await Words.addUserWordsFromGroup(
       group,
       page,
       wordsPerPage,
       fieldsToCache
     );
-    return wordsForRound;
+
+    return words;
   }
 }

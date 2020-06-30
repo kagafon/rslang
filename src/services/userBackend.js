@@ -188,7 +188,7 @@ export default class User {
     }
 
     return User.getGameStatistics('main', defaultValue).then((mainStat) =>
-      mainStat.d ? mainStat.d.find((x) => x.d === today) : {}
+      mainStat ? mainStat.find((x) => x.d === today) : {}
     );
   }
 

@@ -47,18 +47,16 @@ class MainPageGame {
       ''
     );
     const preloads = ['image', 'audio', 'audioExample', 'audioMeaning'];
-    const loader = createLoader();
-    // console.error(loader);
-
-    const data = await Promise.all([getSettings(), getUserWords(preloads)]);
-    loader.parentNode.removeChild(loader);
-    this.settings = data[0];
-    this.words = data[1];
-
-    if (!this.words) {
+    this.loader = createLoader();
+    try {
+      const data = await Promise.all([getSettings(), getUserWords(preloads)]);
+      this.settings = data[0];
+      this.words = data[1];
+    } catch (e) {
       Toaster.createToast(`На сегодня нет слов`, 'danger');
       router.draw('main-page');
-      throw new Error();
+    } finally {
+      this.loader.parentNode.removeChild(this.loader);
     }
   }
 
@@ -303,15 +301,18 @@ class MainPageGame {
       audioExampleSrc,
       textMeaning,
       textExample,
+      difficulty,
       wordTranslate,
       id,
     } = this.wordInput;
-    const stat = (await User.getMainStatistics()) || { g: 10 };
-    console.error(stat);
-    // stat.passedCards = (stat && stat.passedCards) || 0;
-    // stat.correctAnswers = stat.passedCards || 0;
-    // stat.learnedWords = stat.learnedWords || 0;
-    // stat.answerSeries = stat.answerSeries || 0;
+
+    const stat = await User.getMainStatistics();
+    stat.passedCards = stat.passedCards || 0;
+    stat.correctAnswers = stat.passedCards || 0;
+    stat.learnedWords = stat.learnedWords || 0;
+    stat.answerSeries = stat.answerSeries || 0;
+    stat.answerSeriesLen = stat.answerSeriesLen || 0;
+
     this.wordInput.lastRepeat = new Date().getTime();
     this.audio = new Audio();
     this.inputBackground = document.querySelector(
@@ -332,11 +333,21 @@ class MainPageGame {
     if (this.input.value === word) {
       if (event.submitter.innerText === 'Показать ответ') {
         this.wordInput.totalAnswers += 1;
-        // stat.passedCards += 1;
+        stat.passedCards += 1;
+        stat.answerSeries =
+          stat.answerSeries > stat.answerSeriesLen
+            ? stat.answerSeries
+            : stat.answerSeriesLen;
+        stat.answerSeriesLen = 0;
       } else {
-        // stat.correctAnswers += 1;
+        stat.correctAnswers += 1;
+        stat.passedCards += 1;
+        stat.answerSeriesLen += 1;
         this.wordInput.correctAnswers += 1;
         this.wordInput.totalAnswers += 1;
+      }
+      if (difficulty === 'new') {
+        stat.learnedWords += 1;
       }
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
@@ -382,8 +393,6 @@ class MainPageGame {
     }
     Words.updateUserWord(this.wordInput);
     User.saveMainStatistics(stat);
-    const sss = await User.getMainStatistics();
-    console.error(sss);
   }
 
   addInputHandler() {
@@ -483,7 +492,9 @@ class MainPageGame {
       this.addAction();
       this.setLongWord();
     } catch (e) {
+      // this.loader.parentNode.removeChild(this.loader);
       Toaster.createToast(`ошибка загрузки`, 'danger');
+      router.draw('main-page');
     }
   }
 }
