@@ -1,10 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
-@import url('https://unpkg.com/swiper/css/swiper.min.css');
-  
+.promo-page {
   .swiper-container {
-    margin: -160px auto 30px;
+    margin: 0 auto 30px;
     max-width: 700px;
     width: 90%;
     height: 300px;
@@ -32,7 +28,7 @@
   .swiper-button-next:hover {
     transform: scale(1.2);
   }
-  .discribe-game{
+  .discribe-game {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -46,25 +42,24 @@
     text-align: justify;
     margin: 10px;
     border-radius: 30px;
-    background: rgba(0.5,0.5,0.5,0.5);
+    background: rgba(0.5, 0.5, 0.5, 0.5);
     font-size: 20px;
     font-weight: 700;
     display: flex;
   }
   .game {
     font-family: 'roboto';
-    color: #FFFFFF;
+    color: #ffffff;
     width: 45%;
     min-height: 200px;
     height: 100%;
     text-align: justify;
     margin: 10px;
     border-radius: 30px;
-    background: rgba(0.5,0.5,0.5,0.5);
+    background: rgba(0.5, 0.5, 0.5, 0.5);
     font-size: 20px;
     font-weight: 700;
     display: flex;
-
   }
   .img-game {
     margin: auto 10px;
@@ -91,7 +86,6 @@
     }
   }
   @media all and (max-width: 1000px) {
-   
     .game {
       width: 90%;
       min-height: 180px;
@@ -103,7 +97,7 @@
       width: 90%;
       min-height: 250px;
       height: 100%;
-      flex-direction: column;    
+      flex-direction: column;
     }
     .img-game {
       margin: 10px auto;
@@ -113,3 +107,4 @@
       flex-direction: column;
     }
   }
+}
