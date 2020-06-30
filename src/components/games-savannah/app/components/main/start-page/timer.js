@@ -22,17 +22,17 @@ export default class Timer {
   static initializeTimer() {
     const timerBLock = document.querySelector('.timer-block');
     const audio = document.querySelector('audio');
-    // audio.play();
+    audio.play();
     let timerNumber = 4;
 
     function tick() {
       const timer = document.querySelector('.timer-second');
       // eslint-disable-next-line no-plusplus
-      if (--timerNumber === 3) {
+      if (--timerNumber === 0) {
         clearInterval(sec);
         timerBLock.remove();
         StartGame.init();
-        // audio.pause();
+        audio.pause();
       }
       timer.textContent = timerNumber;
     }

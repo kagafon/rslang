@@ -107,6 +107,8 @@ export default class RusWords {
       const stage = store.getState();
       const target = event.key;
 
+      // console.log(stage)
+
       store.setState({ round: stage.round + 1 });
 
       let word;
