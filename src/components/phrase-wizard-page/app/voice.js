@@ -1,4 +1,4 @@
-//import Service from 'components/games-AudioCall/app/service';
+import GameWords from 'components/phrase-wizard-page/app/words';
 
 export default class Voice {
   static render() {
@@ -12,8 +12,34 @@ export default class Voice {
       </span>
       <audio data-id='' src="#"></audio>
     `;
-
+    console.log(GameWords.startPrase);
+    //playAudio.play();
     answerBlock.append(audio);
+  }
+
+  static async autoPlayAudio() {
+    const btnAudio = document.querySelector('.audio');
+    const playAudio = document.querySelector('audio');
+    playAudio.src = await GameWords.startPrase.audioExampleSrc;
+    //const playAudio = await GameWords.startPrase.audioExample;
+    //const audio = new Audio(await GameWords.startPrase.audioExample);
+    btnAudio.classList.add('audio-animation');
+    console.log(GameWords.startPrase.audioExampleSrc);
+    playAudio.play();
+
+    playAudio.onended = () => {
+      btnAudio.classList.remove('audio-animation');
+    };
+
+    
+    /* //const playAudio = await GameWords.startPrase.audioExample;
+    console.log(GameWords.startPrase.audioExample)
+    //playAudio.play();
+    btnAudio.classList.add('audio-animation');
+
+    playAudio.onended = () => {
+      btnAudio.classList.remove('audio-animation');
+    };*/
   }
 /*
   static async audioBtn() {
@@ -60,5 +86,6 @@ export default class Voice {
 
   static init() {
     this.render();
+    this.autoPlayAudio();
   }
 }

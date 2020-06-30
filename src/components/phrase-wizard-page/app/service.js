@@ -7,13 +7,12 @@ export default class Service {
     const rndPage = this.randomInteger(0, 59);
      
       const words = Object.assign(await Words.getWordsForRound((+level - 1), rndPage, 10, [
-          'image',,
-          'audioMeaning',
+          'image',
+          'audioExample',
           ])
       ); 
     await Promise.all(words);
     GameWords.init(words);
-    //this.spinnerOff();
   }
 
   static randomInteger(min, max) {

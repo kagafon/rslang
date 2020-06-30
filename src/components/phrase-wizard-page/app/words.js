@@ -5,9 +5,12 @@ import Statisctic from 'components/phrase-wizard-page/app/statistic';
 
 export default class GameWords {
   static init(words){
+    
+    this.startPrase = words[0];
+    this.render(this.startPrase);
     Voice.init();
-    this.render(words[0]);
     Service.spinnerOff();
+    console.log(this.startPrase);
   }
 
   static render(word) {
