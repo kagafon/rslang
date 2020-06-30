@@ -1,5 +1,9 @@
 @import './main-page/mainPageGame';
 .main-page {
+  margin-top: 130px;
+  .loader {
+    margin-top: 200px;
+  }
   .jumbotron {
     width: 100%;
     background-color: rgba(83, 140, 173, 0.49);

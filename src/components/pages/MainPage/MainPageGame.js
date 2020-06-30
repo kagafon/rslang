@@ -29,6 +29,7 @@ class MainPageGame {
     this.addInputHandler = this.addInputHandler.bind(this);
     this.addVolumeHandler = this.addVolumeHandler.bind(this);
     this.addContainerHandler = this.addContainerHandler.bind(this);
+    this.adddifficultyButton = this.adddifficultyButton.bind(this);
   }
 
   async create() {
@@ -128,7 +129,13 @@ class MainPageGame {
       {},
       ``
     );
-    const cardHeaderButtons = createElement(cardHeader, 'div', [], {}, ``);
+    const cardHeaderButtons = createElement(
+      cardHeader,
+      'div',
+      ['d-flex', 'justify-content-center', 'btn-group'],
+      { role: 'group' },
+      ``
+    );
     if (buttons.removeWord)
       createElement(
         cardHeaderButtons,
@@ -145,6 +152,7 @@ class MainPageGame {
         { 'data-btn': 'complex', type: 'button', tabindex: -1 },
         `сложное слово`
       );
+
     createElement(
       cardHeader,
       'span',
@@ -187,7 +195,7 @@ class MainPageGame {
       },
       `${word}`
     );
-    createElement(cardBody, 'hr', ['my-4'], {}, ``);
+    createElement(cardBody, 'hr', ['my-5'], {}, ``);
     if (prompts.translation)
       createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
     if (prompts.meaning) {
@@ -246,6 +254,35 @@ class MainPageGame {
         `Показать ответ`
       );
 
+    const ankibtn = createElement(
+      cardFooter,
+      'div',
+      ['btn-group'],
+      { role: 'group' },
+      ``
+    );
+    createElement(
+      ankibtn,
+      'button',
+      ['btn', 'btn-sm', 'btn-success'],
+      { type: 'submit' },
+      `Легко`
+    );
+    createElement(
+      ankibtn,
+      'button',
+      ['btn', 'btn-sm', 'btn-info'],
+      { type: 'submit' },
+      `Хорошо`
+    );
+    createElement(
+      ankibtn,
+      'button',
+      ['btn', 'btn-sm', 'btn-warning'],
+      { type: 'submit' },
+      `Сложно`
+    );
+
     return card;
   }
 
@@ -260,7 +297,7 @@ class MainPageGame {
   setLongWord() {
     const backWord = this.card.querySelector('.input-background_back');
     const inputWord = this.card.querySelector('.input-word');
-    inputWord.style.width = `${backWord.offsetWidth}px`;
+    inputWord.style.width = `${backWord.offsetWidth + 1}px`;
     this.input.style.width = `${backWord.offsetWidth}px`;
   }
 
@@ -293,15 +330,15 @@ class MainPageGame {
 
   async addSubmitHandler(event) {
     event.preventDefault();
+
     this.wordInput = this.findActiveCardWord();
-    const {
+    let {
       word,
       audioSrc,
       audioMeaningSrc,
       audioExampleSrc,
       textMeaning,
       textExample,
-      difficulty,
       wordTranslate,
       id,
     } = this.wordInput;
@@ -311,7 +348,7 @@ class MainPageGame {
     stat.correctAnswers = stat.passedCards || 0;
     stat.learnedWords = stat.learnedWords || 0;
     stat.answerSeries = stat.answerSeries || 0;
-    stat.answerSeriesLen = stat.answerSeriesLen || 0;
+    stat.answerCount = stat.answerCount || 0;
 
     this.wordInput.lastRepeat = new Date().getTime();
     this.audio = new Audio();
@@ -331,24 +368,33 @@ class MainPageGame {
     this.inputWord.classList.remove('hidden1', 'hidden2');
     this.inputBackground.classList.remove('answer_success', 'answer_error');
     if (this.input.value === word) {
-      if (event.submitter.innerText === 'Показать ответ') {
+      this.input.disabled = 'disabled';
+      if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
+        console.error('new word');
         this.wordInput.totalAnswers += 1;
         stat.passedCards += 1;
         stat.answerSeries =
-          stat.answerSeries > stat.answerSeriesLen
+          stat.answerSeries > stat.answerCount
             ? stat.answerSeries
-            : stat.answerSeriesLen;
-        stat.answerSeriesLen = 0;
+            : stat.answerCount;
+        stat.answerCount = 0;
       } else {
+        console.error(event.submitter.innerText);
         stat.correctAnswers += 1;
         stat.passedCards += 1;
-        stat.answerSeriesLen += 1;
+        stat.answerCount += 1;
         this.wordInput.correctAnswers += 1;
         this.wordInput.totalAnswers += 1;
+        if (this.wordInput.difficulty === 'new') {
+          stat.learnedWords += 1;
+        }
+        if (this.wordInput.correctAnswers === this.wordInput.totalAnswers) {
+          this.wordInput.difficulty = 'easy';
+        } else {
+          this.wordInput.difficulty = 'medium';
+        }
       }
-      if (difficulty === 'new') {
-        stat.learnedWords += 1;
-      }
+
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
@@ -370,7 +416,7 @@ class MainPageGame {
       setTimeout(() => {
         this.swiper.slideNext();
         this.updateSlide();
-      }, 2000);
+      }, 1000);
     } else {
       this.wordInput.totalAnswers += 1;
       this.inputBackground.classList.add('answer_error');
@@ -391,8 +437,16 @@ class MainPageGame {
         store.setState({ isAudioPlay: false });
       }
     }
+    this.adddifficultyButton(event.submitter.innerText);
     Words.updateUserWord(this.wordInput);
+    console.error(this.wordInput);
     User.saveMainStatistics(stat);
+  }
+
+  adddifficultyButton(button) {
+    if (button === 'ЛЕГКО') this.wordInput.difficulty = 'easy';
+    if (button === 'ХОРОШО') this.wordInput.difficulty = 'medium';
+    if (button === 'СЛОЖНО') this.wordInput.difficulty = 'hard';
   }
 
   addInputHandler() {

@@ -13,14 +13,13 @@ import { APPLICATION } from './config';
 let user = null;
 
 const getToday = () => {
-  return new Date().getTime() / (3600 * 1000 * 24);
+  return Math.floor(new Date().getTime() / (3600 * 1000 * 24));
 };
 
 const DEFAULT_USER_SETTINGS = {
   newWordsPerDay: 10,
   maxWordsPerDay: 50,
   prompts: {
-    example: true,
     translation: true,
     example: true,
     meaning: true,
@@ -147,6 +146,8 @@ export default class User {
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
     let stats = {};
+    const today = getToday();
+
     try {
       stats = await getStatistics(userInfo.userId, userInfo.token);
     } catch (err) {
@@ -158,21 +159,21 @@ export default class User {
       } else throw err;
     }
     if (!stats.optional.main) {
-      stats.optional.main = { d: [] };
+      stats.optional.main = [{ d: today }];
     } else {
       stats.optional.main = JSON.parse(stats.optional.main);
     }
     if (!user.stats) user.stats = {};
     Object.assign(user.stats, newStats);
 
-    const today = getToday();
-    const foundDate = stats.optional.main.d.find((x) => x.d === today);
+    const foundDate = stats.optional.main.find((x) => x.d === today);
 
-    if (!foundDate) stats.optional.main.d.push({ d: today, ...newStats });
+    if (!foundDate) stats.optional.main.push({ d: today, ...newStats });
     else Object.assign(foundDate, newStats);
 
     stats.optional.main = JSON.stringify(stats.optional.main);
     delete stats.id;
+    delete stats.date;
     return setStatistics(userInfo.userId, userInfo.token, stats);
   }
 

@@ -1,6 +1,7 @@
 @import './main-page/modal';
 
 .main-page-game {
+  margin-top: 100px;
   .swiper-container-main {
     max-width: 700px;
     width: 100%;
@@ -20,7 +21,7 @@
     height: 100%;
     margin: 0 auto;
     button {
-      margin: 5px;
+      margin-bottom: 5px;
     }
     hr {
       width: 100%;
@@ -29,6 +30,7 @@
   .volume {
     cursor: pointer;
     color: #35c8c7;
+    text-align: center;
     transition: opacity $page-transition-delay ease;
     &.off {
       opacity: 0.3;
@@ -44,20 +46,6 @@
 
   .card-text {
     transition: font-size $page-transition-delay ease;
-  }
-
-  .input-background,
-  .input-word {
-    height: calc(1.5em + 0.75rem + 2px);
-    padding: 0.385rem 0.85rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #fff0;
-    position: absolute;
-    font-size: 20px;
-    top: 93px;
-    border-radius: 0.25rem;
-    transition: background-color $page-transition-delay ease;
   }
 
   .input-background_back {
@@ -95,6 +83,11 @@
   }
 
   .form-control {
+    text-align: center;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.385rem 0.65rem;
+    font-weight: 400;
+    line-height: 1.5;
     background: transparent;
     z-index: 1000;
     font-size: 20px;
@@ -106,14 +99,37 @@
     }
   }
 
-  @media (max-width: 472px) {
+  .input-background,
+  .input-word {
+    text-align: center;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.385rem 0.65rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff0;
+    position: absolute;
+    font-size: 20px;
+    top: 93px;
+    border-radius: 0.25rem;
+    transition: background-color $page-transition-delay ease;
+  }
+
+  @media (max-width: 491px) {
     .input-background,
     .input-word {
-      top: 141px;
+      top: 117px;
     }
 
-    .card-footer {
+    .card-footer,
+    .card-header {
       flex-direction: column;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 432px) {
+    .input-background,
+    .input-word {
+      top: 137px;
     }
   }
 }

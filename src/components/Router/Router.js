@@ -72,11 +72,7 @@ export default class Router {
     );
     this.container.textContent = '';
     const route = new this.currentRoute.ClassConstructor();
-<<<<<<< HEAD
     this.container.appendChild(await route.init());
-=======
-    this.container.appendChild(route.init());
->>>>>>> develop
     if (route.postInit) route.postInit();
     this.container.style.opacity = '1';
   }
