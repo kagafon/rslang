@@ -1,27 +1,14 @@
-import Results from 'components/games-AudioCall/app/components/main/results/results';
-import RusWords from 'components/games-AudioCall/app/components/main/words/words';
-import store from 'components/games-AudioCall/app/components/storage';
-import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
-import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
-import Service from 'components/games-AudioCall/app/service';
-import statisticStore from 'components/games-AudioCall/app/components/statistic-storage';
+
 
 export default class Button {
   static render() {
-    const wrapper = document.querySelector('.wrapper');
-    const btnBlock = document.createElement('div');
-    btnBlock.classList.add('btnBlock');
-    btnBlock.innerHTML = `
-     <button class='btn btn-primary hint'>Не знаю</button>
-     <button class='btn btn-primary next'>Дальше</button>
-    `;
-    wrapper.append(btnBlock);
+    const btnBlock = document.querySelector('.header');
+    createElement(btnBlock, 'button', ['btn', 'btn-primary', 'ph-wiz'], {}, 'Следующая');
+    
   }
 
   static btnClick() {
-    const answerBlock = document.querySelector('.answerBlock');
-
-    const btnHint = document.querySelector('.hint');
+    const nextButton = document.querySelector('.btn-primary');
     btnHint.addEventListener('click', () => {
       document.querySelector('.answerBlock').innerHTML = '';
       Results.init();

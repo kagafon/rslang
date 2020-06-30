@@ -26,6 +26,7 @@ export default class GameWords {
     imagePhrase.src = word.imageSrc;
     imagePhrase.alt = word.word;
     wrapper.append(imagePhrase);
+    createElement(wrapper, 'div', ['translate', 'ph-wiz'], {}, this.startPrase.textExampleTranslate);
 
     wordsArray.forEach(template => {
       this.template = template.replace(/[a-zA-Z]/g, "•");
@@ -55,63 +56,14 @@ export default class GameWords {
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('incorrect'); 
           ++numberWords;
-          Statisctic.count(1, 0);
-        }else {
-          return
+          Statisctic.count(1, 0);  
+        }else if(numberWords = gameWords.length) {
+          const wordsTranslate = document.querySelector('.translate');
+          wordsTranslate.classList.add('show-oneself');
         }
       });  
     } 
     
-  }
-
-  static rightChoice(item) {
-    const arrWordsCard = document.querySelectorAll('.words');
-    const arrWordsNumber = document.querySelectorAll('.number-words');
-
-    item.children[0].style.display = 'none';
-    item.children[1].style.display = 'block';
-
-    document.querySelector('.hint').style.display = 'none';
-    document.querySelector('.next').style.display = 'block';
-
-    arrWordsNumber.forEach((i) => {
-      if (i.textContent !== item.children[0].textContent) {
-        i.classList.add('words-opacity');
-      }
-    });
-
-    arrWordsCard.forEach((i) => {
-      if (i.textContent !== item.children[3].textContent) {
-        i.classList.add('words-opacity');
-      }
-    });
-  }
-
-  static incorrectChoice(item) {
-    const arrWordsCard = document.querySelectorAll('.words');
-    const arrWordsNumber = document.querySelectorAll('.number-words');
-    const stage = store.getState();
-
-    item.children[0].style.display = 'none';
-    item.children[2].style.display = 'block';
-
-    document.querySelector('.hint').style.display = 'none';
-    document.querySelector('.next').style.display = 'block';
-
-    arrWordsNumber.forEach((i) => {
-      if (i.textContent !== item.children[0].textContent) {
-        i.classList.add('words-opacity');
-      }
-    });
-
-    arrWordsCard.forEach((i) => {
-      if (i.textContent !== item.children[3].textContent) {
-        i.classList.add('words-opacity');
-      } else {
-        stage.correct.children[0].style.display = 'none';
-        stage.correct.children[1].style.display = 'block';
-      }
-    });
   }
 
 }
