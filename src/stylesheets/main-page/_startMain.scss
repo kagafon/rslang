@@ -7,6 +7,8 @@
   .jumbotron {
     width: 100%;
     background-color: rgba(83, 140, 173, 0.49);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
     .div-level {
       width: 100%;
       margin-top: 10px;
@@ -33,20 +35,39 @@
     background-size: cover;
     background-image: url('/assets/images/united-states-of-america-flag-button-square-xs.png');
   }
-  .control-m1 {
+
+  .jumbotron-level {
+    width: 30%;
+    height: 260px;
+    font-size: 18px;
+    color: #ffffff70;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    margin-bottom: 5px;
+    &:hover {
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.12);
+    }
   }
 
-  .control-m2 {
-    margin-right: 4.6rem;
-  }
-
-  .control-m3 {
-    margin-right: 4.9rem;
+  @media (max-width: 965px) {
+    .div-level2 {
+      flex-direction: column;
+      align-items: center;
+    }
+    .jumbotron-level {
+      width: 60%;
+    }
   }
 
   @media (max-width: 550px) {
     .div-level {
       flex-direction: column;
+    }
+    .jumbotron-level {
+      width: 80%;
     }
   }
 }

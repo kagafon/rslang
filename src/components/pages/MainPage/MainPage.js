@@ -1,22 +1,16 @@
 import { createElement } from 'helpers/dom';
+import store from 'components/pages/MainPage/Store';
 import router from 'components/Router/';
-
+import { getUserWords } from 'components/pages/MainPage/dataForMain';
 class MainPage {
   constructor() {
-    this.controlHandler = this.controlHandler.bind(this);
+    // this.controlHandler = this.controlHandler.bind(this);
   }
   create() {
     this.container = createElement(
       '',
       'div',
-      [
-        'd-flex',
-        'justify-content-center',
-        'align-items-center',
-        'flex-column',
-        'mx-4',
-        'main-page',
-      ],
+      ['d-flex', 'justify-content-center', 'flex-column', 'mx-4', 'main-page'],
       {},
       ''
     );
@@ -43,14 +37,6 @@ class MainPage {
       ''
     );
 
-    const div2 = createElement(
-      this.jumbotron,
-      'div',
-      ['d-flex', 'align-items-center', 'div-level', 'flex-column'],
-      {},
-      ''
-    );
-
     const lang = createElement(
       div1,
       'p',
@@ -62,7 +48,13 @@ class MainPage {
     createElement(lang, 'p', [], {}, 'Английский язык');
 
     const progressDiv = createElement(div1, 'div', [], {}, '');
-    createElement(progressDiv, 'p', [], {}, 'Выучено слов : 25%');
+    this.progressText = createElement(
+      progressDiv,
+      'p',
+      [],
+      {},
+      'Выучено слов : 0%'
+    );
     const progress = createElement(progressDiv, 'div', ['progress'], {}, '');
     this.progressBar = createElement(
       progress,
@@ -70,99 +62,90 @@ class MainPage {
       ['progress-bar'],
       {
         role: 'progressbar',
-        style: 'width: 25%;',
-        'aria-valuenow': '25',
+        style: 'width: 0%;',
+        'aria-valuenow': '0',
         'aria-valuemin': '0',
         'aria-valuemax': '100',
       },
-      '25%'
+      '0%'
     );
 
     const words = [
-      'изучать только новые слова',
-      'только повторение',
-      'изучать все слова',
+      { text: 'изучать только новые слова', state: 'new' },
+      { text: 'повторение изученных слов', state: 'old' },
+      { text: 'изучать все слова', state: 'all' },
     ];
 
-    this.radioDiv = createElement(
-      div2,
+    this.wordsDiv = createElement(
+      this.container,
       'div',
-      ['d-flex', 'justify-content-start', 'align-items-start', 'flex-column'],
+      ['d-flex', 'justify-content-between', 'div-level2'],
       {},
       ''
     );
 
     words.forEach((el, index) => {
-      const div = createElement(
-        this.radioDiv,
+      const jumbotronLevel = createElement(
+        this.wordsDiv,
         'div',
         [
-          'custom-control',
-          'custom-radio',
-          'custom-control-inline',
-          `control-m${index + 1}`,
+          'jumbotron',
+          'jumbotron-level',
+          'd-flex',
+          'justify-content-center',
+          'align-items-center',
+          'flex-column',
         ],
-        {},
-        ''
+        { 'data-words': `${el.state}` },
+        `${el.text}`
       );
-      let check = false;
-      if (index === 0) {
-        check = true;
+      let icon = '';
+      switch (el.state) {
+        case 'new':
+          icon = 'fiber_new';
+          break;
+        case 'old':
+          icon = 'loop';
+          break;
+        default:
+          icon = 'reply_all';
       }
-      createElement(
-        div,
-        'input',
-        ['custom-control-input'],
-        {
-          type: 'radio',
-          id: `customRadioInline${index + 1}`,
-          name: 'customRadioInline1',
-          checked: `${check}`,
-        },
-        ''
-      );
-      createElement(
-        div,
-        'label',
-        ['custom-control-label'],
-        { for: `customRadioInline${index + 1}` },
-        `${el}`
-      );
+      createElement(jumbotronLevel, 'span', ['material-icons'], {}, `${icon}`);
     });
-
-    this.startButton = createElement(
-      this.container,
-      'button',
-      ['btn', 'btn-primary', 'btn_start_main'],
-      {},
-      'Начать обучение'
-    );
   }
 
   addHandlers() {
-    const control = document.querySelector('#control');
-    this.startButton.addEventListener('click', () => {
-      router.draw('main-page-game');
+    this.wordsDiv.addEventListener('click', (event) => {
+      if (event.target.dataset.words) {
+        store.setState({ learnedWords: `${event.target.dataset.words}` });
+        router.draw('main-page-game');
+      }
     });
-    this.radioDiv.addEventListener('click', this.controlHandler);
   }
 
-  controlHandler(event) {
-    if (event.target.id === 'customRadioInline1') {
-      console.error('1');
-    }
-    if (event.target.id === 'customRadioInline2') {
-      console.error('2');
-    }
-    if (event.target.id === 'customRadioInline3') {
-      console.error('3');
+  async updateProgress() {
+    try {
+      const words = await getUserWords();
+      const learnWords = words.filter((el) => el.difficulty !== 'new');
+      const pr = (learnWords.length / words.length) * 100;
+      this.progressText.textContent = `Выучено слов: ${pr}%`;
+      this.progressBar.style.width = `${pr}%`;
+      this.progressBar.textContent = `${pr}%`;
+      this.progressBar.ariaValuenow = `${pr}`;
+    } catch {
+      console.error('ой');
     }
   }
 
-  init() {
+  async init() {
     this.create();
     this.addHandlers();
-    return this.container;
+    try {
+      await this.updateProgress();
+      return this.container;
+    } catch {
+      return this.container;
+    }
   }
 }
 

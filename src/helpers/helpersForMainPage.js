@@ -1,4 +1,5 @@
 import { createElement } from 'helpers/dom';
+import { User, Words } from 'services/backend';
 
 function showWord(word, sentence) {
   return sentence.replace('[...]', word);
@@ -83,6 +84,47 @@ function createLoader() {
   return loader;
 }
 
+async function checkWordResult(word, result, showAnswer) {
+  const stat = (await User.getMainStatistics()) || {};
+  stat.passedCards = stat.passedCards ? stat.passedCards : 0;
+  stat.correctAnswers = stat.correctAnswers ? stat.correctAnswers : 0;
+  stat.learnedWords = stat.learnedWords ? stat.learnedWords : 0;
+  stat.answerSeries = stat.answerSeries ? stat.answerSeries : 0;
+  stat.answerCount = stat.answerCount ? stat.answerCount : 0;
+  if (result === 'no') {
+    word.totalAnswers += 1;
+    word.correctAnswerSeries = 0;
+    if (showAnswer) {
+      stat.passedCards += 1;
+    }
+    stat.answerSeries =
+      stat.answerSeries > stat.answerCount
+        ? stat.answerSeries
+        : stat.answerCount;
+    stat.answerCount = 0;
+  } else if (result === 'yes') {
+    stat.correctAnswers += 1;
+    stat.passedCards += 1;
+    stat.answerCount += 1;
+    word.correctAnswers += 1;
+    word.totalAnswers += 1;
+    word.correctAnswerSeries += 1;
+    if (word.difficulty === 'new') {
+      stat.learnedWords += 1;
+    }
+  }
+  if (word.correctAnswers === word.totalAnswers) {
+    word.difficulty = 'easy';
+  } else if (word.correctAnswers === 0) {
+    word.difficulty = 'new';
+  } else {
+    word.difficulty = 'medium';
+  }
+  User.saveMainStatistics(stat);
+  console.error(word);
+  return word;
+}
+
 export {
   showWord,
   hideWord,
@@ -92,4 +134,5 @@ export {
   volumeUp,
   changeProgressBar,
   createLoader,
+  checkWordResult,
 };

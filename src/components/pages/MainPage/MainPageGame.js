@@ -7,6 +7,7 @@ import {
   volumeOff,
   changeProgressBar,
   createLoader,
+  checkWordResult,
 } from 'helpers/helpersForMainPage';
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
@@ -33,6 +34,35 @@ class MainPageGame {
   }
 
   async create() {
+    console.error(store.getState().learnedWords);
+    const preloads = ['image', 'audio', 'audioExample', 'audioMeaning'];
+    this.loader = createLoader();
+    try {
+      const data = await Promise.all([getSettings(), getUserWords(preloads)]);
+      this.settings = data[0];
+      this.words = data[1];
+    } catch (e) {
+      Toaster.createToast(`На сегодня нет слов`, 'danger');
+      router.draw('main-page');
+    } finally {
+      this.loader.parentNode.removeChild(this.loader);
+    }
+    switch (store.getState().learnedWords) {
+      case 'new':
+        this.words = this.words.filter((el) => el.difficulty === 'new');
+        break;
+      case 'old':
+        this.words = this.words.filter((el) => el.difficulty !== 'new');
+        break;
+      default:
+        this.words;
+    }
+    if (this.words.length === 0) {
+      throw new Error();
+    }
+  }
+
+  createSwiper() {
     this.container = createElement(
       '',
       'form',
@@ -47,21 +77,6 @@ class MainPageGame {
       {},
       ''
     );
-    const preloads = ['image', 'audio', 'audioExample', 'audioMeaning'];
-    this.loader = createLoader();
-    try {
-      const data = await Promise.all([getSettings(), getUserWords(preloads)]);
-      this.settings = data[0];
-      this.words = data[1];
-    } catch (e) {
-      Toaster.createToast(`На сегодня нет слов`, 'danger');
-      router.draw('main-page');
-    } finally {
-      this.loader.parentNode.removeChild(this.loader);
-    }
-  }
-
-  createSwiper() {
     this.swiperContainer = createElement(
       this.container,
       'div',
@@ -342,14 +357,6 @@ class MainPageGame {
       wordTranslate,
       id,
     } = this.wordInput;
-
-    const stat = await User.getMainStatistics();
-    stat.passedCards = stat.passedCards || 0;
-    stat.correctAnswers = stat.passedCards || 0;
-    stat.learnedWords = stat.learnedWords || 0;
-    stat.answerSeries = stat.answerSeries || 0;
-    stat.answerCount = stat.answerCount || 0;
-
     this.wordInput.lastRepeat = new Date().getTime();
     this.audio = new Audio();
     this.inputBackground = document.querySelector(
@@ -370,31 +377,10 @@ class MainPageGame {
     if (this.input.value === word) {
       this.input.disabled = 'disabled';
       if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
-        console.error('new word');
-        this.wordInput.totalAnswers += 1;
-        stat.passedCards += 1;
-        stat.answerSeries =
-          stat.answerSeries > stat.answerCount
-            ? stat.answerSeries
-            : stat.answerCount;
-        stat.answerCount = 0;
+        this.wordInput = await checkWordResult(this.wordInput, 'no', true);
       } else {
-        console.error(event.submitter.innerText);
-        stat.correctAnswers += 1;
-        stat.passedCards += 1;
-        stat.answerCount += 1;
-        this.wordInput.correctAnswers += 1;
-        this.wordInput.totalAnswers += 1;
-        if (this.wordInput.difficulty === 'new') {
-          stat.learnedWords += 1;
-        }
-        if (this.wordInput.correctAnswers === this.wordInput.totalAnswers) {
-          this.wordInput.difficulty = 'easy';
-        } else {
-          this.wordInput.difficulty = 'medium';
-        }
+        this.wordInput = await checkWordResult(this.wordInput, 'yes');
       }
-
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
@@ -418,11 +404,9 @@ class MainPageGame {
         this.updateSlide();
       }, 1000);
     } else {
-      this.wordInput.totalAnswers += 1;
+      this.wordInput = await checkWordResult(this.wordInput, 'no', false);
       this.inputBackground.classList.add('answer_error');
-
       letters(word, this.input.value, this.inputWord);
-
       this.input.value = '';
       setTimeout(() => {
         this.inputWord.classList.add('hidden1');
@@ -439,8 +423,6 @@ class MainPageGame {
     }
     this.adddifficultyButton(event.submitter.innerText);
     Words.updateUserWord(this.wordInput);
-    console.error(this.wordInput);
-    User.saveMainStatistics(stat);
   }
 
   adddifficultyButton(button) {
@@ -535,7 +517,8 @@ class MainPageGame {
       this.createSwiper();
       return this.container;
     } catch (e) {
-      return this.container;
+      Toaster.createToast(`ошибка загрузки`, 'danger');
+      router.draw('main-page');
     }
   }
 
@@ -546,7 +529,6 @@ class MainPageGame {
       this.addAction();
       this.setLongWord();
     } catch (e) {
-      // this.loader.parentNode.removeChild(this.loader);
       Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
     }

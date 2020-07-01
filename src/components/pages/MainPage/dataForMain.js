@@ -28,23 +28,24 @@ export async function getSettings() {
 export async function getUserWords(preloads) {
   try {
     const settingsForWords = await getSettings();
-    const { maxWordsPerDay, newWordsPerDay } = settingsForWords;
     const wordsToday = await Words.getTodayUserWords(preloads);
     if (wordsToday.length === 0) throw new Error();
-    // console.error(wordsToday);
     return wordsToday;
   } catch (e) {
-    const group = 0;
-    const page = 1;
-    const wordsPerPage = 30;
-    const fieldsToCache = ['image', 'audio'];
-    const words = await Words.addUserWordsFromGroup(
-      group,
-      page,
-      wordsPerPage,
-      fieldsToCache
-    );
-
-    return words;
+    // const settingsForWords = await getSettings();
+    // const { maxWordsPerDay, newWordsPerDay } = settingsForWords;
+    // const group = 0;
+    // const page = 2;
+    // const wordsPerPage = maxWordsPerDay;
+    // const fieldsToCache = ['image', 'audio'];
+    // const words = await Words.addUserWordsFromGroup(
+    //   group,
+    //   page,
+    //   wordsPerPage,
+    //   fieldsToCache
+    // );
+    // // console.error(words);
+    // const wordsToday = await Words.getTodayUserWords(fieldsToCache);
+    return e;
   }
 }
