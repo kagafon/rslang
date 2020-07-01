@@ -1,9 +1,18 @@
-import store from 'components/games-AudioCall/app/components/storage';
+import Statisctic from 'components/phrase-wizard-page/app/statisctic';
+import Service from 'components/phrase-wizard-page/app/service';
+import { createElement } from 'helpers/dom';
 
 export default class Results {
-  static render() {
-    const answerBlock = document.querySelector('.answerBlock');
-    const resultBlock = document.createElement('div');
+  static init() {
+    console.log(Statisctic.mistake, Statisctic.correct);
+    createElement( document.querySelector('.answerBlock'), 
+    'div', 
+    ['result-ph-wiz'],
+    {}, 
+    `правильных: ${Statisctic.correct}, ошибок: ${Statisctic.mistake}`);
+
+    Service.spinnerOff();
+    /*const resultBlock = document.createElement('div');
     resultBlock.classList.add('resultBlock');
     resultBlock.innerHTML = `
      <div class='words-img'></div>
@@ -11,28 +20,8 @@ export default class Results {
       <audio src="#"></audio>
       <div class='translate-block'></div>
     `;
-    answerBlock.innerHTML = '';
-    answerBlock.append(resultBlock);
+    
+    answerBlock.append(resultBlock); */
   }
 
-  static showResults() {
-    const stage = store.getState();
-    const img = document.querySelector('.words-img');
-    const audioBtn = document.querySelector('.result-audio');
-    const translate = document.querySelector('.translate-block');
-
-    img.style.backgroundImage = `url(${stage.word.imageSrc})`;
-    translate.textContent = stage.word.word;
-
-    audioBtn.addEventListener('click', () => {
-      const audio = document.querySelector('audio');
-      audio.src = stage.word.audioSrc;
-      audio.play();
-    });
-  }
-
-  static init() {
-    this.render();
-    this.showResults();
-  }
 }

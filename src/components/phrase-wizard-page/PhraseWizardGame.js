@@ -1,5 +1,6 @@
 import { createElement } from 'helpers/dom';
 import Service from 'components/phrase-wizard-page/app/service';
+import Statisctic from 'components/phrase-wizard-page/app/statisctic';
 
 export default class PhraseWizard {
   init() {
@@ -61,23 +62,12 @@ export default class PhraseWizard {
     function clickLevel(levelRound) {
       intro.remove();
       if (levelRound === 'изучаемые слова') {
-        levelRound = '0';
+        levelRound = -1;
       }
       Service.wordsRequest(levelRound);
-      //console.log(gameWords);
-      
-      //console.log(await Words.getWordsForRound(0, 0, 10, ['image', 'textMeaning', 'audioMeaning', 'textExampleTranslate']));
-            /*Service.wordsRequest(item.textContent);
-            store.setState({ groupe: +item.textContent });
-            store.setState({ round: 0 });
-            store.setState({ correctChoice: 0 });
-            Header.init();
-            Voice.init();
-            RusWords.init();
-            Button.init(); */ 
     }
     gameBox.append(intro);
-
+    Statisctic.int();
     return gameBox;
   } 
 }

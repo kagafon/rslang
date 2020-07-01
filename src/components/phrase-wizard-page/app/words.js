@@ -1,18 +1,17 @@
 import Service from 'components/phrase-wizard-page/app/service';
 import Voice from 'components/phrase-wizard-page/app/voice';
 import { createElement } from 'helpers/dom';
-import Statisctic from 'components/phrase-wizard-page/app/statistic';
+import Statisctic from 'components/phrase-wizard-page/app/statisctic';
 import Button from 'components/phrase-wizard-page/app/button';
 
 export default class GameWords {
-  static init(words){
-    
-    this.startPrase = words[0];
+  static init(){
+    const words = Service.words;
+    this.startPrase = words[this.round];
     this.render(this.startPrase);
     Voice.init();
     Button.init();
     Service.spinnerOff();
-    console.log(this.startPrase);
   }
 
   static render(word) {
@@ -27,8 +26,10 @@ export default class GameWords {
     const imagePhrase = document.createElement("img");
     imagePhrase.src = word.imageSrc;
     imagePhrase.alt = word.word;
+    imagePhrase.classList.add('ph-wiz-image');
     wrapper.append(imagePhrase);
-    createElement(wrapper, 'div', ['translate', 'ph-wiz'], {}, this.startPrase.textExampleTranslate);
+    this.wordsTranslate = createElement(wrapper, 'div', ['translate', 'ph-wiz'], {}, this.startPrase.textExampleTranslate);
+    this.wordsTranslate.classList.remove('show-oneself');
 
     wordsArray.forEach(template => {
       this.template = template.replace(/[a-zA-Z]/g, "•");
@@ -42,26 +43,30 @@ export default class GameWords {
 
   static game(gameWords) {
     let numberWords = 0;
+    const allWords = gameWords.length;
     const wordsBlock = document.querySelector('.wordsblock');
 
     wordCheck();
     function wordCheck() {
       document.addEventListener('keydown', function(event) {
-        if (gameWords.length > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`) {
+        if (allWords > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`) {
           wordsBlock.children[numberWords].innerText = '';
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('correct');
           ++numberWords;
           Statisctic.count(0, 1);
-        }else if(gameWords.length > numberWords){
+        }else if(allWords > numberWords){
           wordsBlock.children[numberWords].innerText = '';
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('incorrect'); 
           ++numberWords;
           Statisctic.count(1, 0);
-        }else if(numberWords = gameWords.length) {
+        }else if(numberWords === allWords) {
           const wordsTranslate = document.querySelector('.translate');
           wordsTranslate.classList.add('show-oneself');
+          ++numberWords;
+        }else {
+          return
         }
       });  
     } 

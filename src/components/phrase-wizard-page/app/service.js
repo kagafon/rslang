@@ -12,7 +12,9 @@ export default class Service {
           ])
       ); 
     await Promise.all(words);
-    GameWords.init(words);
+    this.words = words;
+    GameWords.round = 0;
+    GameWords.init();
   }
 
   static randomInteger(min, max) {
