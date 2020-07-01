@@ -8,7 +8,6 @@ class GameStatisticsCreation {
     const gamesResults = [];
     async function getGameStat() {
       try {
-        await User.autoLogin();
         const response = await User.getGameStatistics(game);
         const gameStat = response.r;
         gameStat.map(

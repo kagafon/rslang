@@ -10,8 +10,9 @@ class MainStatisticsCreation {
     const newWordData = [];
     async function getMainStat() {
       try {
-        await User.autoLogin();
+        console.log(User.getCurrentUser());
         const response = await User.getMainStatistics(true);
+        console.log(response);
         const todayStatistic = response.d[response.d.length - 1];
         document.getElementById('today-passedCards').innerText =
           todayStatistic.passedCards;
@@ -21,7 +22,7 @@ class MainStatisticsCreation {
           todayStatistic.correctAnswers;
         document.getElementById('today-newWords').innerText =
           todayStatistic.learnedWords;
-        const firstDate = response.d[0].d;
+        const firstDate = response.d[0].d * 3600 * 1000 * 24;
         newWordData[0] = response.d[0].learnedWords || 0;
         mainData[0] = newWordData[0];
         labels[0] = new Date(firstDate);

@@ -8,7 +8,7 @@ class StatisticsPage {
     this.container = createElement(
       '',
       'div',
-      ['content-container'],
+      ['statistic-page', 'content-container'],
       { id: 'content-container' },
       ''
     );
@@ -18,14 +18,14 @@ class StatisticsPage {
     this.todayContainer = createElement(
       this.container,
       'div',
-      ['today-statistic'],
+      ['statistic-page', 'today-statistic'],
       { id: 'today-statistic' },
       ''
     );
     this.TodayStatisticTitle = createElement(
       this.todayContainer,
       'h2',
-      ['today-statistic_title'],
+      ['statistic-page', 'today-statistic_title'],
       {},
       'Сегодня'
     );
@@ -33,7 +33,7 @@ class StatisticsPage {
     this.TodayStatisticContainer = createElement(
       this.todayContainer,
       'div',
-      ['today-statistic-container'],
+      ['statistic-page', 'today-statistic-container'],
       {},
       ''
     );
@@ -41,7 +41,7 @@ class StatisticsPage {
     this.passedCards = createElement(
       this.TodayStatisticContainer,
       'div',
-      ['today-statistic_passedCards'],
+      ['statistic-page', 'today-statistic_passedCards'],
       {},
       ''
     );
@@ -57,15 +57,15 @@ class StatisticsPage {
     this.passedCardsValue = createElement(
       this.passedCards,
       'h3',
-      ['today-value'],
+      ['statistic-page', 'today-value'],
       { id: 'today-passedCards' },
-      'N/D'
+      '0'
     );
 
     this.bestSeria = createElement(
       this.TodayStatisticContainer,
       'div',
-      ['today-statistic_bestSeria'],
+      ['statistic-page', 'today-statistic_bestSeria'],
       {},
       ''
     );
@@ -81,15 +81,15 @@ class StatisticsPage {
     this.bestSeriaValue = createElement(
       this.bestSeria,
       'h3',
-      ['today-value'],
+      ['statistic-page', 'today-value'],
       { id: 'today-bestSeria' },
-      'N/D'
+      '0'
     );
 
     this.rightAnswers = createElement(
       this.TodayStatisticContainer,
       'div',
-      ['today-statistic_rightAnswers'],
+      ['statistic-page', 'today-statistic_rightAnswers'],
       {},
       ''
     );
@@ -105,15 +105,15 @@ class StatisticsPage {
     this.rightAnswersValue = createElement(
       this.rightAnswers,
       'h3',
-      ['today-value'],
+      ['statistic-page', 'today-value'],
       { id: 'today-rightAnswers' },
-      'N/D'
+      '0'
     );
 
     this.newWords = createElement(
       this.TodayStatisticContainer,
       'div',
-      ['today-statistic_newWords'],
+      ['statistic-page', 'today-statistic_newWords'],
       {},
       ''
     );
@@ -129,9 +129,9 @@ class StatisticsPage {
     this.newWordsValue = createElement(
       this.newWords,
       'h3',
-      ['today-value'],
+      ['statistic-page', 'today-value'],
       { id: 'today-newWords' },
-      'N/D'
+      '0'
     );
   }
 
@@ -139,7 +139,7 @@ class StatisticsPage {
     this.mainStatisticContainer = createElement(
       this.container,
       'div',
-      ['main-statistic-container'],
+      ['statistic-page', 'main-statistic-container'],
       {},
       ''
     );
@@ -147,7 +147,7 @@ class StatisticsPage {
     this.mainStatisticTitle = createElement(
       this.mainStatisticContainer,
       'h2',
-      ['main-statistic_title'],
+      ['statistic-page', 'main-statistic_title'],
       {},
       'Общая статистика'
     );
@@ -155,7 +155,7 @@ class StatisticsPage {
     this.mainStatisticChartContainer = createElement(
       this.mainStatisticContainer,
       'div',
-      ['main-statistic-chart'],
+      ['statistic-page', 'main-statistic-chart'],
       {},
       ''
     );
@@ -163,7 +163,7 @@ class StatisticsPage {
     this.mainStatisticChart = createElement(
       this.mainStatisticChartContainer,
       'canvas',
-      ['main-chart'],
+      ['statistic-page', 'main-chart'],
       { id: 'myChart' },
       ''
     );
@@ -173,7 +173,7 @@ class StatisticsPage {
     this.gameStatistic = createElement(
       this.container,
       'div',
-      ['game-statistic'],
+      ['statistic-page', 'game-statistic'],
       {},
       ''
     );
@@ -181,7 +181,7 @@ class StatisticsPage {
     this.gameStatisticHeader = createElement(
       this.gameStatistic,
       'div',
-      ['game-statistic-header'],
+      ['statistic-page', 'game-statistic-header'],
       {},
       ''
     );
@@ -189,7 +189,7 @@ class StatisticsPage {
     this.gameStatisticTitle = createElement(
       this.gameStatisticHeader,
       'h2',
-      ['game-statistic-title'],
+      ['statistic-page', 'game-statistic-title'],
       {},
       'Статистика мини-игр'
     );
@@ -197,7 +197,7 @@ class StatisticsPage {
     this.gameStatisticPeriodSwitcher = createElement(
       this.gameStatisticHeader,
       'ul',
-      ['period-switcher'],
+      ['statistic-page', 'period-switcher'],
       {},
       ''
     );
@@ -205,7 +205,7 @@ class StatisticsPage {
     this.gameStatisticPeriod1 = createElement(
       this.gameStatisticPeriodSwitcher,
       'li',
-      ['period', 'active'],
+      ['statistic-page', 'period', 'active'],
       { id: 'seven-days', 'data-period': 7 },
       '7 дней'
     );
@@ -213,7 +213,7 @@ class StatisticsPage {
     this.gameStatisticPeriod2 = createElement(
       this.gameStatisticPeriodSwitcher,
       'li',
-      ['period'],
+      ['statistic-page', 'period'],
       { id: 'thirty-days', 'data-period': 14 },
       '14 дней'
     );
@@ -221,7 +221,7 @@ class StatisticsPage {
     this.gameStatisticPeriod2 = createElement(
       this.gameStatisticPeriodSwitcher,
       'li',
-      ['period'],
+      ['statistic-page', 'period'],
       { id: 'hundred-days', 'data-period': 30 },
       '30 дней'
     );
@@ -229,7 +229,7 @@ class StatisticsPage {
     this.gameStatisticContainer = createElement(
       this.gameStatistic,
       'div',
-      ['game-statistic-container'],
+      ['statistic-page', 'game-statistic-container'],
       {},
       ''
     );
@@ -237,7 +237,7 @@ class StatisticsPage {
     this.gamesContainer = createElement(
       this.gameStatisticContainer,
       'div',
-      ['games-container'],
+      ['statistic-page', 'games-container'],
       {},
       ''
     );
@@ -245,7 +245,7 @@ class StatisticsPage {
     this.gameSpeakIt = createElement(
       this.gamesContainer,
       'div',
-      ['game-button', 'active-game-button'],
+      ['statistic-page', 'game-button', 'active-game-button'],
       { id: 'speakIt', 'data-game-name': 'speakit' },
       ''
     );
@@ -253,7 +253,7 @@ class StatisticsPage {
     this.gameSpeakItLogo = createElement(
       this.gameSpeakIt,
       'span',
-      ['material-icons'],
+      ['statistic-page', 'material-icons'],
       {},
       'record_voice_over'
     );
@@ -261,7 +261,7 @@ class StatisticsPage {
     this.gameSpeakItTitle = createElement(
       this.gameSpeakIt,
       'h3',
-      ['game-title'],
+      ['statistic-page', 'game-title'],
       {},
       'SpeakIt'
     );
@@ -269,7 +269,7 @@ class StatisticsPage {
     this.gameEnglishPuzzle = createElement(
       this.gamesContainer,
       'div',
-      ['game-button'],
+      ['statistic-page', 'game-button'],
       { id: 'englishPuzzle', 'data-game-name': 'engpuz' },
       ''
     );
@@ -277,7 +277,7 @@ class StatisticsPage {
     this.gameEnglishPuzzleLogo = createElement(
       this.gameEnglishPuzzle,
       'span',
-      ['material-icons'],
+      ['statistic-page', 'material-icons'],
       {},
       'extension'
     );
@@ -285,7 +285,7 @@ class StatisticsPage {
     this.gameEnglishPuzzleTitle = createElement(
       this.gameEnglishPuzzle,
       'h3',
-      ['game-title'],
+      ['statistic-page', 'game-title'],
       {},
       'English puzzle'
     );
@@ -293,7 +293,7 @@ class StatisticsPage {
     this.gameSavanna = createElement(
       this.gamesContainer,
       'div',
-      ['game-button'],
+      ['statistic-page', 'game-button'],
       { id: 'savanna', 'data-game-name': 'savannah' },
       ''
     );
@@ -301,7 +301,7 @@ class StatisticsPage {
     this.gameSavannaLogo = createElement(
       this.gameSavanna,
       'span',
-      ['material-icons'],
+      ['statistic-page', 'material-icons'],
       {},
       'school'
     );
@@ -309,7 +309,7 @@ class StatisticsPage {
     this.gameSavannaTitle = createElement(
       this.gameSavanna,
       'h3',
-      ['game-title'],
+      ['statistic-page', 'game-title'],
       {},
       'Саванна'
     );
@@ -317,7 +317,7 @@ class StatisticsPage {
     this.gameAudioCall = createElement(
       this.gamesContainer,
       'div',
-      ['game-button'],
+      ['statistic-page', 'game-button'],
       { id: 'audioCall', 'data-game-name': 'audiocall' },
       ''
     );
@@ -325,7 +325,7 @@ class StatisticsPage {
     this.gameAudioCallLogo = createElement(
       this.gameAudioCall,
       'span',
-      ['material-icons'],
+      ['statistic-page', 'material-icons'],
       {},
       'volume_up'
     );
@@ -333,7 +333,7 @@ class StatisticsPage {
     this.gameAudioCallTitle = createElement(
       this.gameAudioCall,
       'h3',
-      ['game-title'],
+      ['statistic-page', 'game-title'],
       {},
       'Аудиовызов'
     );
@@ -341,7 +341,7 @@ class StatisticsPage {
     this.gameSprint = createElement(
       this.gamesContainer,
       'div',
-      ['game-button'],
+      ['statistic-page', 'game-button'],
       { id: 'sprint', 'data-game-name': 'sprint' },
       ''
     );
@@ -349,7 +349,7 @@ class StatisticsPage {
     this.gameSprintLogo = createElement(
       this.gameSprint,
       'span',
-      ['material-icons'],
+      ['statistic-page', 'material-icons'],
       {},
       'alarm'
     );
@@ -357,7 +357,7 @@ class StatisticsPage {
     this.gameSprintTitle = createElement(
       this.gameSprint,
       'h3',
-      ['game-title'],
+      ['statistic-page', 'game-title'],
       {},
       'Спринт'
     );
@@ -365,7 +365,7 @@ class StatisticsPage {
     this.gamephraseWizard = createElement(
       this.gamesContainer,
       'div',
-      ['game-button'],
+      ['statistic-page', 'game-button'],
       { id: 'phraseWizard', 'data-game-name': 'phraseWizard' },
       ''
     );
@@ -373,7 +373,7 @@ class StatisticsPage {
     this.gamephraseWizardLogo = createElement(
       this.gamephraseWizard,
       'span',
-      ['material-icons'],
+      ['statistic-page', 'material-icons'],
       {},
       'menu_book'
     );
@@ -381,7 +381,7 @@ class StatisticsPage {
     this.gamephraseWizardTitle = createElement(
       this.gamephraseWizard,
       'h3',
-      ['game-title'],
+      ['statistic-page', 'game-title'],
       {},
       'Мастер фраз'
     );
@@ -389,7 +389,7 @@ class StatisticsPage {
     this.gamesChartContainer = createElement(
       this.gameStatisticContainer,
       'div',
-      ['games-chart-container'],
+      ['statistic-page', 'games-chart-container'],
       { id: 'gameChart' },
       ''
     );
@@ -397,7 +397,7 @@ class StatisticsPage {
     this.gameStatisticChart = createElement(
       this.gamesChartContainer,
       'canvas',
-      ['game-chart-canvas'],
+      ['statistic-page', 'game-chart-canvas'],
       { id: 'gameChart' },
       ''
     );
