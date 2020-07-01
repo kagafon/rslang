@@ -11,6 +11,9 @@ export default class Volume {
       },
       'volume_up'
     );
+    createElement(document.querySelector('.main'), 'audio', ['audio'], {
+      src: 'assets/images/sprint-game/Piu.mp3',
+    });
   }
 
   static init() {

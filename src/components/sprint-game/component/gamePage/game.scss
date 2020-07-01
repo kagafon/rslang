@@ -26,7 +26,6 @@
     height: 50px;
     display: flex;
     margin: 0 auto;
-    background: blueviolet;
     text-align: center;
     justify-content: center;
 }
@@ -36,6 +35,27 @@
     border-radius: 50%;
     background: gray;
     margin: 10px 5px 15px;
+}
+.backViolet {
+    background-color: violet;
+}
+.backYellow {
+    background-color: yellow;
+}
+.backBlue {
+    background-color: blue;
+}
+.backPink {
+    background-color: pink;
+}
+.backOrange {
+    background-color: orange;
+}
+.backRed {
+    background-color: red;
+}
+.green {
+    background-color: green;
 }
 .img-game {
     width: 100px;
@@ -73,6 +93,7 @@ margin: 0 auto;
 left: 0;
 top: 20px;
 display: none;
+transition-duration: 1s;
 }
 .button {
     font-size: 20px;

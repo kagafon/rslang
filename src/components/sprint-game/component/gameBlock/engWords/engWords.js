@@ -8,7 +8,6 @@ export default class EngWords {
 
   static insertText() {
     const stage = store.getState();
-    console.log(stage.round);
     const questionBlock = document.querySelector('.engWord');
     questionBlock.textContent = stage.requestWords[stage.round].word;
     store.setState({ word: stage.requestWords[stage.round].word });

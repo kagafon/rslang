@@ -1,9 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
 import store from 'components/sprint-game/component/storage';
-import Results from 'components/sprint-game/component/results';
+// import Results from 'components/sprint-game/component/results';
 import EngWords from 'components/sprint-game/component/gameBlock/engWords/engWords';
 import RusWords from 'components/sprint-game/component/gameBlock/rusWords/rusWords';
+import Volume from 'components/sprint-game/component/gameBlock/Volume/volume';
 import statiscticStore from 'components/sprint-game/component/statistic-storage';
 
 export default class Buttons {
@@ -18,6 +19,7 @@ export default class Buttons {
       'button',
       ['button', 'button-true']
     );
+
     buttonFalse.textContent = 'Неверно';
     buttonTrue.textContent = 'Верно';
   }
@@ -63,13 +65,14 @@ export default class Buttons {
     const state = store.getState();
     EngWords.insertText();
     RusWords.render();
-    document.querySelector('.checkOk').style.display = 'block';
+    const checkOk = document.querySelector('.checkOk');
+    checkOk.style.display = 'block';
     document.querySelector('.checkFalse').style.display = 'none';
     document.querySelector('.game-block').style.borderColor = 'green';
     store.setState({ correctChoice: state.correctChoice + 1 });
     statiscticStore.setLearnedState([state.word]);
-    console.log(statiscticStore.getLearnedState());
-    Results.init();
+    this.countPoints();
+    // Results.init();
   }
 
   static unCorrectChoice() {
@@ -79,94 +82,158 @@ export default class Buttons {
     document.querySelector('.checkOk').style.display = 'none';
     document.querySelector('.checkFalse').style.display = 'block';
     document.querySelector('.game-block').style.borderColor = 'red';
+    const dotsBlock = document.querySelector('.dotsBlock');
     statiscticStore.setUnexploredState([state.word]);
-    Results.init();
-  }
-
-  /*
-  static rightChoice(item) {
-
-    item.children[0].style.display = 'none';
-    item.children[1].style.display = 'block';
-
-    document.querySelector('.hint').style.display = 'none';
-    document.querySelector('.next').style.display = 'block';
-
-    arrWordsNumber.forEach((i) => {
-      if (i.textContent !== item.children[0].textContent) {
-        i.classList.add('words-opacity');
-      }
-    });
-
-    arrWordsCard.forEach((i) => {
-      if (i.textContent !== item.children[3].textContent) {
-        i.classList.add('words-opacity');
-      }
-    });
-  }
-
-  static incorrectChoice(item) {
-    const arrWordsCard = document.querySelectorAll('.words');
-    const arrWordsNumber = document.querySelectorAll('.number-words');
-    const stage = store.getState();
-
-    item.children[0].style.display = 'none';
-    item.children[2].style.display = 'block';
-
-    document.querySelector('.hint').style.display = 'none';
-    document.querySelector('.next').style.display = 'block';
-
-    arrWordsNumber.forEach((i) => {
-      if (i.textContent !== item.children[0].textContent) {
-        i.classList.add('words-opacity');
-      }
-    });
-
-    arrWordsCard.forEach((i) => {
-      if (i.textContent !== item.children[3].textContent) {
-        i.classList.add('words-opacity');
-      } else {
-        stage.correct.children[0].style.display = 'none';
-        stage.correct.children[1].style.display = 'block';
-      }
-    });
-  }
-
-  static wordChoice() {
-    const arrWords = document.querySelectorAll('.wrapper-words');
-    arrWords.forEach((item) => {
-      item.addEventListener('click', () => {
-        const state = store.getState();
-        const progress = document.querySelector('.progress-bar');
-
-        const width = String(progress.style.width).slice(0, -1);
-        progress.style.width = `${+width + 10}%`;
-
-        store.setState({ round: state.round + 1 });
-
-        if (item.children[3].textContent === state.word.wordTranslate) {
-          console.log(state.word.wordTranslate);
-          store.setState({ correctChoice: state.correctChoice + 1 });
-          statiscticStore.setLearnedState([state.word]);
-
-          this.rightChoice(item);
-          Results.init();
-        } else {
-          statiscticStore.setUnexploredState([state.word]);
-
-          this.incorrectChoice(item);
-          Results.init();
-        }
-
-        setTimeout(() => {
-          if (state.round === 9) {
-            Service.spinnerOn();
-            Statisctic.init();
-          }
-        }, 2000);
+    const checkOk = document.querySelector('.checkOk');
+    const dot = document.querySelectorAll('.dots');
+    if (checkOk.style.display === 'none') {
+      dot[0].style.display = 'block';
+      dot[2].style.display = 'block';
+      dot.forEach((item) => {
+        item.classList.remove('green');
       });
-    });
-  } */
+      dotsBlock.classList.remove('backRed');
+      dotsBlock.classList.remove('backOrange');
+      dotsBlock.classList.remove('backPink');
+      dotsBlock.classList.remove('backBlue');
+      dotsBlock.classList.remove('backYellow');
+      dotsBlock.classList.add('backViolet');
+    }
+    // Results.init();
+  }
+
+  static countPoints() {
+    const dotsBlock = document.querySelector('.dotsBlock');
+    const points = document.querySelector('.points');
+    const checkOk = document.querySelector('.checkOk');
+    const dot = document.querySelectorAll('.dots');
+
+    if (
+      checkOk.style.display === 'block' &&
+      dotsBlock.classList.contains('backRed')
+    ) {
+      points.textContent = Number(points.textContent) + 80;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[2].classList.contains('green') &&
+      dotsBlock.classList.contains('backOrange')
+    ) {
+      dot[0].style.display = 'none';
+      dot[2].style.display = 'none';
+      points.textContent = Number(points.textContent) + 80;
+      dotsBlock.classList.add('backRed');
+      dotsBlock.classList.remove('backOrange');
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[1].classList.contains('green') &&
+      dotsBlock.classList.contains('backOrange')
+    ) {
+      dot[2].classList.add('green');
+      points.textContent = Number(points.textContent) + 80;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[0].classList.contains('green') &&
+      dotsBlock.classList.contains('backOrange')
+    ) {
+      dot[1].classList.add('green');
+      points.textContent = Number(points.textContent) + 80;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[2].classList.contains('green') &&
+      dotsBlock.classList.contains('backPink')
+    ) {
+      dot.forEach((item) => {
+        item.classList.remove('green');
+      });
+      dot[0].classList.add('green');
+      points.textContent = Number(points.textContent) + 80;
+      dotsBlock.classList.add('backOrange');
+      dotsBlock.classList.remove('backPink');
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[1].classList.contains('green') &&
+      dotsBlock.classList.contains('backPink')
+    ) {
+      dot[2].classList.add('green');
+      points.textContent = Number(points.textContent) + 40;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[0].classList.contains('green') &&
+      dotsBlock.classList.contains('backPink')
+    ) {
+      dot[1].classList.add('green');
+      points.textContent = Number(points.textContent) + 40;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[0].classList.contains('green') &&
+      dotsBlock.classList.contains('backPink')
+    ) {
+      dot[1].classList.add('green');
+      points.textContent = Number(points.textContent) + 40;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[2].classList.contains('green') &&
+      dotsBlock.classList.contains('backBlue')
+    ) {
+      dot.forEach((item) => {
+        item.classList.remove('green');
+      });
+      dot[0].classList.add('green');
+      points.textContent = Number(points.textContent) + 40;
+      dotsBlock.classList.add('backPink');
+      dotsBlock.classList.remove('backBlue');
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[1].classList.contains('green') &&
+      dotsBlock.classList.contains('backBlue')
+    ) {
+      dot[2].classList.add('green');
+      points.textContent = Number(points.textContent) + 20;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[0].classList.contains('green') &&
+      dotsBlock.classList.contains('backBlue')
+    ) {
+      dot[1].classList.add('green');
+      points.textContent = Number(points.textContent) + 20;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[2].classList.contains('green') &&
+      dotsBlock.classList.contains('backYellow')
+    ) {
+      dot.forEach((item) => {
+        item.classList.remove('green');
+      });
+      dot[0].classList.add('green');
+      points.textContent = Number(points.textContent) + 20;
+      dotsBlock.classList.add('backBlue');
+      dotsBlock.classList.remove('backYellow');
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[1].classList.contains('green') &&
+      dotsBlock.classList.contains('backYellow')
+    ) {
+      dot[2].classList.add('green');
+      points.textContent = Number(points.textContent) + 10;
+    } else if (
+      checkOk.style.display === 'block' &&
+      dot[0].classList.contains('green') &&
+      dotsBlock.classList.contains('backYellow')
+    ) {
+      dot[1].classList.add('green');
+      points.textContent = Number(points.textContent) + 10;
+    } else if (
+      checkOk.style.display === 'block' &&
+      !dot[0].classList.contains('green') &&
+      dotsBlock.classList.contains('backViolet')
+    ) {
+      console.log('d');
+      dot[0].classList.add('green');
+      dotsBlock.classList.add('backYellow');
+      dotsBlock.classList.remove('backViolet');
+      points.textContent = Number(points.textContent) + 10;
+    }
+  }
 
   static init() {
     this.render();
