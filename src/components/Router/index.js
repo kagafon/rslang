@@ -7,6 +7,7 @@ import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import Dictionary from 'components/pages/dictionary-page';
 import App from 'components/games-AudioCall/app/app';
+import AppPuzzle from 'components/games-englishPuzzle/app/app';
 
 const routes = [
   {
@@ -38,7 +39,7 @@ const routes = [
   {
     name: 'engpuz-page',
     title: 'English puzzle',
-    ClassConstructor: MainPage,
+    ClassConstructor: AppPuzzle,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
