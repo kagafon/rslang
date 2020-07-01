@@ -94,6 +94,7 @@ export default class RusWords {
         store.setState({ round: state.round + 1 });
 
         if (item.children[3].textContent === state.word.wordTranslate) {
+          console.log(state.word.wordTranslate);
           store.setState({ correctChoice: state.correctChoice + 1 });
           statiscticStore.setLearnedState([state.word]);
 

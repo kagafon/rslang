@@ -5,9 +5,7 @@ import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
-import startPage from 'components/sprint-game/component/start-page/start-page';
-import RusWords from 'components/sprint-game/component/words/words';
-import GamePage from 'components/sprint-game/component/gamePage/game-page';
+import AppSprint from 'components/sprint-game/app';
 import Dictionary from 'components/pages/dictionary-page';
 import App from 'components/games-AudioCall/app/app';
 
@@ -71,7 +69,7 @@ const routes = [
   {
     name: 'sprint-page',
     title: 'Спринт',
-    ClassConstructor: MainPage,
+    ClassConstructor: AppSprint,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
@@ -108,7 +106,7 @@ const routes = [
   {
     name: 'settings-page',
     title: 'Настройки',
-    ClassConstructor: RusWords,
+    ClassConstructor: MainPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/settings-page.jpg',
     color: 'rgba(121, 42, 121, 0.69)',

@@ -16,5 +16,4 @@ class Store {
 }
 
 const store = new Store();
-console.log(store.requestWords);
 export default store;

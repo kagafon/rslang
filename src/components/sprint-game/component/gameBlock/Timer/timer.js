@@ -3,8 +3,8 @@ import { createElement } from 'helpers/dom';
 import './style.scss';
 
 export default class Timer {
-  init() {
-    const timerDiv = createElement(
+  static render() {
+    const timer = createElement(
       null,
       'div',
       ['countdown'],
@@ -12,7 +12,7 @@ export default class Timer {
       ''
     );
     const countNumber = createElement(
-      timerDiv,
+      timer,
       'div',
       ['countdown-number'],
       {},
@@ -25,15 +25,8 @@ export default class Timer {
       {},
       ''
     );
-    const message = createElement(
-      null,
-      'div',
-      ['deadline-message'],
-      { id: 'deadline-message' },
-      ''
-    );
-    this.startTimer(7, 0, spanNumber);
-    return timerDiv;
+    this.startTimer(10, 0, spanNumber);
+    return timer;
   }
 
   startTimer(from, to, second) {
@@ -48,5 +41,9 @@ export default class Timer {
       }
       current -= 1;
     }, 1000);
+  }
+
+  static init() {
+    this.render();
   }
 }
