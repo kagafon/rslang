@@ -1,8 +1,13 @@
-@import '~bootstrap';
+@import '~bootswatch/dist/Materia/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/Materia/bootswatch';
+@import '~swiper/swiper';
 @import 'variables';
 @import 'toaster/toaster';
 @import './main-page/navbar';
+@import './promo-page/style.scss';
 @import './game-page/_allgames';
+@import './dictionary-page/main';
 @import './team-page/style.scss';
 @import './phrase-wizard-page/phrase-wizard-game.scss';
 @import './autorization-page/style.scss';
@@ -27,7 +32,7 @@ body {
 }
 
 .main-container {
-  padding-top: 175px;
+  padding-top: $main-menu-height;
   width: 100%;
   transition: $page-transition-delay / 2;
 }
