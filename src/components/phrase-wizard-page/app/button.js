@@ -2,7 +2,7 @@ import { createElement } from 'helpers/dom';
 
 export default class Button {
   static render() {
-    const btnBlock = document.querySelector('.header.ph-wiz');
+    const btnBlock = document.querySelector('.top-block.ph-wiz');
     createElement(btnBlock, 'button', ['btn', 'btn-primary', 'ph-wiz'], {}, 'Дальше');
     
   }

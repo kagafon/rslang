@@ -24,7 +24,7 @@ export default class PhraseWizard {
       'Loading...'
     );
 
-    createElement(gameBox, 'div', ['header', 'ph-wiz']);
+    createElement(gameBox, 'div', ['top-block', 'ph-wiz']);
     createElement(gameBox, 'div', ['wrapper', 'ph-wiz']);
     createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
 

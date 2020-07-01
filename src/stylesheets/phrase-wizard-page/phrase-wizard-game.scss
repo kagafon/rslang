@@ -136,7 +136,7 @@ p {
 
 // Header _____________________________
 
-.header.ph-wiz {
+.top-block.ph-wiz {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -151,8 +151,7 @@ p {
 
 .temlate-words {
   background-color: rgba(255, 255, 255, 0.35);
-  margin-left: 1rem;
-  margin-top: 0.5rem;
+  margin: 1rem 0.5rem 0 0.5rem;
   font-size: 2rem;
   letter-spacing: 0.7rem;
   border-radius: 7%;
@@ -250,10 +249,14 @@ p {
 
 .wordsblock {
   display: flex;
+  position: relative;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: -2.8rem;
+  top: -3,5rem;
+  padding-right: 15px;
+  padding-left: 15px;
+  
 }
 
 .translate.ph-wiz {
@@ -263,6 +266,9 @@ p {
   background-color: rgba(255, 255, 255, 0.5);
   top: -5rem;
   max-width: 350px;
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align: center;
 }
 
 .translate.ph-wiz.show-oneself {
@@ -422,6 +428,7 @@ p {
   padding-bottom: 20px;
 }
 
+/*
 .final-slider {
   display: flex;
   flex-direction: column;
@@ -523,4 +530,4 @@ p {
   margin-bottom: 20px;
   width: 150px;
   background-color: #f85307;
-}
+} */
