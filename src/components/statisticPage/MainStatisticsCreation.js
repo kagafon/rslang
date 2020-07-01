@@ -10,9 +10,7 @@ class MainStatisticsCreation {
     const newWordData = [];
     async function getMainStat() {
       try {
-        console.log(User.getCurrentUser());
         const response = await User.getMainStatistics(true);
-        console.log(response);
         const todayStatistic = response.d[response.d.length - 1];
         document.getElementById('today-passedCards').innerText =
           todayStatistic.passedCards;
