@@ -213,8 +213,10 @@ class MainPageGame {
       `${word}`
     );
     createElement(cardBody, 'hr', ['my-5'], {}, ``);
-    if (prompts.translation)
-      createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
+    createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
+    if (prompts.translation) {
+      createElement(cardBody, 'p', ['card-text', 'translate'], {}, `${word}`);
+    }
     if (prompts.meaning) {
       const sentence = hideWord(word, textMeaning);
       createElement(
@@ -224,7 +226,17 @@ class MainPageGame {
         {},
         `${sentence}`
       );
+      if (prompts.translation) {
+        createElement(
+          cardBody,
+          'p',
+          ['card-text', 'translate'],
+          {},
+          `${textMeaningTranslate}`
+        );
+      }
     }
+
     if (prompts.example) {
       const sentence = hideWord(word, textExample);
       createElement(
@@ -234,6 +246,15 @@ class MainPageGame {
         {},
         `${sentence}`
       );
+      if (prompts.translation) {
+        createElement(
+          cardBody,
+          'p',
+          ['card-text', 'translate'],
+          {},
+          `${textExampleTranslate}`
+        );
+      }
     }
     if (prompts.transcription)
       createElement(cardBody, 'p', ['card-text'], {}, `${transcription}`);
@@ -373,6 +394,9 @@ class MainPageGame {
     this.textExample = document.querySelector(
       '.swiper-slide-active p.card-text-example'
     );
+    this.translations = document.querySelectorAll(
+      '.swiper-slide-active p.translate'
+    );
     this.inputWord.innerHTML = '';
     this.inputWord.classList.remove('hidden1', 'hidden2');
     this.inputBackground.classList.remove('answer_success', 'answer_error');
@@ -385,7 +409,7 @@ class MainPageGame {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
-        if (stat.passedCards === this.settings.maxWordsPerDay) {
+        if (stat.passedCards === this.settings.learning.maxCardsPerDay) {
           showStat('Серия завершена', [
             { text: 'Карточек завершено', value: stat.passedCards },
             {
@@ -402,6 +426,12 @@ class MainPageGame {
           ]);
         }
       }
+      if (this.translations.length !== 0) {
+        this.translations.forEach((el) => {
+          el.style.display = 'block';
+        });
+      }
+
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {

@@ -91,6 +91,7 @@ function showStat(head, stat) {
 
 async function checkWordResult(word, result, showAnswer) {
   const stat = (await User.getMainStatistics()) || {};
+  console.error(stat);
   stat.passedCards = stat.passedCards ? stat.passedCards : 0;
   stat.correctAnswers = stat.correctAnswers ? stat.correctAnswers : 0;
   stat.learnedWords = stat.learnedWords ? stat.learnedWords : 0;
@@ -99,9 +100,9 @@ async function checkWordResult(word, result, showAnswer) {
   if (result === 'no') {
     word.totalAnswers += 1;
     word.correctAnswerSeries = 0;
-    // if (showAnswer) {
-    //   stat.passedCards += 1;
-    // }
+    if (showAnswer) {
+      stat.passedCards += 1;
+    }
     stat.answerSeries =
       stat.answerSeries > stat.answerCount
         ? stat.answerSeries

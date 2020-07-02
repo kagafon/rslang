@@ -48,6 +48,11 @@
 
   .card-text {
     transition: font-size $page-transition-delay ease;
+    &.translate {
+      color: hsl(106, 62%, 30%);
+      display: none;
+      transition: display $page-transition-delay ease;
+    }
   }
 
   .input-background_back {

@@ -36,7 +36,7 @@ const DEFAULT_USER_SETTINGS = {
     puzzle: { levelPages: new Array(LEVELS_COUNT).fill(0) },
   },
   learning: {
-    maxCardsPerDay: 50,
+    maxCardsPerDay: 10,
     levels: Array(LEVELS_COUNT)
       .fill(null)
       .map(() => ({
