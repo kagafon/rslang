@@ -19,14 +19,14 @@ class Modal {
     const dialog = createElement(this.modal, 'div', ['modal-dialog'], {}, ``);
     const content = createElement(dialog, 'div', ['modal-content'], {}, ``);
     const header = createElement(content, 'div', ['modal-header'], {}, ``);
-    const title = createElement(
+    this.title = createElement(
       header,
       'h5',
       ['modal-title'],
       { id: 'exampleModalLabel' },
       `Предупреждение`
     );
-    const buttonClose = createElement(
+    this.buttonClose = createElement(
       header,
       'button',
       ['close'],
@@ -34,32 +34,40 @@ class Modal {
       ``
     );
     createElement(
-      buttonClose,
+      this.buttonClose,
       'span',
       ['material-icons', 'modal-close'],
       { 'aria-hidden': 'true' },
       `close`
     );
-    const modalBody = createElement(content, 'div', ['modal-body'], {}, ``);
-    createElement(modalBody, 'p', [], {}, `dddd`);
+    this.modalBody = createElement(content, 'div', ['modal-body'], {}, ``);
+
     return this.modal;
   }
 
-  setText(text) {
-    const p = this.modal.querySelector('.modal-body p');
-    p.textContent = text;
+  setText(head, text) {
+    this.title.textContent = head;
+    console.error(text);
+    text.forEach((el) => {
+      createElement(this.modalBody, 'p', [], {}, `${el.text}: ${el.value}`);
+    });
   }
 
   show() {
     this.modal.classList.add('show');
   }
 
-  hide() {
-    this.modal.classList.remove('show');
+  addHideHandler() {
+    this.buttonClose.addEventListener('click', () => {
+      this.modal.parentNode.removeChild(this.modal);
+    });
   }
 
-  init() {
+  init(head, text) {
     this.create();
+    this.addHideHandler();
+    this.setText(head, text);
+    this.show();
   }
 }
 

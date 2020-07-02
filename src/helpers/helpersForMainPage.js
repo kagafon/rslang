@@ -1,5 +1,6 @@
 import { createElement } from 'helpers/dom';
 import { User, Words } from 'services/backend';
+import modal from 'components/pages/MainPage/modal';
 
 function showWord(word, sentence) {
   return sentence.replace('[...]', word);
@@ -84,6 +85,10 @@ function createLoader() {
   return loader;
 }
 
+function showStat(head, stat) {
+  modal.init(head, stat);
+}
+
 async function checkWordResult(word, result, showAnswer) {
   const stat = (await User.getMainStatistics()) || {};
   stat.passedCards = stat.passedCards ? stat.passedCards : 0;
@@ -94,16 +99,21 @@ async function checkWordResult(word, result, showAnswer) {
   if (result === 'no') {
     word.totalAnswers += 1;
     word.correctAnswerSeries = 0;
-    if (showAnswer) {
-      stat.passedCards += 1;
-    }
+    // if (showAnswer) {
+    //   stat.passedCards += 1;
+    // }
     stat.answerSeries =
       stat.answerSeries > stat.answerCount
         ? stat.answerSeries
         : stat.answerCount;
     stat.answerCount = 0;
   } else if (result === 'yes') {
-    stat.correctAnswers += 1;
+    if (
+      word.correctAnswers === 0 ||
+      word.correctAnswers === word.totalAnswers
+    ) {
+      stat.correctAnswers += 1;
+    }
     stat.passedCards += 1;
     stat.answerCount += 1;
     word.correctAnswers += 1;
@@ -121,8 +131,7 @@ async function checkWordResult(word, result, showAnswer) {
     word.difficulty = 'medium';
   }
   User.saveMainStatistics(stat);
-  console.error(word);
-  return word;
+  return { word, stat };
 }
 
 export {
@@ -135,4 +144,5 @@ export {
   changeProgressBar,
   createLoader,
   checkWordResult,
+  showStat,
 };

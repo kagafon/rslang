@@ -3,9 +3,6 @@ import store from 'components/pages/MainPage/Store';
 import router from 'components/Router/';
 import { getUserWords } from 'components/pages/MainPage/dataForMain';
 class MainPage {
-  constructor() {
-    // this.controlHandler = this.controlHandler.bind(this);
-  }
   create() {
     this.container = createElement(
       '',
@@ -125,9 +122,10 @@ class MainPage {
 
   async updateProgress() {
     try {
-      const words = await getUserWords();
+      const data = await getUserWords();
+      const words = data.wordsToday;
       const learnWords = words.filter((el) => el.difficulty !== 'new');
-      const pr = (learnWords.length / words.length) * 100;
+      const pr = Math.floor((learnWords.length / words.length) * 100);
       this.progressText.textContent = `Выучено слов: ${pr}%`;
       this.progressBar.style.width = `${pr}%`;
       this.progressBar.textContent = `${pr}%`;

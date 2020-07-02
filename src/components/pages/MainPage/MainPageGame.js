@@ -8,6 +8,7 @@ import {
   changeProgressBar,
   createLoader,
   checkWordResult,
+  showStat,
 } from 'helpers/helpersForMainPage';
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
@@ -34,35 +35,6 @@ class MainPageGame {
   }
 
   async create() {
-    console.error(store.getState().learnedWords);
-    const preloads = ['image', 'audio', 'audioExample', 'audioMeaning'];
-    this.loader = createLoader();
-    try {
-      const data = await Promise.all([getSettings(), getUserWords(preloads)]);
-      this.settings = data[0];
-      this.words = data[1];
-    } catch (e) {
-      Toaster.createToast(`На сегодня нет слов`, 'danger');
-      router.draw('main-page');
-    } finally {
-      this.loader.parentNode.removeChild(this.loader);
-    }
-    switch (store.getState().learnedWords) {
-      case 'new':
-        this.words = this.words.filter((el) => el.difficulty === 'new');
-        break;
-      case 'old':
-        this.words = this.words.filter((el) => el.difficulty !== 'new');
-        break;
-      default:
-        this.words;
-    }
-    if (this.words.length === 0) {
-      throw new Error();
-    }
-  }
-
-  createSwiper() {
     this.container = createElement(
       '',
       'form',
@@ -77,6 +49,36 @@ class MainPageGame {
       {},
       ''
     );
+    // console.error(store.getState().learnedWords);
+    this.loader = createLoader();
+    try {
+      const data = await getUserWords();
+      this.words = data.wordsToday;
+      this.settings = data.settings;
+    } catch (e) {
+      Toaster.createToast(`На сегодня нет слов`, 'danger');
+      throw new Error();
+    } finally {
+      this.loader.parentNode.removeChild(this.loader);
+    }
+    switch (store.getState().learnedWords) {
+      case 'new':
+        this.words = this.words.filter((el) => el.difficulty === 'new');
+        break;
+      case 'old':
+        this.words = this.words.filter((el) => el.difficulty !== 'new');
+        break;
+      default:
+        this.words;
+    }
+    if (this.words.length === 0) {
+      Toaster.createToast(`в этой категории пока нет слов`, 'danger');
+      throw new Error();
+    }
+    // console.error(this.words);
+  }
+
+  createSwiper() {
     this.swiperContainer = createElement(
       this.container,
       'div',
@@ -377,9 +379,28 @@ class MainPageGame {
     if (this.input.value === word) {
       this.input.disabled = 'disabled';
       if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
-        this.wordInput = await checkWordResult(this.wordInput, 'no', true);
+        const dataUpdate = await checkWordResult(this.wordInput, 'no', true);
+        this.wordInput = dataUpdate.word;
       } else {
-        this.wordInput = await checkWordResult(this.wordInput, 'yes');
+        const dataUpdate = await checkWordResult(this.wordInput, 'yes');
+        this.wordInput = dataUpdate.word;
+        const stat = dataUpdate.stat;
+        if (stat.passedCards === this.settings.maxWordsPerDay) {
+          showStat('Серия завершена', [
+            { text: 'Карточек завершено', value: stat.passedCards },
+            {
+              text: 'Правильные ответы',
+              value: `${Math.floor(
+                (stat.correctAnswers / stat.passedCards) * 100
+              )}%`,
+            },
+            { text: 'Новые слова', value: stat.learnedWords },
+            {
+              text: 'Самая длинная серия правльных ответов',
+              value: stat.answerSeries,
+            },
+          ]);
+        }
       }
       this.inputBackground.classList.add('answer_success');
       this.input.classList.add('success');
@@ -404,7 +425,8 @@ class MainPageGame {
         this.updateSlide();
       }, 1000);
     } else {
-      this.wordInput = await checkWordResult(this.wordInput, 'no', false);
+      const dataUpdate = await checkWordResult(this.wordInput, 'no', false);
+      this.wordInput = dataUpdate.word;
       this.inputBackground.classList.add('answer_error');
       letters(word, this.input.value, this.inputWord);
       this.input.value = '';
@@ -517,14 +539,14 @@ class MainPageGame {
       this.createSwiper();
       return this.container;
     } catch (e) {
-      Toaster.createToast(`ошибка загрузки`, 'danger');
+      // Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
+      return this.container;
     }
   }
 
   postInit() {
     try {
-      modal.create();
       this.initSwiper();
       this.addAction();
       this.setLongWord();
