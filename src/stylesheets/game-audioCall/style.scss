@@ -5,7 +5,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 1440px;
-    margin: 100px auto;
+    margin: 50px auto;
     transition: 0.2s linear;
   }
 
@@ -88,6 +88,7 @@
 
   .start {
     width: 120px;
+    padding: 0px;
     margin-left: 10px;
   }
 
@@ -234,21 +235,21 @@
     color: #ffffff;
     font-size: 18px;
     top: 1px;
-    left: -10px;
+    left: -20px;
   }
 
   .correct {
     display: none;
     position: absolute;
     top: 2px;
-    left: -20px;
+    left: -30px;
   }
 
   .cancel {
     display: none;
     position: absolute;
     top: 2px;
-    left: -20px;
+    left: -30px;
   }
 
   .words-opacity {
@@ -281,6 +282,7 @@
   .btn {
     width: 100px;
     height: 40px;
+    padding: 0px;
     background-color: #f85307;
     &:hover {
       background-color: #09f1d2;
@@ -459,31 +461,8 @@
   .final-btn {
     margin-top: 20px;
     margin-bottom: 20px;
+    padding: 0px;
     width: 150px;
     background-color: #f85307;
-  }
-
-  .popap {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    top: 25%;
-    left: 35%;
-    height: 200px;
-    width: 400px;
-    border-radius: 10px;
-    background-color: rgba(252, 249, 249, 0.747);
-    margin: 0 auto;
-  }
-
-  .popap-title {
-    color: #000000;
-    text-align: center;
-    font-size: 24px;
-  }
-
-  .popap-btn {
-    margin: 20px auto;
   }
 }
