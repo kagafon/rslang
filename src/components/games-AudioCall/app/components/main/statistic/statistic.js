@@ -103,13 +103,13 @@ export default class Statisctic {
   static gradationResult(mistake) {
     let description = '';
     if (mistake <= 4) {
-      description = 'попробуйте пройти обучение и повторить!';
+      description = 'Попробуйте пройти обучение и повторить!';
     } else if (mistake > 4 && mistake <= 6) {
-      description = 'есть куда стремиться!';
+      description = 'Есть куда стремиться!';
     } else if (mistake > 6 && mistake < 9) {
-      description = 'хороший результат!';
+      description = 'Хороший результат!';
     } else if (mistake >= 9) {
-      description = 'отличный результат!';
+      description = 'Отличный результат!';
     }
 
     return description;
