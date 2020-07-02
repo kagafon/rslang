@@ -17,7 +17,7 @@ export default class StartPage {
        <span>Тренировка Саванна развивает словарный запас.
        Чем больше слов ты знаешь, тем больше очков опыта получишь.</span>
      </div>
-     <span class="level-select">Выберете уровень</span>
+     <span class="level-select">Выберите уровень</span>
      <div class="level-block">
         <button data-num="0" type="button" class="btn btn-primary start">1</button>
         <button data-num="1" type="button" class="btn btn-primary start">2</button>
@@ -25,7 +25,7 @@ export default class StartPage {
         <button data-num="3" type="button" class="btn btn-primary start">4</button>
         <button data-num="4" type="button" class="btn btn-primary start">5</button>
         <button data-num="5" type="button" class="btn btn-primary start">6</button>
-        <button data-num="-1" type="button" class="btn btn-primary start learn-words">изучаемые слова</button>
+        <button data-num="-1" type="button" class="btn btn-primary start learn-words">Изучаемые слова</button>
      </div>
     `;
     container.append(intro);
@@ -42,7 +42,10 @@ export default class StartPage {
         store.setState({ volume: 'on' });
 
         if (words.length < 10) {
-          Toaster.createToast('необходимое количество слов 10', 'danger');
+          Toaster.createToast(
+            'Недостаточно слов для игры (необходимо минимум 10 слов)',
+            'danger'
+          );
           Service.spinnerOff();
         } else {
           intro.remove();

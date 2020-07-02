@@ -29,8 +29,7 @@ export default class Animate {
 
       if (stage.volume !== 'off') {
         const audio = new Audio();
-        audio.src =
-          'https://zvukipro.com/uploads/files/2018-10/1540309251_jg-032316-sfx-feedback-incorrect-25.mp3';
+        audio.src = './assets/audio/savannah/error.mp3';
         audio.play();
       }
 

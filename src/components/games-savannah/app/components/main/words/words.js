@@ -4,7 +4,6 @@ import store from 'components/games-savannah/app/components/storage';
 import statiscticStore from 'components/games-savannah/app/components/statistic-storage';
 import Answer from 'components/games-savannah/app/components/main/answer-block/answer-block';
 import Statistic from 'components/games-savannah/app/components/main/statistic/statistic';
-// import Popap from 'components/games-savannah/app/components/main/popap-error/popap-error';
 
 export default class RusWords {
   static render() {
@@ -32,7 +31,7 @@ export default class RusWords {
 
     if (stage.volume !== 'off') {
       const audio = new Audio();
-      audio.src = 'https://pic.pikbest.com/00/43/23/41F888piC5fv.mp3';
+      audio.src = 'assets/audio/savannah/correct.mp3';
       audio.play();
     }
 
@@ -62,8 +61,7 @@ export default class RusWords {
     answer.textContent = '';
 
     const audio = new Audio();
-    audio.src =
-      'https://zvukipro.com/uploads/files/2018-10/1540309251_jg-032316-sfx-feedback-incorrect-25.mp3';
+    audio.src = 'assets/audio/savannah/error.mp3';
     audio.play();
 
     if (stage.round <= 9 && stage.health !== 0) {
@@ -106,8 +104,6 @@ export default class RusWords {
     document.addEventListener('keypress', (event) => {
       const stage = store.getState();
       const target = event.key;
-
-      // console.log(stage)
 
       store.setState({ round: stage.round + 1 });
 

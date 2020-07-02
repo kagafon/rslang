@@ -13,9 +13,9 @@ export default class Timer {
       <span class="material-icons keyboard">
         keyboard_hide
       </span>
-      <span class="control"> Используйте клавиша 1, 2, 3, 4 что бы дать быстрый ответ. 
+      <span class="control"> Используйте клавиши 1, 2, 3, 4 что бы дать быстрый ответ. 
       находится по центру экрана под тамером</span>
-      <audio class='xx' src="https://noisefx.ru/noise_base/zvon/01071.mp3"></audio>
+      <audio class='xx' src="assets/audio/savannah/start.mp3"></audio>
     `;
   }
 

@@ -17,8 +17,7 @@ export default class App {
       ),
       'span',
       ['sr-only'],
-      {},
-      'Loading...'
+      {}
     );
 
     createElement(createElement(this.gameContainer, 'div', ['header']), 'div', [
