@@ -7,7 +7,7 @@ export default class RusWords {
     const stage = store.getState();
     createElement(document.querySelector('.game-block'), 'div', ['rusWord']);
     const rusWord = document.querySelector('.rusWord');
-    const rndNum = this.randomInteger(stage.round, stage.round + 3);
+    const rndNum = this.randomInteger(stage.round, stage.round + 2);
     rusWord.textContent = stage.requestWords[rndNum].wordTranslate;
   }
 

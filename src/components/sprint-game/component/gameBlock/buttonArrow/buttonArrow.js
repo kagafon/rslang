@@ -1,18 +1,34 @@
 import { createElement } from 'helpers/dom';
 
 export default class ButtonsArrow {
-  static render() {
-    const buttonLeft = createElement(document.querySelector('.main'), 'div', [
-      'btn',
-      'btn-false',
-    ]);
-    const buttonRight = createElement(document.querySelector('.main'), 'btn', [
-      'btn',
-      'btn-true',
-    ]);
+  static init() {
+    const buttonLeft = createElement(document.querySelector('.main'), 'btn', ['btn', 'btn-false']);
+    const buttonRight = createElement(document.querySelector('.main'), 'btn', ['btn', 'btn-true']);
+    this.pressKeyBoardF();
+    this.pressKeyBoardT();
   }
 
-  static init() {
-    this.render();
+  static pressKeyBoardF() {
+    const btnFalse = document.querySelector('.btn-false');
+    const btnTrue = document.querySelector('.btn-true');
+
+    document.addEventListener('keydown', (event) => {
+      if (event.keyCode === 37) {
+        btnFalse.style.opacity = 1;
+        btnTrue.style.opacity = 0.7;
+      }
+    });
+  }
+
+  static pressKeyBoardT() {
+    const btnFalse = document.querySelector('.btn-false');
+    const btnTrue = document.querySelector('.btn-true');
+
+    document.addEventListener('keydown', (event) => {
+      if (event.keyCode === 39) {
+        btnFalse.style.opacity = 0.7;
+        btnTrue.style.opacity = 1;
+      }
+    });
   }
 }

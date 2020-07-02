@@ -88,10 +88,10 @@ p {
 
 .title {
   font-size: 40px;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 1;
   margin-bottom: 60px;
-  color: #6cffde;
+  color: rgba(36, 5, 71, 0.57);
   opacity: 0.8;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
@@ -103,19 +103,19 @@ p {
   margin: 0 auto 30px;
   font-size: 18px;
   line-height: 18px;
-  font-weight: 300;
-  color: #fff;
+  font-weight: 500;
+  color: rgb(31, 8, 138);
   opacity: 0.8;
 }
 
 .level-select {
   margin-top: 10px;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1;
   margin-bottom: 60px;
-  color: #6cffde;
-  opacity: 0.8;
+  color: rgba(48, 2, 100, 0.57);
+  opacity: 0.9;
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   letter-spacing: 5px;
@@ -126,71 +126,8 @@ p {
   margin-left: 10px;
 }
 
-.learn {
+.learn-words {
   width: 190px !important;
-}
-
-// Header _____________________________
-
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 1440px;
-  height: 20px;
-  position: relative;
-}
-
-// navBarBlock__________________________
-
-.navBarBlock {
-  display: flex;
-  position: fixed;
-  width: 100%;
-}
-
-.progress-bar {
-  height: 10px;
-  background-color: #09f1d2;
-  height: 5px;
-}
-
-// Answer-Block_____________________________
-
-.answerBlock {
-  display: flex;
-  justify-content: center;
-  height: 200px;
-}
-
-// Audio____________________________________
-
-.audio {
-  width: 100px;
-  height: 100px;
-  margin: 50px auto;
-  border-radius: 100px;
-  // box-shadow: 0px 0px 15px 30px #f85307ad;
-  background-color: #f853077c;
-  transition: 0.3s linear;
-  &:hover {
-    box-shadow: 0px 0px 15px 30px #09f1d285;
-  }
-  cursor: pointer;
-}
-
-.audio-animation {
-  animation: radial-pulse 1s infinite;
-}
-
-@keyframes radial-pulse {
-  0% {
-    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.5);
-  }
-
-  100% {
-    box-shadow: 0 0 0 40px rgba(0, 0, 0, 0);
-  }
 }
 
 /* Rules for using icons as black on a light background. */
@@ -239,40 +176,6 @@ p {
   font-feature-settings: 'liga';
 }
 
-// Words block______________________________
-
-.wordsblock {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.wrapper-words {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  margin: 50px 50px 0px 50px;
-  outline: none;
-}
-
-.words {
-  color: #ffffff;
-  font-size: 18px;
-  background: transparent;
-  outline: none !important;
-  cursor: pointer;
-}
-
-.number-words {
-  // display: none;
-  position: absolute;
-  color: #ffffff;
-  font-size: 18px;
-  top: 1px;
-  left: -10px;
-}
-
 .correct {
   display: none;
   position: absolute;
@@ -287,9 +190,6 @@ p {
   left: -20px;
 }
 
-.words-opacity {
-  opacity: 50%;
-}
 
 /* Rules for sizing the icon. */
 .material-icons.md-18 {
@@ -323,10 +223,6 @@ p {
   }
 }
 
-.next {
-  display: none;
-}
-
 // Result ______________________________________________
 
 .resultBlock {
@@ -335,28 +231,6 @@ p {
   justify-content: center;
   align-items: center;
   position: relative;
-}
-
-.result-audio {
-  position: absolute;
-  padding-right: 20px;
-  border-radius: 100px;
-  padding: 0px;
-  bottom: 7%;
-  left: -50%;
-  box-shadow: 0px 0px 30px 15px #f8530783;
-  transition: 0.3s linear;
-  &:hover {
-    box-shadow: 0px 0px 30px 15px #09f1d285;
-  }
-  cursor: pointer;
-}
-
-.words-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 100px;
-  background-size: cover;
 }
 
 .translate-block {
@@ -497,4 +371,154 @@ p {
   margin-bottom: 20px;
   width: 150px;
   background-color: #f85307;
+}
+
+.main {
+  position: relative;
+  text-align: center;
+  font-family: 'roboto', sans-serif;
+}
+.wrapper {
+  margin: -170px auto 0;
+}
+.points {
+  font-size: 50px;
+  font-weight: 700;
+  color: green;
+  margin: 0 auto;
+}
+.game-block {
+  width: 450px;
+  height: 380px;
+  border: 10px violet solid;
+  border-radius: 20px;
+  margin:  0 auto;
+  background: white;
+}
+
+.dotsBlock {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+}
+.dots {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: gray;
+  margin: 10px 5px 15px;
+}
+.backViolet {
+  background-color: violet;
+}
+.backYellow {
+  background-color: yellow;
+}
+.backBlue {
+  background-color: blue;
+}
+.backPink {
+  background-color: pink;
+}
+.backOrange {
+  background-color: orange;
+}
+.backRed {
+  background-color: red;
+}
+.green {
+  background-color: green;
+}
+.img-game {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto 0;
+}
+.engWord,
+.rusWord {
+  margin-top: -15px;
+  font-family: 'roboto', sans-serif;
+  height: 50px;
+  font-size: 25px;
+  font-weight: 500;
+  display: block;   
+}
+.checkOk,
+.checkFalse {
+position: relative;
+margin: 0 auto;
+left: 0;
+top: 20px;
+display: none;
+}
+.button {
+  font-size: 20px;
+  justify-content: center;
+}
+.button-false,
+.button-true {
+  margin: -40px 40px;
+  border-radius: 10px;
+  width: 100px;
+  height: 40px;
+  background: rgba(146, 85, 215, 0.57);
+  border-color: rgba(146, 85, 215, 0.57);
+  opacity: 1;
+}
+.button-false:hover,
+.button-true:hover {
+  opacity: 0.6;
+}
+.btn-false,
+.btn-true {
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  background: whitesmoke;
+  margin: 20px 40px;
+  opacity: 0.7;
+}
+
+.btn-true {
+  margin-right: 40px;
+}
+.btn-false:before {
+  content: '\2B05';
+  line-height: 20px;
+}
+.btn-true:before {
+  content: '\27A1';
+  line-height: 20px;
+}
+.volume {
+  font-size: 55px;
+  color: rgba(146, 85, 215, 0.57);
+}
+.audio-block {
+  position: relative;
+  top: -180px;
+  left:0px;
+  width: 30px;
+  height: 30px;
+}
+.timer {
+  margin: 200px auto;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  color: rgba(40, 0, 87, 0.57);
+  display: block;
+}
+.game-timer {
+  position: relative;
+  top: 160px;
+  left: 350px;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  color:  rgba(40, 0, 87, 0.57);
+  display: block;
 }

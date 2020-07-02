@@ -1,11 +1,25 @@
+/* eslint-disable consistent-return */
 import { Words } from 'services/backend';
 
 export default class Service {
-  // eslint-disable-next-line consistent-return
   static async wordsRequest(level = 0) {
-    const rndPage = this.randomInteger(0, 5);
-    const words = await Words.getWordsForRound(+level, rndPage, 100, []);
-    return words;
+    try {
+      const rndPage = this.randomInteger(0, 5);
+      const words = await Words.getWordsForRound(+level, rndPage, 100, []);
+      return words;
+    } catch (error) {
+      console.error();
+    }
+  }
+
+  static spinnerOn() {
+    const spiner = document.querySelector('.spinner');
+    spiner.style.display = 'block';
+  }
+
+  static spinnerOff() {
+    const spiner = document.querySelector('.spinner');
+    spiner.style.display = 'none';
   }
 
   static randomInteger(min, max) {

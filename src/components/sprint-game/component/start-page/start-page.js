@@ -2,13 +2,10 @@
 /* eslint-disable class-methods-use-this */
 
 import store from 'components/sprint-game/component/storage';
+import Timer from 'components/sprint-game/component/timer/timer';
 import 'stylesheets/sprint-game/sprint-game.scss';
-import 'components/sprint-game/component/gamePage/game.scss';
-import { Words } from 'services/backend';
 import Service from 'components/sprint-game/component/service';
-import { createElement } from 'helpers/dom';
-import GameBlock from 'components/sprint-game/component/gameBlock/gameBlock';
-// import gamePage from 'components/sprint-game/component/gamePage/game-page';
+import Toaster from 'components/Toaster/index';
 
 export default class StartPage {
   static render(container) {
@@ -37,35 +34,30 @@ export default class StartPage {
     container.append(intro);
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
+        Service.spinnerOn();
         const words = await Service.wordsRequest(+item.dataset.num);
+        console.log(words);
+
         store.setState({ requestWords: words });
         store.setState({ groupe: +item.dataset.num });
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
         store.setState({ volume: 'On' });
-        intro.remove();
-        GameBlock.init();
+
+        if (words.length < 10) {
+          console.log(words);
+          Toaster.createToast(
+            'Недостаточно слов для игры (необходимо минимум 10 слов)',
+            'danger'
+          );
+          Service.spinnerOff();
+        } else {
+          intro.remove();
+          Service.spinnerOff();
+          Timer.init();
+        }
       });
     });
-  }
-
-  timer(time) {
-    function startTimer(from, to) {
-      let current = from;
-
-      setTimeout(function go() {
-        time.innerHTML = `0${current}`.slice(-2);
-        if (current > to) {
-          setTimeout(go, 1000);
-        } /* else {
-          gamePage.init();
-        } */
-        current -= 1;
-      }, 1000);
-    }
-    startTimer(5, 0);
-
-    return this.time;
   }
 
   static init(container) {

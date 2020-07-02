@@ -8,9 +8,9 @@ export default class EngWords {
 
   static insertText() {
     const stage = store.getState();
-    const questionBlock = document.querySelector('.engWord');
-    questionBlock.textContent = stage.requestWords[stage.round].word;
-    store.setState({ word: stage.requestWords[stage.round].word });
+    const engWord = document.querySelector('.engWord');
+    engWord.textContent = stage.requestWords[stage.round].word;
+    store.setState({ word: stage.requestWords[stage.round] });
   }
 
   static init() {

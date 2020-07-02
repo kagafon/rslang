@@ -4,8 +4,8 @@ import store from 'components/sprint-game/component/storage';
 // import Results from 'components/sprint-game/component/results';
 import EngWords from 'components/sprint-game/component/gameBlock/engWords/engWords';
 import RusWords from 'components/sprint-game/component/gameBlock/rusWords/rusWords';
-import Volume from 'components/sprint-game/component/gameBlock/Volume/volume';
 import statiscticStore from 'components/sprint-game/component/statistic-storage';
+import ButtonsArrow from 'components/sprint-game/component/gameBlock/buttonArrow/buttonArrow';
 
 export default class Buttons {
   static render() {
@@ -27,11 +27,17 @@ export default class Buttons {
   static toNextWord() {
     const button = document.querySelectorAll('.button');
     const rusBlock = document.querySelector('.rusWord');
-
+    const audioSrc = document.querySelector('.audio');
     button.forEach((item) => {
       item.addEventListener('click', () => {
         const stage = store.getState();
         store.setState({ round: stage.round + 1 });
+        audioSrc.play();
+        setTimeout(() => {
+          document.querySelector('.game-block').style.borderColor = 'violet';
+          document.querySelector('.checkFalse').style.display = 'none';
+          document.querySelector('.checkOk').style.display = 'none';
+        }, 500);
         if (
           rusBlock.textContent ===
             stage.requestWords[stage.round].wordTranslate &&
@@ -61,16 +67,57 @@ export default class Buttons {
     });
   }
 
+  static toNextWordKeyBoard() {
+    const rusBlock = document.querySelector('.rusWord');
+    const audioSrc = document.querySelector('.audio');
+    ButtonsArrow.init();
+    document.addEventListener('keydown', (event) => {
+      const stage = store.getState();
+      store.setState({ round: stage.round + 1 });
+      audioSrc.play();
+      setTimeout(() => {
+        document.querySelector('.game-block').style.borderColor = 'violet';
+        document.querySelector('.checkFalse').style.display = 'none';
+        document.querySelector('.checkOk').style.display = 'none';
+      }, 500);
+      if (
+        rusBlock.textContent ===
+          stage.requestWords[stage.round].wordTranslate &&
+        event.keyCode === 39
+      ) {
+        this.rightChoice();
+      } else if (
+        rusBlock.textContent ===
+          stage.requestWords[stage.round].wordTranslate &&
+        event.keyCode === 37
+      ) {
+        this.unCorrectChoice();
+      } else if (
+        rusBlock.textContent !==
+          stage.requestWords[stage.round].wordTranslate &&
+        event.keyCode === 39
+      ) {
+        this.unCorrectChoice();
+      } else if (
+        rusBlock.textContent !==
+          stage.requestWords[stage.round].wordTranslate &&
+        event.keyCode === 37
+      ) {
+        this.rightChoice();
+      }
+    });
+  }
+
   static rightChoice() {
     const state = store.getState();
     EngWords.insertText();
     RusWords.render();
-    const checkOk = document.querySelector('.checkOk');
-    checkOk.style.display = 'block';
+    document.querySelector('.checkOk').style.display = 'block';
     document.querySelector('.checkFalse').style.display = 'none';
     document.querySelector('.game-block').style.borderColor = 'green';
     store.setState({ correctChoice: state.correctChoice + 1 });
     statiscticStore.setLearnedState([state.word]);
+
     this.countPoints();
     // Results.init();
   }
@@ -227,16 +274,38 @@ export default class Buttons {
       !dot[0].classList.contains('green') &&
       dotsBlock.classList.contains('backViolet')
     ) {
-      console.log('d');
       dot[0].classList.add('green');
       dotsBlock.classList.add('backYellow');
       dotsBlock.classList.remove('backViolet');
       points.textContent = Number(points.textContent) + 10;
     }
+    return points.textContent;
+  }
+
+  static audioOff() {
+    const audioBlock = document.querySelector('.audio-block');
+    const volume = document.querySelector('.volume');
+    const audio = document.querySelector('.audio');
+
+    audioBlock.addEventListener('click', () => {
+      if (audio.volume === 0) {
+        audio.volume = 1;
+        volume.style.color = 'blue';
+      } else {
+        audio.volume = 0;
+        volume.style.color = 'black';
+      }
+    });
+
+    setTimeout(() => {
+      document.querySelector('.game-block').style.borderColor = 'violet';
+    }, 1000);
   }
 
   static init() {
     this.render();
     this.toNextWord();
+    this.audioOff();
+    this.toNextWordKeyBoard();
   }
 }

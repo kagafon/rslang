@@ -1,22 +1,23 @@
 import { createElement } from 'helpers/dom';
 
 export default class Volume {
-  static render() {
-    createElement(
-      document.querySelector('.main'),
+  static init() {
+    const audioBlock = createElement(
+      document.querySelector('.game-block'),
+      'div',
+      ['audio-block']
+    );
+    const audioIcon = createElement(
+      audioBlock,
       'span',
       ['material-icons', 'md-100', 'md-light', 'volume'],
-      {
-        style: 'font-size: 40px; position: relative; right: -130px; top: 13px',
-      },
+      { style: 'font-size: 40px; color: rgba(146, 85, 215, 0.57)' },
       'volume_up'
     );
-    createElement(document.querySelector('.main'), 'audio', ['audio'], {
+    const audioSrc = createElement(audioIcon, 'audio', ['audio'], {
+      preload: true,
       src: 'assets/images/sprint-game/Piu.mp3',
     });
-  }
-
-  static init() {
-    this.render();
+    return audioBlock;
   }
 }
