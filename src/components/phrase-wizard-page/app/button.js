@@ -15,11 +15,11 @@ export default class Button {
     nextButton.addEventListener('click', () => {
       ++GameWords.round;
       Service.spinnerOn();
-        document.querySelector('.top-block.ph-wiz').textContent = '';
-        document.querySelector('.wordsblock').remove();
-        document.querySelector('.answerBlock').textContent = '';
-        document.querySelector('.ph-wiz-image').remove();
-        document.querySelector('.translate').remove();
+      document.querySelector('.top-block.ph-wiz').textContent = '';
+      document.querySelector('.wordsblock').remove();
+      document.querySelector('.answerBlock').textContent = '';
+      document.querySelector('.ph-wiz-image').remove();
+      document.querySelector('.translate').remove();
       if (GameWords.round < 10) {
         GameWords.init();
       }else if (GameWords.round === 10) {

@@ -41,7 +41,7 @@ export default class PhraseWizard {
       'Прослушайте фразу и определите слова. Вводите на клавиатуре первые буквы каждого слова, пока вся фраза не будет открыта. Время не важно, важна точность!'
     );
     
-    createElement(intro, 'div', ['level-select', 'ph-wiz'], {}, 'Выберете уровень');
+    createElement(intro, 'div', ['level-select', 'ph-wiz'], {}, 'Выберите уровень');
     const LevelBlock = createElement(intro, 'div', ['level-block']);
     const level = [ '1', '2', '3', '4', '5', '6', 'изучаемые слова'];
 

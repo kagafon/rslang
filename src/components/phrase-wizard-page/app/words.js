@@ -45,30 +45,60 @@ export default class GameWords {
     let numberWords = 0;
     const allWords = gameWords.length;
     const wordsBlock = document.querySelector('.wordsblock');
+    const wordsTranslate = document.querySelector('.translate');
+    
 
     wordCheck();
     function wordCheck() {
-      document.addEventListener('keydown', function(event) {
+      const keyListener = function(event) {
+      //const keyListener = function(event) {
+       /* switch (true) {
+          case allWords > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`:
+            wordsBlock.children[numberWords].innerText = '';
+            wordsBlock.children[numberWords].innerText = gameWords[numberWords];
+            wordsBlock.children[numberWords].classList.add('correct');
+            ++numberWords;
+            Statisctic.count(0, 1);
+            wordsTranslate.classList.remove('show-oneself');
+            break;
+          case allWords > numberWords:
+            wordsBlock.children[numberWords].innerText = '';
+            wordsBlock.children[numberWords].innerText = gameWords[numberWords];
+            wordsBlock.children[numberWords].classList.add('incorrect'); 
+            ++numberWords;
+            Statisctic.count(1, 0);
+            wordsTranslate.classList.remove('show-oneself');
+            break;
+          case numberWords === allWords:
+            wordsTranslate.classList.add('show-oneself');
+            break;
+        } */
         if (allWords > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`) {
           wordsBlock.children[numberWords].innerText = '';
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('correct');
           ++numberWords;
           Statisctic.count(0, 1);
+          wordsTranslate.classList.remove('show-oneself');
+          if(numberWords === allWords) {
+            const wordsTranslate = document.querySelector('.translate');
+            wordsTranslate.classList.add('show-oneself');
+          }
         }else if(allWords > numberWords){
           wordsBlock.children[numberWords].innerText = '';
           wordsBlock.children[numberWords].innerText = gameWords[numberWords];
           wordsBlock.children[numberWords].classList.add('incorrect'); 
           ++numberWords;
           Statisctic.count(1, 0);
-        }else if(numberWords === allWords) {
-          const wordsTranslate = document.querySelector('.translate');
-          wordsTranslate.classList.add('show-oneself');
-          ++numberWords;
-        }else {
-          return
+          wordsTranslate.classList.remove('show-oneself');
+          if(numberWords === allWords) {
+            const wordsTranslate = document.querySelector('.translate');
+            wordsTranslate.classList.add('show-oneself');
+          }
         }
-      });  
+      }; 
+      document.addEventListener('keydown', keyListener); 
+      //div.removeEventListener('click', listener, false);
     } 
     
   }
