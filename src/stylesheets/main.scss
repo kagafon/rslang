@@ -1,6 +1,6 @@
-@import '~bootswatch/dist/Materia/variables';
+@import '~bootswatch/dist/materia/variables';
 @import '~bootstrap/scss/bootstrap';
-@import '~bootswatch/dist/Materia/bootswatch';
+@import '~bootswatch/dist/materia/bootswatch';
 @import '~swiper/swiper';
 @import 'variables';
 @import 'toaster/toaster';
@@ -10,7 +10,7 @@
 @import './dictionary-page/main';
 @import './team-page/style.scss';
 @import './autorization-page/style.scss';
-@import 'game-AudioCall/style.scss';
+@import 'game-audioCall/style.scss';
 
 body {
   background-repeat: no-repeat;

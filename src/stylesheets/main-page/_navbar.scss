@@ -1,6 +1,7 @@
 .navbar {
   transition: background-color $page-transition-delay ease;
   user-select: none;
+  z-index: 99999;
 }
 
 .navbar-main {
@@ -31,4 +32,24 @@
 }
 .navbar-dark .navbar-nav .nav-link.active {
   color: $menu-active-color;
+}
+
+@media (max-width: 991.98px) {
+  .show, .collapsing, .collapse {
+    height: calc(100vh - 79.13px);
+    transition: height 0.1s ease;
+    margin-top: 20px;
+    .navbar-nav {
+      width: 100%;
+      text-align: center;
+      margin: auto;
+      font-size: 1.3em;
+      .nav-item {
+        width: 100%;
+        .nav-link {
+          box-shadow: 2px 17px 0px -16px rgba(255,255,255,0.5);
+        }
+      }
+    }
+  }
 }
