@@ -1,12 +1,38 @@
-.modal-close {
-  cursor: pointer;
-}
-
 .modal {
   &.show {
     display: block;
   }
   &.hide {
     display: none;
+  }
+  .modal-close {
+    cursor: pointer;
+  }
+  .modal-view {
+    background-color: #45aabc;
+    color: #235874;
+    text-align: center;
+    font-size: 16px;
+  }
+  .modal-body {
+    background-image: url('/assets/images/main-page/image1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    // width: 100px;
+    // height: 100px;
+    // border-radius: 50%;
+  }
+  p:nth-child(2) {
+    color: #0097ff;
+  }
+  p:nth-child(3) {
+    color: #6dff46;
+  }
+  p:nth-child(4) {
+    color: #ff6e4f;
+  }
+  p:nth-child(5) {
+    color: #d456c0;
   }
 }

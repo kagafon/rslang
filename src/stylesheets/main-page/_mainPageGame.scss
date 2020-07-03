@@ -98,8 +98,10 @@
     background: transparent;
     z-index: 1000;
     font-size: 20px;
+    border: none;
     &:focus {
       background-color: #fff0;
+      box-shadow: none;
     }
     &.success {
       color: hsl(106, 62%, 30%);
@@ -119,6 +121,10 @@
     top: 93px;
     border-radius: 0.25rem;
     transition: background-color $page-transition-delay ease;
+  }
+
+  .container-disable {
+    user-select: none;
   }
 
   @media (max-width: 491px) {

@@ -17,7 +17,13 @@ class Modal {
       ``
     );
     const dialog = createElement(this.modal, 'div', ['modal-dialog'], {}, ``);
-    const content = createElement(dialog, 'div', ['modal-content'], {}, ``);
+    const content = createElement(
+      dialog,
+      'div',
+      ['modal-content', 'modal-view'],
+      {},
+      ``
+    );
     const header = createElement(content, 'div', ['modal-header'], {}, ``);
     this.title = createElement(
       header,
@@ -47,7 +53,7 @@ class Modal {
 
   setText(head, text) {
     this.title.textContent = head;
-    console.error(text);
+    createElement(this.modalBody, 'div', ['modal-img'], {}, ``);
     text.forEach((el) => {
       createElement(this.modalBody, 'p', [], {}, `${el.text}: ${el.value}`);
     });

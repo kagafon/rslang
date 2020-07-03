@@ -36,26 +36,21 @@ export async function getUserWords(preloads) {
   try {
     let preloads = [];
     const settings = await getSettings();
-    console.error(settings);
     const { image, example, meaning } = settings.prompts;
     if (image) preloads.push('image');
     preloads.push('audio');
     if (example) preloads.push('audioExample');
     if (meaning) preloads.push('audioMeaning');
     let wordsToday = await Words.getTodayUserWords(preloads);
-    console.error(wordsToday);
     if (wordsToday.length === 0) {
-      console.error(wordsToday);
       try {
         await Words.addUserWordsFromGroup(0, 1, 10);
         wordsToday = await Words.getTodayUserWords(preloads);
       } catch (e) {
         console.error(e);
       }
-      console.error(wordsToday);
     }
     // if (wordsToday.length === 0) throw new Error();
-
     return { wordsToday, settings };
   } catch (e) {
     throw new Error();

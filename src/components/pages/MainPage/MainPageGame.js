@@ -1,6 +1,6 @@
 import { createElement } from 'helpers/dom';
+import createCard from 'components/pages/MainPage/Card';
 import {
-  hideWord,
   playAudio,
   letters,
   volumeUp,
@@ -13,12 +13,9 @@ import {
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
-import modal from 'components/pages/MainPage/modal';
-import {
-  getSettings,
-  getUserWords,
-} from 'components/pages/MainPage/dataForMain';
-import { User, Words } from 'services/backend';
+// import modal from 'components/pages/MainPage/modal';
+import { getUserWords } from 'components/pages/MainPage/dataForMain';
+import { Words } from 'services/backend';
 
 import Toaster from 'components/Toaster';
 import router from 'components/Router/';
@@ -31,7 +28,6 @@ class MainPageGame {
     this.addInputHandler = this.addInputHandler.bind(this);
     this.addVolumeHandler = this.addVolumeHandler.bind(this);
     this.addContainerHandler = this.addContainerHandler.bind(this);
-    this.adddifficultyButton = this.adddifficultyButton.bind(this);
   }
 
   async create() {
@@ -108,8 +104,6 @@ class MainPageGame {
       },
       ''
     );
-    // createElement(this.swiperContainer, 'div', ['swiper-button-prev'], {}, '');
-    // createElement(this.swiperContainer, 'div', ['swiper-button-next'], {}, '');
     this.words.forEach((word) => {
       const item = createElement(
         this.swiperWrapper,
@@ -118,218 +112,16 @@ class MainPageGame {
         { id: word.id },
         ''
       );
-      const card = this.createCard(word);
+      const { buttons, prompts } = this.settings;
+      const card = createCard(word, buttons, prompts);
+
       item.appendChild(card);
     });
-  }
-
-  createCard(wordInit) {
-    const { buttons, prompts } = this.settings;
-    const {
-      word,
-      image,
-      audioSrc,
-      imageSrc,
-      textMeaning,
-      textExample,
-      transcription,
-      wordTranslate,
-      textMeaningTranslate,
-      textExampleTranslate,
-      id,
-    } = wordInit;
-    const card = createElement('', 'div', ['card', 'card_size'], {}, '');
-    const cardHeader = createElement(
-      card,
-      'div',
-      ['card-header', 'd-flex', 'justify-content-between'],
-      {},
-      ``
-    );
-    const cardHeaderButtons = createElement(
-      cardHeader,
-      'div',
-      ['d-flex', 'justify-content-center', 'btn-group'],
-      { role: 'group' },
-      ``
-    );
-    if (buttons.removeWord)
-      createElement(
-        cardHeaderButtons,
-        'button',
-        ['btn', 'btn-danger'],
-        { 'data-btn': 'delete', type: 'button', tabindex: -1 },
-        `удалить слово`
-      );
-    if (buttons.gradeWord)
-      createElement(
-        cardHeaderButtons,
-        'button',
-        ['btn', 'btn-warning'],
-        { 'data-btn': 'complex', type: 'button', tabindex: -1 },
-        `сложное слово`
-      );
-
-    createElement(
-      cardHeader,
-      'span',
-      ['material-icons', 'md-100', 'volume'],
-      { 'data-btn': 'volume' },
-      `volume_up`
-    );
-    const cardBody = createElement(
-      card,
-      'div',
-      [
-        'card-body',
-        'd-flex',
-        'justify-content-center',
-        'align-items-center',
-        'flex-column',
-      ],
-      {},
-      ``
-    );
-    createElement(
-      cardBody,
-      'span',
-      ['input-background', 'input-background_back'],
-      {},
-      `${word}`
-    );
-    createElement(cardBody, 'span', ['input-word', 'form-control'], {}, ``);
-    createElement(
-      cardBody,
-      'input',
-      ['form-control'],
-      {
-        type: 'text',
-        autocomplete: 'off',
-        id: `${id}`,
-        'aria-label': `${word}`,
-        'aria-describedby': 'basic-addon1',
-        tabindex: -1,
-      },
-      `${word}`
-    );
-    createElement(cardBody, 'hr', ['my-5'], {}, ``);
-    createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
-    if (prompts.translation) {
-      createElement(cardBody, 'p', ['card-text', 'translate'], {}, `${word}`);
-    }
-    if (prompts.meaning) {
-      const sentence = hideWord(word, textMeaning);
-      createElement(
-        cardBody,
-        'p',
-        ['card-text', 'card-text-meaning'],
-        {},
-        `${sentence}`
-      );
-      if (prompts.translation) {
-        createElement(
-          cardBody,
-          'p',
-          ['card-text', 'translate'],
-          {},
-          `${textMeaningTranslate}`
-        );
-      }
-    }
-
-    if (prompts.example) {
-      const sentence = hideWord(word, textExample);
-      createElement(
-        cardBody,
-        'p',
-        ['card-text', 'card-text-example'],
-        {},
-        `${sentence}`
-      );
-      if (prompts.translation) {
-        createElement(
-          cardBody,
-          'p',
-          ['card-text', 'translate'],
-          {},
-          `${textExampleTranslate}`
-        );
-      }
-    }
-    if (prompts.transcription)
-      createElement(cardBody, 'p', ['card-text'], {}, `${transcription}`);
-    if (prompts.image) {
-      const cardImage = createElement(
-        cardBody,
-        'div',
-        ['card-img_div'],
-        {},
-        ``
-      );
-      createElement(cardImage, 'img', ['card-img'], { src: `${imageSrc}` }, ``);
-    }
-
-    const cardFooter = createElement(
-      card,
-      'div',
-      ['card-footer', 'd-flex', 'justify-content-between'],
-      {},
-      ``
-    );
-    createElement(
-      cardFooter,
-      'button',
-      ['btn', 'btn-primary'],
-      { value: 1, tabindex: -1, type: 'submit' },
-      `Далее`
-    );
-    if (buttons.showAnswer)
-      createElement(
-        cardFooter,
-        'button',
-        ['btn', 'btn-info'],
-        { value: 1, tabindex: -1, type: 'submit', 'data-btn': 'answer' },
-        `Показать ответ`
-      );
-
-    const ankibtn = createElement(
-      cardFooter,
-      'div',
-      ['btn-group'],
-      { role: 'group' },
-      ``
-    );
-    createElement(
-      ankibtn,
-      'button',
-      ['btn', 'btn-sm', 'btn-success'],
-      { type: 'submit' },
-      `Легко`
-    );
-    createElement(
-      ankibtn,
-      'button',
-      ['btn', 'btn-sm', 'btn-info'],
-      { type: 'submit' },
-      `Хорошо`
-    );
-    createElement(
-      ankibtn,
-      'button',
-      ['btn', 'btn-sm', 'btn-warning'],
-      { type: 'submit' },
-      `Сложно`
-    );
-
-    return card;
+    console.error(this.swiperContainer);
   }
 
   initSwiper() {
     this.swiper = new Swiper(this.swiperContainer, optionsForSwiper);
-  }
-
-  focusInput() {
-    this.input.focus();
   }
 
   setLongWord() {
@@ -348,28 +140,8 @@ class MainPageGame {
     return word;
   }
 
-  updateSlide() {
-    this.input = document.querySelector('.swiper-slide-active input');
-    this.volumeBtn = document.querySelector('.swiper-slide-active span.volume');
-    this.input.addEventListener('input', this.addInputHandler);
-    this.card = document.querySelector('.swiper-slide-active');
-    this.setLongWord();
-    if (store.getState().isAudioPlayButton) {
-      volumeUp(this.volumeBtn);
-    } else {
-      volumeOff(this.volumeBtn);
-    }
-    this.progressBar = document.querySelector('.progress-bar');
-    this.pagination = document.querySelector(
-      '.swiper-pagination.swiper-pagination-fraction'
-    );
-    changeProgressBar(this.progressBar, this.pagination);
-  }
-
   async addSubmitHandler(event) {
     event.preventDefault();
-
-    this.wordInput = this.findActiveCardWord();
     let {
       word,
       audioSrc,
@@ -402,6 +174,9 @@ class MainPageGame {
     this.inputBackground.classList.remove('answer_success', 'answer_error');
     if (this.input.value === word) {
       this.input.disabled = 'disabled';
+      this.submittBtn.style.userSelect = 'none';
+      this.submittBtnAnswer.style.userSelect = 'none';
+      // this.input.disabled = 'disabled';
       if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
         const dataUpdate = await checkWordResult(this.wordInput, 'no', true);
         this.wordInput = dataUpdate.word;
@@ -473,14 +248,7 @@ class MainPageGame {
         store.setState({ isAudioPlay: false });
       }
     }
-    this.adddifficultyButton(event.submitter.innerText);
     Words.updateUserWord(this.wordInput);
-  }
-
-  adddifficultyButton(button) {
-    if (button === 'ЛЕГКО') this.wordInput.difficulty = 'easy';
-    if (button === 'ХОРОШО') this.wordInput.difficulty = 'medium';
-    if (button === 'СЛОЖНО') this.wordInput.difficulty = 'hard';
   }
 
   addInputHandler() {
@@ -507,6 +275,18 @@ class MainPageGame {
     if (event.target.dataset.btn === 'complex') {
       this.complexBtn = event.target;
       this.addComplexHandler();
+    }
+    if (event.target.dataset.btn === 'easy') {
+      this.wordInput.difficulty = 'easy';
+      Toaster.createToast(`это слово легкое для Вас`, 'danger');
+    }
+    if (event.target.dataset.btn === 'medium') {
+      this.wordInput.difficulty = 'medium';
+      Toaster.createToast(`это слово стоит повторить`, 'danger');
+    }
+    if (event.target.dataset.btn === 'hard') {
+      this.wordInput.difficulty = 'hard';
+      Toaster.createToast(`это трудное слово, но Вы справитесь!`, 'danger');
     }
   }
 
@@ -553,13 +333,34 @@ class MainPageGame {
       Toaster.createToast(`ошибка сохранения`, 'danger');
     }
   }
-
-  addAction() {
-    this.card = document.querySelector('.swiper-slide-active');
+  updateSlide() {
     this.input = document.querySelector('.swiper-slide-active input');
-    this.focusInput();
-    this.container.addEventListener('submit', this.addSubmitHandler);
+    this.volumeBtn = document.querySelector('.swiper-slide-active span.volume');
+    this.submittBtn = document.querySelector('.swiper-slide-active #submitt1');
+    this.submittBtnAnswer = document.querySelector(
+      '.swiper-slide-active #submitt2'
+    );
+    console.error(this.submittBtn);
+    this.card = document.querySelector('.swiper-slide-active');
     this.input.addEventListener('input', this.addInputHandler);
+    this.wordInput = this.findActiveCardWord();
+    this.setLongWord();
+    if (store.getState().isAudioPlayButton) {
+      volumeUp(this.volumeBtn);
+    } else {
+      volumeOff(this.volumeBtn);
+    }
+    this.progressBar = document.querySelector('.progress-bar');
+    this.pagination = document.querySelector(
+      '.swiper-pagination.swiper-pagination-fraction'
+    );
+    changeProgressBar(this.progressBar, this.pagination);
+  }
+  addAction() {
+    this.form = document.querySelector('.swipper-form');
+    this.updateSlide();
+    this.input.focus();
+    this.container.addEventListener('submit', this.addSubmitHandler);
     this.container.addEventListener('click', this.addContainerHandler);
   }
 
@@ -569,7 +370,6 @@ class MainPageGame {
       this.createSwiper();
       return this.container;
     } catch (e) {
-      // Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
       return this.container;
     }
@@ -581,6 +381,7 @@ class MainPageGame {
       this.addAction();
       this.setLongWord();
     } catch (e) {
+      console.error(e);
       Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
     }
