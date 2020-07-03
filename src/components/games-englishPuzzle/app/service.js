@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { Words } from 'services/backend';
-// import { button } from './components/main/button/button';
-// import { hints } from './components/main/header/hints/hints';
+import store from 'components/games-englishPuzzle/app/storage';
+import Button from './components/main/button/button';
+import Hints from './components/main/header/hints/hints';
 
 export default class Service {
   // eslint-disable-next-line consistent-return
@@ -16,9 +17,8 @@ export default class Service {
     }
   }
 
-  async audioRequest() {
+  static async audioRequest() {
     const arrAudioUrl = await this.wordRequest();
-
     const arrUrl = [];
     arrAudioUrl.forEach((item) => {
       arrUrl.push(item.audioExample);
@@ -27,22 +27,14 @@ export default class Service {
     return arrUrl;
   }
 
-  async translateRequest() {
-    const arrWordTranslate = await this.wordRequest();
-    const translate = [];
-    arrWordTranslate.forEach((item) => {
-      translate.push(item.textExampleTranslate);
-    });
-    return translate;
-  }
-
   static puzzleMovement() {
     const card = document.querySelectorAll('.words-card');
+    const stage = store.getState();
 
     card.forEach((item) => {
       item.addEventListener('click', () => {
         if (!item.classList.contains('result-mistake')) {
-          const wordsCount = localStorage.getItem('wordsCount');
+          const { wordsCount } = stage;
           const resultLine = document.querySelectorAll('.results-line');
           item.classList.remove('source');
           item.classList.add('result');
@@ -70,7 +62,6 @@ export default class Service {
 
   static puzzleDropRemove() {
     const source = document.querySelector('.source-line');
-
     source.addEventListener('dragover', (event) => {
       event.preventDefault();
     });
@@ -91,6 +82,7 @@ export default class Service {
       card.classList.remove('result');
       card.classList.remove('result-mistake');
       card.classList.add('source');
+
       source.appendChild(card);
     });
   }
@@ -106,8 +98,13 @@ export default class Service {
       });
 
       item.addEventListener('dragenter', ({ target }) => {
+        if (target === document.querySelector('.line-active')) {
+          store.setState({ appendCard: '' });
+        } else {
+          store.setState({ appendCard: target.textContent });
+        }
+
         item.classList.add('hovered');
-        localStorage.setItem('appendCard', `${target.textContent}`);
         target.classList.add('card-active');
       });
 
@@ -119,6 +116,10 @@ export default class Service {
       item.addEventListener('drop', () => {
         item.classList.remove('hovered');
         const card = document.querySelector('.hide');
+        const stage = store.getState();
+
+        const appednWord = stage.appendCard;
+
         if (
           !card.classList.contains('correct') &&
           !card.classList.contains('mistake')
@@ -129,17 +130,16 @@ export default class Service {
 
         card.classList.add('result-mistake');
 
-        const appedWord = localStorage.getItem('appendCard');
-
         const arrWordss = document.querySelectorAll('.words-card');
         const lineActive = document.querySelector('.line-active');
 
-        if (appedWord === '' && item.classList.contains('line-active')) {
+        if (appednWord === '' && item.classList.contains('line-active')) {
           item.append(card);
           lineActive.classList.remove('card-active');
         } else {
           arrWordss.forEach((item) => {
-            if (item.textContent === appedWord) {
+            const state = store.getState();
+            if (item.textContent === state.appendCard) {
               item.after(card);
               item.classList.remove('card-active');
             }
@@ -151,9 +151,9 @@ export default class Service {
     });
   }
 
-  static async bitValidation(arrWord) {
-    const wordsArray = await this.wordRequest();
-    const autoPlay = localStorage.getItem('autoPlay');
+  static bitValidation(arrWord) {
+    const stage = store.getState();
+    const wordsArray = stage.requestWords;
     const arrWords = [];
 
     wordsArray.filter((reading, index) => {
@@ -168,19 +168,15 @@ export default class Service {
       }
     });
 
-    const wordsCount = localStorage.getItem('wordsCount');
+    const { wordsCount } = stage;
 
-    for (let i = 0; i < arrWord.length; i++) {
+    for (let i = 0; i < arrWord.length; i += 1) {
       if (arrWord[i].textContent === arrWords[+wordsCount][i]) {
         arrWord[i].classList.remove('mistake');
         arrWord[i].classList.remove('result');
         arrWord[i].classList.add('correct');
         document.querySelector('.btn-check').style.display = 'none';
         document.querySelector('.btn-continue').style.display = 'block';
-
-        if (autoPlay === 'yes') {
-          this.audioPlay();
-        }
       } else {
         document.querySelector('.btn-i-dont-know').style.display = 'block';
         document.querySelector('.btn-continue').style.display = 'none';
@@ -195,8 +191,9 @@ export default class Service {
   }
 
   static bidCounter() {
+    const stage = store.getState();
     const sourceLine = document.querySelectorAll('.source');
-    const count = localStorage.getItem('wordsCount');
+    const count = stage.wordsCount;
     const word = document.querySelectorAll('.result');
 
     const arrWord = [];
@@ -216,35 +213,34 @@ export default class Service {
   }
 
   static btnClick() {
-    const userLogout = document.querySelector('.btn-logout');
-    userLogout.addEventListener('click', () => {
-      logout.userLogout();
-    });
-
     const btnSolution = document.querySelector('.btn-i-dont-know');
     btnSolution.addEventListener('click', () => {
-      button.btnSolution();
+      Button.btnSolution();
     });
 
     const btnCheck = document.querySelector('.btn-check');
     btnCheck.addEventListener('click', () => {
-      button.btnCheck();
+      Button.btnCheck();
     });
 
     const btnContinue = document.querySelector('.btn-continue');
     btnContinue.addEventListener('click', () => {
-      button.btnContinue();
+      Button.btnContinue();
       btnContinue.style.display = 'none';
-      hints.btnTranslate();
-      hints.btnAudio();
+      Hints.btnTranslate();
+      Hints.btnAudio();
     });
   }
 
   static audioPlay() {
     const audio = document.querySelector('audio');
     const btnAudioPlay = document.querySelector('.audio-play');
-    btnAudioPlay.classList.add('voice-animation');
-    audio.play();
+    const hintSound = document.querySelector('.translate-sound');
+    if (!hintSound.classList.contains('hint-disabled')) {
+      btnAudioPlay.classList.add('voice-animation');
+      audio.play();
+    }
+
     audio.onended = () => {
       btnAudioPlay.classList.remove('voice-animation');
     };
@@ -253,29 +249,30 @@ export default class Service {
   static hintsClick() {
     const sound = document.querySelector('.translate-sound');
     sound.addEventListener('click', () => {
-      hints.btnAudio();
-      hints.hintsActive(sound);
+      Hints.hintsActive(sound);
+      Hints.btnAudio();
     });
 
     const translate = document.querySelector('.translate');
     translate.addEventListener('click', () => {
-      hints.btnTranslate();
-      hints.hintsActive(translate);
+      Hints.hintsActive(translate);
+      Hints.btnTranslate();
     });
 
     const audioAutoPlay = document.querySelector('.audio');
     audioAutoPlay.addEventListener('click', () => {
-      hints.hintsActive(audioAutoPlay);
-      if (localStorage.getItem('autoPlay') === 'yes') {
-        localStorage.setItem('autoPlay', 'no');
+      const stage = store.getState();
+      if (stage.autoPlay === 'yes') {
+        store.setState({ autoPlay: 'no' });
       } else {
-        localStorage.setItem('autoPlay', 'yes');
+        store.setState({ autoPlay: 'yes' });
       }
+      Hints.hintsActive(audioAutoPlay);
     });
 
     const backGround = document.querySelector('.background-img');
     backGround.addEventListener('click', () => {
-      hints.hintsActive(backGround);
+      Hints.hintsActive(backGround);
     });
 
     const audio = document.querySelector('.audio-play');

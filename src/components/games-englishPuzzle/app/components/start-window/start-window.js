@@ -3,10 +3,10 @@
 import Service from 'components/games-englishPuzzle/app/service';
 import store from 'components/games-englishPuzzle/app/storage';
 import Header from 'components/games-englishPuzzle/app/components/main/header/header';
-import HintsBlock from 'components/games-englishPuzzle/app/components/main/hints-block/hints-block';
 import ResultsBlock from 'components/games-englishPuzzle/app/components/main/results-block/results-block';
 import SourceData from 'components/games-englishPuzzle/app/components/main/source-data/source-data';
 import Button from 'components/games-englishPuzzle/app/components/main/button/button';
+import Hints from 'components/games-englishPuzzle/app/components/main/header/hints/hints';
 
 export default class StartPage {
   static render(container) {
@@ -50,10 +50,12 @@ export default class StartPage {
         } else {
           intro.remove();
           Header.init();
-          HintsBlock.init();
           ResultsBlock.init();
           SourceData.init();
           Button.init();
+          Service.puzzleDrop();
+          Service.hintsClick();
+          Hints.btnTranslate();
         }
       });
     });

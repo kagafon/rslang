@@ -17,6 +17,7 @@ export default class SourceData {
     const wordsArray = stage.requestWords;
     const arrWord = [];
 
+    // eslint-disable-next-line array-callback-return
     wordsArray.filter((reading, index) => {
       if (index < 10) {
         arrWord.push(
@@ -31,18 +32,16 @@ export default class SourceData {
 
     arrWord.forEach((item) => {
       item
-        .sort(function () {
+        .sort(function Sort() {
           return 0.5 - Math.random();
         })
         .join(' ')
         .split(' ');
     });
 
-    console.log(arrWord);
-
     const sourceLine = document.querySelector('.source-line');
 
-    const wordsCount = localStorage.getItem('wordsCount');
+    const { wordsCount } = stage;
 
     for (let j = 0; j < arrWord[+wordsCount].length; j += 1) {
       const card = document.createElement('div');
@@ -57,7 +56,23 @@ export default class SourceData {
       }
     }
 
+    this.cardsWidth();
     Service.puzzleMovement();
+
+    setTimeout(() => {
+      if (stage.autoPlay === 'yes') {
+        Service.audioPlay();
+      }
+    }, 1000);
+  }
+
+  static cardsWidth() {
+    const sourceLine = document.querySelector('.source-line');
+    const card = sourceLine.querySelectorAll('.words-card');
+
+    card.forEach((item) => {
+      item.style.width = `${item.offsetWidth}px`;
+    });
   }
 
   static init() {
@@ -65,5 +80,3 @@ export default class SourceData {
     this.cardGeneration();
   }
 }
-
-export const sourceData = new SourceData();

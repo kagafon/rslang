@@ -1,35 +1,4 @@
 .englishPuzzle {
-  body {
-    display: flex;
-    flex-direction: column-reverse;
-    margin: 0 auto;
-    padding: 0px;
-    max-width: 1440px;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    background-color: #ffffff;
-    background-size: cover;
-    color: #ffffff;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    margin: 0;
-    padding: 0;
-  }
-
-  *,
-  ::before,
-  ::after {
-    box-sizing: border-box;
-    border: 0;
-  }
 
   .wrapper {
     display: flex;
@@ -39,8 +8,6 @@
     position: relative;
     margin: 0 auto;
   }
-
-  // Start Page ________________________________
 
   .intro {
     display: flex;
@@ -266,18 +233,18 @@
 
   .hints-block {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     flex-direction: row;
     width: 100%;
     height: 100%;
     background: transparent;
-    margin-bottom: 20px;
   }
 
   .md-36 {
     font-size: 36px;
     cursor: pointer;
+    color: #ffffff;
   }
 
   .voice-animation {
@@ -297,7 +264,9 @@
   }
 
   .translate-show {
-    margin-top: 10px;
+    margin-left: 10%;
+    color: #ffffff;
+    font-size: 1.2rem;
   }
 
   .hints {
@@ -317,7 +286,6 @@
     display: flex;
     height: 28px;
     width: 40px;
-    // background: #f2f2f2;
     border: 1px solid;
     border-color: white #f7f7f7 whitesmoke;
     border-radius: 3px;
@@ -397,6 +365,7 @@
     justify-content: center;
     height: 40px;
     max-height: 380px;
+    width: 100%;
   }
 
   .results {
@@ -440,7 +409,7 @@
   // words-card______________________________________
 
   .words-card {
-    width: auto;
+    width: 100%;
     min-width: 38px;
     min-height: 25px;
     transition: all 0.2s ease;
