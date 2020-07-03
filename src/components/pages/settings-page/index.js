@@ -43,7 +43,7 @@ export default class SettingsPage {
                 readonly: true,
                 ClassName: TextControl,
                 value: (
-                  this.user.settings.creationDate || new Date()
+                  new Date(this.user.settings.creationDate) || new Date()
                 ).toLocaleString(),
               },
             ],

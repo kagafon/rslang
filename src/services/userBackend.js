@@ -18,6 +18,7 @@ const getToday = () => {
 
 const DEFAULT_USER_SETTINGS = {
   username: '',
+  creationDate: new Date().getTime(),
   prompts: {
     translation: true,
     example: true,
@@ -59,7 +60,6 @@ export default class User {
     this.id = id;
     this.email = email;
     this.settings = JSON.parse(JSON.stringify(settings));
-    console.log(settings);
   }
 
   getBaseInterval(group, difficulty) {
@@ -106,25 +106,24 @@ export default class User {
     });
   }
 
-  static createUserAndLogin(
-    email,
-    password,
-    settings = JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS)) // Deep copy
-  ) {
+  static createUserAndLogin(email, password, settings = {}) {
+    localStorage.setItem(`${APPLICATION}.auth`, '');
     return addUser(email, password)
       .then(() => authUser(email, password))
       .then(async (userInfo) => {
+        localStorage.setItem(`${APPLICATION}.auth`, JSON.stringify(userInfo));
         const settingsToUse = {
           ...DEFAULT_USER_SETTINGS,
           ...settings,
-          creationDate: new Date().getTime(),
         };
+
         await Promise.allSettled([
           setSettings(userInfo.userId, userInfo.token, {
             wordsPerDay: 1,
-            optional: {
-              user: JSON.stringify(settingsToUse),
-            },
+            optional: Object.keys(settingsToUse).reduce(
+              (acc, x) => ({ ...acc, [x]: JSON.stringify(settingsToUse[x]) }),
+              {}
+            ),
           }),
         ]);
         user = new User(userInfo.userId, email, settingsToUse);
@@ -262,7 +261,10 @@ export default class User {
     if (!userInfo || !user) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
 
-    const settingsToSave = { wordsPerDay: 1, optional: { ...settings } };
+    const settingsToSave = {
+      wordsPerDay: 1,
+      optional: { ...DEFAULT_USER_SETTINGS, ...user.settings, ...settings },
+    };
     Object.keys(settingsToSave.optional).forEach((x) => {
       settingsToSave.optional[x] = JSON.stringify(settingsToSave.optional[x]);
     });

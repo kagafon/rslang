@@ -14,26 +14,26 @@ const userWordFields = [
   { name: 'difficulty', default: 'new' },
   {
     name: 'creationDate',
-    get: (x) => (x ? null : new Date(x)),
+    get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
-    default: `${new Date().getTime()}`,
+    default: new Date(),
   },
   {
     name: 'lastRepeat',
     get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
-    default: 'null',
+    default: null,
   },
-  { name: 'repeatTimes', default: '0' },
+  { name: 'repeatTimes', default: 0 },
   {
     name: 'nextRepeat',
     get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
-    default: `${new Date().getTime()}`,
+    default: new Date(),
   },
-  { name: 'correctAnswers', default: '0' },
-  { name: 'totalAnswers', default: '0' },
-  { name: 'correctAnswerSeries', default: '0' },
+  { name: 'correctAnswers', default: 0 },
+  { name: 'totalAnswers', default: 0 },
+  { name: 'correctAnswerSeries', default: 0 },
 ];
 
 const getUserInfo = () => {
@@ -103,7 +103,7 @@ export default class Words {
   ) {
     return (group >= 0
       ? getWords(group, page, wordsPerPage, maxWordsInSentence)
-      : Words.getTodayUserWords()
+      : Words.getAllUserWords()
     ).then(async (words) => {
       const wordsToReturn = words
         .sort(() => Math.random() - 0.5)
@@ -124,7 +124,15 @@ export default class Words {
           token,
           wordId,
           userWordFields.reduce(
-            (acc, x) => Object.assign(acc, { [x.name]: x.default }),
+            (acc, x) =>
+              Object.assign(
+                acc,
+                x.default !== null && x.default !== undefined
+                  ? {
+                      [x.name]: x.default.toString(),
+                    }
+                  : {}
+              ),
             {}
           )
         );
@@ -139,12 +147,17 @@ export default class Words {
       word.id,
       userWordFields.reduce(
         (acc, x) =>
-          Object.assign(acc, {
-            [x.name]:
-              word[x.name] !== undefined
-                ? JSON.stringify(word[x.name])
-                : x.default,
-          }),
+          Object.assign(
+            acc,
+            word[x.name] !== null && word[x.name] !== undefined
+              ? {
+                  [x.name]: (x.set
+                    ? x.set(word[x.name])
+                    : word[x.name]
+                  ).toString(),
+                }
+              : {}
+          ),
         {}
       )
     );
@@ -179,6 +192,28 @@ export default class Words {
   static getTodayUserWords(preload) {
     return Words.getUserWords(
       `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}]}`,
+      preload
+    );
+  }
+
+  static getNewUserWords(todayOnly, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":"null"}${
+        todayOnly
+          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
+          : ''
+      }]}`,
+      preload
+    );
+  }
+
+  static getLearnedUserWords(todayOnly, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":"null"}}${
+        todayOnly
+          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
+          : ''
+      }]}`,
       preload
     );
   }
