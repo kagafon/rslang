@@ -1,4 +1,4 @@
-.settings-block {
+.control-area {
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -31,7 +31,7 @@
     }
   }
 
-  & .settings-block {
+  & .control-area {
     min-width: 240px;
     width: calc(100% - 20px);
   }

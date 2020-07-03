@@ -40,6 +40,7 @@ const DEFAULT_USER_SETTINGS = {
       .fill(null)
       .map(() => ({
         newWordsPerDay: 10,
+        currentWordNumber: 0,
         baseInterval: { new: 60, easy: 60, medium: 60, hard: 60 },
       })),
   },

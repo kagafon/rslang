@@ -21,13 +21,7 @@ export default class IntervalsWindow {
       'align-items-center',
     ]);
 
-    this.title = createElement(
-      modalHeader,
-      'h3',
-      ['text-capitalize', 'mb-0'],
-      {},
-      title
-    );
+    this.title = createElement(modalHeader, 'h3', ['mb-0'], {}, title);
 
     this.modalBody = createElement(modalContent, 'div', ['modal-body']);
 

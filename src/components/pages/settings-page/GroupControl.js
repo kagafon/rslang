@@ -3,7 +3,7 @@ import { createElement } from 'helpers/dom';
 import BaseControl from './BaseControl';
 
 export default class GroupControl extends BaseControl {
-  constructor({ label, source, max, min, preprocessValue }) {
+  constructor({ label, source, max, min, preprocessValue, showModal }) {
     super();
     this.source = source;
     this.container = createElement(null, 'div', ['form-group', 'd-flex']);
@@ -42,7 +42,16 @@ export default class GroupControl extends BaseControl {
       { type: 'button' }
     );
     createElement(btn, 'i', ['material-icons'], {}, 'timer');
-
+    btn.addEventListener('click', () =>
+      showModal(
+        'Базовые интервалы (мин)',
+        ['Новое', 'Легко', 'Хорошо', 'Сложно'],
+        ['new', 'easy', 'medium', 'hard'],
+        source.baseInterval,
+        [90, 90, 90, 90],
+        [1, 1, 1, 1]
+      )
+    );
     this.control.addEventListener('input', (evt) => {
       valueContainer.innerText = evt.currentTarget.value;
       this.source.newWordsPerDay = preprocessValue

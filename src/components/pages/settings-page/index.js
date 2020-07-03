@@ -2,12 +2,11 @@ import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
 
 import Toaster from 'components/Toaster';
-import SettingsBlock from './SettingsBlock';
+import ControlBlock from './ControlBlock';
 import TextControl from './TextControl';
 import ToggleControl from './ToggleControl';
 import RangeControl from './RangeControl';
 import GroupControl from './GroupControl';
-import SeparatorControl from './SeparatorControl';
 import ControlsContainer from './ControlsContainer';
 import LabelControl from './LabelControl';
 import Modal from './Modal';
@@ -15,6 +14,7 @@ import Modal from './Modal';
 export default class SettingsPage {
   constructor() {
     this.user = JSON.parse(JSON.stringify(User.getCurrentUser()));
+    this.modal = new Modal(this.container);
     this.controls = [
       {
         name: 'Общие настройки',
@@ -130,6 +130,7 @@ export default class SettingsPage {
               max: 30,
               min: 0,
               ClassName: GroupControl,
+              showModal: this.modal.show.bind(this.modal),
             })),
           },
         ],
@@ -166,7 +167,6 @@ export default class SettingsPage {
       },
     ];
     this.settingValueMap = [];
-    console.log(this.user.settings.games.sprint);
     this.container = createElement(null, 'form', [
       'settings-page',
       'container-fluid',
@@ -177,7 +177,7 @@ export default class SettingsPage {
     ]);
 
     this.controls.forEach((x) => {
-      SettingsBlock.render(
+      ControlBlock.render(
         controlsArea,
         x.name,
         x.items.map((item) => {
@@ -194,22 +194,7 @@ export default class SettingsPage {
         })
       );
     });
-    // createElement(
-    //   this.container,
-    //   'button',
-    //   ['btn', 'btn-primary'],
-    //   { type: 'button' },
-    //   'test'
-    // ).addEventListener('click', () => {
-    //   this.modal.show(
-    //     'Базовые интервалы (мин)',
-    //     ['Новое', 'Легко', 'Хорошо', 'Сложно'],
-    //     ['new', 'easy', 'medium', 'hard'],
-    //     this.user.settings.learning.levels[0].baseInterval,
-    //     [90, 90, 90, 90],
-    //     [1, 1, 1, 1]
-    //   );
-    // });
+
     createElement(
       createElement(this.container, 'div', ['control-block']),
       'button',
@@ -218,7 +203,6 @@ export default class SettingsPage {
       'Сохранить'
     );
 
-    this.modal = new Modal(this.container);
     this.spinner = createElement(null, 'div', ['spinner-container']);
     createElement(this.spinner, 'div', ['modal-backdrop', 'fade', 'show']);
     createElement(
