@@ -8,6 +8,7 @@ import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import Dictionary from 'components/pages/dictionary-page';
 import App from 'components/games-AudioCall/app/app';
 import AppPuzzle from 'components/games-englishPuzzle/app/app';
+import AppSavannah from 'components/games-savannah/app/app';
 
 const routes = [
   {
@@ -49,7 +50,7 @@ const routes = [
   {
     name: 'savannah-page',
     title: 'Саванна',
-    ClassConstructor: MainPage,
+    ClassConstructor: AppSavannah,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
