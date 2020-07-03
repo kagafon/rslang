@@ -24,7 +24,7 @@ export default class RusWords {
       <span class="material-icons md-cancel cancel icon">
       cancel
       </span>
-      <button class='words'></button>
+      <div class='words'></div>
       `;
       wordsBlock.append(wrapperWords);
     }
