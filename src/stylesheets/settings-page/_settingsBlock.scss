@@ -1,0 +1,38 @@
+.settings-block {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 10px;
+  background-color: transparentize(theme-color('light'), 0.5);
+  border-radius: 5px;
+  padding: 10px;
+  opacity: 1;
+  min-width: 280px;
+  align-self: flex-start;
+
+  .h3 {
+    margin-left: 20px;
+    color: darken($settings-page-color, 20);
+  }
+
+  &.fade-out {
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
+  }
+
+  &-body,
+  &-header {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    .btn {
+      margin: 5px;
+    }
+  }
+
+  & .settings-block {
+    min-width: 240px;
+    width: calc(100% - 20px);
+  }
+}

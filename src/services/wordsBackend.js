@@ -33,6 +33,7 @@ const userWordFields = [
   },
   { name: 'correctAnswers', default: '0' },
   { name: 'totalAnswers', default: '0' },
+  { name: 'correctAnswerSeries', default: '0' },
 ];
 
 const getUserInfo = () => {
@@ -93,9 +94,15 @@ const preloadData = async (words, preloadFields) => {
   return words;
 };
 export default class Words {
-  static getWordsForRound(group, page, wordsPerPage, preload) {
+  static getWordsForRound(
+    group,
+    page,
+    wordsPerPage,
+    preload,
+    maxWordsInSentence = 1000
+  ) {
     return (group >= 0
-      ? getWords(group, page, wordsPerPage)
+      ? getWords(group, page, wordsPerPage, maxWordsInSentence)
       : Words.getTodayUserWords()
     ).then(async (words) => {
       const wordsToReturn = words
