@@ -1,0 +1,21 @@
+@import 'variables';
+
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: calc(100vh - #{$main-menu-height});
+  overflow-y: auto;
+
+  .controls-area{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @import 'spinner';
+  @import 'modal';
+  @import 'controlBlock';
+  @import 'controlArea';
+}

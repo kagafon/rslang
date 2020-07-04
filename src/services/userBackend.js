@@ -8,17 +8,17 @@ import {
   getStatistics,
 } from './dataBackend';
 
-import { APPLICATION } from './config';
+import { APPLICATION, LEVELS_COUNT } from './config';
 
 let user = null;
 
 const getToday = () => {
-  return new Date().getTime() / (3600 * 1000 * 24);
+  return Math.floor(new Date().getTime() / (3600 * 1000 * 24));
 };
 
 const DEFAULT_USER_SETTINGS = {
-  newWordsPerDay: 10,
-  maxWordsPerDay: 50,
+  username: '',
+  creationDate: new Date().getTime(),
   prompts: {
     translation: true,
     example: true,
@@ -31,6 +31,20 @@ const DEFAULT_USER_SETTINGS = {
     removeWord: true,
     gradeWord: true,
   },
+  games: {
+    puzzle: { levelPages: new Array(LEVELS_COUNT).fill(0) },
+    sprint: { maxScore: 0 },
+  },
+  learning: {
+    maxCardsPerDay: 50,
+    levels: Array(LEVELS_COUNT)
+      .fill(null)
+      .map(() => ({
+        newWordsPerDay: 10,
+        currentWordNumber: 0,
+        baseInterval: { new: 60, easy: 60, medium: 60, hard: 60 },
+      })),
+  },
 };
 
 const DEFAULT_STATISTICS = {
@@ -40,6 +54,16 @@ const DEFAULT_STATISTICS = {
 export default class User {
   static getCurrentUser() {
     return user;
+  }
+
+  constructor(id, email, settings) {
+    this.id = id;
+    this.email = email;
+    this.settings = JSON.parse(JSON.stringify(settings));
+  }
+
+  getBaseInterval(group, difficulty) {
+    return this.settings.levels[group].baseInterval[difficulty];
   }
 
   static logout() {
@@ -82,38 +106,27 @@ export default class User {
     });
   }
 
-  static createUserAndLogin(
-    email,
-    password,
-    settings = {
-      newWordsPerDay: 10,
-      maxWordsPerDay: 50,
-      prompts: {
-        translation: true,
-        meaning: true,
-        transcription: true,
-        image: true,
-      },
-      buttons: {
-        showAnswer: true,
-        removeWord: true,
-        gradeWord: true,
-      },
-    }
-  ) {
+  static createUserAndLogin(email, password, settings = {}) {
+    localStorage.setItem(`${APPLICATION}.auth`, '');
     return addUser(email, password)
       .then(() => authUser(email, password))
       .then(async (userInfo) => {
-        const settingsToUse = { ...DEFAULT_USER_SETTINGS, ...settings };
+        localStorage.setItem(`${APPLICATION}.auth`, JSON.stringify(userInfo));
+        const settingsToUse = {
+          ...DEFAULT_USER_SETTINGS,
+          ...settings,
+        };
+
         await Promise.allSettled([
           setSettings(userInfo.userId, userInfo.token, {
             wordsPerDay: 1,
-            optional: {
-              user: JSON.stringify(settingsToUse),
-            },
+            optional: Object.keys(settingsToUse).reduce(
+              (acc, x) => ({ ...acc, [x]: JSON.stringify(settingsToUse[x]) }),
+              {}
+            ),
           }),
         ]);
-        user = { id: userInfo.userId, email, settingsToUse };
+        user = new User(userInfo.userId, email, settingsToUse);
         return user;
       })
       .catch((err) => {
@@ -146,32 +159,33 @@ export default class User {
     if (!userInfo) throw Error('Пользователь не найден');
     userInfo = JSON.parse(userInfo);
     let stats = {};
+    const today = getToday();
+
     try {
       stats = await getStatistics(userInfo.userId, userInfo.token);
     } catch (err) {
       if (err.code === 404) {
         stats = {
-          learnedWords: 0,
-          optional: {},
+          ...DEFAULT_STATISTICS,
         };
       } else throw err;
     }
     if (!stats.optional.main) {
-      stats.optional.main = { d: [] };
+      stats.optional.main = [{ d: today }];
     } else {
       stats.optional.main = JSON.parse(stats.optional.main);
     }
     if (!user.stats) user.stats = {};
     Object.assign(user.stats, newStats);
 
-    const today = getToday();
-    const foundDate = stats.optional.main.d.find((x) => x.d === today);
+    const foundDate = stats.optional.main.find((x) => x.d === today);
 
-    if (!foundDate) stats.optional.main.d.push({ d: today, ...newStats });
+    if (!foundDate) stats.optional.main.push({ d: today, ...newStats });
     else Object.assign(foundDate, newStats);
 
     stats.optional.main = JSON.stringify(stats.optional.main);
     delete stats.id;
+    delete stats.date;
     return setStatistics(userInfo.userId, userInfo.token, stats);
   }
 
@@ -187,9 +201,13 @@ export default class User {
       return User.getGameStatistics('main', defaultValue);
     }
 
-    return User.getGameStatistics('main', defaultValue).then((mainStat) =>
-      mainStat ? mainStat.find((x) => x.d === today) : {}
-    );
+    return User.getGameStatistics('main', defaultValue).then((mainStat) => {
+      if (mainStat) {
+        const foundItem = mainStat.find((x) => x.d === today);
+        if (foundItem) return foundItem;
+      }
+      return defaultValue[0];
+    });
   }
 
   static async saveGameStatistics(game, d, c, t) {
@@ -238,23 +256,50 @@ export default class User {
       });
   }
 
+  static async saveSettings(settings) {
+    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
+    if (!userInfo || !user) throw Error('Пользователь не найден');
+    userInfo = JSON.parse(userInfo);
+
+    const settingsToSave = {
+      wordsPerDay: 1,
+      optional: { ...DEFAULT_USER_SETTINGS, ...user.settings, ...settings },
+    };
+    Object.keys(settingsToSave.optional).forEach((x) => {
+      settingsToSave.optional[x] = JSON.stringify(settingsToSave.optional[x]);
+    });
+    await setSettings(userInfo.userId, userInfo.token, settingsToSave);
+    user.settings = settings;
+  }
+
+  static async loadSettings() {
+    let userInfo = localStorage.getItem(`${APPLICATION}.auth`);
+    if (!userInfo || !user) throw Error('Пользователь не найден');
+    userInfo = JSON.parse(userInfo);
+
+    const settings = await getSettings(userInfo.userId, userInfo.token);
+    Object.keys(settings.optional).forEach((x) => {
+      settings.optional[x] = JSON.parse(settings.optional[x]);
+    });
+    user.settings = settings;
+  }
+
   static async fillUser(userInfo) {
     try {
       const settings = await getSettings(userInfo.userId, userInfo.token);
-      user = {
-        id: userInfo.userId,
-        email: userInfo.email,
-        settings: settings.optional.user
-          ? JSON.parse(settings.optional.user)
-          : {},
-      };
+      user = new User(
+        userInfo.userId,
+        userInfo.email,
+        settings.optional
+          ? Object.keys(settings.optional).reduce(
+              (acc, x) => ({ ...acc, [x]: JSON.parse(settings.optional[x]) }),
+              {}
+            )
+          : DEFAULT_USER_SETTINGS
+      );
     } catch (err) {
       if (err.code === 404) {
-        user = {
-          id: userInfo.userId,
-          email: userInfo.email,
-          settings: { ...DEFAULT_USER_SETTINGS },
-        };
+        user = new User(userInfo.userId, userInfo.email, DEFAULT_USER_SETTINGS);
       } else {
         localStorage.setItem(`${APPLICATION}.auth`, '');
         user = null;
