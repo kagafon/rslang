@@ -1,0 +1,59 @@
+.start-page {
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s;
+  color: $speakit-page-base-color;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: transparentize(theme-color('light'), 0.5);
+  border-radius: 5px;
+  padding: 10px;
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 60px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 13px;
+  }
+
+  &__description {
+    max-width: 565px;
+    margin: 0 auto 30px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 300;
+    color: theme-color('white');
+    opacity: 0.8;
+  }
+}
+.level-select {
+  max-width: 500px;
+
+  &__title {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 60px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 5px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+
+    & .btn {
+      width: 15%;
+    }
+  }
+}

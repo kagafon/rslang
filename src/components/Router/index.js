@@ -11,6 +11,7 @@ import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';
 import AppSavannah from 'components/games-savannah/app/app';
+import SpeakIt from 'components/pages/mini-games/speakit';
 
 const routes = [
   {
@@ -32,7 +33,7 @@ const routes = [
   {
     name: 'speakit-page',
     title: 'Speak It',
-    ClassConstructor: MainPage,
+    ClassConstructor: SpeakIt,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',

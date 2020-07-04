@@ -1,0 +1,12 @@
+.game-speakit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - #{$main-menu-height});
+  overflow-y: hidden;
+
+
+  @import 'variables';
+  @import 'startPage';
+}
