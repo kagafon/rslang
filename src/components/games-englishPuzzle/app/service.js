@@ -187,7 +187,16 @@ export default class Service {
         arrWord[i].classList.add('mistake');
       }
     }
-    this.cardDisabledDraggable();
+
+    const mistake = document.querySelectorAll('.mistake');
+    if (wordsCount < 9) {
+      this.cardDisabledDraggable();
+    } else if (wordsCount === 9 && mistake.length === 0) {
+      document.querySelector('.btn-i-dont-know').style.display = 'none';
+      document.querySelector('.btn-check').style.display = 'none';
+      document.querySelector('.btn-continue').style.display = 'none';
+      document.querySelector('.btn-results').style.display = 'block';
+    }
   }
 
   static bidCounter() {
@@ -208,7 +217,7 @@ export default class Service {
     } else if (sourceLine.length === 0 && +count === 9) {
       document.querySelector('.btn-i-dont-know').style.display = 'none';
       document.querySelector('.btn-check').style.display = 'block';
-      document.querySelector('.btn-results').style.display = 'block';
+      document.querySelector('.btn-results').style.display = 'none';
     }
   }
 
@@ -229,6 +238,11 @@ export default class Service {
       btnContinue.style.display = 'none';
       Hints.btnTranslate();
       Hints.btnAudio();
+    });
+
+    const btnResults = document.querySelector('.btn-results');
+    btnResults.addEventListener('click', () => {
+      Button.btnResults();
     });
   }
 

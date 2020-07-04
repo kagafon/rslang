@@ -38,7 +38,7 @@ export default class StartPage {
         const words = await Service.wordRequest(+item.dataset.num);
         store.setState({ requestWords: words });
         store.setState({ groupe: item.dataset.num });
-        store.setState({ round: 0 });
+        store.setState({ solution: 'yes' });
         store.setState({ correctChoice: 0 });
         store.setState({ appendCard: '' });
         store.setState({ autoPlay: 'yes' });

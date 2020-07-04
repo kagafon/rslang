@@ -3,7 +3,8 @@
 import Service from 'components/games-englishPuzzle/app/service';
 import store from 'components/games-englishPuzzle/app/storage';
 import SourceData from 'components/games-englishPuzzle/app/components/main/source-data/source-data';
-import Hints from '../header/hints/hints';
+import statisticStore from 'components/games-englishPuzzle/app/statistic-storage';
+import Statistic from 'components/games-englishPuzzle/app/components/main/statistic/statistic';
 
 export default class Button {
   static render() {
@@ -12,15 +13,15 @@ export default class Button {
     buttonBlock.classList.add('button-block');
 
     buttonBlock.innerHTML = `
-     <button class="btn btn-primary btn-i-dont-know">I dont now</button>
-     <button class ="btn btn-primary btn-check">Check</button>
-     <button class ="btn btn-primary btn-continue">Continue</button>
-     <button class ="btn btn-primary btn-results">Results</button>
+     <button class="btn btn-primary btn-i-dont-know">Я не знаю</button>
+     <button class ="btn btn-primary btn-check">проверить</button>
+     <button class ="btn btn-primary btn-continue">дальше</button>
+     <button class ="btn btn-primary btn-results">статистика</button>
     `;
     wrapper.append(buttonBlock);
   }
 
-  static async btnSolution() {
+  static btnSolution() {
     const stage = store.getState();
     const wordsArray = stage.requestWords;
     const arrWord = [];
@@ -37,6 +38,7 @@ export default class Button {
     });
 
     const { wordsCount } = stage;
+    store.setState({ solution: 'no' });
     const resultLine = document.querySelectorAll('.results-line');
     const sourceLine = document.querySelector('.source-line');
     const arrWordResult = document.querySelectorAll('.result');
@@ -74,7 +76,8 @@ export default class Button {
     const word = document.querySelectorAll('.result');
     const wordMistake = document.querySelectorAll('.result-mistake');
     const arrWord = [];
-    if (word.length === 0 && +count !== 9) {
+
+    if (word.length === 0 && +count < 10) {
       wordMistake.forEach((item) => {
         arrWord.push(item);
       });
@@ -90,6 +93,14 @@ export default class Button {
     const stage = store.getState();
     const count = stage.wordsCount;
     store.setState({ wordsCount: stage.wordsCount + 1 });
+
+    if (stage.solution === 'yes') {
+      statisticStore.setLearnedState([stage.requestWords[count]]);
+      store.setState({ correctChoice: stage.correctChoice + 1 });
+    } else {
+      statisticStore.setUnexploredState([stage.requestWords[count]]);
+    }
+
     const resultLine = document.querySelectorAll('.results-line');
     const sourceLine = document.querySelector('.source-line');
     const wordMistake = document.querySelectorAll('.result-mistake');
@@ -99,21 +110,8 @@ export default class Button {
       item.classList.remove('result-mistake');
     });
     if (+count === 9) {
-      // const level = localStorage.getItem('level');
-      // const select = document.querySelector('.dropdown-select-page');
       // const sourceBlock = document.querySelectorAll('.source-line');
       // const resultsBlock = document.querySelectorAll('.results-line');
-      // localStorage.setItem('page', +select.value);
-      // localStorage.setItem('wordsCount', '0');
-      // sourceBlock.forEach((item) => {
-      //   item.innerHTML = '';
-      // });
-      // resultsBlock.forEach((item) => {
-      //   item.innerHTML = '';
-      // });
-      // controls.showSelectedLevel();
-      // const page = localStorage.getItem('page');
-      // sourceData.cardGeneration(level, page);
       // document.querySelector('.btn-results').style.display = 'none';
       // document.querySelector('.btn-i-dont-know').style.display = 'block';
     } else {
@@ -125,6 +123,10 @@ export default class Button {
       SourceData.cardGeneration();
       document.querySelector('.btn-i-dont-know').style.display = 'block';
     }
+  }
+
+  static btnResults() {
+    Statistic.init();
   }
 
   static disabledButtons() {

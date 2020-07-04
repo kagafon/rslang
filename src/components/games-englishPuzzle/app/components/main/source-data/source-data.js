@@ -14,6 +14,7 @@ export default class SourceData {
 
   static cardGeneration() {
     const stage = store.getState();
+    store.setState({ solution: 'yes' });
     const wordsArray = stage.requestWords;
     const arrWord = [];
 
