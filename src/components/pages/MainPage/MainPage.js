@@ -1,7 +1,10 @@
 import { createElement } from 'helpers/dom';
 import store from 'components/pages/MainPage/Store';
 import router from 'components/Router/';
+// import { User, Words } from 'services/backend';
 import { getUserWords } from 'components/pages/MainPage/dataForMain';
+import Toaster from 'components/Toaster';
+import { createLoader } from 'helpers/helpersForMainPage';
 class MainPage {
   create() {
     this.container = createElement(
@@ -113,25 +116,43 @@ class MainPage {
 
   addHandlers() {
     this.wordsDiv.addEventListener('click', (event) => {
-      if (event.target.dataset.words) {
-        store.setState({ learnedWords: `${event.target.dataset.words}` });
-        router.draw('main-page-game');
+      switch (event.target.dataset.words) {
+        case 'new':
+          console.error(this.newWords);
+          store.setState({ words: this.newWords });
+          break;
+        case 'old':
+          console.error(this.learnedWords);
+          store.setState({ words: this.learnedWords });
+          break;
+        default:
+          console.error(this.allWords);
+          store.setState({ words: this.allWords });
+          break;
       }
+      router.draw('main-page-game');
     });
   }
 
   async updateProgress() {
+    this.loader = createLoader();
     try {
       const data = await getUserWords();
-      const words = data.wordsToday;
-      const learnWords = words.filter((el) => el.difficulty !== 'new');
-      const pr = Math.floor((learnWords.length / words.length) * 100);
+      this.newWords = data.words[0];
+      this.learnedWords = data.words[1];
+      this.allWords = data.words[2];
+      store.setState({ userSettings: data.settings });
+      const pr = Math.floor(
+        (this.learnedWords.length / this.allWords.length) * 100
+      );
       this.progressText.textContent = `Выучено слов: ${pr}%`;
       this.progressBar.style.width = `${pr}%`;
       this.progressBar.textContent = `${pr}%`;
       this.progressBar.ariaValuenow = `${pr}`;
-    } catch {
-      console.error('ой');
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.loader.parentNode.removeChild(this.loader);
     }
   }
 

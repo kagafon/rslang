@@ -16,14 +16,9 @@ const getToday = () => {
   return Math.floor(new Date().getTime() / (3600 * 1000 * 24));
 };
 
-const LEVELS_COUNT = 6;
-
 const DEFAULT_USER_SETTINGS = {
   username: '',
-<<<<<<< HEAD
-=======
   creationDate: new Date().getTime(),
->>>>>>> develop
   prompts: {
     translation: true,
     example: true,
@@ -38,26 +33,16 @@ const DEFAULT_USER_SETTINGS = {
   },
   games: {
     puzzle: { levelPages: new Array(LEVELS_COUNT).fill(0) },
-<<<<<<< HEAD
-  },
-  learning: {
-    maxCardsPerDay: 10,
-=======
     sprint: { maxScore: 0 },
   },
   learning: {
     maxCardsPerDay: 50,
->>>>>>> develop
     levels: Array(LEVELS_COUNT)
       .fill(null)
       .map(() => ({
         newWordsPerDay: 10,
-<<<<<<< HEAD
-        baseInterval: { new: 1800, easy: 1800, medium: 1800, hard: 1800 },
-=======
         currentWordNumber: 0,
         baseInterval: { new: 60, easy: 60, medium: 60, hard: 60 },
->>>>>>> develop
       })),
   },
 };

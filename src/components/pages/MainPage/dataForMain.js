@@ -41,18 +41,29 @@ export async function getUserWords(preloads) {
     preloads.push('audio');
     if (example) preloads.push('audioExample');
     if (meaning) preloads.push('audioMeaning');
-    let wordsToday = await Words.getTodayUserWords(preloads);
-    if (wordsToday.length === 0) {
-      try {
-        await Words.addUserWordsFromGroup(0, 1, 10);
-        wordsToday = await Words.getTodayUserWords(preloads);
-      } catch (e) {
-        console.error(e);
-      }
+    const data = await Promise.all([
+      Words.getNewUserWords(true, preloads),
+      Words.getLearnedUserWords(true, preloads),
+    ]);
+    const learnedWords = data[0];
+    const newWords = data[1];
+    let allWords = learnedWords.concat(newWords);
+    // if(allWords.length === 0) throw new Error();
+    if (allWords.length === 0) {
+      await Words.addUserWordsFromGroup(0, 2, 10);
+
+      // await Words.addUserWordsFromGroup(1, 1, 10);
+      // await Words.addUserWordsFromGroup(2, 1, 10);
+      // await Words.addUserWordsFromGroup(3, 1, 10);
+      // await Words.addUserWordsFromGroup(4, 1, 10);
+      // await Words.addUserWordsFromGroup(5, 1, 10);
+
+      allWords = await Words.getTodayUserWords(preloads);
+      console.error(allWords);
     }
-    // if (wordsToday.length === 0) throw new Error();
-    return { wordsToday, settings };
+    let words = [newWords, learnedWords, allWords];
+    return { words, settings };
   } catch (e) {
-    throw new Error();
+    throw new Error(e);
   }
 }

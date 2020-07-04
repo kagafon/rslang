@@ -92,8 +92,8 @@ function showStat(head, stat) {
 async function checkWordResult(word, result, showAnswer) {
   const stat = (await User.getMainStatistics()) || {};
   console.error(stat);
-  stat.passedCards = stat.passedCards ? stat.passedCards : 0;
-  stat.correctAnswers = stat.correctAnswers ? stat.correctAnswers : 0;
+  stat.passedCards = stat.passedCards || 0;
+  stat.correctAnswers = stat.correctAnswers || 0;
   stat.learnedWords = stat.learnedWords ? stat.learnedWords : 0;
   stat.answerSeries = stat.answerSeries ? stat.answerSeries : 0;
   stat.answerCount = stat.answerCount ? stat.answerCount : 0;
@@ -120,17 +120,18 @@ async function checkWordResult(word, result, showAnswer) {
     word.correctAnswers += 1;
     word.totalAnswers += 1;
     word.correctAnswerSeries += 1;
-    if (word.difficulty === 'new') {
+    if (!word.lastRepeat) {
       stat.learnedWords += 1;
     }
   }
-  if (word.correctAnswers === word.totalAnswers) {
-    word.difficulty = 'easy';
-  } else if (word.correctAnswers === 0) {
-    word.difficulty = 'new';
-  } else {
-    word.difficulty = 'medium';
-  }
+  // if (word.correctAnswers === word.totalAnswers) {
+  //   word.difficulty = 'easy';
+  // } else if (word.correctAnswers === 0) {
+  //   word.difficulty = 'new';
+  // } else {
+  //   word.difficulty = 'medium';
+  // }
+  // word.nextRepeat = word.correctAnswerSeries * baseInterval
   User.saveMainStatistics(stat);
   return { word, stat };
 }

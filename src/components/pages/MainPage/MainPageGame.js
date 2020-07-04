@@ -45,33 +45,23 @@ class MainPageGame {
       {},
       ''
     );
-    // console.error(store.getState().learnedWords);
     this.loader = createLoader();
     try {
-      const data = await getUserWords();
-      this.words = data.wordsToday;
-      this.settings = data.settings;
+      this.words = store.getState().words;
+      this.settings = store.getState().settings;
+      if (this.words.length === 0) {
+        throw new Error();
+      }
     } catch (e) {
-      Toaster.createToast(`На сегодня нет слов`, 'danger');
+      Toaster.createToast(
+        `в этой категории на сегодня пока нет слов`,
+        'danger'
+      );
       throw new Error();
     } finally {
       this.loader.parentNode.removeChild(this.loader);
     }
-    switch (store.getState().learnedWords) {
-      case 'new':
-        this.words = this.words.filter((el) => el.difficulty === 'new');
-        break;
-      case 'old':
-        this.words = this.words.filter((el) => el.difficulty !== 'new');
-        break;
-      default:
-        this.words;
-    }
-    if (this.words.length === 0) {
-      Toaster.createToast(`в этой категории пока нет слов`, 'danger');
-      throw new Error();
-    }
-    // console.error(this.words);
+    console.error(this.words);
   }
 
   createSwiper() {
@@ -152,7 +142,7 @@ class MainPageGame {
       wordTranslate,
       id,
     } = this.wordInput;
-    this.wordInput.lastRepeat = new Date().getTime();
+    this.wordInput.lastRepeat = new Date();
     this.audio = new Audio();
     this.inputBackground = document.querySelector(
       '.swiper-slide-active span.input-background'
