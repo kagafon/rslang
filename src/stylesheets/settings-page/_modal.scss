@@ -1,0 +1,19 @@
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.modal-footer {
+  .btn {
+    min-width: 80px;
+  }
+}
+
+.modal-header {
+  .badge {
+    vertical-align: top;
+    font-size: 0.4em;
+    margin-left: 5px;
+  }
+}
