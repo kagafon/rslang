@@ -1,7 +1,7 @@
 import Statisctic from 'components/phrase-wizard-page/app/statisctic';
 import Service from 'components/phrase-wizard-page/app/service';
 import { createElement } from 'helpers/dom';
-import User from 'services/backend';
+import { User } from 'services/backend';
 
 export default class Results {
   static init() {
@@ -14,8 +14,9 @@ export default class Results {
     createElement(resultsBlock, 'span', ['result-ph-wiz'], {}, `ошибок: ${Statisctic.mistake} `);
     createElement(resultsBlock, 'b', ['result-ph-wiz'], {}, `Точность ${this.accuracy}%`);
     Service.spinnerOff();
-    console.log(new Date().getTime(), Statisctic.correct, this.sumAnswers);
-    User.saveGameStatistics('phrase-wizard', new Date().getTime(), Statisctic.correct, this.sumAnswers);
+    const date = new Date();
+    console.log(date.getTime(), Statisctic.correct, Results.sumAnswers);
+    User.saveGameStatistics('phrase-wizard', date.getTime(), Statisctic.correct, Results.sumAnswers);
     
   }
 
