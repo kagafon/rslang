@@ -17,9 +17,10 @@ export default class GameWords {
   static render(word) {
     const wrapper = document.querySelector('.wrapper');
     const wordsBlock = createElement(wrapper, 'div', ['wordsblock']);
-    let phraseRound = word.textExample.replace(/[/]/, "");
 
+    let phraseRound = word.textExample.replace(/[/]/, "");
     phraseRound = phraseRound.replace(/<b>/g, "");
+
     phraseRound.substring(phraseRound.length - 1, phraseRound.length) == "." ? phraseRound = phraseRound.substring(0, phraseRound.length - 1) : true;
     const wordsArray = phraseRound.split(' ');
 
@@ -37,21 +38,74 @@ export default class GameWords {
 
     });
     wrapper.append(wordsBlock);
-    this.game(wordsArray);
-    console.log(wordsArray);
+    this.gameWords = wordsArray;
+    this.game();
+    console.log(this.gameWords);
   }
 
-  static game(gameWords) {
-    let numberWords = 0;
-    const allWords = gameWords.length;
-    const wordsBlock = document.querySelector('.wordsblock');
-    const wordsTranslate = document.querySelector('.translate');
+  static game() {
+    this.numberWords = 0;
+    this.allWords = this.gameWords.length;
+    this.wordsBlock = document.querySelector('.wordsblock');
+    this.wordsTranslate = document.querySelector('.translate');
+    this.keyListener;
     
 
-    wordCheck();
-    function wordCheck() {
-      const keyListener = function(event) {
-      //const keyListener = function(event) {
+    //wordCheck();
+    //function wordCheck() {
+  
+ 
+  //keyListener(event) {
+      this.keyListener = function (event) {
+        if (GameWords.allWords > GameWords.numberWords && event.code == `Key${GameWords.gameWords[GameWords.numberWords].charAt(0).toUpperCase()}`) {
+          GameWords.wordsBlock.children[GameWords.numberWords].innerText = '';
+          GameWords.wordsBlock.children[GameWords.numberWords].innerText = GameWords.gameWords[GameWords.numberWords];
+          GameWords.wordsBlock.children[GameWords.numberWords].classList.add('correct');
+          ++GameWords.numberWords;
+          Statisctic.count(0, 1);
+          GameWords.wordsTranslate.classList.remove('show-oneself');
+          if(GameWords.numberWords === GameWords.allWords) {
+            GameWords.wordsTranslate = document.querySelector('.translate');
+            GameWords.wordsTranslate.classList.add('show-oneself');
+            document.removeEventListener('keydown', GameWords.keyListener);
+          }
+        }else if(GameWords.allWords > GameWords.numberWords){
+          GameWords.wordsBlock.children[GameWords.numberWords].innerText = '';
+          GameWords.wordsBlock.children[GameWords.numberWords].innerText = GameWords.gameWords[GameWords.numberWords];
+          GameWords.wordsBlock.children[GameWords.numberWords].classList.add('incorrect'); 
+          ++GameWords.numberWords;
+          Statisctic.count(1, 0);
+          GameWords.wordsTranslate.classList.remove('show-oneself');
+          if(GameWords.numberWords === GameWords.allWords) {
+            GameWords.wordsTranslate = document.querySelector('.translate');
+            GameWords.wordsTranslate.classList.add('show-oneself');
+            document.removeEventListener('keydown', GameWords.keyListener);
+          }
+        }
+      }  
+
+
+
+     // }; 
+    document.addEventListener('keydown', GameWords.keyListener);
+
+     // this.keyListenerOff = function (){
+     //   document.removeEventListener('keydown', keyListener);
+     //   console.log('listener off')
+     // };
+    //}
+
+  }
+
+  //static keyListener(event){
+
+  //}
+
+  /*static nextRound() {
+    document.removeEventListener('keydown', this.keyListener);
+  } 
+*/
+  //const keyListener = function(event) {
        /* switch (true) {
           case allWords > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`:
             wordsBlock.children[numberWords].innerText = '';
@@ -73,34 +127,4 @@ export default class GameWords {
             wordsTranslate.classList.add('show-oneself');
             break;
         } */
-        if (allWords > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`) {
-          wordsBlock.children[numberWords].innerText = '';
-          wordsBlock.children[numberWords].innerText = gameWords[numberWords];
-          wordsBlock.children[numberWords].classList.add('correct');
-          ++numberWords;
-          Statisctic.count(0, 1);
-          wordsTranslate.classList.remove('show-oneself');
-          if(numberWords === allWords) {
-            const wordsTranslate = document.querySelector('.translate');
-            wordsTranslate.classList.add('show-oneself');
-          }
-        }else if(allWords > numberWords){
-          wordsBlock.children[numberWords].innerText = '';
-          wordsBlock.children[numberWords].innerText = gameWords[numberWords];
-          wordsBlock.children[numberWords].classList.add('incorrect'); 
-          ++numberWords;
-          Statisctic.count(1, 0);
-          wordsTranslate.classList.remove('show-oneself');
-          if(numberWords === allWords) {
-            const wordsTranslate = document.querySelector('.translate');
-            wordsTranslate.classList.add('show-oneself');
-          }
-        }
-      }; 
-      document.addEventListener('keydown', keyListener); 
-      //div.removeEventListener('click', listener, false);
-    } 
-    
-  }
-
 }

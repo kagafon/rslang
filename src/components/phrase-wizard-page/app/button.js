@@ -15,6 +15,8 @@ export default class Button {
     nextButton.addEventListener('click', () => {
       ++GameWords.round;
       Service.spinnerOn();
+      document.removeEventListener('keydown', GameWords.keyListener);
+      //GameWords.keyListenerOff;
       document.querySelector('.top-block.ph-wiz').textContent = '';
       document.querySelector('.wordsblock').remove();
       document.querySelector('.answerBlock').textContent = '';

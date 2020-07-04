@@ -7,6 +7,7 @@ export default class Results {
   static init() {
     this.sumAnswers = Statisctic.mistake + Statisctic.correct;
     this.accuracy = Math.round(Statisctic.correct / (this.sumAnswers / 100));
+    Number.isNaN(this.accuracy) ? this.accuracy = '-' : true;
     
     const resultsBlock = createElement(document.querySelector('.answerBlock'), 'div', ['result-ph-wiz'], );
     createElement(resultsBlock, 'span', ['result-ph-wiz'], {}, `правильных: ${Statisctic.correct}, `);

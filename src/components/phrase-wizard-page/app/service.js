@@ -13,6 +13,10 @@ export default class Service {
       ); 
     await Promise.all(words);
     this.words = words;
+    this.startGame();
+  }
+
+  static startGame() {
     GameWords.round = 0;
     GameWords.init();
   }

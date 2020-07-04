@@ -67,7 +67,7 @@ export default class PhraseWizard {
       Service.wordsRequest(levelRound);
     }
     gameBox.append(intro);
-    Statisctic.int();
+    Statisctic.init();
     return gameBox;
   } 
 }
