@@ -129,7 +129,7 @@ export default class Words {
                 acc,
                 x.default !== null && x.default !== undefined
                   ? {
-                      [x.name]: x.default.toString(),
+                      [x.name]: (x.set ? x.set(x.default) : x).toString(),
                     }
                   : {}
               ),
