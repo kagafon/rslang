@@ -13,19 +13,47 @@ export default class authorizationPage {
       { style: 'width:100%' },
       ''
     );
-    const form = createElement(
+
+    const formContainer = createElement(
       parent,
-      'form',
-      ['registration'],
-      { action: '' },
+      'div',
+      ['form-container'],
+      {},
       ''
     );
-    const title = createElement(
-      form,
-      'h1',
-      ['title'],
-      { title: 'Форма регистрации на сайте' },
-      'Регистрация'
+
+    const formContainerHeader = createElement(
+      formContainer,
+      'div',
+      ['form-container-header'],
+      {},
+      ''
+    );
+
+    const LoginBookmark = createElement(
+      formContainerHeader,
+      'div',
+      ['login-bookmark', 'active'],
+      {},
+      ''
+    );
+    createElement(LoginBookmark, 'h3', ['login-bookmark-title'], {}, 'Вход');
+
+    const SigninBookmark = createElement(
+      formContainerHeader,
+      'div',
+      ['signin-bookmark'],
+      {},
+      ''
+    );
+    createElement(SigninBookmark, 'h3', ['signin-bookmark-title'], {}, 'Регистрация')
+
+    const form = createElement(
+      formContainer,
+      'form',
+      ['registration'],
+      {},
+      ''
     );
     const divEmail = createElement(form, 'div', ['group'], { style: '' }, '');
     const labelEmail = createElement(
@@ -33,7 +61,7 @@ export default class authorizationPage {
       'label',
       ['label'],
       { for: 'email' },
-      'Email'
+      'Адрес эл. почты'
     );
     const inputEmail = createElement(
       divEmail,
@@ -60,7 +88,7 @@ export default class authorizationPage {
       'label',
       ['label'],
       { for: 'username' },
-      'Username'
+      'Имя пользователя'
     );
     const inputUsername = createElement(
       divUsername,
@@ -68,7 +96,7 @@ export default class authorizationPage {
       ['username'],
       {
         type: 'text',
-        placeholder: 'Username',
+        placeholder: 'Имя Фамилия',
         autocomplete: 'off',
         autofocus: 'false',
         required: 'true',
@@ -87,7 +115,7 @@ export default class authorizationPage {
       'label',
       ['label'],
       { for: 'psw' },
-      'Password'
+      'Пароль'
     );
     const inputPassword = createElement(
       divPassword,
@@ -100,7 +128,7 @@ export default class authorizationPage {
         autofocus: 'false',
         id: 'psw',
         title:
-          'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
+          'Пароль должен содержать не менее одной цифры и одной заглавной и прописной буквы, а также спец. символ. Пароль должен быть не короче восьми символов.',
         required: 'true',
       },
       ''
@@ -117,7 +145,7 @@ export default class authorizationPage {
       'label',
       ['label'],
       { for: 'psw' },
-      'Confirm Password'
+      'Повторите пароль'
     );
     const inputConfirmPassword = createElement(
       divConfirmPassword,
@@ -130,7 +158,7 @@ export default class authorizationPage {
         autofocus: 'false',
         id: 'confirmPsw',
         title:
-          'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
+          'Пароль должен содержать не менее одной цифры и одной заглавной и прописной буквы, а также спец. символ. Пароль должен быть не короче восьми символов.',
         required: 'true',
       },
       ''
@@ -148,21 +176,14 @@ export default class authorizationPage {
       'button',
       ['button', 'btn-reg'],
       { style: '' },
-      'Sign Up'
+      'Зарегистрироваться'
     );
     const formLogin = createElement(
-      parent,
+      formContainer,
       'form',
-      ['login'],
+      ['login', 'active'],
       { action: '' },
       ''
-    );
-    const titleLogin = createElement(
-      formLogin,
-      'h1',
-      ['title'],
-      { title: 'Форма входа на сайт' },
-      'Вход'
     );
     const divLoginEmail = createElement(
       formLogin,
@@ -176,7 +197,7 @@ export default class authorizationPage {
       'label',
       ['label'],
       { for: 'email' },
-      'Email'
+      'Адрес эл. почты'
     );
     const inputLoginEmail = createElement(
       divLoginEmail,
@@ -203,7 +224,7 @@ export default class authorizationPage {
       'label',
       ['label'],
       { for: 'pswLogin' },
-      'Password'
+      'Пароль'
     );
     const inputLoginPassword = createElement(
       divLoginPassword,
@@ -216,7 +237,7 @@ export default class authorizationPage {
         autofocus: 'false',
         id: 'pswLogin',
         title:
-          'Must contain at least one number and one uppercase and lowercase letter, and one special character, and at least 8 or more characters',
+          'Пароль должен содержать не менее одной цифры и одной заглавной и прописной буквы, а также спец. символ. Пароль должен быть не короче восьми символов.',
         required: 'true',
       },
       ''
@@ -233,7 +254,7 @@ export default class authorizationPage {
       'button',
       ['button', 'btn-log'],
       { style: '' },
-      'Log In'
+      'Войти'
     );
     const errorLogin = createElement(
       divLoginPassword,
@@ -324,6 +345,7 @@ export default class authorizationPage {
       divToast
     );
     this.callAutoLogin(errorLogin, divToast);
+    this.addHandlers(formContainerHeader);
     return parent;
   }
 
@@ -351,6 +373,26 @@ export default class authorizationPage {
     }
   }
 
+  addHandlers(e) {
+    e.addEventListener('click', () => {
+      const targetBookmark = event.target.closest('div');
+      if(!targetBookmark.classList.contains('active')) {
+        if(targetBookmark.classList.contains('signin-bookmark')) {
+          document.querySelector("#main-container > div > div > form.login").classList.remove('active');
+          document.querySelector("#main-container > div > div > form.registration").classList.add('active');
+        } else {
+          document.querySelector("#main-container > div > div > form.registration").classList.remove('active');
+          document.querySelector("#main-container > div > div > form.login").classList.add('active');
+        }
+      }
+      e.childNodes.forEach(element => {
+        element.classList.remove('active');
+      });
+      targetBookmark.classList.add('active');
+      console.log(targetBookmark);
+    })
+  }
+
   toLogin(email, password, button, err, spinner, toast) {
     button.addEventListener('click', function send(event) {
       event.preventDefault();
@@ -364,7 +406,7 @@ export default class authorizationPage {
         } catch (error) {
           spinner.style.display = 'none';
           toast.style.display = 'block';
-          toast.innerHTML = `<p>Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз, или пройдите процедуру регистрации</p>
+          toast.innerHTML = `<p>Введён неправильный пароль или адрес электронной почты. Введите данные ещё раз или пройдите процедуру регистрации.</p>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true" class="span-close">&times;</span></button>`;
         }
