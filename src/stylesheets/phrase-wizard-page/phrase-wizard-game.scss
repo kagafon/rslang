@@ -97,6 +97,7 @@
 .start {
   width: 120px;
   margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .start:last-child {
@@ -329,6 +330,10 @@ div.result-ph-wiz {
 
 b.result-ph-wiz {
   margin: 1.2rem;
+}
+
+.result.btn {
+  margin-top: 2rem;
 }
 
 }

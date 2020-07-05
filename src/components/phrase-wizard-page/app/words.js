@@ -49,82 +49,36 @@ export default class GameWords {
     this.wordsBlock = document.querySelector('.wordsblock');
     this.wordsTranslate = document.querySelector('.translate');
     this.keyListener;
-    
-
-    //wordCheck();
-    //function wordCheck() {
   
- 
-  //keyListener(event) {
-      this.keyListener = function (event) {
-        if (GameWords.allWords > GameWords.numberWords && event.code == `Key${GameWords.gameWords[GameWords.numberWords].charAt(0).toUpperCase()}`) {
-          GameWords.wordsBlock.children[GameWords.numberWords].innerText = '';
-          GameWords.wordsBlock.children[GameWords.numberWords].innerText = GameWords.gameWords[GameWords.numberWords];
-          GameWords.wordsBlock.children[GameWords.numberWords].classList.add('correct');
-          ++GameWords.numberWords;
-          Statisctic.count(0, 1);
-          GameWords.wordsTranslate.classList.remove('show-oneself');
-          if(GameWords.numberWords === GameWords.allWords) {
-            GameWords.wordsTranslate = document.querySelector('.translate');
-            GameWords.wordsTranslate.classList.add('show-oneself');
-            document.removeEventListener('keydown', GameWords.keyListener);
-          }
-        }else if(GameWords.allWords > GameWords.numberWords){
-          GameWords.wordsBlock.children[GameWords.numberWords].innerText = '';
-          GameWords.wordsBlock.children[GameWords.numberWords].innerText = GameWords.gameWords[GameWords.numberWords];
-          GameWords.wordsBlock.children[GameWords.numberWords].classList.add('incorrect'); 
-          ++GameWords.numberWords;
-          Statisctic.count(1, 0);
-          GameWords.wordsTranslate.classList.remove('show-oneself');
-          if(GameWords.numberWords === GameWords.allWords) {
-            GameWords.wordsTranslate = document.querySelector('.translate');
-            GameWords.wordsTranslate.classList.add('show-oneself');
-            document.removeEventListener('keydown', GameWords.keyListener);
-          }
+    this.keyListener = function (event) {
+      if (GameWords.allWords > GameWords.numberWords && event.code == `Key${GameWords.gameWords[GameWords.numberWords].charAt(0).toUpperCase()}`) {
+        GameWords.wordsBlock.children[GameWords.numberWords].innerText = '';
+        GameWords.wordsBlock.children[GameWords.numberWords].innerText = GameWords.gameWords[GameWords.numberWords];
+        GameWords.wordsBlock.children[GameWords.numberWords].classList.add('correct');
+        ++GameWords.numberWords;
+        Statisctic.count(0, 1);
+        GameWords.wordsTranslate.classList.remove('show-oneself');
+        if(GameWords.numberWords === GameWords.allWords) {
+          GameWords.wordsTranslate = document.querySelector('.translate');
+          GameWords.wordsTranslate.classList.add('show-oneself');
+          document.removeEventListener('keydown', GameWords.keyListener);
         }
-      }  
-
-
-
-     // }; 
+      }else if(GameWords.allWords > GameWords.numberWords){
+        GameWords.wordsBlock.children[GameWords.numberWords].innerText = '';
+        GameWords.wordsBlock.children[GameWords.numberWords].innerText = GameWords.gameWords[GameWords.numberWords];
+        GameWords.wordsBlock.children[GameWords.numberWords].classList.add('incorrect'); 
+        ++GameWords.numberWords;
+        Statisctic.count(1, 0);
+        GameWords.wordsTranslate.classList.remove('show-oneself');
+        if(GameWords.numberWords === GameWords.allWords) {
+          GameWords.wordsTranslate = document.querySelector('.translate');
+          GameWords.wordsTranslate.classList.add('show-oneself');
+          document.removeEventListener('keydown', GameWords.keyListener);
+        }
+      }
+    } 
     document.addEventListener('keydown', GameWords.keyListener);
-
-     // this.keyListenerOff = function (){
-     //   document.removeEventListener('keydown', keyListener);
-     //   console.log('listener off')
-     // };
-    //}
 
   }
 
-  //static keyListener(event){
-
-  //}
-
-  /*static nextRound() {
-    document.removeEventListener('keydown', this.keyListener);
-  } 
-*/
-  //const keyListener = function(event) {
-       /* switch (true) {
-          case allWords > numberWords && event.code == `Key${gameWords[numberWords].charAt(0).toUpperCase()}`:
-            wordsBlock.children[numberWords].innerText = '';
-            wordsBlock.children[numberWords].innerText = gameWords[numberWords];
-            wordsBlock.children[numberWords].classList.add('correct');
-            ++numberWords;
-            Statisctic.count(0, 1);
-            wordsTranslate.classList.remove('show-oneself');
-            break;
-          case allWords > numberWords:
-            wordsBlock.children[numberWords].innerText = '';
-            wordsBlock.children[numberWords].innerText = gameWords[numberWords];
-            wordsBlock.children[numberWords].classList.add('incorrect'); 
-            ++numberWords;
-            Statisctic.count(1, 0);
-            wordsTranslate.classList.remove('show-oneself');
-            break;
-          case numberWords === allWords:
-            wordsTranslate.classList.add('show-oneself');
-            break;
-        } */
 }

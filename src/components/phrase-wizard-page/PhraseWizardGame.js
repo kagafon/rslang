@@ -64,10 +64,13 @@ export default class PhraseWizard {
       if (levelRound === 'изучаемые слова') {
         levelRound = -1;
       }
+      PhraseWizard.levelRound = levelRound;
       Service.wordsRequest(levelRound);
     }
     gameBox.append(intro);
     Statisctic.init();
+
     return gameBox;
-  } 
+  }
+  
 }
