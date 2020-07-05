@@ -227,7 +227,7 @@ export default class Words {
           unwindWord(preloadedWords[0])
         );
       }
-      return words[0];
+      return unwindWord(words[0]);
     });
   }
 }
