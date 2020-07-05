@@ -2,9 +2,38 @@ import { createElement } from 'helpers/dom';
 
 export default class Image {
   static render() {
-    createElement(document.querySelector('.game-block'), 'img', ['img-game'], {
-      src: 'assets/images/sprint-game/dog.png',
-    });
+    createElement(
+      document.querySelector('.game-block'),
+      'img',
+      ['img-game', 'img1'],
+      {
+        src: 'assets/images/sprint-game/1.jpg',
+      }
+    );
+    createElement(
+      document.querySelector('.game-block'),
+      'img',
+      ['img-game', 'img2'],
+      {
+        src: 'assets/images/sprint-game/2.jpg',
+      }
+    );
+    createElement(
+      document.querySelector('.game-block'),
+      'img',
+      ['img-game', 'img3'],
+      {
+        src: 'assets/images/sprint-game/3.jpg',
+      }
+    );
+    createElement(
+      document.querySelector('.game-block'),
+      'img',
+      ['img-game', 'img4'],
+      {
+        src: 'assets/images/sprint-game/4.jpg',
+      }
+    );
   }
 
   static init() {

@@ -265,25 +265,55 @@ p {
 }
 
 .img-game {
-  width: 100px;
-  height: 100px;
   margin: 50px auto 0;
+}
+
+.img2, 
+.img3,
+.img4 {
+  display: none;
+}
+
+.img2 {
+  width: 150px;
+  height: 100px;
+}
+
+.img2 {
+  width: 220px;
+  height: 100px;
+}
+
+.img3 {
+  width: 300px;
+  height: 100px;
+}
+
+.img4 {
+  max-width: 400px;
+  width: 100%;
+  height: 100px;
 }
 
 .engWord,
 .rusWord {
   font-family: 'roboto', sans-serif;
-  height: 50px;
+  height: 30px;
   font-size: 25px;
   font-weight: 500;
   display: block;   
+  margin-top: 10px;
 }
 
+
+.rusWord {
+  margin-top: 5px;
+}
 .checkOk {
 position: relative;
 margin: 0 auto;
 left: 0;
-top: 0px;
+top: 10px;
 display: block;
 opacity: 0;
 }
@@ -292,7 +322,7 @@ opacity: 0;
   position: relative;
   margin: 0 auto;
   left: 0;
-  top: -20px;
+  top: -10px;
   display: block;
   opacity: 0;
   }
@@ -304,10 +334,7 @@ opacity: 0;
 
 .button-false,
 .button-true {
-  position: relative;
-  left: 0;
-  top: -50px;
-  margin: 0 40px;
+  margin: -5px 40px;
   border-radius: 10px;
   width: 100px;
   height: 40px;
@@ -511,13 +538,13 @@ opacity: 0;
   .checkOk {
     position: relative;
     left: 0;
-    top: 60px;
+    top: 20px;
   }
       
   .checkFalse {
     position: relative;
     left: 0;
-    top: 40px;
+    top: 0px;
   }
 
   .game-timer {
@@ -535,4 +562,12 @@ opacity: 0;
   .final-answer-tr {
     margin-right: 6px;
   }
+
+  .img3,
+  .img4 {
+    max-width: 300px;
+    width: 100%;
+    height: 100px;
+  }
+  
 }

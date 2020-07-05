@@ -135,10 +135,13 @@ export default class Buttons {
     document.querySelector('.checkOk').style.opacity = '0';
     document.querySelector('.checkFalse').style.opacity = '1';
     document.querySelector('.game-block').style.borderColor = 'red';
+    document.querySelector('.img1').style.display = 'block';
+    document.querySelector('.img2').style.display = 'none';
+    document.querySelector('.img3').style.display = 'none';
+    document.querySelector('.img4').style.display = 'none';
+
     const dotsBlock = document.querySelector('.dotsBlock');
     statisticStore.setUnexploredState([state.word]);
-    console.log(store.getState().word);
-    console.log(statisticStore.getState().learned);
     const checkOk = document.querySelector('.checkOk');
     const dot = document.querySelectorAll('.dots');
     if (checkOk.style.opacity === '0') {
@@ -163,6 +166,10 @@ export default class Buttons {
     const dot = document.querySelectorAll('.dots');
     const audio = document.querySelector('.audio1');
     const pointText = document.querySelector('.points-text');
+    const img1 = document.querySelector('.img1');
+    const img2 = document.querySelector('.img2');
+    const img3 = document.querySelector('.img3');
+    const img4 = document.querySelector('.img4');
 
     if (
       checkOk.style.opacity === '1' &&
@@ -218,6 +225,8 @@ export default class Buttons {
       pointText.textContent = '+80 баллов';
       dotsBlock.classList.add('backOrange');
       dotsBlock.classList.remove('backPink');
+      img3.style.display = 'none';
+      img4.style.display = 'block';
       audio.play();
     } else if (
       checkOk.style.opacity === '1' &&
@@ -255,6 +264,8 @@ export default class Buttons {
       pointText.textContent = '+40 баллов';
       dotsBlock.classList.add('backPink');
       dotsBlock.classList.remove('backBlue');
+      img2.style.display = 'none';
+      img3.style.display = 'block';
       audio.play();
     } else if (
       checkOk.style.opacity === '1' &&
@@ -292,6 +303,8 @@ export default class Buttons {
       pointText.textContent = '+20 баллов';
       dotsBlock.classList.add('backBlue');
       dotsBlock.classList.remove('backYellow');
+      img1.style.display = 'none';
+      img2.style.display = 'block';
       audio.play();
     } else if (
       checkOk.style.opacity === '1' &&

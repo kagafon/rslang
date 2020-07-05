@@ -106,20 +106,6 @@ export default class User {
     });
   }
 
-<<<<<<< HEAD
-  static createUserAndLogin(
-    email,
-    password,
-    settings = JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS)) // Deep copy
-  ) {
-    return addUser(email, password)
-      .then(() => authUser(email, password))
-      .then(async (userInfo) => {
-        const settingsToUse = {
-          ...DEFAULT_USER_SETTINGS,
-          ...settings,
-          creationDate: new Date(),
-=======
   static createUserAndLogin(email, password, settings = {}) {
     localStorage.setItem(`${APPLICATION}.auth`, '');
     return addUser(email, password)
@@ -129,7 +115,6 @@ export default class User {
         const settingsToUse = {
           ...DEFAULT_USER_SETTINGS,
           ...settings,
->>>>>>> origin/develop
         };
 
         await Promise.allSettled([
@@ -278,11 +263,7 @@ export default class User {
 
     const settingsToSave = {
       wordsPerDay: 1,
-<<<<<<< HEAD
-      optional: { ...(settings || user.settings) },
-=======
       optional: { ...DEFAULT_USER_SETTINGS, ...user.settings, ...settings },
->>>>>>> origin/develop
     };
     Object.keys(settingsToSave.optional).forEach((x) => {
       settingsToSave.optional[x] = JSON.stringify(settingsToSave.optional[x]);
@@ -306,10 +287,6 @@ export default class User {
   static async fillUser(userInfo) {
     try {
       const settings = await getSettings(userInfo.userId, userInfo.token);
-<<<<<<< HEAD
-      console.log(settings);
-=======
->>>>>>> origin/develop
       user = new User(
         userInfo.userId,
         userInfo.email,
