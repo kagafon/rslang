@@ -1,6 +1,5 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
-
 import store from 'components/sprint-game/component/storage';
 import Timer from 'components/sprint-game/component/timer/timer';
 import 'stylesheets/sprint-game/sprint-game.scss';
@@ -27,7 +26,7 @@ export default class StartPage {
         <button data-num="3" type="button" class="btn btn-primary start">4</button>
         <button data-num="4" type="button" class="btn btn-primary start">5</button>
         <button data-num="5" type="button" class="btn btn-primary start">6</button>
-        <button data-num="-1" type="button" class="btn btn-primary start learn-words">изучаемые слова</button>
+        <button data-num="-1" type="button" class="btn btn-primary start learn-words">Изучаемые слова</button>
      </div>
     `;
 
@@ -36,18 +35,15 @@ export default class StartPage {
       item.addEventListener('click', async () => {
         Service.spinnerOn();
         const words = await Service.wordsRequest(+item.dataset.num);
-        console.log(words);
-
         store.setState({ requestWords: words });
         store.setState({ groupe: +item.dataset.num });
         store.setState({ round: 0 });
         store.setState({ correctChoice: 0 });
-        store.setState({ volume: 'On' });
+        store.setState({ points: 0 });
 
-        if (words.length < 10) {
-          console.log(words);
+        if (words.length < 50) {
           Toaster.createToast(
-            'Недостаточно слов для игры (необходимо минимум 10 слов)',
+            'Недостаточно слов для игры (необходимо минимум 50 слов)',
             'danger'
           );
           Service.spinnerOff();

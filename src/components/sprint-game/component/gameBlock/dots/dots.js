@@ -10,6 +10,13 @@ export default class Dots {
     for (let i = 0; i < 3; i += 1) {
       createElement(dotsBlock, 'div', ['dots']);
     }
+    createElement(
+      document.querySelector('.game-block'),
+      'div',
+      ['points-text'],
+      { style: 'display: block' },
+      '0'
+    );
   }
 
   static init() {

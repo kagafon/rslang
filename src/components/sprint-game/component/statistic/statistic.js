@@ -1,8 +1,8 @@
+/* eslint-disable class-methods-use-this */
 import Service from 'components/sprint-game/component/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/sprint-game/component/storage';
 import statisticStore from 'components/sprint-game/component/statistic-storage';
-import Points from 'components/sprint-game/component/gameBlock/points/points';
 // eslint-disable-next-line import/no-cycle
 import StartPage from 'components/sprint-game/component/start-page/start-page';
 // eslint-disable-next-line import/no-cycle
@@ -10,20 +10,19 @@ import { User } from 'services/backend';
 
 export default class Statistic {
   static render() {
-    const wrapper = document.querySelector('.main');
+    const wrapper = document.querySelector('.wrapper');
     const stage = store.getState();
     const description = this.gradationResult(stage.correctChoice);
-    const points = document.querySelector('.points');
+    const record = this.getRecord();
+    const state = store.getState();
     wrapper.innerHTML = '';
 
     const statisticBlock = createElement(wrapper, 'div', ['statistic-block']);
 
     statisticBlock.innerHTML = `
      <div class="statistic">
-         <p class="statistic-title"> Ваш результат: ${
-           points.textContent
-         } баллов.</p>
-         <p class="statistic-title"> Ваш рекорд: !</p>
+         <p class="statistic-title"> Ваш результат: ${state.points} баллов.</p>
+         <p class="statistic-title"> Ваш рекорд: ${record} баллов!</p>
          <span class="statistic-title">${description}</span>
          <span class="statistic-subtitle">${
            stage.correctChoice
@@ -51,17 +50,20 @@ export default class Statistic {
   static unexploredWords() {
     const learned = statisticStore.getState();
     const learnedWords = learned.learned;
+    console.log(learned);
     const unexploredWords = learned.unexplored;
     const arrLearnedWords = store.getState();
-
-    // if (unexploredWords.length === 0 && learnedWords.length === 0) {
-    //   arr = arrLearnedWords.requestWords.filter(function filter(item, index) {
-    //     return index <= 9;
-    //   });
-    // } else {
-    //   arr = unexploredWords;
-    //   console.log(arr);
-    // }
+    console.log(unexploredWords);
+    console.log(arrLearnedWords);
+    let arr = [];
+    if (unexploredWords.length === 0 && learnedWords.length === 0) {
+      arr = arrLearnedWords.requestWords.filter(function filter(item, index) {
+        return index <= 9;
+      });
+    } else {
+      arr = unexploredWords;
+      console.log(arr);
+    }
 
     unexploredWords.forEach((item) => {
       const invalidBlock = document.querySelector('.invalid');
@@ -115,18 +117,29 @@ export default class Statistic {
     return description;
   }
 
+  static getRecord() {
+    const state = store.getState();
+    const record = User.getCurrentUser().settings.games.sprint.maxScore;
+    if (+state.points > record) {
+      User.getCurrentUser().settings.games.sprint.maxScore = state.points;
+      User.saveSettings();
+    }
+    return record;
+  }
+
   static reboot() {
     const bntReboot = document.querySelector('.final-btn');
 
     bntReboot.addEventListener('click', () => {
-      document.querySelector('.main').innerHTML = '';
-      createElement(document.querySelector('.wrapper'), 'div', ['main']);
       statisticStore.clearState();
+      console.log(statisticStore.getState());
+      document.querySelector('.wrapper').innerHTML = '';
+      createElement(document.querySelector('.wrapper'), 'div', ['main']);
       StartPage.render(document.querySelector('.game-container'));
     });
   }
 
-  static postGametStatistic() {
+  static sendGameStatistic() {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
@@ -143,6 +156,6 @@ export default class Statistic {
     this.unexploredWords();
     this.learnedWords();
     this.reboot();
-    this.postGametStatistic();
+    this.sendGameStatistic();
   }
 }

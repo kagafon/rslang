@@ -40,7 +40,7 @@ p {
   flex-direction: column;
   width: 100%;
   max-width: 1440px;
-  margin: 100px auto;
+  margin: -170px auto;
   transition: 0.2s linear;
 }
 
@@ -71,8 +71,6 @@ p {
   width: 35px;
   height: 35px;
 }
-
-// Start Page ________________________________
 
 .intro {
   display: flex;
@@ -130,23 +128,11 @@ p {
   width: 190px !important;
 }
 
-/* Rules for using icons as black on a light background. */
-.material-icons.md-dark {
-  color: rgba(0, 0, 0, 0.54);
-}
 .material-icons.md-correct {
   color: rgba(34, 247, 6, 0.726);
 }
 .material-icons.md-cancel {
   color: rgba(250, 6, 6, 0.712);
-}
-
-/* Rules for using icons as white on a dark background. */
-.material-icons.md-light {
-  color: rgba(255, 255, 255, 0.678);
-}
-.material-icons.md-light.md-inactive {
-  color: rgba(255, 255, 255, 0.678);
 }
 
 .material-icons {
@@ -164,19 +150,11 @@ p {
   outline: none;
   user-select: none;
 
-  /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
+  text-rendering: optimizeL
 }
 
-.correct {
+  .correct {
   display: none;
   position: absolute;
   top: 2px;
@@ -190,22 +168,10 @@ p {
   left: -20px;
 }
 
-
-/* Rules for sizing the icon. */
-.material-icons.md-18 {
-  font-size: 18px;
-}
-.material-icons.md-22 {
-  font-size: 22px;
-}
-.material-icons.md-48 {
-  font-size: 48px;
-}
 .material-icons.md-100 {
-  font-size: 100px;
+  font-size: 40px;
+  color: rgba(146, 85, 215, 0.57);
 }
-
-// Button______________________________
 
 .btnBlock {
   display: flex;
@@ -223,32 +189,198 @@ p {
   }
 }
 
-// Result ______________________________________________
-
-.resultBlock {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.main {
   position: relative;
+  text-align: center;
+  font-family: 'roboto', sans-serif;
 }
 
-.translate-block {
-  text-align: start;
-  color: #ffffff;
+.points {
+  font-size: 50px;
+  font-weight: 700;
+  color: green;
+  margin: 50px auto 0;
+}
+
+.points-text{
+  font-size: 16px;
+  font-weight: 500;
+  margin: -35px 0; 
+  display: block;
+}
+
+.game-block {
+  width: 100%;
+  max-width: 450px;
+  height: 380px;
+  border: 10px violet solid;
+  border-radius: 20px;
+  margin:  0 auto;
+  background: white;
+}
+
+
+.dotsBlock {
+  height: 80px;
+  display: flex;
+  margin: -30px auto;
+  text-align: center;
+  justify-content: center;
+}
+
+.dots {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: gray;
+  margin: 10px 5px 15px;
+}
+
+.backViolet {
+  background-color: violet;
+}
+
+.backYellow {
+  background-color: yellow;
+}
+
+.backBlue {
+  background-color: blue;
+}
+
+.backPink {
+  background-color: pink;
+}
+
+.backOrange {
+  background-color: orange;
+}
+
+.backRed {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.img-game {
+  width: 100px;
+  height: 100px;
+  margin: 50px auto 0;
+}
+
+.engWord,
+.rusWord {
+  font-family: 'roboto', sans-serif;
+  height: 50px;
+  font-size: 25px;
+  font-weight: 500;
+  display: block;   
+}
+
+.checkOk {
+position: relative;
+margin: 0 auto;
+left: 0;
+top: 0px;
+display: block;
+opacity: 0;
+}
+
+.checkFalse {
+  position: relative;
+  margin: 0 auto;
+  left: 0;
+  top: -20px;
+  display: block;
+  opacity: 0;
+  }
+
+.button {
   font-size: 20px;
-  margin-top: 20px;
-  vertical-align: middle;
+  justify-content: center;
 }
 
-// Statistic_______________________________________
+.button-false,
+.button-true {
+  position: relative;
+  left: 0;
+  top: -50px;
+  margin: 0 40px;
+  border-radius: 10px;
+  width: 100px;
+  height: 40px;
+  background: rgba(146, 85, 215, 0.57);
+  border-color: rgba(146, 85, 215, 0.57);
+  opacity: 1;
+}
+
+.button-false:hover,
+.button-true:hover {
+  opacity: 0.6;
+}
+
+.btn-false,
+.btn-true {
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  background: whitesmoke;
+  margin: 20px 40px;
+  opacity: 0.7;
+}
+
+.btn-true {
+  margin-right: 40px;
+}
+
+.btn-false:before {
+  content: '\2B05';
+  line-height: 20px;
+}
+
+.btn-true:before {
+  content: '\27A1';
+  line-height: 20px;
+}
+
+.audio-block {
+  position: relative;
+  top: 0px;
+  left:0px;
+  width: 30px;
+  height: 30px;
+}
+
+.timer {
+  margin: 130px auto;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  color: rgba(40, 0, 87, 0.57);
+  display: block;
+}
+
+.game-timer {
+  position: relative;
+  top: 180px;
+  left: 180px;
+  margin: 0 auto;
+  width: 51px;
+  height: 51px;
+  font-size: 50px;
+  color:  rgba(40, 0, 87, 0.57);
+  display: block;
+}
 
 .statistic-block {
   height: auto;
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   border-radius: 10px;
   background-color: rgba(252, 249, 249, 0.747);
-  margin: 0 auto;
+  margin: 100px auto 0;
 }
 
 .statistic {
@@ -299,19 +431,6 @@ p {
   margin-top: 16px;
   margin-left: 60px;
   position: relative;
-}
-
-.final-audio {
-  margin-right: 5px;
-  cursor: pointer;
-  border-radius: 100px;
-}
-
-.material-icons.md-22 {
-  font-size: 22px;
-  position: absolute;
-  top: 0px;
-  left: -20px;
 }
 
 .final-answer-eng {
@@ -373,152 +492,47 @@ p {
   background-color: #f85307;
 }
 
-.main {
-  position: relative;
-  text-align: center;
-  font-family: 'roboto', sans-serif;
-}
-.wrapper {
-  margin: -170px auto 0;
-}
-.points {
-  font-size: 50px;
-  font-weight: 700;
-  color: green;
-  margin: 0 auto;
-}
-.game-block {
-  width: 450px;
-  height: 380px;
-  border: 10px violet solid;
-  border-radius: 20px;
-  margin:  0 auto;
-  background: white;
-}
+@media all and (max-width: 500px) {
+  .game-block {
+    max-width: 300px;
+    width: 100%;
+    height: 400px;
+  }
+  .button {
+    margin: 10px auto;
+  }
+  .btn-true {
+    margin-left: 10px;
+  }
+  .btn-false {
+    margin-right: 10px;
+  }
 
-.dotsBlock {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  margin: 0 auto;
-  text-align: center;
-  justify-content: center;
-}
-.dots {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: gray;
-  margin: 10px 5px 15px;
-}
-.backViolet {
-  background-color: violet;
-}
-.backYellow {
-  background-color: yellow;
-}
-.backBlue {
-  background-color: blue;
-}
-.backPink {
-  background-color: pink;
-}
-.backOrange {
-  background-color: orange;
-}
-.backRed {
-  background-color: red;
-}
-.green {
-  background-color: green;
-}
-.img-game {
-  width: 100px;
-  height: 100px;
-  margin: 10px auto 0;
-}
-.engWord,
-.rusWord {
-  margin-top: -15px;
-  font-family: 'roboto', sans-serif;
-  height: 50px;
-  font-size: 25px;
-  font-weight: 500;
-  display: block;   
-}
-.checkOk,
-.checkFalse {
-position: relative;
-margin: 0 auto;
-left: 0;
-top: 20px;
-display: none;
-}
-.button {
-  font-size: 20px;
-  justify-content: center;
-}
-.button-false,
-.button-true {
-  margin: -40px 40px;
-  border-radius: 10px;
-  width: 100px;
-  height: 40px;
-  background: rgba(146, 85, 215, 0.57);
-  border-color: rgba(146, 85, 215, 0.57);
-  opacity: 1;
-}
-.button-false:hover,
-.button-true:hover {
-  opacity: 0.6;
-}
-.btn-false,
-.btn-true {
-  border-radius: 5px;
-  width: 40px;
-  height: 40px;
-  background: whitesmoke;
-  margin: 20px 40px;
-  opacity: 0.7;
-}
+  .checkOk {
+    position: relative;
+    left: 0;
+    top: 60px;
+  }
+      
+  .checkFalse {
+    position: relative;
+    left: 0;
+    top: 40px;
+  }
 
-.btn-true {
-  margin-right: 40px;
-}
-.btn-false:before {
-  content: '\2B05';
-  line-height: 20px;
-}
-.btn-true:before {
-  content: '\27A1';
-  line-height: 20px;
-}
-.volume {
-  font-size: 55px;
-  color: rgba(146, 85, 215, 0.57);
-}
-.audio-block {
-  position: relative;
-  top: -180px;
-  left:0px;
-  width: 30px;
-  height: 30px;
-}
-.timer {
-  margin: 200px auto;
-  width: 100px;
-  height: 100px;
-  font-size: 50px;
-  color: rgba(40, 0, 87, 0.57);
-  display: block;
-}
-.game-timer {
-  position: relative;
-  top: 160px;
-  left: 350px;
-  width: 100px;
-  height: 100px;
-  font-size: 50px;
-  color:  rgba(40, 0, 87, 0.57);
-  display: block;
+  .game-timer {
+    position: relative;
+    top: 180px;
+    left: 100px;
+  }
+
+  .statistic-block {
+    height: auto;
+    max-width: 300px;
+    width: 100%;
+  }
+  
+  .final-answer-tr {
+    margin-right: 6px;
+  }
 }

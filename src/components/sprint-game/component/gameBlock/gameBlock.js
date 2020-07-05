@@ -1,9 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { createElement } from 'helpers/dom';
-// import Results from 'components/sprint-game/component/results';
 import Statistic from 'components/sprint-game/component/statistic/statistic';
-import Service from 'components/sprint-game/component/service';
-
+import store from 'components/sprint-game/component/storage';
+import Toaster from 'components/Toaster/index';
 import Points from './points/points';
 import Dots from './dots/dots';
 import EngWords from './engWords/engWords';
@@ -15,30 +14,32 @@ import Volume from './Volume/volume';
 
 export default class GameBlock {
   static render() {
+    createElement(document.querySelector('.main'), 'div', ['points'], {}, '0');
     createElement(document.querySelector('.main'), 'div', ['game-block']);
   }
 
-  static countTime(from, to) {
+  static startСountdown(from, to) {
     const time = document.querySelector('.timer');
-    // const audioBlock = document.querySelector('.audio-block');
+    const points = document.querySelector('.points');
+    let isTime = true;
     time.style.display = 'block';
     time.classList.add('game-timer');
     time.classList.remove('timer');
     function startTimer() {
       setTimeout(function go() {
         time.textContent = `0${from}`.slice(-2);
-        if (from > to) {
+        if (isTime && from > to) {
           setTimeout(go, 1000);
+          from -= 1;
         } else if (from < 1) {
+          isTime = false;
+          time.style.display = 'none';
+          Toaster.createToast('Игра окончена', 'danger');
+          store.setState({ points: points.textContent });
           setTimeout(() => {
-            Service.spinnerOn();
-            time.style.display = 'none';
-            // audioBlock.style.display = 'none';
             Statistic.init();
           }, 1000);
-          Service.spinnerOff();
         }
-        from -= 1;
       }, 1000);
     }
     startTimer();
@@ -46,15 +47,15 @@ export default class GameBlock {
   }
 
   static init() {
-    this.countTime(60, 0);
-    Points.init();
     this.render();
+    Points.init();
+    this.startСountdown(10, 0);
+    Volume.init();
     Dots.init();
     Image.init();
     EngWords.init();
     RusWords.init();
     CheckMark.init();
-    Volume.init();
     Buttons.init();
   }
 }

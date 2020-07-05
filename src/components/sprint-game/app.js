@@ -15,8 +15,7 @@ export default class AppSprint {
       ),
       'span',
       ['sr-only'],
-      {},
-      'Loading...'
+      {}
     );
 
     createElement(

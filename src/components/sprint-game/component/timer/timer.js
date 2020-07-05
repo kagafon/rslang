@@ -8,26 +8,25 @@ export default class Timer {
       'timer',
     ]);
     const count = createElement(timer, 'div', ['count']);
-    const second = createElement(count, 'span', ['time']);
-    this.time(3, 0, second);
+    const time = createElement(count, 'span', ['time']);
+    this.startСountdown(3, 0, time);
     return timer;
   }
 
-  static time(from, to, second) {
+  static startСountdown(from, to, time) {
     function startTimer() {
       setTimeout(function go() {
-        second.textContent = from;
+        time.textContent = from;
         if (from > to) {
           setTimeout(go, 1000);
         } else if (from < 1) {
-          second.style.display = 'none';
-          // audioBlock.style.display = 'block';
+          time.style.display = 'none';
           GameBlock.init();
         }
         from -= 1;
       }, 1000);
     }
     startTimer();
-    return this.second;
+    return this.time;
   }
 }

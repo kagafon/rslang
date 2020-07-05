@@ -11,12 +11,17 @@ export default class Volume {
       audioBlock,
       'span',
       ['material-icons', 'md-100', 'md-light', 'volume'],
-      { style: 'font-size: 40px; color: rgba(146, 85, 215, 0.57)' },
+      {},
       'volume_up'
     );
-    const audioSrc = createElement(audioIcon, 'audio', ['audio'], {
+    const audioSrc1 = createElement(audioIcon, 'audio', ['audio', 'audio1'], {
       preload: true,
+      muted: true,
       src: 'assets/images/sprint-game/Piu.mp3',
+    });
+    const audioSrc2 = createElement(audioIcon, 'audio', ['audio', 'audio2'], {
+      preload: true,
+      src: 'assets/images/sprint-game/whoosh.mp3',
     });
     return audioBlock;
   }
