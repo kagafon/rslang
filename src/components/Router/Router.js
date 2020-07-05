@@ -96,7 +96,7 @@ export default class Router {
         'aria-expanded': 'false',
         'aria-label': 'Toggle navigation',
       },
-      'RS Lang'
+      ''
     );
     createElement(menuBtn, 'span', ['navbar-toggler-icon']);
 
@@ -117,6 +117,7 @@ export default class Router {
     const onClickHandler = (pageName, event) => {
       event.preventDefault();
       this.draw(pageName);
+      collapseArea.classList.remove('show');
     };
 
     this.menuItems = this.routes
