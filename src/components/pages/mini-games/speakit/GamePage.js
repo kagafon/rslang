@@ -1,9 +1,12 @@
 import { createElement } from 'helpers/dom';
+import SpeechRecognitionWrapper from 'services/recognition';
 import { Words, User } from 'services/backend';
 import WordButton from './WordButton';
 
 export default class GamePage {
   constructor(container, newGame) {
+    this.checkResultHandler = this.checkResult.bind(this);
+
     this.container = createElement(container, 'div', [
       'game-page',
       'hidden',
@@ -63,9 +66,14 @@ export default class GamePage {
     }
     this.trainMode = true;
     this.audio = new Audio();
+    this.recognition = new SpeechRecognitionWrapper(
+      document.querySelector('#mic')
+    );
   }
 
   startRound(words) {
+    this.failResultCount = 10;
+    this.successResultCount = 0;
     this.words = words;
     this.buttons.forEach((x, idx) => x.setWord(words[idx]));
     this.image.style = `background-image:url(assets/images/speakit-page/background.svg)`;
@@ -112,9 +120,51 @@ export default class GamePage {
     if (enable) {
       this.buttons.forEach((x) => x.setReady());
       this.trainMode = false;
+      this.recognition.start(
+        this.checkResultHandler,
+        this.words.map((x) => x.word)
+      );
     } else {
       this.buttons.forEach((x) => x.reset());
       this.trainMode = true;
+    }
+  }
+
+  checkResult(recognizedWords) {
+    console.log(recognizedWords);
+    if (!this.trainMode) {
+      if (recognizedWords && recognizedWords.length > 0) {
+        const wordsToUse = recognizedWords.map((x) => x.toLowerCase());
+        const foundIdx = this.words.findIndex((x) =>
+          wordsToUse.includes(x.word.toLowerCase())
+        );
+        if (foundIdx >= 0) {
+          this.buttons[foundIdx].setSuccess();
+          this.failResultCount -= 1;
+          this.successResultCount += 1;
+        }
+      }
+
+      // this.successResultCount.innerText = this.wordPlaceholders.filter((x) =>
+      //   x.button.classList.contains('active')
+      // ).length;
+      // this.failResultCount.innerText = this.wordPlaceholders.filter(
+      //   (x) => !x.button.classList.contains('active')
+      // ).length;
+      // updateGameStatistics(
+      //   this.gameStartDate,
+      //   this.currentLevel,
+      //   this.successResultCount.innerText,
+      //   this.failResultCount.innerText
+      // );
+      if (this.failResultCount !== 0) {
+        this.recognition.start(
+          this.checkResultHandler,
+          this.words.map((x) => x.word)
+        );
+      } else {
+        this.showResult();
+      }
     }
   }
 }
