@@ -389,7 +389,6 @@ export default class authorizationPage {
         element.classList.remove('active');
       });
       targetBookmark.classList.add('active');
-      console.log(targetBookmark);
     })
   }
 
@@ -426,7 +425,6 @@ export default class authorizationPage {
           const userInfo = await User.createUserAndLogin(mail, pass, {
             username: name.value,
           });
-          console.log(userInfo);
           Router.draw('main-page');
         } catch (error) {
           spinner.style.display = 'none';
