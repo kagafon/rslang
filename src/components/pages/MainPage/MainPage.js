@@ -126,7 +126,6 @@ class MainPage {
           store.setState({ words: this.learnedWords });
           break;
         default:
-          console.error(this.allWords);
           store.setState({ words: this.allWords });
           break;
       }

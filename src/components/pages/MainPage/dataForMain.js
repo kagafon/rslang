@@ -50,16 +50,13 @@ export async function getUserWords(preloads) {
     let allWords = learnedWords.concat(newWords);
     // if(allWords.length === 0) throw new Error();
     if (allWords.length === 0) {
-      await Words.addUserWordsFromGroup(0, 2, 10);
-
-      // await Words.addUserWordsFromGroup(1, 1, 10);
-      // await Words.addUserWordsFromGroup(2, 1, 10);
-      // await Words.addUserWordsFromGroup(3, 1, 10);
-      // await Words.addUserWordsFromGroup(4, 1, 10);
-      // await Words.addUserWordsFromGroup(5, 1, 10);
-
+      await Words.addUserWordsFromGroup(0, 1, 9);
+      await Words.addUserWordsFromGroup(1, 1, 8);
+      await Words.addUserWordsFromGroup(2, 1, 9);
+      await Words.addUserWordsFromGroup(3, 1, 8);
+      await Words.addUserWordsFromGroup(4, 1, 9);
+      await Words.addUserWordsFromGroup(5, 1, 8);
       allWords = await Words.getTodayUserWords(preloads);
-      console.error(allWords);
     }
     let words = [newWords, learnedWords, allWords];
     return { words, settings };

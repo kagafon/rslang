@@ -167,6 +167,7 @@ export default class User {
       if (err.code === 404) {
         stats = {
           ...DEFAULT_STATISTICS,
+          optional: {},
         };
       } else throw err;
     }

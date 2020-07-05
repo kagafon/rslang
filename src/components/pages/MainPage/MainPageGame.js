@@ -14,7 +14,6 @@ import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
 // import modal from 'components/pages/MainPage/modal';
-import { getUserWords } from 'components/pages/MainPage/dataForMain';
 import { Words } from 'services/backend';
 
 import Toaster from 'components/Toaster';
@@ -48,7 +47,7 @@ class MainPageGame {
     this.loader = createLoader();
     try {
       this.words = store.getState().words;
-      this.settings = store.getState().settings;
+      this.settings = store.getState().userSettings;
       if (this.words.length === 0) {
         throw new Error();
       }
@@ -61,7 +60,6 @@ class MainPageGame {
     } finally {
       this.loader.parentNode.removeChild(this.loader);
     }
-    console.error(this.words);
   }
 
   createSwiper() {
@@ -94,6 +92,7 @@ class MainPageGame {
       },
       ''
     );
+
     this.words.forEach((word) => {
       const item = createElement(
         this.swiperWrapper,
@@ -107,7 +106,6 @@ class MainPageGame {
 
       item.appendChild(card);
     });
-    console.error(this.swiperContainer);
   }
 
   initSwiper() {
@@ -142,7 +140,6 @@ class MainPageGame {
       wordTranslate,
       id,
     } = this.wordInput;
-    this.wordInput.lastRepeat = new Date();
     this.audio = new Audio();
     this.inputBackground = document.querySelector(
       '.swiper-slide-active span.input-background'
@@ -174,7 +171,7 @@ class MainPageGame {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
-        if (stat.passedCards === this.settings.learning.maxCardsPerDay) {
+        if (stat.passedCards !== this.settings.learning.maxCardsPerDay) {
           showStat('Серия завершена', [
             { text: 'Карточек завершено', value: stat.passedCards },
             {
@@ -239,6 +236,7 @@ class MainPageGame {
       }
     }
     Words.updateUserWord(this.wordInput);
+    console.error(this.wordInput);
   }
 
   addInputHandler() {
@@ -268,15 +266,15 @@ class MainPageGame {
     }
     if (event.target.dataset.btn === 'easy') {
       this.wordInput.difficulty = 'easy';
-      Toaster.createToast(`это слово легкое для Вас`, 'danger');
+      Toaster.createToast(`это слово легкое для Вас`, 'success');
     }
     if (event.target.dataset.btn === 'medium') {
       this.wordInput.difficulty = 'medium';
-      Toaster.createToast(`это слово стоит повторить`, 'danger');
+      Toaster.createToast(`это слово стоит повторить`, 'info');
     }
     if (event.target.dataset.btn === 'hard') {
       this.wordInput.difficulty = 'hard';
-      Toaster.createToast(`это трудное слово, но Вы справитесь!`, 'danger');
+      Toaster.createToast(`это трудное слово, но Вы справитесь!`, 'warning');
     }
   }
 
@@ -316,7 +314,7 @@ class MainPageGame {
   addComplexHandler() {
     const word = this.findActiveCardWord();
     word.difficulty = 'hard';
-    Toaster.createToast(`слово добавлено в категорию 'сложные'`, 'danger');
+    Toaster.createToast(`слово добавлено в категорию 'сложные'`, 'warning');
     try {
       Words.updateUserWord(word);
     } catch (e) {
@@ -330,7 +328,6 @@ class MainPageGame {
     this.submittBtnAnswer = document.querySelector(
       '.swiper-slide-active #submitt2'
     );
-    console.error(this.submittBtn);
     this.card = document.querySelector('.swiper-slide-active');
     this.input.addEventListener('input', this.addInputHandler);
     this.wordInput = this.findActiveCardWord();
@@ -371,7 +368,6 @@ class MainPageGame {
       this.addAction();
       this.setLongWord();
     } catch (e) {
-      console.error(e);
       Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
     }

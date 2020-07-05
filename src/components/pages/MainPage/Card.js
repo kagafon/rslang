@@ -13,6 +13,7 @@ export default function createCard(wordInit, buttons, prompts) {
     textExampleTranslate,
     id,
   } = wordInit;
+
   const card = createElement('', 'div', ['card', 'card_size'], {}, '');
   const cardHeader = createElement(
     card,

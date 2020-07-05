@@ -5,7 +5,7 @@ class Modal {
     this.modal = createElement(
       document.body,
       'div',
-      ['modal'],
+      ['modal', 'modal-view'],
       {
         tabindex: '-1',
         role: 'dialog',
