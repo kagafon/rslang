@@ -58,10 +58,10 @@ export default class authorizationPage {
     const divEmail = createElement(form, 'div', ['group'], { style: '' }, '');
     const labelEmail = createElement(
       divEmail,
-      'label',
-      ['label'],
+      'span',
+      ['label', 'material-icons'],
       { for: 'email' },
-      'Адрес эл. почты'
+      'email'
     );
     const inputEmail = createElement(
       divEmail,
@@ -69,7 +69,7 @@ export default class authorizationPage {
       ['email'],
       {
         type: 'email',
-        placeholder: 'email@gmail.com',
+        placeholder: 'Адрес эл. почты',
         autocomplete: 'off',
         autofocus: 'false',
         required: 'true',
@@ -85,10 +85,10 @@ export default class authorizationPage {
     );
     const labelUsername = createElement(
       divUsername,
-      'label',
-      ['label'],
+      'span',
+      ['label', 'material-icons'],
       { for: 'username' },
-      'Имя пользователя'
+      'person'
     );
     const inputUsername = createElement(
       divUsername,
@@ -112,10 +112,10 @@ export default class authorizationPage {
     );
     const labelPassword = createElement(
       divPassword,
-      'label',
-      ['label'],
+      'span',
+      ['label', 'material-icons'],
       { for: 'psw' },
-      'Пароль'
+      'lock'
     );
     const inputPassword = createElement(
       divPassword,
@@ -123,7 +123,7 @@ export default class authorizationPage {
       ['password'],
       {
         type: 'password',
-        placeholder: '********',
+        placeholder: 'Пароль',
         autocomplete: 'off',
         autofocus: 'false',
         id: 'psw',
@@ -142,10 +142,10 @@ export default class authorizationPage {
     );
     const labelConfirmPassword = createElement(
       divConfirmPassword,
-      'label',
-      ['label'],
+      'span',
+      ['label', 'material-icons'],
       { for: 'psw' },
-      'Повторите пароль'
+      'lock'
     );
     const inputConfirmPassword = createElement(
       divConfirmPassword,
@@ -153,7 +153,7 @@ export default class authorizationPage {
       ['password'],
       {
         type: 'password',
-        placeholder: '********',
+        placeholder: 'Повторите пароль',
         autocomplete: 'off',
         autofocus: 'false',
         id: 'confirmPsw',
@@ -194,10 +194,10 @@ export default class authorizationPage {
     );
     const labelLoginEmail = createElement(
       divLoginEmail,
-      'label',
-      ['label'],
+      'span',
+      ['label', 'material-icons'],
       { for: 'email' },
-      'Адрес эл. почты'
+      'email'
     );
     const inputLoginEmail = createElement(
       divLoginEmail,
@@ -205,7 +205,7 @@ export default class authorizationPage {
       ['email-login'],
       {
         type: 'email',
-        placeholder: 'email@gmail.com',
+        placeholder: 'Адрес эл. почты',
         autocomplete: 'off',
         autofocus: 'false',
         required: 'true',
@@ -221,10 +221,10 @@ export default class authorizationPage {
     );
     const labelLoginPassword = createElement(
       divLoginPassword,
-      'label',
-      ['label'],
+      'span',
+      ['label', 'material-icons'],
       { for: 'pswLogin' },
-      'Пароль'
+      'lock'
     );
     const inputLoginPassword = createElement(
       divLoginPassword,
@@ -232,7 +232,7 @@ export default class authorizationPage {
       ['password'],
       {
         type: 'password',
-        placeholder: '********',
+        placeholder: 'Пароль',
         autocomplete: 'off',
         autofocus: 'false',
         id: 'pswLogin',
