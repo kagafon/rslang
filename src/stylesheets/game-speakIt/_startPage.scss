@@ -1,4 +1,5 @@
 .start-page {
+  position: absolute;
   display: flex;
   flex-direction: column;
   transition: opacity 0.3s;
@@ -9,6 +10,14 @@
   background-color: transparentize(theme-color('light'), 0.5);
   border-radius: 5px;
   padding: 10px;
+  opacity: 1;
+  z-index: 1;
+  top: 10px;
+
+  &.hidden {
+    opacity: 0;
+    z-index: -1;
+  }
 
   &__title {
     font-size: 2.5rem;

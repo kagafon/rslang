@@ -4,9 +4,16 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - #{$main-menu-height});
-  overflow-y: hidden;
+  overflow-y: auto;
+  position: relative;
 
+  & .modal-backdrop {
+    height: 100vh;
+  }
 
   @import 'variables';
   @import 'startPage';
+  @import 'gamePage';
+  @import 'spinner';
+  @import 'wordButton';
 }

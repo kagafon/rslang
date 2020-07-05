@@ -1,8 +1,17 @@
 import { createElement } from 'helpers/dom';
 
 export default class StartPage {
-  constructor(container, startRound) {
+  constructor(container, prepareForRound, startRound) {
     this.container = createElement(container, 'div', ['start-page', 'hidden']);
+    this.readyToStart = null;
+    this.transitionEndHandler = (evt) => {
+      evt.currentTarget.removeEventListener('click', this.transitionEndHandler);
+      if (this.readyToStart) {
+        startRound();
+        this.readyToStart = null;
+      }
+    };
+    this.container.addEventListener('transitionend', this.transitionEndHandler);
     createElement(
       this.container,
       'h4',
@@ -31,8 +40,11 @@ export default class StartPage {
         ['btn', 'btn-primary'],
         { type: 'button' },
         x
-      ).addEventListener('click', () => {
-        startRound(x - 1);
+      ).addEventListener('click', async () => {
+        if (await prepareForRound(x - 1)) {
+          this.readyToStart = true;
+          this.hide();
+        }
       });
     });
     createElement(
@@ -41,16 +53,24 @@ export default class StartPage {
       ['btn', 'btn-primary', 'mt-3'],
       { type: 'button' },
       'Изучаемые слова'
-    ).addEventListener('click', () => {
-      startRound(-1);
+    ).addEventListener('click', async () => {
+      if (await prepareForRound(-1)) {
+        this.readyToStart = true;
+        this.hide();
+      }
     });
   }
 
   hide() {
+    const transitionEnd = (evt) => {
+      evt.currentTarget.removeEventListener('transitionend', transitionEnd);
+      this.container.classList.add('d-none');
+    };
+    this.container.addEventListener('transitionend', transitionEnd);
     this.container.classList.add('hidden');
   }
 
   show() {
-    this.container.classList.remove('hidden');
+    this.container.classList.remove('hidden', 'd-none');
   }
 }
