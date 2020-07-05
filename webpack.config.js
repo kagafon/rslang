@@ -118,8 +118,8 @@ module.exports = (env, options) => {
           to: 'assets/images/',
         },
         {
-          from: 'src/assets/audio/*.mp3',
-          to: 'assets/audio/[name].[ext]',
+          from: 'src/assets/audio/',
+          to: 'assets/audio/',
         },
       ]),
       new CleanWebpackPlugin(),
