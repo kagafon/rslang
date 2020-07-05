@@ -20,7 +20,11 @@ export default class WordDetails {
           }),
         hide: !user.settings.prompts.image,
       },
-      { title: 'Перевод', name: 'wordTranslate' },
+      {
+        title: 'Перевод',
+        name: 'wordTranslate',
+        hide: !user.settings.prompts.translation,
+      },
       {
         title: 'Транскрипция',
         name: 'transcription',
