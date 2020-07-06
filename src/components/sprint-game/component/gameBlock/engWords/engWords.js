@@ -10,6 +10,7 @@ export default class EngWords {
   static insertText() {
     const stage = store.getState();
     const engWord = document.querySelector('.engWord');
+
     engWord.textContent = stage.requestWords[stage.round].word;
     store.setState({ word: stage.requestWords[stage.round] });
   }

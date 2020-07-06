@@ -10,7 +10,7 @@ export default class AppSprint {
       createElement(
         createElement(this.gameContainer, 'div', ['spinner']),
         'div',
-        ['spinner-border', 'text-warning'],
+        ['spinner-border', 'text-secondary'],
         { role: 'status' }
       ),
       'span',

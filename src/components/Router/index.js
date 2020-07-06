@@ -6,7 +6,6 @@ import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import AppSprint from 'components/sprint-game/app';
-import Dictionary from 'components/pages/dictionary-page';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';

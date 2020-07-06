@@ -11,16 +11,17 @@ export default class Buttons {
     const buttonFalse = createElement(
       document.querySelector('.game-block'),
       'button',
-      ['button', 'button-false']
+      ['button', 'button-false'],
+      {},
+      'Неверно'
     );
     const buttonTrue = createElement(
       document.querySelector('.game-block'),
       'button',
-      ['button', 'button-true']
+      ['button', 'button-true'],
+      {},
+      'Верно'
     );
-
-    buttonFalse.textContent = 'Неверно';
-    buttonTrue.textContent = 'Верно';
   }
 
   static toNextWord() {
@@ -67,46 +68,40 @@ export default class Buttons {
     });
   }
 
-  static toNextWordKeyBoard() {
+  static keyUpHandler(event) {
     const rusBlock = document.querySelector('.rusWord');
     const audioSrc = document.querySelector('.audio2');
-    document.addEventListener('keyup', (event) => {
-      const stage = store.getState();
-      store.setState({ round: stage.round + 1 });
-      audioSrc.play();
-      console.log(stage.round);
-      setTimeout(() => {
-        document.querySelector('.game-block').style.borderColor = 'violet';
-        document.querySelector('.checkFalse').style.opacity = '0';
-        document.querySelector('.checkOk').style.opacity = '0';
-        document.querySelector('.points-text').style.opacity = '0';
-      }, 500);
-      if (
-        rusBlock.textContent ===
-          stage.requestWords[stage.round].wordTranslate &&
-        event.keyCode === 39
-      ) {
-        this.rightChoice();
-      } else if (
-        rusBlock.textContent ===
-          stage.requestWords[stage.round].wordTranslate &&
-        event.keyCode === 37
-      ) {
-        this.unCorrectChoice();
-      } else if (
-        rusBlock.textContent !==
-          stage.requestWords[stage.round].wordTranslate &&
-        event.keyCode === 39
-      ) {
-        this.unCorrectChoice();
-      } else if (
-        rusBlock.textContent !==
-          stage.requestWords[stage.round].wordTranslate &&
-        event.keyCode === 37
-      ) {
-        this.rightChoice();
-      }
-    });
+
+    const stage = store.getState();
+    store.setState({ round: stage.round + 1 });
+    audioSrc.play();
+    setTimeout(() => {
+      document.querySelector('.game-block').style.borderColor = 'violet';
+      document.querySelector('.checkFalse').style.opacity = '0';
+      document.querySelector('.checkOk').style.opacity = '0';
+      document.querySelector('.points-text').style.opacity = '0';
+    }, 500);
+    if (
+      rusBlock.textContent === stage.requestWords[stage.round].wordTranslate &&
+      event.keyCode === 39
+    ) {
+      Buttons.rightChoice();
+    } else if (
+      rusBlock.textContent === stage.requestWords[stage.round].wordTranslate &&
+      event.keyCode === 37
+    ) {
+      Buttons.unCorrectChoice();
+    } else if (
+      rusBlock.textContent !== stage.requestWords[stage.round].wordTranslate &&
+      event.keyCode === 39
+    ) {
+      Buttons.unCorrectChoice();
+    } else if (
+      rusBlock.textContent !== stage.requestWords[stage.round].wordTranslate &&
+      event.keyCode === 37
+    ) {
+      Buttons.rightChoice();
+    }
   }
 
   static rightChoice() {
@@ -117,12 +112,9 @@ export default class Buttons {
     document.querySelector('.checkFalse').style.opacity = '0';
     document.querySelector('.game-block').style.borderColor = 'green';
     document.querySelector('.points-text').style.opacity = '1';
-    console.log(store.getState().correctChoice);
 
     store.setState({ correctChoice: state.correctChoice + 1 });
     statisticStore.setLearnedState([state.word]);
-    console.log(store.getState().word);
-    console.log(statisticStore.getState().learned);
     this.countPoints();
   }
 
@@ -131,7 +123,11 @@ export default class Buttons {
     EngWords.init();
     RusWords.init();
     const pointText = document.querySelector('.points-text');
-    pointText.textContent = ''
+    const dotsBlock = document.querySelector('.dotsBlock');
+    const checkOk = document.querySelector('.checkOk');
+    const dot = document.querySelectorAll('.dots');
+
+    pointText.textContent = '';
     document.querySelector('.checkOk').style.opacity = '0';
     document.querySelector('.checkFalse').style.opacity = '1';
     document.querySelector('.game-block').style.borderColor = 'red';
@@ -140,10 +136,8 @@ export default class Buttons {
     document.querySelector('.img3').style.display = 'none';
     document.querySelector('.img4').style.display = 'none';
 
-    const dotsBlock = document.querySelector('.dotsBlock');
     statisticStore.setUnexploredState([state.word]);
-    const checkOk = document.querySelector('.checkOk');
-    const dot = document.querySelectorAll('.dots');
+
     if (checkOk.style.opacity === '0') {
       dot[0].style.display = 'block';
       dot[2].style.display = 'block';
@@ -175,7 +169,7 @@ export default class Buttons {
       checkOk.style.opacity === '1' &&
       dotsBlock.classList.contains('backRed')
     ) {
-      points.textContent = Number(points.textContent) + 80;
+      points.textContent = +points.textContent + 80;
       pointText.textContent = '+80 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -184,7 +178,7 @@ export default class Buttons {
     ) {
       dot[0].style.display = 'none';
       dot[2].style.display = 'none';
-      points.textContent = Number(points.textContent) + 80;
+      points.textContent = +points.textContent + 80;
       pointText.textContent = '+80 баллов';
       dotsBlock.classList.add('backRed');
       dotsBlock.classList.remove('backOrange');
@@ -195,7 +189,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backOrange')
     ) {
       dot[2].classList.add('green');
-      points.textContent = Number(points.textContent) + 80;
+      points.textContent = +points.textContent + 80;
       pointText.textContent = '+80 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -203,7 +197,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backOrange')
     ) {
       dot[1].classList.add('green');
-      points.textContent = Number(points.textContent) + 80;
+      points.textContent = +points.textContent + 80;
       pointText.textContent = '+80 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -211,7 +205,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backOrange')
     ) {
       dot[0].classList.add('green');
-      points.textContent = Number(points.textContent) + 80;
+      points.textContent = +points.textContent + 80;
       pointText.textContent = '+80 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -221,7 +215,7 @@ export default class Buttons {
       dot.forEach((item) => {
         item.classList.remove('green');
       });
-      points.textContent = Number(points.textContent) + 80;
+      points.textContent = +points.textContent + 80;
       pointText.textContent = '+80 баллов';
       dotsBlock.classList.add('backOrange');
       dotsBlock.classList.remove('backPink');
@@ -234,7 +228,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backPink')
     ) {
       dot[2].classList.add('green');
-      points.textContent = Number(points.textContent) + 40;
+      points.textContent = +points.textContent + 40;
       pointText.textContent = '+40 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -242,7 +236,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backPink')
     ) {
       dot[1].classList.add('green');
-      points.textContent = Number(points.textContent) + 40;
+      points.textContent = +points.textContent + 40;
       pointText.textContent = '+40 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -250,7 +244,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backPink')
     ) {
       dot[0].classList.add('green');
-      points.textContent = Number(points.textContent) + 40;
+      points.textContent = +points.textContent + 40;
       pointText.textContent = '+40 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -260,7 +254,7 @@ export default class Buttons {
       dot.forEach((item) => {
         item.classList.remove('green');
       });
-      points.textContent = Number(points.textContent) + 40;
+      points.textContent = +points.textContent + 40;
       pointText.textContent = '+40 баллов';
       dotsBlock.classList.add('backPink');
       dotsBlock.classList.remove('backBlue');
@@ -273,7 +267,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backBlue')
     ) {
       dot[2].classList.add('green');
-      points.textContent = Number(points.textContent) + 20;
+      points.textContent = +points.textContent + 20;
       pointText.textContent = '+20 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -281,7 +275,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backBlue')
     ) {
       dot[1].classList.add('green');
-      points.textContent = Number(points.textContent) + 20;
+      points.textContent = +points.textContent + 20;
       pointText.textContent = '+20 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -289,7 +283,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backBlue')
     ) {
       dot[0].classList.add('green');
-      points.textContent = Number(points.textContent) + 20;
+      points.textContent = +points.textContent + 20;
       pointText.textContent = '+20 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -299,7 +293,7 @@ export default class Buttons {
       dot.forEach((item) => {
         item.classList.remove('green');
       });
-      points.textContent = Number(points.textContent) + 20;
+      points.textContent = +points.textContent + 20;
       pointText.textContent = '+20 баллов';
       dotsBlock.classList.add('backBlue');
       dotsBlock.classList.remove('backYellow');
@@ -312,7 +306,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backYellow')
     ) {
       dot[2].classList.add('green');
-      points.textContent = Number(points.textContent) + 10;
+      points.textContent = +points.textContent + 10;
       pointText.textContent = '+10 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -320,7 +314,7 @@ export default class Buttons {
       dotsBlock.classList.contains('backYellow')
     ) {
       dot[1].classList.add('green');
-      points.textContent = Number(points.textContent) + 10;
+      points.textContent = +points.textContent + 10;
       pointText.textContent = '+10 баллов';
     } else if (
       checkOk.style.opacity === '1' &&
@@ -330,7 +324,7 @@ export default class Buttons {
       dot[0].classList.add('green');
       dotsBlock.classList.add('backYellow');
       dotsBlock.classList.remove('backViolet');
-      points.textContent = Number(points.textContent) + 10;
+      points.textContent = +points.textContent + 10;
       pointText.textContent = '+10 баллов';
     }
     return points.textContent;
@@ -352,17 +346,14 @@ export default class Buttons {
         }
       });
     });
-
-    setTimeout(() => {
-      document.querySelector('.game-block').style.borderColor = 'violet';
-    }, 1000);
   }
 
   static init() {
     this.render();
     this.toNextWord();
     ButtonsArrow.init();
-    this.toNextWordKeyBoard();
+    document.removeEventListener('keyup', this.keyUpHandler);
+    document.addEventListener('keyup', this.keyUpHandler);
     this.audioOff();
   }
 }
