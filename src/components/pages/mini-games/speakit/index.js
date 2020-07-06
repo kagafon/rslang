@@ -12,7 +12,7 @@ export default class SpeakItPage {
       this.prepareForRound.bind(this),
       this.startRound.bind(this)
     );
-    this.gamePage = new GamePage(this.container, this.newGame.bind(this));
+    this.gamePage = new GamePage(this.container, this.startNewGame.bind(this));
     this.spinner = createElement(null, 'div', ['spinner-container']);
     createElement(this.spinner, 'div', ['modal-backdrop', 'fade', 'show']);
     createElement(
@@ -60,7 +60,6 @@ export default class SpeakItPage {
   }
 
   startRound() {
-    //    this.startPage.hide();
     Toaster.createToast('Start Round ' + this.level, 'info');
     this.gamePage.startRound(this.words);
   }
@@ -70,7 +69,11 @@ export default class SpeakItPage {
     return this.container;
   }
 
-  newGame() {
+  beforeClose() {
+    this.gamePage.recognition.stop();
+  }
+
+  startNewGame() {
     this.startPage.show();
   }
 

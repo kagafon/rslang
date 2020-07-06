@@ -22,7 +22,7 @@ export default class StartPage {
     createElement(this.container, 'div', [
       'start-page__description',
     ]).innerHTML =
-      'Тренировка <strong>Speak It</strong> предназначена для развития понимания речи и постановке произношения';
+      'Тренировка <strong>Speak It</strong> предназначена для развития понимания речи и постановки произношения.';
     createElement(
       this.container,
       'div',

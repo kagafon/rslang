@@ -18,9 +18,9 @@ export default class SpeechRecognitionWrapper {
     this.started = state;
     if (this.micControl) {
       if (state) {
-        this.micControl.classList.remove('mic_muted');
+        this.micControl.firstChild.innerText = 'mic';
       } else {
-        this.micControl.classList.add('mic_muted');
+        this.micControl.firstChild.innerText = 'mic_off';
       }
     }
     if (!state && !this.hasResult && this.endRecognitionCallbacks.length > 0) {

@@ -23,11 +23,27 @@
   &__image {
     max-height: 284px;
     min-height: 284px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    transition: background-image 0.2s ease-in-out;
     width: 100%;
+    position: relative;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, background-image 0.2s ease-in-out;
+      & > i {
+        font-size: 15rem;
+      }
+    }
   }
 
   &__translation {
@@ -44,5 +60,16 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 10;
   }
 }
