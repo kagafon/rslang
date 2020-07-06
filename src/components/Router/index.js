@@ -5,7 +5,8 @@ import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
-import Dictionary from 'components/pages/dictionary-page';
+import DictionaryPage from 'components/pages/dictionary-page';
+import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';
 import AppPuzzle from 'components/games-englishPuzzle/app/app';
 import AppSavannah from 'components/games-savannah/app/app';
@@ -107,7 +108,7 @@ const routes = [
   {
     name: 'settings-page',
     title: 'Настройки',
-    ClassConstructor: MainPage,
+    ClassConstructor: SettingsPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/settings-page.jpg',
     color: 'rgba(121, 42, 121, 0.69)',
@@ -133,7 +134,7 @@ const routes = [
     title: 'Словарь',
     image: 'assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgba(101, 99, 209, 0.78)',
-    ClassConstructor: Dictionary,
+    ClassConstructor: DictionaryPage,
     needAuthorization: false,
   },
 ];
