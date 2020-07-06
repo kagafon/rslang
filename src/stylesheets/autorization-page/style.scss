@@ -2,6 +2,23 @@
   .title {
     font-size: 30px;
   }
+
+  .autologin-background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: 99998;
+    text-align: center;
+    background-image: url(../assets/images/backgrounds/authorization-page.jpg);
+  }
+
+  .spin-autolog {
+    color: white;
+    position: absolute;
+    top: 50%;
+  }
+
   .form {
     display: flex;
     justify-content: center;
