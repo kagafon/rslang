@@ -1,8 +1,8 @@
 import { User } from 'services/backend';
 import GameChart from 'components/statisticPage/GameChart';
-
 class GameStatisticsCreation {
   create(popCanvas, period, game) {
+    const myChart = null;
     let arr = [];
     const dataGame = [];
     const gamesResults = [];

@@ -16,7 +16,6 @@ class GameChart {
         ],
       },
       options: {
-        events: ['mousemove'],
         tooltips: {
           callbacks: {
             label(tooltipItem, data) {
@@ -29,7 +28,7 @@ class GameChart {
                   html.push('Вы не играли в эту игру');
                 }
                 for (let i = 0; i < results.length; i += 1) {
-                  html.push(`${i + 1}: ${results[i]}%;`);
+                  html.push(`${i + 1}: ${results[i]}% правильных ответов;`);
                 }
               }
               return html;
@@ -38,7 +37,7 @@ class GameChart {
         },
       },
     });
-  }
+  };
 }
 
 export default new GameChart();

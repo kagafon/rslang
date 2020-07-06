@@ -1,5 +1,4 @@
 import { createElement } from 'helpers/dom';
-import MainChart from 'components/statisticPage/MainChart';
 import GameStatisticsCreation from 'components/statisticPage/GameStatisticsCreation';
 import MainStatisticsCreation from 'components/statisticPage/MainStatisticsCreation';
 
@@ -147,7 +146,7 @@ class StatisticsPage {
     this.mainStatisticTitle = createElement(
       this.mainStatisticContainer,
       'h2',
-      ['statistic-page', 'main-statistic_title'],
+      ['statistic-page', 'main-statistic-title'],
       {},
       'Общая статистика'
     );
@@ -390,7 +389,7 @@ class StatisticsPage {
       this.gameStatisticContainer,
       'div',
       ['statistic-page', 'games-chart-container'],
-      { id: 'gameChart' },
+      { id: 'gameChart-container' },
       ''
     );
 
@@ -412,6 +411,14 @@ class StatisticsPage {
         const game = document.querySelector('div.active-game-button').dataset
           .gameName;
         event.target.closest('li').classList.add('active');
+        this.gameStatisticChart.remove();
+        this.gameStatisticChart = createElement(
+          this.gamesChartContainer,
+          'canvas',
+          ['statistic-page', 'game-chart-canvas'],
+          { id: 'gameChart' },
+          ''
+        );
         GameStatisticsCreation.create(
           this.gameStatisticChart,
           event.target.closest('li').dataset.period,
@@ -427,6 +434,15 @@ class StatisticsPage {
       if (event.target.closest('div')) {
         const { period } = document.querySelector('li.active').dataset;
         event.target.closest('div').classList.add('active-game-button');
+        this.gameStatisticChart.remove();
+        this.gameStatisticChart = createElement(
+          this.gamesChartContainer,
+          'canvas',
+          ['statistic-page', 'game-chart-canvas'],
+          { id: 'gameChart' },
+          ''
+        );
+
         GameStatisticsCreation.create(
           this.gameStatisticChart,
           period,

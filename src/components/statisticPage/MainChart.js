@@ -16,7 +16,6 @@ class MainChart {
         ],
       },
       options: {
-        events: ['mousemove'],
         tooltips: {
           callbacks: {
             label(tooltipItem, data) {
