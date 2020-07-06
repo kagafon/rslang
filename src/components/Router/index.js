@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import StatisticsPage from 'components/statisticPage/StatisticsPage';
 import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
@@ -90,7 +91,7 @@ const routes = [
   {
     name: 'statistics-page',
     title: 'Статистика',
-    ClassConstructor: MainPage,
+    ClassConstructor: StatisticsPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/statistics-page.jpg',
     color: 'rgba(146, 85, 215, 0.57)',
