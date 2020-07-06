@@ -37,8 +37,6 @@
     height: 35px;
   }
 
-  // Start Page ________________________________
-
   .intro {
     display: flex;
     flex-direction: column;
@@ -96,8 +94,6 @@
     width: 190px !important;
   }
 
-  // Header _____________________________
-
   .header {
     display: flex;
     flex-wrap: wrap;
@@ -105,8 +101,6 @@
     max-width: 1440px;
     position: relative;
   }
-
-  // navBarBlock__________________________
 
   .navBarBlock {
     display: flex;
@@ -120,22 +114,17 @@
     height: 5px;
   }
 
-  // Answer-Block_____________________________
-
   .answerBlock {
     display: flex;
     justify-content: center;
     height: 200px;
   }
 
-  // Audio____________________________________
-
   .audio {
     width: 100px;
     height: 100px;
     margin: 50px auto;
     border-radius: 100px;
-    // box-shadow: 0px 0px 15px 30px #f85307ad;
     background-color: #f853077c;
     transition: 0.3s linear;
     &:hover {
@@ -158,7 +147,6 @@
     }
   }
 
-  /* Rules for using icons as black on a light background. */
   .material-icons.md-dark {
     color: rgba(0, 0, 0, 0.54);
   }
@@ -169,7 +157,6 @@
     color: rgba(250, 6, 6, 0.712);
   }
 
-  /* Rules for using icons as white on a dark background. */
   .material-icons.md-light {
     color: rgba(255, 255, 255, 0.678);
   }
@@ -177,34 +164,6 @@
     color: rgba(255, 255, 255, 0.678);
   }
 
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px; /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    outline: none;
-    user-select: none;
-
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-
-  // Words block______________________________
 
   .wordsblock {
     display: flex;
@@ -230,7 +189,6 @@
   }
 
   .number-words {
-    // display: none;
     position: absolute;
     color: #ffffff;
     font-size: 18px;
@@ -256,7 +214,6 @@
     opacity: 50%;
   }
 
-  /* Rules for sizing the icon. */
   .material-icons.md-18 {
     font-size: 18px;
   }
@@ -269,8 +226,6 @@
   .material-icons.md-100 {
     font-size: 100px;
   }
-
-  // Button______________________________
 
   .btnBlock {
     display: flex;
@@ -292,8 +247,6 @@
   .next {
     display: none;
   }
-
-  // Result ______________________________________________
 
   .resultBlock {
     display: flex;
@@ -332,8 +285,6 @@
     margin-top: 20px;
     vertical-align: middle;
   }
-
-  // Statistic_______________________________________
 
   .statistic-block {
     height: auto;
