@@ -40,7 +40,6 @@ export default class GameWords {
     wrapper.append(wordsBlock);
     this.gameWords = wordsArray;
     this.game();
-    console.log(this.gameWords);
   }
 
   static game() {

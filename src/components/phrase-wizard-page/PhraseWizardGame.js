@@ -29,20 +29,20 @@ export default class PhraseWizard {
     createElement(gameBox, 'div', ['wrapper', 'ph-wiz']);
     createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
 
-    const intro = document.createElement('div');
-    intro.classList.add('intro');
+    this.intro = document.createElement('div');
+    this.intro.classList.add('intro');
 
-    const title = createElement(intro, 'div', ['title', 'ph-wiz']);
+    const title = createElement(this.intro, 'div', ['title', 'ph-wiz']);
     createElement(title, 'span', [], {}, 'Мастер фраз');
     
-    const subTitle = createElement(intro, 'div', ['subTitle', 'ph-wiz']);
+    const subTitle = createElement(this.intro, 'div', ['subTitle', 'ph-wiz']);
     createElement(
       subTitle, 'span', [], {}, 
       'Прослушайте фразу и определите слова. Вводите на клавиатуре первые буквы каждого слова, пока вся фраза не будет открыта. Время не важно, важна точность!'
     );
     
-    createElement(intro, 'div', ['level-select', 'ph-wiz'], {}, 'Выберите уровень');
-    const LevelBlock = createElement(intro, 'div', ['level-block']);
+    createElement(this.intro, 'div', ['level-select', 'ph-wiz'], {}, 'Выберите уровень');
+    const LevelBlock = createElement(this.intro, 'div', ['level-block']);
     const level = [ '1', '2', '3', '4', '5', '6', 'изучаемые слова'];
 
     createButton(level);
@@ -57,18 +57,17 @@ export default class PhraseWizard {
         );
         buttonItem.addEventListener('click', clickLevel.bind(null, level));
       });
-    } 
+    }
+    gameBox.append(this.intro);
+    Statisctic.init();
     
     function clickLevel(levelRound) {
-      intro.remove();
       if (levelRound === 'изучаемые слова') {
-        levelRound = -1;
+        levelRound = 0;
       }
       PhraseWizard.levelRound = levelRound;
       Service.wordsRequest(levelRound);
     }
-    gameBox.append(intro);
-    Statisctic.init();
 
     return gameBox;
   }

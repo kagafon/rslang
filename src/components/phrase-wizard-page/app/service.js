@@ -1,19 +1,26 @@
 import { Words } from 'services/backend';
+import Toaster from 'components/Toaster';
 import GameWords from 'components/phrase-wizard-page/app/words';
 
 export default class Service {
   static async wordsRequest(level) {
     this.spinnerOn();
     const rndPage = this.randomInteger(0, 59);
-     
-      const words = Object.assign(await Words.getWordsForRound((+level - 1), rndPage, 10, [
+    const words = await Words.getWordsForRound((+level - 1), rndPage, 10, [
           'image',
           'audioExample',
           ])
-      ); 
-    await Promise.all(words);
-    this.words = words;
-    this.startGame();
+    this.words = Object.assign(words);
+    if (this.words.length == 10) {
+      document.querySelector('.intro').remove();
+      this.startGame();
+    } else{
+      this.spinnerOff()
+      Toaster.createToast(
+        'Недостаточно слов для игры (необходимо минимум 10 слов)',
+        'danger'
+      );
+    } 
   }
 
   static startGame() {

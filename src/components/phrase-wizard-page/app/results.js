@@ -18,6 +18,7 @@ export default class Results {
     oneMore.addEventListener('click', () => {
       oneMore.remove();
       resultsBlock.remove();
+      createElement(document.querySelector('.box-games'), 'span', ['intro']);
       Service.wordsRequest(PhraseWizard.levelRound);
     });
     const date = new Date();
