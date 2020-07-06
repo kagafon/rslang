@@ -11,6 +11,19 @@ export default class AppPuzzle {
       'hints-block',
     ]);
 
+    createElement(
+      createElement(
+        createElement(this.gameContainer, 'div', ['spinner']),
+        'div',
+        ['spinner-border', 'text-warning'],
+        { role: 'status' }
+      ),
+      'span',
+      ['sr-only'],
+      {},
+      'Loading...'
+    );
+
     createElement(this.gameContainer, 'div', ['wrapper']);
 
     return this.gameContainer;

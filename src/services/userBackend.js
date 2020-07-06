@@ -262,14 +262,19 @@ export default class User {
     userInfo = JSON.parse(userInfo);
 
     const settingsToSave = {
-      wordsPerDay: 1,
-      optional: { ...DEFAULT_USER_SETTINGS, ...user.settings, ...settings },
+      ...DEFAULT_USER_SETTINGS,
+      ...user.settings,
+      ...settings,
     };
-    Object.keys(settingsToSave.optional).forEach((x) => {
-      settingsToSave.optional[x] = JSON.stringify(settingsToSave.optional[x]);
+
+    await setSettings(userInfo.userId, userInfo.token, {
+      wordsPerDay: 1,
+      optional: Object.keys(settingsToSave).reduce(
+        (acc, x) => ({ ...acc, [x]: JSON.stringify(settingsToSave[x]) }),
+        {}
+      ),
     });
-    await setSettings(userInfo.userId, userInfo.token, settingsToSave);
-    user.settings = settings;
+    user.settings = settingsToSave;
   }
 
   static async loadSettings() {

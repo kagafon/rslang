@@ -1,5 +1,4 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable no-restricted-imports */
+/* eslint-disable import/no-cycle */
 import Service from 'components/games-englishPuzzle/app/service';
 import store from 'components/games-englishPuzzle/app/storage';
 import Header from 'components/games-englishPuzzle/app/components/main/header/header';
@@ -7,6 +6,7 @@ import ResultsBlock from 'components/games-englishPuzzle/app/components/main/res
 import SourceData from 'components/games-englishPuzzle/app/components/main/source-data/source-data';
 import Button from 'components/games-englishPuzzle/app/components/main/button/button';
 import Hints from 'components/games-englishPuzzle/app/components/main/header/hints/hints';
+import Toaster from 'components/Toaster';
 
 export default class StartPage {
   static render(container) {
@@ -39,14 +39,15 @@ export default class StartPage {
         store.setState({ requestWords: words });
         store.setState({ groupe: item.dataset.num });
         store.setState({ solution: 'yes' });
+        store.setState({ level: +item.dataset.num });
         store.setState({ correctChoice: 0 });
         store.setState({ appendCard: '' });
         store.setState({ autoPlay: 'yes' });
         store.setState({ wordsCount: 0 });
 
         if (words.length < 10) {
-          // Toaster.createToast('необходимое количество слов 10', 'danger');
-          // Service.spinnerOff();
+          Toaster.createToast('необходимое количество слов 10', 'danger');
+          Service.spinnerOff();
         } else {
           intro.remove();
           Header.init();

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+// eslint-disable-next-line import/no-cycle
 import Service from 'components/games-englishPuzzle/app/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-englishPuzzle/app/storage';
@@ -10,6 +11,7 @@ import { User } from 'services/backend';
 
 export default class Statisctic {
   static render() {
+    Service.spinnerOn();
     const wrapper = document.querySelector('.wrapper');
     const header = document.querySelector('.header');
     const stage = store.getState();
@@ -22,7 +24,7 @@ export default class Statisctic {
     statisticBlock.innerHTML = `
      <div class="statistic">
         <div class='results-img'></div>
-        <span class='img-description'>тут будет описание картины</span>
+        <span class='img-description'>${stage.imgDescription}</span>
      <div class="final-slider">
      <div class="final-error">
      <span> ОШИБОК: </span>
@@ -39,7 +41,11 @@ export default class Statisctic {
     </div>
     </div>
     `;
-    // Service.spinnerOff();
+
+    const img = document.querySelector('.results-img');
+    img.style.backgroundImage = `url("${stage.img}")`;
+    img.style.backgroundSize = 'cover';
+    Service.spinnerOff();
   }
 
   static unexploredWords() {
@@ -136,6 +142,8 @@ export default class Statisctic {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
+    User.getCurrentUser().settings.games.puzzle.levelPages[0] += 1;
+    User.saveSettings();
     User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
   }
 
@@ -145,6 +153,6 @@ export default class Statisctic {
     this.learnedWords();
     this.playAudio();
     this.reboot();
-    // this.postGametStatistic();
+    this.postGametStatistic();
   }
 }

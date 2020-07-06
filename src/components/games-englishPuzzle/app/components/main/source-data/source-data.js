@@ -1,5 +1,13 @@
+/* eslint-disable import/no-cycle */
 import Service from 'components/games-englishPuzzle/app/service';
 import store from 'components/games-englishPuzzle/app/storage';
+import { User } from 'services/backend';
+import paintings1 from 'components/games-englishPuzzle/app/components/data/level1';
+import paintings2 from 'components/games-englishPuzzle/app/components/data/level2';
+import paintings3 from 'components/games-englishPuzzle/app/components/data/level3';
+import paintings4 from 'components/games-englishPuzzle/app/components/data/level4';
+import paintings5 from 'components/games-englishPuzzle/app/components/data/level5';
+import paintings6 from 'components/games-englishPuzzle/app/components/data/level6';
 
 export default class SourceData {
   static render() {
@@ -43,12 +51,27 @@ export default class SourceData {
     const sourceLine = document.querySelector('.source-line');
 
     const { wordsCount } = stage;
+    const { level } = stage;
+    const page = User.getCurrentUser().settings.games.puzzle.levelPages[0];
+    const url = this.backGroundImg(level);
+    const imgAutor = url[page].author;
+    const imgName = url[page].name;
+    const bg = `https://raw.githubusercontent.com/jules0802/rslang_data_paintings/master/${url[page].cutSrc}`;
+
+    store.setState({ img: bg });
+    store.setState({ imgDescription: `${`${imgAutor} - ${imgName}`}` });
 
     for (let j = 0; j < arrWord[+wordsCount].length; j += 1) {
       const card = document.createElement('div');
       card.classList.add('words-card');
       card.setAttribute('draggable', 'true');
-      card.classList.add('source');
+      card.classList.add('source', 'bg-img');
+      // card.style.backgroundImage = `url("${bg}")`;
+      // card.style.backgroundPositionY = `${-450 + wordsCount * 45}px`;
+      // const num = arrWord[+wordsCount].length;
+      // // const width = 450 / num;
+      // card.style.backgroundPositionX = `${-800 + num * j}px`;
+      // console.log(card.style.backgroundPositionX = `${-800 + num * j}px`);
 
       card.textContent = arrWord[+wordsCount][j];
 
@@ -59,12 +82,40 @@ export default class SourceData {
 
     this.cardsWidth();
     Service.puzzleMovement();
+    Service.spinnerOff();
 
     setTimeout(() => {
       if (stage.autoPlay === 'yes') {
         Service.audioPlay();
       }
     }, 1000);
+  }
+
+  static backGroundImg(num) {
+    let url = '';
+
+    switch (num) {
+      case 0:
+        url = paintings1;
+        break;
+      case 1:
+        url = paintings2;
+        break;
+      case 2:
+        url = paintings3;
+        break;
+      case 3:
+        url = paintings4;
+        break;
+      case 4:
+        url = paintings5;
+        break;
+      case 5:
+        url = paintings6;
+        break;
+      default:
+    }
+    return url;
   }
 
   static cardsWidth() {

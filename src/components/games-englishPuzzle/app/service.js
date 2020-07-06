@@ -1,6 +1,8 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable import/no-cycle */
 import { Words } from 'services/backend';
 import store from 'components/games-englishPuzzle/app/storage';
+import { User } from 'services/backend';
 import Button from './components/main/button/button';
 import Hints from './components/main/header/hints/hints';
 
@@ -8,13 +10,23 @@ export default class Service {
   // eslint-disable-next-line consistent-return
   static async wordRequest(level = 0) {
     try {
-      // this.spinnerOn();
-      // const rndPage = this.randomInteger(0, 29);
-      const words = await Words.getWordsForRound(+level, 1, 10, ['audio']);
+      this.spinnerOn();
+      const page = User.getCurrentUser().settings.games.puzzle.levelPages[0];
+      const words = await Words.getWordsForRound(+level, page, 10, [], 10);
       return words;
     } catch (error) {
-      // Service.spinnerOff();
+      Service.spinnerOff();
     }
+  }
+
+  static spinnerOn() {
+    const spiner = document.querySelector('.spinner');
+    spiner.style.display = 'block';
+  }
+
+  static spinnerOff() {
+    const spiner = document.querySelector('.spinner');
+    spiner.style.display = 'none';
   }
 
   static async audioRequest() {
@@ -196,6 +208,13 @@ export default class Service {
       document.querySelector('.btn-check').style.display = 'none';
       document.querySelector('.btn-continue').style.display = 'none';
       document.querySelector('.btn-results').style.display = 'block';
+      const results = document.querySelector('.results');
+      results.innerHTML = '';
+      results.style.backgroundImage = `url("${stage.img}")`;
+      results.style.backgroundSize = 'cover';
+
+      const description = document.querySelector('.source-line');
+      description.textContent = stage.imgDescription;
     }
   }
 
