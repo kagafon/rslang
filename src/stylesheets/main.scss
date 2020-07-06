@@ -5,6 +5,7 @@
 @import 'variables';
 @import 'toaster/toaster';
 @import './main-page/navbar';
+@import './statisticPage/statisticPage';
 @import './promo-page/style.scss';
 @import './game-page/_allgames';
 @import './dictionary-page/main';
@@ -21,7 +22,6 @@ body {
   background-position: center center;
   width: 100%;
   height: 100vh;
-  position: relative;
   box-sizing: border-box;
   transition: background-image $page-transition-delay ease,
     opacity $page-transition-delay ease;

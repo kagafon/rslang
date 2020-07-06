@@ -1,0 +1,3 @@
+@mixin media-phone {
+    @media (max-width: $tablet-width) { @content; }
+}
