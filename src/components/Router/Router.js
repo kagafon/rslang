@@ -54,7 +54,7 @@ export default class Router {
         );
         this.container.style.opacity = '0';
         document.body.style.backgroundImage = `url(${
-          preparedRoutes[routeName].imageSrc || preparedRoutes[routeName].image
+          route.imageSrc || route.image
         })`;
         this.navbar.style.backgroundColor = `${route.color}`;
         this.currentRoute = route;
