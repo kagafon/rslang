@@ -91,8 +91,7 @@ function showStat(head, stat) {
 }
 
 async function checkWordResult(word, result, showAnswer) {
-  const stat = (await User.getMainStatistics()) || {};
-  console.error(stat);
+  const stat = await User.getMainStatistics();
   const settings = store.getState().userSettings;
   stat.passedCards = stat.passedCards || 0;
   stat.correctAnswers = stat.correctAnswers || 0;

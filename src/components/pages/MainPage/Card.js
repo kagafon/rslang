@@ -4,7 +4,6 @@ import { hideWord } from 'helpers/helpersForMainPage';
 export default function createCard(wordInit, buttons, prompts) {
   const {
     word,
-    imageSrc,
     textMeaning,
     textExample,
     transcription,
@@ -22,30 +21,6 @@ export default function createCard(wordInit, buttons, prompts) {
     {},
     ``
   );
-  const cardHeaderButtons = createElement(
-    cardHeader,
-    'div',
-    ['d-flex', 'justify-content-center', 'btn-group'],
-    { role: 'group' },
-    ``
-  );
-  if (buttons.removeWord)
-    createElement(
-      cardHeaderButtons,
-      'button',
-      ['btn', 'btn-danger'],
-      { 'data-btn': 'delete', type: 'button', tabindex: -1 },
-      `удалить слово`
-    );
-  if (buttons.gradeWord)
-    createElement(
-      cardHeaderButtons,
-      'button',
-      ['btn', 'btn-warning'],
-      { 'data-btn': 'complex', type: 'button', tabindex: -1 },
-      `сложное слово`
-    );
-
   createElement(
     cardHeader,
     'span',
@@ -94,14 +69,14 @@ export default function createCard(wordInit, buttons, prompts) {
     createElement(cardBody, 'p', ['card-text', 'translate'], {}, `${word}`);
   }
   if (prompts.meaning) {
-    const sentence = hideWord(word, textMeaning);
-    createElement(
+    const sentenceTextMeaning = createElement(
       cardBody,
       'p',
       ['card-text', 'card-text-meaning'],
       {},
-      `${sentence}`
+      ``
     );
+    sentenceTextMeaning.innerHTML = hideWord(word, textMeaning);
     if (prompts.translation) {
       createElement(
         cardBody,
@@ -114,14 +89,14 @@ export default function createCard(wordInit, buttons, prompts) {
   }
 
   if (prompts.example) {
-    const sentence = hideWord(word, textExample);
-    createElement(
+    const sentenceTextExample = createElement(
       cardBody,
       'p',
       ['card-text', 'card-text-example'],
       {},
-      `${sentence}`
+      ``
     );
+    sentenceTextExample.innerHTML = hideWord(word, textExample);
     if (prompts.translation) {
       createElement(
         cardBody,
@@ -136,7 +111,7 @@ export default function createCard(wordInit, buttons, prompts) {
     createElement(cardBody, 'p', ['card-text'], {}, `${transcription}`);
   if (prompts.image) {
     const cardImage = createElement(cardBody, 'div', ['card-img_div'], {}, ``);
-    createElement(cardImage, 'img', ['card-img'], { src: `${imageSrc}` }, ``);
+    createElement(cardImage, 'img', ['card-img'], { src: `` }, ``);
   }
 
   const cardFooter = createElement(
@@ -149,15 +124,16 @@ export default function createCard(wordInit, buttons, prompts) {
   createElement(
     cardFooter,
     'button',
-    ['btn', 'btn-primary'],
+    ['btn', 'btn-primary', 'btn-sm'],
     { value: 1, tabindex: -1, type: 'submit', id: 'submitt1' },
     `Далее`
   );
+
   if (buttons.showAnswer)
     createElement(
       cardFooter,
       'button',
-      ['btn', 'btn-info'],
+      ['btn', 'btn-info', 'btn-sm'],
       {
         value: 1,
         tabindex: -1,
@@ -167,34 +143,45 @@ export default function createCard(wordInit, buttons, prompts) {
       },
       `Показать ответ`
     );
+  if (buttons.removeWord)
+    createElement(
+      cardFooter,
+      'button',
+      ['btn', 'btn-danger', 'btn-sm'],
+      { 'data-btn': 'delete', type: 'button', tabindex: -1 },
+      `удалить`
+    );
 
-  const ankibtn = createElement(
-    cardFooter,
-    'div',
-    ['btn-group', 'difficulty-buttons'],
-    { role: 'group' },
-    ``
-  );
-  createElement(
-    ankibtn,
-    'button',
-    ['btn', 'btn-sm', 'btn-success'],
-    { type: 'button', 'data-btn': 'easy' },
-    `Легко`
-  );
-  createElement(
-    ankibtn,
-    'button',
-    ['btn', 'btn-sm', 'btn-info'],
-    { type: 'button', 'data-btn': 'medium' },
-    `Хорошо`
-  );
-  createElement(
-    ankibtn,
-    'button',
-    ['btn', 'btn-sm', 'btn-warning'],
-    { type: 'button', 'data-btn': 'hard' },
-    `Сложно`
-  );
+  if (buttons.gradeWord) {
+    const ankibtn = createElement(
+      cardFooter,
+      'div',
+      ['btn-group', 'difficulty-buttons'],
+      { role: 'group' },
+      ``
+    );
+    createElement(
+      ankibtn,
+      'button',
+      ['btn', 'btn-sm', 'btn-success', 'button-size'],
+      { type: 'button', 'data-btn': 'easy' },
+      `Легко`
+    );
+    createElement(
+      ankibtn,
+      'button',
+      ['btn', 'btn-sm', 'btn-info', 'button-size'],
+      { type: 'button', 'data-btn': 'medium' },
+      `Хорошо`
+    );
+    createElement(
+      ankibtn,
+      'button',
+      ['btn', 'btn-sm', 'btn-warning', 'button-size'],
+      { type: 'button', 'data-btn': 'hard' },
+      `Сложно`
+    );
+  }
+
   return card;
 }

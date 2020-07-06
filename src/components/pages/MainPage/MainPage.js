@@ -118,7 +118,6 @@ class MainPage {
     this.wordsDiv.addEventListener('click', (event) => {
       switch (event.target.dataset.words) {
         case 'new':
-          console.error(this.newWords);
           store.setState({ words: this.newWords });
           break;
         case 'old':
@@ -140,14 +139,57 @@ class MainPage {
       this.newWords = data.words[0];
       this.learnedWords = data.words[1];
       this.allWords = data.words[2];
-      store.setState({ userSettings: data.settings });
+      this.learnedTodyUserWords = data.words[3];
+
+      let preloads = [];
+      const { image, example, meaning } = data.settings.prompts;
+      if (image) preloads.push('image');
+      preloads.push('audio');
+      if (example) preloads.push('audioExample');
+      if (meaning) preloads.push('audioMeaning');
+
+      store.setState({ userSettings: data.settings, userPreloads: preloads });
+
       const pr = Math.floor(
-        (this.learnedWords.length / this.allWords.length) * 100
+        (this.learnedTodyUserWords / data.settings.learning.maxCardsPerDay) *
+          100
       );
       this.progressText.textContent = `Выучено слов: ${pr}%`;
       this.progressBar.style.width = `${pr}%`;
       this.progressBar.textContent = `${pr}%`;
       this.progressBar.ariaValuenow = `${pr}`;
+
+      const buttonsWords = this.container.querySelectorAll('div[data-words]');
+      buttonsWords.forEach((el) => {
+        switch (el.dataset.words) {
+          case 'new':
+            createElement(
+              el,
+              'span',
+              [],
+              {},
+              `всего слов: ${this.newWords.length}`
+            );
+            break;
+          case 'old':
+            createElement(
+              el,
+              'span',
+              [],
+              {},
+              `всего слов: ${this.learnedWords.length}`
+            );
+            break;
+          default:
+            createElement(
+              el,
+              'span',
+              [],
+              {},
+              `всего слов: ${this.allWords.length}`
+            );
+        }
+      });
     } catch (e) {
       console.error(e);
     } finally {

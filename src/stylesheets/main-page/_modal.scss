@@ -1,6 +1,9 @@
 .modal {
-  margin-top: 5rem;
-  background-color: #00000085;
+  &.back {
+    margin-top: 5rem;
+    background-color: #00000085;
+  }
+
   &.show {
     display: block;
   }
@@ -16,8 +19,12 @@
     text-align: center;
     font-size: 16px;
   }
-  .modal-body {
-    background-image: url('/assets/images/main-page/image1.jpg');
+  .modal-body-back {
+    background: linear-gradient(
+        rgba(8, 15, 26, 0.69) 0%,
+        rgba(17, 17, 46, 0.16) 100%
+      ),
+      url('/assets/images/main-page/image1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;

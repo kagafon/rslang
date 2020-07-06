@@ -62,7 +62,7 @@ class MainPageGame {
     }
   }
 
-  createSwiper() {
+  async createSwiper() {
     this.swiperContainer = createElement(
       this.container,
       'div',
@@ -92,7 +92,6 @@ class MainPageGame {
       },
       ''
     );
-
     this.words.forEach((word) => {
       const item = createElement(
         this.swiperWrapper,
@@ -128,18 +127,21 @@ class MainPageGame {
     return word;
   }
 
+  async getPreloads() {
+    const preloads = store.getState().userPreloads;
+    const wordWithPreload = await Words.getUserWordById(
+      this.wordInput.id,
+      preloads
+    );
+    this.audioSrc = wordWithPreload.audioSrc;
+    this.audioMeaningSrc = wordWithPreload.audioMeaningSrc;
+    this.audioExampleSrc = wordWithPreload.audioExampleSrc;
+    this.imageSrc = wordWithPreload.imageSrc;
+  }
+
   async addSubmitHandler(event) {
     event.preventDefault();
-    let {
-      word,
-      audioSrc,
-      audioMeaningSrc,
-      audioExampleSrc,
-      textMeaning,
-      textExample,
-      wordTranslate,
-      id,
-    } = this.wordInput;
+    let { word, textMeaning, textExample, wordTranslate, id } = this.wordInput;
     this.audio = new Audio();
     this.inputBackground = document.querySelector(
       '.swiper-slide-active span.input-background'
@@ -171,7 +173,7 @@ class MainPageGame {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
-        if (stat.passedCards !== this.settings.learning.maxCardsPerDay) {
+        if (stat.passedCards === this.settings.learning.maxCardsPerDay) {
           showStat('Серия завершена', [
             { text: 'Карточек завершено', value: stat.passedCards },
             {
@@ -198,24 +200,26 @@ class MainPageGame {
       this.input.classList.add('success');
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
         store.setState({ isAudioPlay: true });
-        await playAudio(this.audio, audioSrc);
+        await playAudio(this.audio, this.audioSrc);
         if (this.textMeaning) {
-          this.textMeaning.textContent = `${textMeaning}`;
-          await playAudio(this.audio, audioMeaningSrc);
+          this.textMeaning.innerHTML = `${textMeaning}`;
+          await playAudio(this.audio, this.audioMeaningSrc);
         }
         if (this.textExample) {
-          this.textExample.textContent = `${textExample}`;
-          await playAudio(this.audio, audioExampleSrc);
+          this.textExample.innerHTML = `${textExample}`;
+          await playAudio(this.audio, this.audioExampleSrc);
         }
         store.setState({ isAudioPlay: false });
-      } else {
-        if (this.textMeaning) this.textMeaning.textContent = `${textMeaning}`;
-        if (this.textExample) this.textExample.textContent = `${textExample}`;
-      }
-      setTimeout(() => {
         this.swiper.slideNext();
-        this.updateSlide();
-      }, 1000);
+        await this.updateSlide();
+      } else {
+        if (this.textMeaning) this.textMeaning.innerHTML = `${textMeaning}`;
+        if (this.textExample) this.textExample.innerHTML = `${textExample}`;
+        setTimeout(async () => {
+          this.swiper.slideNext();
+          await this.updateSlide();
+        }, 5000);
+      }
     } else {
       const dataUpdate = await checkWordResult(this.wordInput, 'no', false);
       this.wordInput = dataUpdate.word;
@@ -229,14 +233,13 @@ class MainPageGame {
 
       if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
         store.setState({ isAudioPlay: true });
-        await playAudio(this.audio, audioSrc);
-        if (this.textMeaning) await playAudio(this.audio, audioMeaningSrc);
-        if (this.textExample) await playAudio(this.audio, audioExampleSrc);
+        await playAudio(this.audio, this.audioSrc);
+        if (this.textMeaning) await playAudio(this.audio, this.audioMeaningSrc);
+        if (this.textExample) await playAudio(this.audio, this.audioExampleSrc);
         store.setState({ isAudioPlay: false });
       }
     }
     Words.updateUserWord(this.wordInput);
-    console.error(this.wordInput);
   }
 
   addInputHandler() {
@@ -259,10 +262,6 @@ class MainPageGame {
     if (event.target.dataset.btn === 'delete') {
       this.deleteBtn = event.target;
       this.addDeleteHandler();
-    }
-    if (event.target.dataset.btn === 'complex') {
-      this.complexBtn = event.target;
-      this.addComplexHandler();
     }
     if (event.target.dataset.btn === 'easy') {
       this.wordInput.difficulty = 'easy';
@@ -311,17 +310,7 @@ class MainPageGame {
     }
   }
 
-  addComplexHandler() {
-    const word = this.findActiveCardWord();
-    word.difficulty = 'hard';
-    Toaster.createToast(`слово добавлено в категорию 'сложные'`, 'warning');
-    try {
-      Words.updateUserWord(word);
-    } catch (e) {
-      Toaster.createToast(`ошибка сохранения`, 'danger');
-    }
-  }
-  updateSlide() {
+  async updateSlide() {
     this.input = document.querySelector('.swiper-slide-active input');
     this.volumeBtn = document.querySelector('.swiper-slide-active span.volume');
     this.submittBtn = document.querySelector('.swiper-slide-active #submitt1');
@@ -342,6 +331,11 @@ class MainPageGame {
       '.swiper-pagination.swiper-pagination-fraction'
     );
     changeProgressBar(this.progressBar, this.pagination);
+    await this.getPreloads();
+    const cardImage = document.querySelector('.swiper-slide-active .card-img');
+    if (cardImage) {
+      cardImage.src = `${this.imageSrc}`;
+    }
   }
   addAction() {
     this.form = document.querySelector('.swipper-form');
@@ -353,8 +347,7 @@ class MainPageGame {
 
   async init() {
     try {
-      await this.create();
-      this.createSwiper();
+      await Promise.all([this.create(), this.createSwiper()]);
       return this.container;
     } catch (e) {
       router.draw('main-page');

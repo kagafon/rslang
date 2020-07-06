@@ -34,31 +34,45 @@ export async function getSettings() {
 
 export async function getUserWords(preloads) {
   try {
-    let preloads = [];
     const settings = await getSettings();
-    const { image, example, meaning } = settings.prompts;
-    if (image) preloads.push('image');
-    preloads.push('audio');
-    if (example) preloads.push('audioExample');
-    if (meaning) preloads.push('audioMeaning');
     const data = await Promise.all([
-      Words.getNewUserWords(true, preloads),
-      Words.getLearnedUserWords(true, preloads),
+      Words.getNewUserWords(true),
+      Words.getLearnedUserWords(true),
+      User.getMainStatistics(),
     ]);
     const learnedWords = data[0];
-    const newWords = data[1];
+    let newWords = data[1];
+    const learnedTodyUserWords = data[2].passedCards || 0;
+    // data[2].filter((word) => {
+    //   const now = new Date();
+    //   const wordDate = new Date(word.lastRepeat);
+    //   if (
+    //     now.getDate() === wordDate.getDate() &&
+    //     now.getMonth() === wordDate.getMonth() &&
+    //     now.getFullYear() === wordDate.getFullYear()
+    //   ) {
+    //     return true;
+    //   }
+    // });
     let allWords = learnedWords.concat(newWords);
     // if(allWords.length === 0) throw new Error();
     if (allWords.length === 0) {
-      await Words.addUserWordsFromGroup(0, 1, 9);
-      await Words.addUserWordsFromGroup(1, 1, 8);
-      await Words.addUserWordsFromGroup(2, 1, 9);
-      await Words.addUserWordsFromGroup(3, 1, 8);
-      await Words.addUserWordsFromGroup(4, 1, 9);
-      await Words.addUserWordsFromGroup(5, 1, 8);
-      allWords = await Words.getTodayUserWords(preloads);
+      await Promise.all([
+        Words.addUserWordsFromGroup(0, Math.floor(Math.random() * 29), 8),
+        Words.addUserWordsFromGroup(1, Math.floor(Math.random() * 29), 9),
+        Words.addUserWordsFromGroup(2, Math.floor(Math.random() * 29), 8),
+        Words.addUserWordsFromGroup(3, Math.floor(Math.random() * 29), 9),
+        Words.addUserWordsFromGroup(4, Math.floor(Math.random() * 29), 8),
+        Words.addUserWordsFromGroup(5, Math.floor(Math.random() * 29), 8),
+      ]);
+      const newData = await Promise.all([
+        Words.getTodayUserWords([]),
+        Words.getNewUserWords(true),
+      ]);
+      allWords = newData[0];
+      newWords = newData[1];
     }
-    let words = [newWords, learnedWords, allWords];
+    let words = [newWords, learnedWords, allWords, learnedTodyUserWords];
     return { words, settings };
   } catch (e) {
     throw new Error(e);

@@ -5,7 +5,7 @@ class Modal {
     this.modal = createElement(
       document.body,
       'div',
-      ['modal', 'modal-view'],
+      ['modal', 'modal-view', 'back'],
       {
         tabindex: '-1',
         role: 'dialog',
@@ -46,7 +46,13 @@ class Modal {
       { 'aria-hidden': 'true' },
       `close`
     );
-    this.modalBody = createElement(content, 'div', ['modal-body'], {}, ``);
+    this.modalBody = createElement(
+      content,
+      'div',
+      ['modal-body', 'modal-body-back'],
+      {},
+      ``
+    );
 
     return this.modal;
   }
