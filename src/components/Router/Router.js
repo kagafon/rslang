@@ -53,7 +53,6 @@ export default class Router {
           this.transitionEndHandler
         );
         this.container.style.opacity = '0';
-
         document.body.style.backgroundImage = `url(${
           route.imageSrc || route.image
         })`;

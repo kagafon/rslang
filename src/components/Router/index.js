@@ -1,11 +1,13 @@
 /* eslint-disable import/no-cycle */
 import MainPage from 'components/pages/MainPage';
 import Router from 'components/Router/Router';
+import StatisticsPage from 'components/statisticPage/StatisticsPage';
 import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import AppSprint from 'components/sprint-game/app';
+import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';
@@ -81,7 +83,7 @@ const routes = [
   {
     name: 'phrasewizard-page',
     title: 'Мастер фраз',
-    ClassConstructor: MainPage,
+    ClassConstructor: PhraseWizard,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
@@ -91,7 +93,7 @@ const routes = [
   {
     name: 'statistics-page',
     title: 'Статистика',
-    ClassConstructor: MainPage,
+    ClassConstructor: StatisticsPage,
     needAuthorization: false,
     image: 'assets/images/backgrounds/statistics-page.jpg',
     color: 'rgba(146, 85, 215, 0.57)',
