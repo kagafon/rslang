@@ -72,9 +72,30 @@ export default class Hints {
     }
   }
 
+  static btnBackGround() {
+    const stage = store.getState();
+
+    const background = document.querySelector('.background-img');
+
+    if (!background.classList.contains('hint-disabled')) {
+      store.setState({ background: 'yes' });
+
+      const arrWords = document.querySelectorAll('.bg');
+      arrWords.forEach((item) => {
+        item.style.opacity = '50%';
+      });
+    } else {
+      store.setState({ background: 'none' });
+
+      const arrWords = document.querySelectorAll('.bg');
+      arrWords.forEach((item) => {
+        item.style.opacity = '0';
+      });
+    }
+  }
+
   static init() {
     this.render();
     this.btnAudio();
-    // this.btnTranslate();
   }
 }

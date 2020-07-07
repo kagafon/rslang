@@ -25,6 +25,7 @@ export default class Button {
     const stage = store.getState();
     const wordsArray = stage.requestWords;
     const arrWord = [];
+
     wordsArray.filter((reading, index) => {
       if (index < 10) {
         arrWord.push(
@@ -38,30 +39,84 @@ export default class Button {
     });
 
     const { wordsCount } = stage;
+    const bg = stage.img;
+    const bgImage = stage.background;
+
     store.setState({ solution: 'no' });
     const resultLine = document.querySelectorAll('.results-line');
     const sourceLine = document.querySelector('.source-line');
     const arrWordResult = document.querySelectorAll('.result');
+    const resultBlock = document.querySelector('.results');
     if (
       document.querySelectorAll('.mistake').length > 0 ||
       arrWordResult.length > 0
     ) {
       resultLine[+wordsCount].innerHTML = '';
-      arrWord[+wordsCount].forEach((item) => {
+      arrWord[+wordsCount].forEach((item, index) => {
         const card = document.createElement('div');
         card.classList.add('words-card');
         card.classList.add('result');
+
         card.textContent = item;
+
+        const background = document.createElement('div');
+        background.classList.add('bg');
+
+        background.style.backgroundImage = `url("${bg}")`;
+
+        background.style.backgroundPositionY = `${
+          wordsCount * -sourceLine.offsetHeight
+        }px`;
+
+        const num = arrWord[+wordsCount].length;
+
+        background.style.backgroundPositionX = `${
+          (resultBlock.offsetWidth / num) * -index
+        }px`;
+
+        if (bgImage === 'none') {
+          background.style.opacity = '0';
+        } else {
+          background.style.opacity = '50%';
+        }
+
+        card.append(background);
+
         resultLine[+wordsCount].append(card);
         sourceLine.innerHTML = '';
       });
       document.querySelector('.btn-i-dont-know').style.display = 'none';
     } else if (arrWord) {
-      arrWord[+wordsCount].forEach((item) => {
+      arrWord[+wordsCount].forEach((item, index) => {
         const card = document.createElement('div');
         card.classList.add('words-card');
         card.classList.add('result');
+
         card.textContent = item;
+
+        const background = document.createElement('div');
+        background.classList.add('bg');
+
+        background.style.backgroundImage = `url("${bg}")`;
+
+        background.style.backgroundPositionY = `${
+          wordsCount * -sourceLine.offsetHeight
+        }px`;
+
+        const num = arrWord[+wordsCount].length;
+
+        background.style.backgroundPositionX = `${
+          (resultBlock.offsetWidth / num) * -index
+        }px`;
+
+        if (bgImage === 'none') {
+          background.style.opacity = '0';
+        } else {
+          background.style.opacity = '50%';
+        }
+
+        card.append(background);
+
         resultLine[+wordsCount].append(card);
         sourceLine.innerHTML = '';
       });
@@ -104,17 +159,12 @@ export default class Button {
     const resultLine = document.querySelectorAll('.results-line');
     const sourceLine = document.querySelector('.source-line');
     const wordMistake = document.querySelectorAll('.result-mistake');
-    localStorage.setItem('appendCard', '');
+
     wordMistake.forEach((item) => {
       item.removeAttribute('draggable', 'true');
       item.classList.remove('result-mistake');
     });
-    if (+count === 9) {
-      // const sourceBlock = document.querySelectorAll('.source-line');
-      // const resultsBlock = document.querySelectorAll('.results-line');
-      // document.querySelector('.btn-results').style.display = 'none';
-      // document.querySelector('.btn-i-dont-know').style.display = 'block';
-    } else {
+    if (+count !== 9) {
       resultLine.forEach((item) => {
         item.classList.remove('line-active');
       });

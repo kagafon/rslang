@@ -49,11 +49,14 @@ export default class SourceData {
     });
 
     const sourceLine = document.querySelector('.source-line');
+    const resultBlock = document.querySelector('.results');
 
     const { wordsCount } = stage;
     const { level } = stage;
+    const bgImage = stage.background;
+
     const page = User.getCurrentUser().settings.games.puzzle.levelPages[0];
-    const url = this.backGroundImg(level);
+    const url = this.backGroundUrl(level);
     const imgAutor = url[page].author;
     const imgName = url[page].name;
     const bg = `https://raw.githubusercontent.com/jules0802/rslang_data_paintings/master/${url[page].cutSrc}`;
@@ -65,15 +68,32 @@ export default class SourceData {
       const card = document.createElement('div');
       card.classList.add('words-card');
       card.setAttribute('draggable', 'true');
-      card.classList.add('source', 'bg-img');
-      // card.style.backgroundImage = `url("${bg}")`;
-      // card.style.backgroundPositionY = `${-450 + wordsCount * 45}px`;
-      // const num = arrWord[+wordsCount].length;
-      // // const width = 450 / num;
-      // card.style.backgroundPositionX = `${-800 + num * j}px`;
-      // console.log(card.style.backgroundPositionX = `${-800 + num * j}px`);
+      card.classList.add('source');
 
       card.textContent = arrWord[+wordsCount][j];
+
+      const background = document.createElement('div');
+      background.classList.add('bg');
+
+      background.style.backgroundImage = `url("${bg}")`;
+
+      background.style.backgroundPositionY = `${
+        wordsCount * -sourceLine.offsetHeight
+      }px`;
+
+      const num = arrWord[+wordsCount].length;
+
+      background.style.backgroundPositionX = `${
+        (resultBlock.offsetWidth / num) * -j
+      }px`;
+
+      if (bgImage === 'none') {
+        background.style.opacity = '0';
+      } else {
+        background.style.opacity = '50%';
+      }
+
+      card.append(background);
 
       if (card.textContent) {
         sourceLine.append(card);
@@ -91,7 +111,7 @@ export default class SourceData {
     }, 1000);
   }
 
-  static backGroundImg(num) {
+  static backGroundUrl(num) {
     let url = '';
 
     switch (num) {

@@ -43,6 +43,7 @@ export default class StartPage {
         store.setState({ correctChoice: 0 });
         store.setState({ appendCard: '' });
         store.setState({ autoPlay: 'yes' });
+        store.setState({ background: 'none' });
         store.setState({ wordsCount: 0 });
 
         if (words.length < 10) {

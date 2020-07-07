@@ -209,12 +209,14 @@ export default class Service {
       document.querySelector('.btn-continue').style.display = 'none';
       document.querySelector('.btn-results').style.display = 'block';
       const results = document.querySelector('.results');
-      results.innerHTML = '';
-      results.style.backgroundImage = `url("${stage.img}")`;
-      results.style.backgroundSize = 'cover';
 
-      const description = document.querySelector('.source-line');
-      description.textContent = stage.imgDescription;
+      setTimeout(() => {
+        results.innerHTML = '';
+        results.style.backgroundImage = `url("${stage.img}")`;
+        results.style.backgroundSize = 'cover';
+        const description = document.querySelector('.source-line');
+        description.textContent = stage.imgDescription;
+      }, 1500);
     }
   }
 
@@ -306,6 +308,7 @@ export default class Service {
     const backGround = document.querySelector('.background-img');
     backGround.addEventListener('click', () => {
       Hints.hintsActive(backGround);
+      Hints.btnBackGround();
     });
 
     const audio = document.querySelector('.audio-play');
