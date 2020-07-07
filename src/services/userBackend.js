@@ -19,6 +19,7 @@ const getToday = () => {
 const DEFAULT_USER_SETTINGS = {
   username: '',
   creationDate: new Date().getTime(),
+  lastLoginDate: null,
   prompts: {
     translation: true,
     example: true,

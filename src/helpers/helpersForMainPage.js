@@ -90,7 +90,8 @@ function showStat(head, stat) {
   modal.init(head, stat);
 }
 
-async function checkWordResult(word, result, showAnswer) {
+async function checkWordResult(wordN, result, showAnswer) {
+  const word = wordN;
   const stat = await User.getMainStatistics();
   const settings = store.getState().userSettings;
   stat.passedCards = stat.passedCards || 0;

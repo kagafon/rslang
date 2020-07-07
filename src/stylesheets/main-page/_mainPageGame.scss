@@ -22,6 +22,7 @@
     width: 75%;
     height: 100%;
     margin: 0 auto;
+    transition: opacity $page-transition-delay ease;
     button {
       margin-bottom: 5px;
     }

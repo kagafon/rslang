@@ -158,6 +158,7 @@ class MainPageGame {
     this.translations = document.querySelectorAll(
       '.swiper-slide-active p.translate'
     );
+    if (this.inputBackground.classList.contains('answer_success')) return;
     this.inputWord.innerHTML = '';
     this.inputWord.classList.remove('hidden1', 'hidden2');
     this.inputBackground.classList.remove('answer_success', 'answer_error');
@@ -265,14 +266,17 @@ class MainPageGame {
     }
     if (event.target.dataset.btn === 'easy') {
       this.wordInput.difficulty = 'easy';
+      Words.updateUserWord(this.wordInput);
       Toaster.createToast(`это слово легкое для Вас`, 'success');
     }
     if (event.target.dataset.btn === 'medium') {
       this.wordInput.difficulty = 'medium';
+      Words.updateUserWord(this.wordInput);
       Toaster.createToast(`это слово стоит повторить`, 'info');
     }
     if (event.target.dataset.btn === 'hard') {
       this.wordInput.difficulty = 'hard';
+      Words.updateUserWord(this.wordInput);
       Toaster.createToast(`это трудное слово, но Вы справитесь!`, 'warning');
     }
   }
@@ -311,35 +315,47 @@ class MainPageGame {
   }
 
   async updateSlide() {
-    this.input = document.querySelector('.swiper-slide-active input');
-    this.volumeBtn = document.querySelector('.swiper-slide-active span.volume');
-    this.submittBtn = document.querySelector('.swiper-slide-active #submitt1');
-    this.submittBtnAnswer = document.querySelector(
-      '.swiper-slide-active #submitt2'
-    );
-    this.card = document.querySelector('.swiper-slide-active');
-    this.input.addEventListener('input', this.addInputHandler);
-    this.wordInput = this.findActiveCardWord();
-    this.setLongWord();
-    if (store.getState().isAudioPlayButton) {
-      volumeUp(this.volumeBtn);
-    } else {
-      volumeOff(this.volumeBtn);
-    }
-    this.progressBar = document.querySelector('.progress-bar');
-    this.pagination = document.querySelector(
-      '.swiper-pagination.swiper-pagination-fraction'
-    );
-    changeProgressBar(this.progressBar, this.pagination);
-    await this.getPreloads();
-    const cardImage = document.querySelector('.swiper-slide-active .card-img');
-    if (cardImage) {
-      cardImage.src = `${this.imageSrc}`;
+    try {
+      this.input = document.querySelector('.swiper-slide-active input');
+      this.volumeBtn = document.querySelector(
+        '.swiper-slide-active span.volume'
+      );
+      this.submittBtn = document.querySelector(
+        '.swiper-slide-active #submitt1'
+      );
+      this.submittBtnAnswer = document.querySelector(
+        '.swiper-slide-active #submitt2'
+      );
+      this.card = document.querySelector('.swiper-slide-active');
+      this.input.addEventListener('input', this.addInputHandler);
+      this.wordInput = this.findActiveCardWord();
+      this.setLongWord();
+      if (store.getState().isAudioPlayButton) {
+        volumeUp(this.volumeBtn);
+      } else {
+        volumeOff(this.volumeBtn);
+      }
+      this.progressBar = document.querySelector('.progress-bar');
+      this.pagination = document.querySelector(
+        '.swiper-pagination.swiper-pagination-fraction'
+      );
+      changeProgressBar(this.progressBar, this.pagination);
+      this.card.style.opacity = '0';
+      await this.getPreloads();
+      this.card.style.opacity = '1';
+      const cardImage = document.querySelector(
+        '.swiper-slide-active .card-img'
+      );
+      if (cardImage) {
+        cardImage.src = `${this.imageSrc}`;
+      }
+    } catch {
+      return;
     }
   }
-  addAction() {
+  async addAction() {
     this.form = document.querySelector('.swipper-form');
-    this.updateSlide();
+    await this.updateSlide();
     this.input.focus();
     this.container.addEventListener('submit', this.addSubmitHandler);
     this.container.addEventListener('click', this.addContainerHandler);
@@ -355,10 +371,10 @@ class MainPageGame {
     }
   }
 
-  postInit() {
+  async postInit() {
     try {
       this.initSwiper();
-      this.addAction();
+      await this.addAction();
       this.setLongWord();
     } catch (e) {
       Toaster.createToast(`ошибка загрузки`, 'danger');

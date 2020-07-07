@@ -40,8 +40,8 @@ export async function getUserWords(preloads) {
       Words.getLearnedUserWords(true),
       User.getMainStatistics(),
     ]);
-    const learnedWords = data[0];
-    let newWords = data[1];
+    let newWords = data[0];
+    const learnedWords = data[1];
     const learnedTodyUserWords = data[2].passedCards || 0;
     // data[2].filter((word) => {
     //   const now = new Date();
@@ -55,8 +55,7 @@ export async function getUserWords(preloads) {
     //   }
     // });
     let allWords = learnedWords.concat(newWords);
-    // if(allWords.length === 0) throw new Error();
-    if (allWords.length === 0) {
+    if (!settings.lastLoginDate && allWords.length === 0) {
       await Promise.all([
         Words.addUserWordsFromGroup(0, Math.floor(Math.random() * 29), 8),
         Words.addUserWordsFromGroup(1, Math.floor(Math.random() * 29), 9),
@@ -65,14 +64,14 @@ export async function getUserWords(preloads) {
         Words.addUserWordsFromGroup(4, Math.floor(Math.random() * 29), 8),
         Words.addUserWordsFromGroup(5, Math.floor(Math.random() * 29), 8),
       ]);
-      const newData = await Promise.all([
-        Words.getTodayUserWords([]),
-        Words.getNewUserWords(true),
-      ]);
-      allWords = newData[0];
-      newWords = newData[1];
-    }
-    let words = [newWords, learnedWords, allWords, learnedTodyUserWords];
+      // const newData = await Promise.all([
+      //   Words.getTodayUserWords(),
+      //   Words.getNewUserWords(true),
+      // ]);
+      allWords = await Words.getTodayUserWords();
+      newWords = await Words.getNewUserWords(true);
+    } else if (allWords.length === 0) throw new Error();
+    const words = [newWords, learnedWords, allWords, learnedTodyUserWords];
     return { words, settings };
   } catch (e) {
     throw new Error(e);

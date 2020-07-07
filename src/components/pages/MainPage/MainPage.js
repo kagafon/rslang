@@ -21,7 +21,7 @@ class MainPage {
       [
         'jumbotron',
         'd-flex',
-        'justify-content-between',
+        'justify-content-center',
         'align-items-center',
         'flex-column',
       ],
@@ -97,7 +97,20 @@ class MainPage {
           'flex-column',
         ],
         { 'data-words': `${el.state}` },
-        `${el.text}`
+        ``
+      );
+      const centerDiv = createElement(
+        jumbotronLevel,
+        'div',
+        [
+          'd-flex',
+          'justify-content-center',
+          'align-items-center',
+          'flex-column',
+          'text-center',
+        ],
+        { 'data-words': `${el.state}` },
+        ``
       );
       let icon = '';
       switch (el.state) {
@@ -110,7 +123,9 @@ class MainPage {
         default:
           icon = 'reply_all';
       }
-      createElement(jumbotronLevel, 'span', ['material-icons'], {}, `${icon}`);
+      createElement(centerDiv, 'span', ['material-icons'], {}, `${icon}`);
+      createElement(centerDiv, 'span', [], {}, `${el.text}`);
+      createElement(centerDiv, 'span', [], { id: `${el.state}` }, ``);
     });
   }
 
@@ -163,31 +178,19 @@ class MainPage {
       buttonsWords.forEach((el) => {
         switch (el.dataset.words) {
           case 'new':
-            createElement(
-              el,
-              'span',
-              [],
-              {},
-              `всего слов: ${this.newWords.length}`
-            );
+            el.querySelector(
+              '#new'
+            ).textContent = `всего: ${this.newWords.length}`;
             break;
           case 'old':
-            createElement(
-              el,
-              'span',
-              [],
-              {},
-              `всего слов: ${this.learnedWords.length}`
-            );
+            el.querySelector(
+              '#old'
+            ).textContent = `всего: ${this.learnedWords.length}`;
             break;
           default:
-            createElement(
-              el,
-              'span',
-              [],
-              {},
-              `всего слов: ${this.allWords.length}`
-            );
+            el.querySelector(
+              '#all'
+            ).textContent = `всего: ${this.allWords.length}`;
         }
       });
     } catch (e) {

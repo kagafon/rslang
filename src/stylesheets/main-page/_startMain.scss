@@ -40,15 +40,26 @@
     width: 30%;
     height: 260px;
     font-size: 18px;
-    color: #ffffff70;
+    color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
       0 2px 10px 0 rgba(0, 0, 0, 0.12);
     margin-bottom: 25px;
+    transition: background-color $page-transition-delay ease,
+      box-shadow $page-transition-delay ease;
     &:hover {
-      color: #fff;
+      background-color: rgb(83, 140, 173);
       cursor: pointer;
       box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+    span {
+      text-align: center;
+    }
+    .text-center {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      background-color: rgba(161, 196, 216, 0.79);
     }
   }
 
