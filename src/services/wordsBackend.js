@@ -201,7 +201,7 @@ export default class Words {
 
   static getNewUserWords(todayOnly, preload) {
     return Words.getUserWords(
-      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":"null"}${
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":null}${
         todayOnly
           ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
           : ''
@@ -212,7 +212,7 @@ export default class Words {
 
   static getLearnedUserWords(todayOnly, preload) {
     return Words.getUserWords(
-      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":"null"}}${
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":null}}${
         todayOnly
           ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
           : ''

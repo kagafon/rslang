@@ -7,13 +7,10 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  background-color: transparentize(theme-color('light'), 0.5);
-  border-radius: 5px;
-  padding: 10px;
   opacity: 1;
   z-index: 1;
-  max-width: 830px;
-  top: 10px;
+  top: 0;
+  left: 0;
 
   &.hidden {
     opacity: 0;
@@ -22,7 +19,8 @@
 
   &__image {
     max-height: 284px;
-    min-height: 284px;
+    min-height: 200px;
+    height: 33vh;
     width: 100%;
     position: relative;
 
@@ -44,6 +42,17 @@
         font-size: 15rem;
       }
     }
+  }
+
+  &__placeholder {
+    max-width: 830px;
+    padding: 10px;
+    background-color: transparentize(theme-color('light'), 0.5);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   &__translation {

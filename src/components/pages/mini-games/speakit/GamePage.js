@@ -3,6 +3,7 @@ import SpeechRecognitionWrapper from 'services/recognition';
 import { User } from 'services/backend';
 import WordButton from './WordButton';
 import ResultsModal from './Modal';
+import Toaster from 'components/Toaster';
 
 export default class GamePage {
   constructor(container, startNewGame) {
@@ -14,9 +15,13 @@ export default class GamePage {
       'hidden',
       'd-none',
     ]);
+    const placeholder = createElement(this.container, 'div', [
+      'game-page__placeholder',
+    ]);
+
     this.words = [];
 
-    const controlsArea = createElement(this.container, 'div', [
+    const controlsArea = createElement(placeholder, 'div', [
       'game-page__controls',
     ]);
     this.trainButton = createElement(
@@ -27,7 +32,7 @@ export default class GamePage {
       'Начать'
     );
     this.trainButton.addEventListener('click', this.switchTrainMode.bind(this));
-    const imagePlaceholder = createElement(this.container, 'div', [
+    const imagePlaceholder = createElement(placeholder, 'div', [
       'game-page__image',
     ]);
     this.image = createElement(imagePlaceholder, 'div');
@@ -36,13 +41,13 @@ export default class GamePage {
     });
     createElement(this.micImage, 'i', ['material-icons'], {}, 'mic');
 
-    this.translation = createElement(this.container, 'h4', [
+    this.translation = createElement(placeholder, 'h4', [
       'h4',
       'game-page__translation',
       'd-flex',
       'align-items-center',
     ]);
-    const buttonsArea = createElement(this.container, 'div', [
+    const buttonsArea = createElement(placeholder, 'div', [
       'game-page__buttons-area',
     ]);
     this.buttons = [];
@@ -129,6 +134,7 @@ export default class GamePage {
         this.words.map((x) => x.word)
       );
       this.trainButton.innerText = 'Завершить';
+      this.translation.innerText = '';
       this.image.style = '';
       this.micImage.style = 'opacity:1;';
       this.gameStartDate = new Date().getTime();
@@ -175,14 +181,18 @@ export default class GamePage {
     }
   }
 
-  saveStatistics() {
+  async saveStatistics() {
     if (this.gameStartDate) {
-      User.saveGameStatistics(
-        'speakit',
-        this.gameStartDate,
-        this.words.filter((x) => x.success).length,
-        this.words.length
-      );
+      try {
+        await User.saveGameStatistics(
+          'speakit',
+          this.gameStartDate,
+          this.words.filter((x) => x.success).length,
+          this.words.length
+        );
+      } catch (err) {
+        Toaster.createToast(`Ошибка сохранения результата: ${err}`, 'warning');
+      }
     }
   }
 }

@@ -60,7 +60,6 @@ export default class SpeakItPage {
   }
 
   startRound() {
-    Toaster.createToast('Start Round ' + this.level, 'info');
     this.gamePage.startRound(this.words);
   }
 

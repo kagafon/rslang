@@ -3,6 +3,9 @@ import { createElement } from 'helpers/dom';
 export default class StartPage {
   constructor(container, prepareForRound, startRound) {
     this.container = createElement(container, 'div', ['start-page', 'hidden']);
+    const placeholder = createElement(this.container, 'div', [
+      'start-page__placeholder',
+    ]);
     this.readyToStart = null;
     this.transitionEndHandler = (evt) => {
       evt.currentTarget.removeEventListener('click', this.transitionEndHandler);
@@ -13,24 +16,22 @@ export default class StartPage {
     };
     this.container.addEventListener('transitionend', this.transitionEndHandler);
     createElement(
-      this.container,
+      placeholder,
       'h4',
       ['h4', 'start-page__title'],
       {},
       'Speak It'
     );
-    createElement(this.container, 'div', [
-      'start-page__description',
-    ]).innerHTML =
+    createElement(placeholder, 'div', ['start-page__description']).innerHTML =
       'Тренировка <strong>Speak It</strong> предназначена для развития понимания речи и постановки произношения.';
     createElement(
-      this.container,
+      placeholder,
       'div',
       ['level-select__title'],
       {},
       'Выберите уровень'
     );
-    const buttonsContainer = createElement(this.container, 'div', [
+    const buttonsContainer = createElement(placeholder, 'div', [
       'level-select__buttons',
     ]);
     [1, 2, 3, 4, 5, 6].forEach((x) => {
@@ -48,7 +49,7 @@ export default class StartPage {
       });
     });
     createElement(
-      this.container,
+      placeholder,
       'button',
       ['btn', 'btn-primary', 'mt-3'],
       { type: 'button' },

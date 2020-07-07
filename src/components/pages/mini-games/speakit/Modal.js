@@ -75,7 +75,7 @@ export default class ResultsModal {
     createElement(
       modalFooter,
       'button',
-      ['btn', 'btn-secondary', 'btn-sm'],
+      ['btn', 'btn-info'],
       { type: 'button', 'data-dismiss': 'modal' },
       'Новая игра'
     ).addEventListener('click', restartGame);
