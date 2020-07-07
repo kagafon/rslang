@@ -1,16 +1,20 @@
-@import '~bootswatch/dist/Materia/variables';
+@import '~bootswatch/dist/materia/variables';
 @import '~bootstrap/scss/bootstrap';
-@import '~bootswatch/dist/Materia/bootswatch';
-@import '~swiper/swiper';
+@import '~bootswatch/dist/materia/bootswatch';
+@import 'swiper/css/swiper';
 @import 'variables';
 @import 'toaster/toaster';
 @import './main-page/navbar';
+@import './statisticPage/statisticPage';
 @import './promo-page/style.scss';
 @import './game-page/_allgames';
 @import './dictionary-page/main';
+@import './settings-page/main';
 @import './team-page/style.scss';
+@import './phrase-wizard-page/phrase-wizard-game.scss';
 @import './autorization-page/style.scss';
-@import 'game-AudioCall/style.scss';
+@import 'game-audioCall/style.scss';
+@import 'game-savannah/style.scss';
 
 body {
   background-repeat: no-repeat;
@@ -18,7 +22,6 @@ body {
   background-position: center center;
   width: 100%;
   height: 100vh;
-  position: relative;
   box-sizing: border-box;
   transition: background-image $page-transition-delay ease,
     opacity $page-transition-delay ease;

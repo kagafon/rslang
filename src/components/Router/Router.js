@@ -53,9 +53,8 @@ export default class Router {
           this.transitionEndHandler
         );
         this.container.style.opacity = '0';
-
         document.body.style.backgroundImage = `url(${
-          preparedRoutes[routeName].imageSrc || preparedRoutes[routeName].image
+          route.imageSrc || route.image
         })`;
         this.navbar.style.backgroundColor = `${route.color}`;
         this.currentRoute = route;
@@ -97,7 +96,7 @@ export default class Router {
         'aria-expanded': 'false',
         'aria-label': 'Toggle navigation',
       },
-      'RS Lang'
+      ''
     );
     createElement(menuBtn, 'span', ['navbar-toggler-icon']);
 
@@ -118,6 +117,7 @@ export default class Router {
     const onClickHandler = (pageName, event) => {
       event.preventDefault();
       this.draw(pageName);
+      collapseArea.classList.remove('show');
     };
 
     this.menuItems = this.routes
