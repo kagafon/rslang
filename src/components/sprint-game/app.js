@@ -1,16 +1,16 @@
 import { createElement } from 'helpers/dom';
-import StartPage from 'components/games-AudioCall/app/components/main/start-page/start-page';
+import StartPage from 'components/sprint-game/component/start-page/start-page';
 
-export default class App {
+export default class AppSprint {
   init() {
     this.gameContainer = document.createElement('div');
-    this.gameContainer.classList.add('game-container', 'audioCall');
+    this.gameContainer.classList.add('game-container', 'sprint');
 
     createElement(
       createElement(
         createElement(this.gameContainer, 'div', ['spinner']),
         'div',
-        ['spinner-border', 'text-warning'],
+        ['spinner-border', 'text-secondary'],
         { role: 'status' }
       ),
       'span',
@@ -18,13 +18,12 @@ export default class App {
       {}
     );
 
-    createElement(this.gameContainer, 'div', ['header']);
     createElement(
       createElement(this.gameContainer, 'div', ['wrapper']),
       'div',
-      ['answerBlock']
+      ['main']
     );
-   
+
     return this.gameContainer;
   }
 

@@ -19,6 +19,7 @@ const getToday = () => {
 const DEFAULT_USER_SETTINGS = {
   username: '',
   creationDate: new Date().getTime(),
+  lastLoginDate: null,
   prompts: {
     translation: true,
     example: true,
@@ -48,7 +49,7 @@ const DEFAULT_USER_SETTINGS = {
 };
 
 const DEFAULT_STATISTICS = {
-  wordsLearned: 0,
+  learnedWords: 0,
 };
 
 export default class User {
@@ -167,6 +168,7 @@ export default class User {
       if (err.code === 404) {
         stats = {
           ...DEFAULT_STATISTICS,
+          optional: {},
         };
       } else throw err;
     }
@@ -230,8 +232,12 @@ export default class User {
     } else {
       stats.optional[game] = JSON.parse(stats.optional[game]);
     }
-
-    stats.optional[game].r.push({ d, c, t });
+    const foundItem = stats.optional[game].r.find((x) => x.d === d);
+    if (foundItem) {
+      Object.assign(foundItem, { c, t });
+    } else {
+      stats.optional[game].r.push({ d, c, t });
+    }
 
     stats.optional[game] = JSON.stringify(stats.optional[game]);
     delete stats.id;
@@ -262,14 +268,19 @@ export default class User {
     userInfo = JSON.parse(userInfo);
 
     const settingsToSave = {
-      wordsPerDay: 1,
-      optional: { ...DEFAULT_USER_SETTINGS, ...user.settings, ...settings },
+      ...DEFAULT_USER_SETTINGS,
+      ...user.settings,
+      ...settings,
     };
-    Object.keys(settingsToSave.optional).forEach((x) => {
-      settingsToSave.optional[x] = JSON.stringify(settingsToSave.optional[x]);
+
+    await setSettings(userInfo.userId, userInfo.token, {
+      wordsPerDay: 1,
+      optional: Object.keys(settingsToSave).reduce(
+        (acc, x) => ({ ...acc, [x]: JSON.stringify(settingsToSave[x]) }),
+        {}
+      ),
     });
-    await setSettings(userInfo.userId, userInfo.token, settingsToSave);
-    user.settings = settings;
+    user.settings = settingsToSave;
   }
 
   static async loadSettings() {

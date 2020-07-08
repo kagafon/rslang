@@ -1,0 +1,84 @@
+.game-page {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s;
+  color: $speakit-page-base-color;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  &.hidden {
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &__image {
+    max-height: 284px;
+    min-height: 200px;
+    height: 33vh;
+    width: 100%;
+    position: relative;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out, background-image 0.2s ease-in-out;
+      & > i {
+        font-size: 15rem;
+      }
+    }
+  }
+
+  &__placeholder {
+    max-width: 830px;
+    padding: 10px;
+    background-color: transparentize(theme-color('light'), 0.5);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__translation {
+    min-height: 32px;
+    background-color: transparentize(theme-color('light'), 0.5);
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+
+  &__buttons-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 10;
+  }
+}

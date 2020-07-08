@@ -129,7 +129,10 @@ export default class Words {
                 acc,
                 x.default !== null && x.default !== undefined
                   ? {
-                      [x.name]: x.default.toString(),
+                      [x.name]: (x.set
+                        ? x.set(x.default)
+                        : x.default
+                      ).toString(),
                     }
                   : {}
               ),
@@ -198,7 +201,7 @@ export default class Words {
 
   static getNewUserWords(todayOnly, preload) {
     return Words.getUserWords(
-      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":"null"}${
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":null}${
         todayOnly
           ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
           : ''
@@ -209,7 +212,7 @@ export default class Words {
 
   static getLearnedUserWords(todayOnly, preload) {
     return Words.getUserWords(
-      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":"null"}}${
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":null}}${
         todayOnly
           ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
           : ''
@@ -227,7 +230,7 @@ export default class Words {
           unwindWord(preloadedWords[0])
         );
       }
-      return words[0];
+      return unwindWord(words[0]);
     });
   }
 }

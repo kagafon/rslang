@@ -22,7 +22,7 @@ export default class componentTeam {
                         <div class="person">
                             <img class="person__image" src="../../assets/images/team-page/ira.jpg" alt="Ira">
                             <div class="describe-person">
-                                <h3 class="person__title"><a href="https://github.com/irinainina">Ирина Блоцкая</a></h3>
+                                <h3 class="person__title"><a href="https://github.com/CharlieBlbl">Ирина Блоцкая</a></h3>
                                 <h5 class="person__position">Дизайнер-разработчик</h5>
                                 <p class="person__phrase">Красота стилевых форм и упорядоченность одним взмахом.</p>
                                 <p class="person__contribution">Отвечает за весь дизайн проекта. Главная страница полностью на её совести</p>
