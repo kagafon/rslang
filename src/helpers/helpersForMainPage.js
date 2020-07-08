@@ -1,5 +1,5 @@
 import { createElement } from 'helpers/dom';
-import { User, Words } from 'services/backend';
+import { User } from 'services/backend';
 import modal from 'components/pages/MainPage/modal';
 import store from 'components/pages/MainPage/Store';
 
@@ -126,20 +126,12 @@ async function checkWordResult(wordN, result, showAnswer) {
     word.totalAnswers += 1;
     word.correctAnswerSeries += 1;
   }
-  // if (word.correctAnswers === word.totalAnswers) {
-  //   word.difficulty = 'easy';
-  // } else if (word.correctAnswers === 0) {
-  //   word.difficulty = 'new';
-  // } else {
-  //   word.difficulty = 'medium';
-  // }
-
   word.lastRepeat = new Date();
   const min =
     word.correctAnswerSeries *
     settings.learning.levels[word.group].baseInterval[word.difficulty];
   word.nextRepeat = new Date(new Date().getTime() + min * 60 * 1000);
-  User.saveMainStatistics(stat);
+  stat.User.saveMainStatistics(stat);
   return { word, stat };
 }
 

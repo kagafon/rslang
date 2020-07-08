@@ -232,7 +232,10 @@ class MainPageGame {
       }, 3000);
       this.input.blur();
 
-      if (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) {
+      if (
+        (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) ||
+        store.getState().isAudioPlayButton
+      ) {
         store.setState({ isAudioPlay: true });
         await playAudio(this.audio, this.audioSrc);
         if (this.textMeaning) await playAudio(this.audio, this.audioMeaningSrc);
