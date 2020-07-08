@@ -39,6 +39,7 @@ export default class Statistic {
         </div>
         <div class="final valid"></div>
         </div>
+       
         <button type="button" class="btn btn-primary final-btn">Начать заново</button>
      </div>
      
