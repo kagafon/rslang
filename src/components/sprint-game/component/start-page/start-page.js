@@ -11,7 +11,7 @@ export default class StartPage {
     intro.classList.add('intro');
     intro.innerHTML = `
      <div class="title">
-       <span>Sprint</span>
+       <span>Спринт</span>
      </div>
      <div class="subTitle">
        <span>Игра Sprint развивает словарный запас и скорость принятия решений.
@@ -35,11 +35,13 @@ export default class StartPage {
         try {
           Service.spinnerOn();
           const words = await Service.wordsRequest(+item.dataset.num);
-          store.setState({ requestWords: words });
-          store.setState({ groupe: +item.dataset.num });
-          store.setState({ round: 0 });
-          store.setState({ correctChoice: 0 });
-          store.setState({ points: 0 });
+          store.setState({
+            requestWords: words,
+            groupe: +item.dataset.num,
+            round: 0,
+            correctChoice: 0,
+            points: 0,
+          });
 
           if (words.length < 50) {
             Toaster.createToast(

@@ -49,7 +49,6 @@ export default class Statistic {
 
   static unexploredWords() {
     const learned = statisticStore.getState();
-    // const learnedWords = learned.learned;
 
     const unexploredWords = learned.unexplored;
 

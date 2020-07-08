@@ -3,7 +3,6 @@ import { createElement } from 'helpers/dom';
 import Statistic from 'components/sprint-game/component/statistic/statistic';
 import store from 'components/sprint-game/component/storage';
 import Toaster from 'components/Toaster/index';
-import Points from './points/points';
 import Dots from './dots/dots';
 import EngWords from './engWords/engWords';
 import RusWords from './rusWords/rusWords';
@@ -48,7 +47,6 @@ export default class GameBlock {
 
   static init() {
     this.render();
-    Points.init();
     this.startСountdown(60, 0);
     Volume.init();
     Dots.init();
