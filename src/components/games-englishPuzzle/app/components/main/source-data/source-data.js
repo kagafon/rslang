@@ -2,6 +2,7 @@
 import Service from 'components/games-englishPuzzle/app/service';
 import store from 'components/games-englishPuzzle/app/storage';
 import { User } from 'services/backend';
+import getCroppedImageUrl from 'components/games-englishPuzzle/app/image';
 import paintings1 from 'components/games-englishPuzzle/app/components/data/level1';
 import paintings2 from 'components/games-englishPuzzle/app/components/data/level2';
 import paintings3 from 'components/games-englishPuzzle/app/components/data/level3';
@@ -20,7 +21,7 @@ export default class SourceData {
     wrapper.append(words);
   }
 
-  static cardGeneration() {
+  static async cardGeneration() {
     const stage = store.getState();
     store.setState({ solution: 'yes' });
     const wordsArray = stage.requestWords;
@@ -50,6 +51,7 @@ export default class SourceData {
 
     const sourceLine = document.querySelector('.source-line');
     const resultBlock = document.querySelector('.results');
+    const resultLine = document.querySelector('.results-line');
 
     const { wordsCount } = stage;
     const { level } = stage;
@@ -59,7 +61,13 @@ export default class SourceData {
     const url = this.backGroundUrl(level);
     const imgAutor = url[page].author;
     const imgName = url[page].name;
-    const bg = `https://raw.githubusercontent.com/jules0802/rslang_data_paintings/master/${url[page].cutSrc}`;
+    const imageUrl = `https://raw.githubusercontent.com/jules0802/rslang_data_paintings/master/${url[page].cutSrc}`;
+
+    const bg = await getCroppedImageUrl(
+      imageUrl,
+      resultBlock.offsetWidth,
+      resultBlock.offsetHeight
+    );
 
     store.setState({ img: bg });
     store.setState({ imgDescription: `${`${imgAutor} - ${imgName}`}` });
@@ -78,7 +86,7 @@ export default class SourceData {
       background.style.backgroundImage = `url("${bg}")`;
 
       background.style.backgroundPositionY = `${
-        wordsCount * -sourceLine.offsetHeight
+        wordsCount * -resultLine.offsetHeight
       }px`;
 
       const num = arrWord[+wordsCount].length;

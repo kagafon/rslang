@@ -25,6 +25,7 @@ export default class Button {
     const stage = store.getState();
     const wordsArray = stage.requestWords;
     const arrWord = [];
+    store.setState({ correctChoice: stage.correctChoice - 1 });
 
     wordsArray.filter((reading, index) => {
       if (index < 10) {
@@ -42,7 +43,10 @@ export default class Button {
     const bg = stage.img;
     const bgImage = stage.background;
 
+    statisticStore.setUnexploredState([stage.requestWords[wordsCount]]);
+
     store.setState({ solution: 'no' });
+
     const resultLine = document.querySelectorAll('.results-line');
     const sourceLine = document.querySelector('.source-line');
     const arrWordResult = document.querySelectorAll('.result');
@@ -65,7 +69,7 @@ export default class Button {
         background.style.backgroundImage = `url("${bg}")`;
 
         background.style.backgroundPositionY = `${
-          wordsCount * -sourceLine.offsetHeight
+          wordsCount * -resultLine[0].offsetHeight
         }px`;
 
         const num = arrWord[+wordsCount].length;
@@ -100,7 +104,7 @@ export default class Button {
         background.style.backgroundImage = `url("${bg}")`;
 
         background.style.backgroundPositionY = `${
-          wordsCount * -sourceLine.offsetHeight
+          wordsCount * -resultLine[0].offsetHeight
         }px`;
 
         const num = arrWord[+wordsCount].length;
@@ -152,8 +156,6 @@ export default class Button {
     if (stage.solution === 'yes') {
       statisticStore.setLearnedState([stage.requestWords[count]]);
       store.setState({ correctChoice: stage.correctChoice + 1 });
-    } else {
-      statisticStore.setUnexploredState([stage.requestWords[count]]);
     }
 
     const resultLine = document.querySelectorAll('.results-line');

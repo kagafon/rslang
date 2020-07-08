@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-cycle
-import Service from 'components/games-englishPuzzle/app/service';
 import store from 'components/games-englishPuzzle/app/storage';
 
 export default class Hints {
@@ -73,8 +71,6 @@ export default class Hints {
   }
 
   static btnBackGround() {
-    const stage = store.getState();
-
     const background = document.querySelector('.background-img');
 
     if (!background.classList.contains('hint-disabled')) {

@@ -15,6 +15,9 @@ export default class Statisctic {
     const wrapper = document.querySelector('.wrapper');
     const header = document.querySelector('.header');
     const stage = store.getState();
+    const learned = statisticStore.getState();
+    const unexploredWords = learned.unexplored;
+    const learnedWords = learned.learned;
 
     header.innerHTML = '';
     wrapper.innerHTML = '';
@@ -28,12 +31,12 @@ export default class Statisctic {
      <div class="final-slider">
      <div class="final-error">
      <span> ОШИБОК: </span>
-    ${10 - stage.correctChoice}
+    ${unexploredWords.length}
     </div>
       <div class="final invalid"></div>
       <div class="final-line"></div>
       <div class="final-correct">ЗНАЮ: 
-      <span> ${stage.correctChoice}</span>
+      <span> ${learnedWords.length}</span>
     </div>
       <div class="final valid"></div>
     </div>
@@ -50,20 +53,9 @@ export default class Statisctic {
 
   static unexploredWords() {
     const learned = statisticStore.getState();
-    const learnedWords = learned.learned;
     const unexploredWords = learned.unexplored;
-    let arr;
-    const arrLearnedWords = store.getState();
 
-    if (unexploredWords.length === 0 && learnedWords.length === 0) {
-      arr = arrLearnedWords.requestWords.filter(function filter(item, index) {
-        return index <= 9;
-      });
-    } else {
-      arr = unexploredWords;
-    }
-
-    arr.forEach((item) => {
+    unexploredWords.forEach((item) => {
       const text = item.textExample
         .replace(/<\/?[^>]+>/g, '')
         .replace(/[.,]/g, '');
@@ -142,9 +134,33 @@ export default class Statisctic {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
-    User.getCurrentUser().settings.games.puzzle.levelPages[0] += 1;
+
+    this.userPage();
     User.saveSettings();
-    User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
+    User.saveGameStatistics('engpuz', date.getTime(), +correctChoice, 10);
+  }
+
+  static userPage() {
+    const stage = store.getState();
+
+    const { level } = stage;
+    const page = User.getCurrentUser().settings.games.puzzle.levelPages[level];
+
+    if (level === 0 && page === 44) {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] = 0;
+    } else if (level === 1 && page === 39) {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] = 0;
+    } else if (level === 2 && page === 39) {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] = 0;
+    } else if (level === 3 && page === 24) {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] = 0;
+    } else if (level === 4 && page === 24) {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] = 0;
+    } else if (level === 5 && page === 24) {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] = 0;
+    } else {
+      User.getCurrentUser().settings.games.puzzle.levelPages[level] += 1;
+    }
   }
 
   static init() {

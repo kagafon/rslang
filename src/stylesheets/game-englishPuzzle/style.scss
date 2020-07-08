@@ -58,6 +58,7 @@
   .start {
     width: 120px;
     margin-left: 10px;
+    margin-bottom: 10px;
   }
 
   .learn {
@@ -92,8 +93,6 @@
     height: 35px;
   }
 
-  // Main__________________________________________
-
   .header {
     display: flex;
     justify-content: flex-end;
@@ -113,8 +112,6 @@
   .logout {
     margin-left: 30px;
   }
-
-  // Hints_____________________________________________
 
   .hints-block {
     display: flex;
@@ -139,12 +136,12 @@
   @keyframes radial-pulse-audio {
     0% {
       border-radius: 100px;
-      box-shadow: 0px 0px 0px 0px rgba(245, 229, 8, 0.5);
+      box-shadow: 0px 0px 0px 0px #2195f3a4;
     }
 
     100% {
       border-radius: 100px;
-      box-shadow: 0px 0px 0px 8px rgba(245, 229, 8, 0.5);
+      box-shadow: 0px 0px 0px 8px #2195f3a4;
     }
   }
 
@@ -225,8 +222,6 @@
     left: 7px;
   }
 
-  // source-data___________________________________
-
   .source-data {
     display: flex;
     flex-wrap: wrap;
@@ -287,12 +282,25 @@
     }
   }
 
+  @media (max-width: 1440px) {
+    .source-data {
+      width: 604px;
+    }
+
+    .source-line {
+      height: 34px;
+    }
+
+    .results {
+      width: 604px;
+      height: 339.75px;
+    }
+  }
+
   .line-active {
     border-bottom: 2px solid #2196f3;
     border-radius: 5px;
   }
-
-  // words-card______________________________________
 
   .words-card {
     width: 100%;
@@ -311,11 +319,19 @@
     color: #000000;
     font-weight: 700;
     user-select: none;
-    clip-path: polygon(calc(100% - 6px) 0%, 100% 50%, calc(100% - 6px) 100%, 0% 100%, 6px 50%, 0% 0%);
+    clip-path: polygon(
+      calc(100% - 6px) 0%,
+      100% 50%,
+      calc(100% - 6px) 100%,
+      0% 100%,
+      6px 50%,
+      0% 0%
+    );
     position: relative;
+    font-size: 0.7rem;
   }
 
-  .bg{
+  .bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -350,8 +366,6 @@
     border: 1px solid #ff0505;
     width: 100%;
   }
-
-  // Button-block________________________________
 
   .button-block {
     display: flex;

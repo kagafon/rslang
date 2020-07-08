@@ -17,10 +17,10 @@ export default class StartPage {
          <span>English-puzzle</span>
      </div>
      <div class="subTitle">
-         <span>Тренировка Аудиовызов развивает словарный запас.
+         <span>Тренировка English-puzzle развивает словарный запас.
          Чем больше слов ты знаешь, тем больше очков опыта получишь.</span>
      </div>
-     <span class="level-select">Выберете уровень</span>
+     <span class="level-select">Выберите уровень</span>
      <div class="level-block">
          <button data-num="0" type="button" class="btn btn-primary start">1</button>
          <button data-num="1" type="button" class="btn btn-primary start">2</button>
@@ -28,7 +28,7 @@ export default class StartPage {
          <button data-num="3" type="button" class="btn btn-primary start">4</button>
          <button data-num="4" type="button" class="btn btn-primary start">5</button>
          <button data-num="5" type="button" class="btn btn-primary start">6</button>
-         <button data-num="-1" type="button" class="btn btn-primary start learn">изучаемые слова</button>
+         <button data-num="-1" type="button" class="btn btn-primary start learn">Изучаемые слова</button>
      </div>
     `;
     container.append(intro);
@@ -40,24 +40,28 @@ export default class StartPage {
         store.setState({ groupe: item.dataset.num });
         store.setState({ solution: 'yes' });
         store.setState({ level: +item.dataset.num });
-        store.setState({ correctChoice: 0 });
+        store.setState({ correctChoice: 9 });
         store.setState({ appendCard: '' });
         store.setState({ autoPlay: 'yes' });
         store.setState({ background: 'none' });
         store.setState({ wordsCount: 0 });
 
-        if (words.length < 10) {
-          Toaster.createToast('необходимое количество слов 10', 'danger');
-          Service.spinnerOff();
-        } else {
-          intro.remove();
-          Header.init();
-          ResultsBlock.init();
-          SourceData.init();
-          Button.init();
-          Service.puzzleDrop();
-          Service.hintsClick();
-          Hints.btnTranslate();
+        try {
+          if (words.length < 10) {
+            Toaster.createToast('необходимое количество слов 10', 'danger');
+            Service.spinnerOff();
+          } else {
+            intro.remove();
+            Header.init();
+            ResultsBlock.init();
+            SourceData.init();
+            Button.init();
+            Service.puzzleDrop();
+            Service.hintsClick();
+            Hints.btnTranslate();
+          }
+        } catch (error) {
+          Toaster.createToast('необходимо авторизоваться', 'danger');
         }
       });
     });

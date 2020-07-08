@@ -113,7 +113,9 @@ export default class Service {
         if (target === document.querySelector('.line-active')) {
           store.setState({ appendCard: '' });
         } else {
-          store.setState({ appendCard: target.textContent });
+          store.setState({
+            appendCard: target.closest('.words-card').textContent,
+          });
         }
 
         item.classList.add('hovered');
