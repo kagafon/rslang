@@ -19,6 +19,7 @@ const getToday = () => {
 const DEFAULT_USER_SETTINGS = {
   username: '',
   creationDate: new Date().getTime(),
+  lastLoginDate: null,
   prompts: {
     translation: true,
     example: true,
@@ -231,8 +232,12 @@ export default class User {
     } else {
       stats.optional[game] = JSON.parse(stats.optional[game]);
     }
-
-    stats.optional[game].r.push({ d, c, t });
+    const foundItem = stats.optional[game].r.find((x) => x.d === d);
+    if (foundItem) {
+      Object.assign(foundItem, { c, t });
+    } else {
+      stats.optional[game].r.push({ d, c, t });
+    }
 
     stats.optional[game] = JSON.stringify(stats.optional[game]);
     delete stats.id;
