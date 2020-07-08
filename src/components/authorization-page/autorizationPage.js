@@ -18,7 +18,7 @@ export default class authorizationPage {
       parent,
       'div',
       ['autologin-background'],
-      { style: 'display: none' },
+      {},
       ''
     );
 
@@ -340,7 +340,6 @@ export default class authorizationPage {
       { 'aria-hidden': 'true' },
       '&times;'
     );
-    User.logout()
     this.callAutoLogin(errorLogin, divToast, autologinBackdround);
     this.hideToast(spanToast, divToast);
     this.hideToast(spanToast, divLoginToast);
@@ -383,15 +382,10 @@ export default class authorizationPage {
 
   async callAutoLogin(err, toast, background) {
     try {
-      background.style.display = 'block';
-      const login = await User.autoLogin();
-      console.log(login);
+      await User.autoLogin();
       Router.draw('main-page');
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      background.style.display = 'none';
     } catch (error) {
       background.style.display = 'none';
-      console.log(error);
     }
   }
 
