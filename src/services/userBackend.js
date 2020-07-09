@@ -33,7 +33,20 @@ const DEFAULT_USER_SETTINGS = {
     gradeWord: true,
   },
   games: {
-    puzzle: { levelPages: new Array(LEVELS_COUNT).fill(0) },
+    audioCall: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Аудио вызов',
+    },
+    savannah: { levelPages: new Array(LEVELS_COUNT).fill(0), name: 'Саванна' },
+    phraseWizard: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Мастер фраз',
+    },
+    puzzle: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'English Puzzle',
+      max: [45, 40, 40, 25, 25, 25],
+    },
     sprint: { maxScore: 0 },
   },
   learning: {
