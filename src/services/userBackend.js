@@ -9,6 +9,7 @@ import {
 } from './dataBackend';
 
 import { APPLICATION, LEVELS_COUNT } from './config';
+import Words from './wordsBackend';
 
 let user = null;
 
@@ -317,6 +318,21 @@ export default class User {
         throw err;
       }
     }
+    const today = getToday();
+
+    if (
+      !user.settings.lastLoginDate ||
+      user.settings.lastLoginDate / (3600 * 1000 * 24) < today
+    ) {
+      await Promise.allSettled(
+        user.settings.learning.levels.map((x, idx) =>
+          Words.addNextUserWordsFromGroup(idx, x.newWordsPerDay)
+        )
+      );
+    }
+    user.settings.lastLoginDate = new Date().getTime();
+    User.saveSettings();
+
     try {
       user.stats = await User.getMainStatistics();
     } catch (err) {
