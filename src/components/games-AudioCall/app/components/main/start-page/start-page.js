@@ -35,25 +35,36 @@ export default class StartPage {
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
-        const words = await Service.wordsRequest(+item.dataset.num);
-        store.setState({ requestWords: words });
+        try {
+          const words = await Service.wordsRequest(+item.dataset.num);
+          store.setState({ requestWords: words });
 
-        store.setState({ groupe: item.dataset.num });
-        store.setState({ round: 0 });
-        store.setState({ correctChoice: 0 });
+          store.setState({ groupe: item.dataset.num });
+          store.setState({ round: 0 });
+          store.setState({ correctChoice: 0 });
 
-        if (words.length < 10) {
-          Toaster.createToast(
-            'Недостаточно слов для игры (необходимо минимум 10 слов)',
-            'danger'
-          );
-          Service.spinnerOff();
-        } else {
-          intro.remove();
-          Header.init();
-          Voice.init();
-          RusWords.init();
-          Button.init();
+          if (words.length < 10) {
+            Toaster.createToast(
+              'Недостаточно слов для игры (необходимо минимум 10 слов)',
+              'danger'
+            );
+            Service.spinnerOff();
+          } else {
+            intro.remove();
+            Header.init();
+            Voice.init();
+            RusWords.init();
+            Button.init();
+          }
+        } catch (error) {
+          if (
+            error.message === 'Failed to fetch' ||
+            error.message === 'NetworkError when attempting to fetch resource.'
+          ) {
+            Toaster.createToast('отсутсвует соединение с интернетом', 'danger');
+          } else {
+            Toaster.createToast('необходимо авторизоваться', 'danger');
+          }
         }
       });
     });
