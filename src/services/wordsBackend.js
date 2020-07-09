@@ -245,17 +245,6 @@ export default class Words {
     );
   }
 
-  static getUserWordsByDifficulty(todayOnly, difficulty, preload) {
-    return Words.getUserWords(
-      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":"${difficulty}"}${
-        todayOnly
-          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
-          : ''
-      }]}`,
-      preload
-    );
-  }
-
   static getUserWordById(wordId, preload) {
     const { userId, token } = getUserInfo();
 

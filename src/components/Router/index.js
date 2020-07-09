@@ -6,11 +6,13 @@ import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
+import AppSprint from 'components/sprint-game/app';
 import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';
 import AppSavannah from 'components/games-savannah/app/app';
+import SpeakIt from 'components/pages/mini-games/speakit';
 
 const routes = [
   {
@@ -41,7 +43,7 @@ const routes = [
   {
     name: 'speakit-page',
     title: 'Speak It',
-    ClassConstructor: MainPage,
+    ClassConstructor: SpeakIt,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
@@ -81,7 +83,7 @@ const routes = [
   {
     name: 'sprint-page',
     title: 'Спринт',
-    ClassConstructor: MainPage,
+    ClassConstructor: AppSprint,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',

@@ -16,7 +16,19 @@ class GameChart {
         ],
       },
       options: {
+        legend: {
+          labels: {
+              fontColor: 'white',
+              fontSize: 22,
+              fontStyle: 'bold',
+          }
+        },
         tooltips: {
+          backgroundColor: 'rgba(146, 85, 215, 0.8)',
+          titleFontSize: 24,
+          titleAlign: 'average',
+          bodyFontSize: 18,
+          cornerRadius: 10,
           callbacks: {
             label(tooltipItem, data) {
               const html = [];

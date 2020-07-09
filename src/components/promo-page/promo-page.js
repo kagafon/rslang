@@ -146,7 +146,7 @@ export default class promoPage {
       {},
       ''
     );
-    const divRule = createElement(describeGame, 'div', ['learn'], {}, '');
+    const divRule = createElement(describeGame, 'div', ['learn-r'], {}, '');
     const imgRule = createElement(
       divRule,
       'img',
