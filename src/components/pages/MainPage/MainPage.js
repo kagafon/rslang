@@ -63,11 +63,13 @@ class MainPage {
       { text: 'изучать только новые слова', state: 'new' },
       { text: 'повторение изученных слов', state: 'old' },
       { text: 'изучать все слова', state: 'all' },
+      { text: 'изучать сложные слова', state: 'hard' },
     ];
 
     this.wordsDiv = createElement(this.container, 'div', [
       'd-flex',
       'justify-content-between',
+      'flex-wrap',
       'div-level2',
     ]);
 
@@ -107,6 +109,9 @@ class MainPage {
         case 'old':
           icon = 'loop';
           break;
+        case 'hard':
+          icon = 'psychology';
+          break;
         default:
           icon = 'reply_all';
       }
@@ -123,8 +128,11 @@ class MainPage {
           store.setState({ words: this.newWords });
           break;
         case 'old':
-          console.error(this.learnedWords);
           store.setState({ words: this.learnedWords });
+          break;
+        case 'hard':
+          console.error(this.hardWords);
+          store.setState({ words: this.hardWords });
           break;
         default:
           store.setState({ words: this.allWords });
@@ -142,7 +150,7 @@ class MainPage {
       this.learnedWords = data.words[1];
       this.allWords = data.words[2];
       this.learnedTodyUserWords = data.words[3];
-
+      this.hardWords = data.words[4];
       let preloads = [];
       const { image, example, meaning } = data.settings.prompts;
       if (image) preloads.push('image');
@@ -173,6 +181,11 @@ class MainPage {
             el.querySelector(
               '#old'
             ).textContent = `всего: ${this.learnedWords.length}`;
+            break;
+          case 'hard':
+            el.querySelector(
+              '#hard'
+            ).textContent = `всего: ${this.hardWords.length}`;
             break;
           default:
             el.querySelector(

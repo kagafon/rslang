@@ -1,6 +1,7 @@
 @import './main-page/mainPageGame';
 .main-page {
   margin-top: 50px;
+  padding: 0 200px;
   .loader {
     margin-top: 200px;
   }
@@ -39,6 +40,7 @@
   .jumbotron-level {
     width: 30%;
     height: 260px;
+    margin: 0 10%;
     font-size: 18px;
     color: #fff;
     border-radius: 5px;
@@ -64,6 +66,9 @@
   }
 
   @media (max-width: 965px) {
+    .main-page {
+      padding: 0;
+    }
     .div-level2 {
       flex-direction: column;
       align-items: center;
@@ -74,11 +79,31 @@
   }
 
   @media (max-width: 550px) {
+    .main-page {
+      padding: 0;
+    }
     .div-level {
       flex-direction: column;
     }
     .jumbotron-level {
       width: 80%;
     }
+  }
+}
+@media (max-width: 1200px) {
+  .main-page {
+    padding: 0 150px;
+  }
+}
+
+@media (max-width: 965px) {
+  .main-page {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 550px) {
+  .main-page {
+    padding: 0;
   }
 }
