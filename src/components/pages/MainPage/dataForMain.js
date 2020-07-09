@@ -44,6 +44,7 @@ export async function getUserWords(preloads) {
     };
     return { words, settings };
   } catch (e) {
+    console.error(e);
     throw new Error(e);
   }
 }
