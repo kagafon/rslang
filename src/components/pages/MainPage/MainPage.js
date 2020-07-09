@@ -42,7 +42,7 @@ class MainPage {
       'p',
       [],
       {},
-      'Выучено слов : 0%'
+      'Пройдено сегодня слов : 0%'
     );
     const progress = createElement(progressDiv, 'div', ['progress']);
     this.progressBar = createElement(
@@ -131,10 +131,9 @@ class MainPage {
           store.setState({ words: this.learnedWords });
           break;
         case 'hard':
-          console.error(this.hardWords);
           store.setState({ words: this.hardWords });
           break;
-        default:
+        case 'all':
           store.setState({ words: this.allWords });
           break;
       }
@@ -146,11 +145,18 @@ class MainPage {
     this.loader = createLoader();
     try {
       const data = await getUserWords();
-      this.newWords = data.words[0];
-      this.learnedWords = data.words[1];
-      this.allWords = data.words[2];
-      this.learnedTodyUserWords = data.words[3];
-      this.hardWords = data.words[4];
+      const {
+        newWords,
+        learnedWords,
+        allWords,
+        learnedTodyUserWords,
+        hardWords,
+      } = data.words;
+      this.newWords = newWords;
+      this.learnedWords = learnedWords;
+      this.allWords = allWords;
+      this.learnedTodyUserWords = learnedTodyUserWords;
+      this.hardWords = hardWords;
       let preloads = [];
       const { image, example, meaning } = data.settings.prompts;
       if (image) preloads.push('image');
@@ -164,7 +170,7 @@ class MainPage {
         (this.learnedTodyUserWords / data.settings.learning.maxCardsPerDay) *
           100
       );
-      this.progressText.textContent = `Выучено слов: ${pr}%`;
+      this.progressText.textContent = `Пройдено   слов: ${pr}%`;
       this.progressBar.style.width = `${pr}%`;
       this.progressBar.textContent = `${pr}%`;
       this.progressBar.ariaValuenow = `${pr}`;
@@ -187,7 +193,7 @@ class MainPage {
               '#hard'
             ).textContent = `всего: ${this.hardWords.length}`;
             break;
-          default:
+          case 'all':
             el.querySelector(
               '#all'
             ).textContent = `всего: ${this.allWords.length}`;

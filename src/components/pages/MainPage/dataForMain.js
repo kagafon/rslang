@@ -35,13 +35,13 @@ export async function getUserWords(preloads) {
       allWords = await Words.getTodayUserWords();
       newWords = await Words.getNewUserWords(true);
     } else if (allWords.length === 0) throw new Error();
-    const words = [
+    const words = {
       newWords,
       learnedWords,
       allWords,
       learnedTodyUserWords,
       hardWords,
-    ];
+    };
     return { words, settings };
   } catch (e) {
     throw new Error(e);
