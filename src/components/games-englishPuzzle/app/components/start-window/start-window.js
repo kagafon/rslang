@@ -7,6 +7,7 @@ import SourceData from 'components/games-englishPuzzle/app/components/main/sourc
 import Button from 'components/games-englishPuzzle/app/components/main/button/button';
 import Hints from 'components/games-englishPuzzle/app/components/main/header/hints/hints';
 import Toaster from 'components/Toaster';
+import Statisctic from 'components/games-englishPuzzle/app/components/main/statistic/statistic';
 
 export default class StartPage {
   static render(container) {
@@ -35,20 +36,23 @@ export default class StartPage {
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
-        const words = await Service.wordRequest(+item.dataset.num);
-        store.setState({ requestWords: words });
-        store.setState({ groupe: item.dataset.num });
-        store.setState({ solution: 'yes' });
-        store.setState({ level: +item.dataset.num });
-        store.setState({ correctChoice: 9 });
-        store.setState({ appendCard: '' });
-        store.setState({ autoPlay: 'yes' });
-        store.setState({ background: 'none' });
-        store.setState({ wordsCount: 0 });
-
         try {
+          const words = await Service.wordRequest(+item.dataset.num);
+          store.setState({ requestWords: words });
+          store.setState({ groupe: item.dataset.num });
+          store.setState({ solution: 'yes' });
+          store.setState({ level: +item.dataset.num });
+          store.setState({ correctChoice: 9 });
+          store.setState({ appendCard: '' });
+          store.setState({ autoPlay: 'yes' });
+          store.setState({ background: 'none' });
+          store.setState({ wordsCount: 0 });
+
           if (words.length < 10) {
-            Toaster.createToast('необходимое количество слов 10', 'danger');
+            Toaster.createToast(
+              'Недостаточно слов для игры (необходимо минимум 10 слов)',
+              'danger'
+            );
             Service.spinnerOff();
           } else {
             intro.remove();
@@ -59,9 +63,14 @@ export default class StartPage {
             Service.puzzleDrop();
             Service.hintsClick();
             Hints.btnTranslate();
+            Statisctic.rebootStatictic();
           }
         } catch (error) {
-          Toaster.createToast('необходимо авторизоваться', 'danger');
+          if (error.message.search('fetch') > -1) {
+            Toaster.createToast('отсутсвует соединение с интернетом', 'danger');
+          } else {
+            Toaster.createToast('необходимо авторизоваться', 'danger');
+          }
         }
       });
     });
