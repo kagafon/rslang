@@ -1,11 +1,14 @@
 import {
   getWords,
+  getWordsFrom,
   getUserWords,
   addUserWord,
   updateUserWord,
   getUserWordById,
 } from './dataBackend';
 import { APPLICATION, FILE_BASE_URL } from './config';
+
+import User from './userBackend';
 
 const WORDS_TOTAL = 3600;
 const LEARN_LEVEL_CUP = 20;
@@ -166,9 +169,30 @@ export default class Words {
     );
   }
 
-  static async addUserWordsFromGroup(group, page, count) {
-    const wordsToLoad = await Words.getWordsForRound(group, page, count);
-    return Promise.allSettled(wordsToLoad.map((x) => Words.addUserWord(x.id)));
+  static async addNextUserWordsFromGroup(group, count) {
+    const {
+      currentWordNumber,
+    } = User.getCurrentUser().settings.learning.levels[group];
+    const wordsToLoad = await getWordsFrom(
+      group,
+      User.getCurrentUser().settings.learning.levels[group].currentWordNumber ||
+        0,
+      count
+    );
+    if (currentWordNumber)
+      User.getCurrentUser().settings.learning.levels[
+        group
+      ].currentWordNumber += count;
+    else {
+      User.getCurrentUser().settings.learning.levels[
+        group
+      ].currentWordNumber = count;
+    }
+
+    return Promise.allSettled([
+      ...wordsToLoad.map((x) => Words.addUserWord(x.id)),
+      User.saveSettings(),
+    ]);
   }
 
   static getUserWords(query, preload) {

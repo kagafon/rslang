@@ -13,7 +13,6 @@ import {
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
-// import modal from 'components/pages/MainPage/modal';
 import { Words } from 'services/backend';
 
 import Toaster from 'components/Toaster';
@@ -30,20 +29,14 @@ class MainPageGame {
   }
 
   async create() {
-    this.container = createElement(
-      '',
-      'form',
-      [
-        'd-flex',
-        'justify-content-center',
-        'align-items-center',
-        'flex-column',
-        'swipper-form',
-        'main-page-game',
-      ],
-      {},
-      ''
-    );
+    this.container = createElement('', 'form', [
+      'd-flex',
+      'justify-content-center',
+      'align-items-center',
+      'flex-column',
+      'swipper-form',
+      'main-page-game',
+    ]);
     this.loader = createLoader();
     try {
       this.words = store.getState().words;
@@ -52,10 +45,7 @@ class MainPageGame {
         throw new Error();
       }
     } catch (e) {
-      Toaster.createToast(
-        `в этой категории на сегодня пока нет слов`,
-        'danger'
-      );
+      Toaster.createToast(`В этой категории на сегодня нет слов`, 'danger');
       throw new Error();
     } finally {
       this.loader.parentNode.removeChild(this.loader);
@@ -63,43 +53,26 @@ class MainPageGame {
   }
 
   async createSwiper() {
-    this.swiperContainer = createElement(
-      this.container,
-      'div',
-      ['swiper-container', 'swiper-container-main'],
-      {},
-      ''
-    );
-    this.swiperWrapper = createElement(
-      this.swiperContainer,
-      'div',
-      ['swiper-wrapper'],
-      {},
-      ''
-    );
-    createElement(this.container, 'div', ['swiper-pagination'], {}, '');
-    const progress = createElement(this.container, 'div', ['progress'], {}, '');
-    this.progressBar = createElement(
-      progress,
-      'div',
-      ['progress-bar'],
-      {
-        role: 'progressbar',
-        style: `width: ${(1 / this.words.length) * 100}%`,
-        'aria-valuenow': `${(1 / this.words.length) * 100}`,
-        'aria-valuemin': '0',
-        'aria-valuemax': '300',
-      },
-      ''
-    );
+    this.swiperContainer = createElement(this.container, 'div', [
+      'swiper-container',
+      'swiper-container-main',
+    ]);
+    this.swiperWrapper = createElement(this.swiperContainer, 'div', [
+      'swiper-wrapper',
+    ]);
+    createElement(this.container, 'div', ['swiper-pagination']);
+    const progress = createElement(this.container, 'div', ['progress']);
+    this.progressBar = createElement(progress, 'div', ['progress-bar'], {
+      role: 'progressbar',
+      style: `width: ${(1 / this.words.length) * 100}%`,
+      'aria-valuenow': `${(1 / this.words.length) * 100}`,
+      'aria-valuemin': '0',
+      'aria-valuemax': '300',
+    });
     this.words.forEach((word) => {
-      const item = createElement(
-        this.swiperWrapper,
-        'div',
-        ['swiper-slide'],
-        { id: word.id },
-        ''
-      );
+      const item = createElement(this.swiperWrapper, 'div', ['swiper-slide'], {
+        id: word.id,
+      });
       const { buttons, prompts } = this.settings;
       const card = createCard(word, buttons, prompts);
 
@@ -166,7 +139,6 @@ class MainPageGame {
       this.input.disabled = 'disabled';
       this.submittBtn.style.userSelect = 'none';
       this.submittBtnAnswer.style.userSelect = 'none';
-      // this.input.disabled = 'disabled';
       if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
         const dataUpdate = await checkWordResult(this.wordInput, 'no', true);
         this.wordInput = dataUpdate.word;
@@ -185,7 +157,7 @@ class MainPageGame {
             },
             { text: 'Новые слова', value: stat.learnedWords },
             {
-              text: 'Самая длинная серия правльных ответов',
+              text: 'Самая длинная серия правильных ответов',
               value: stat.answerSeries,
             },
           ]);
@@ -270,17 +242,17 @@ class MainPageGame {
     if (event.target.dataset.btn === 'easy') {
       this.wordInput.difficulty = 'easy';
       Words.updateUserWord(this.wordInput);
-      Toaster.createToast(`это слово легкое для Вас`, 'success');
+      Toaster.createToast(`Это слово легкое для Вас`, 'success');
     }
     if (event.target.dataset.btn === 'medium') {
       this.wordInput.difficulty = 'medium';
       Words.updateUserWord(this.wordInput);
-      Toaster.createToast(`это слово стоит повторить`, 'info');
+      Toaster.createToast(`Это слово стоит повторить`, 'info');
     }
     if (event.target.dataset.btn === 'hard') {
       this.wordInput.difficulty = 'hard';
       Words.updateUserWord(this.wordInput);
-      Toaster.createToast(`это трудное слово, но Вы справитесь!`, 'warning');
+      Toaster.createToast(`Это трудное слово, но Вы справитесь!`, 'warning');
     }
   }
 

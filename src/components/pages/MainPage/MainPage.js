@@ -1,9 +1,7 @@
 import { createElement } from 'helpers/dom';
 import store from 'components/pages/MainPage/Store';
 import router from 'components/Router/';
-// import { User, Words } from 'services/backend';
 import { getUserWords } from 'components/pages/MainPage/dataForMain';
-import Toaster from 'components/Toaster';
 import { createLoader } from 'helpers/helpersForMainPage';
 class MainPage {
   create() {
@@ -15,39 +13,30 @@ class MainPage {
       ''
     );
 
-    this.jumbotron = createElement(
-      this.container,
-      'div',
-      [
-        'jumbotron',
-        'd-flex',
-        'justify-content-center',
-        'align-items-center',
-        'flex-column',
-      ],
-      {},
-      ''
-    );
+    this.jumbotron = createElement(this.container, 'div', [
+      'jumbotron',
+      'd-flex',
+      'justify-content-center',
+      'align-items-center',
+      'flex-column',
+    ]);
 
-    const div1 = createElement(
-      this.jumbotron,
-      'div',
-      ['d-flex', 'justify-content-around', 'align-items-center', 'div-level'],
-      {},
-      ''
-    );
+    const div1 = createElement(this.jumbotron, 'div', [
+      'd-flex',
+      'justify-content-around',
+      'align-items-center',
+      'div-level',
+    ]);
 
-    const lang = createElement(
-      div1,
-      'p',
-      ['d-flex', 'justify-content-between', 'align-items-center'],
-      {},
-      ''
-    );
-    createElement(lang, 'div', ['lang-image'], {}, '');
+    const lang = createElement(div1, 'p', [
+      'd-flex',
+      'justify-content-between',
+      'align-items-center',
+    ]);
+    createElement(lang, 'div', ['lang-image']);
     createElement(lang, 'p', [], {}, 'Английский язык');
 
-    const progressDiv = createElement(div1, 'div', [], {}, '');
+    const progressDiv = createElement(div1, 'div');
     this.progressText = createElement(
       progressDiv,
       'p',
@@ -55,7 +44,7 @@ class MainPage {
       {},
       'Выучено слов : 0%'
     );
-    const progress = createElement(progressDiv, 'div', ['progress'], {}, '');
+    const progress = createElement(progressDiv, 'div', ['progress']);
     this.progressBar = createElement(
       progress,
       'div',
@@ -76,15 +65,13 @@ class MainPage {
       { text: 'изучать все слова', state: 'all' },
     ];
 
-    this.wordsDiv = createElement(
-      this.container,
-      'div',
-      ['d-flex', 'justify-content-between', 'div-level2'],
-      {},
-      ''
-    );
+    this.wordsDiv = createElement(this.container, 'div', [
+      'd-flex',
+      'justify-content-between',
+      'div-level2',
+    ]);
 
-    words.forEach((el, index) => {
+    words.forEach((el) => {
       const jumbotronLevel = createElement(
         this.wordsDiv,
         'div',
@@ -125,7 +112,7 @@ class MainPage {
       }
       createElement(centerDiv, 'span', ['material-icons'], {}, `${icon}`);
       createElement(centerDiv, 'span', [], {}, `${el.text}`);
-      createElement(centerDiv, 'span', [], { id: `${el.state}` }, ``);
+      createElement(centerDiv, 'span', [], { id: `${el.state}` });
     });
   }
 
@@ -194,7 +181,7 @@ class MainPage {
         }
       });
     } catch (e) {
-      console.error(e);
+      return this.loader;
     } finally {
       this.loader.parentNode.removeChild(this.loader);
     }

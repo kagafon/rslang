@@ -14,13 +14,11 @@ export default function createCard(wordInit, buttons, prompts) {
   } = wordInit;
 
   const card = createElement('', 'div', ['card', 'card_size'], {}, '');
-  const cardHeader = createElement(
-    card,
-    'div',
-    ['card-header', 'd-flex', 'justify-content-between'],
-    {},
-    ``
-  );
+  const cardHeader = createElement(card, 'div', [
+    'card-header',
+    'd-flex',
+    'justify-content-between',
+  ]);
   createElement(
     cardHeader,
     'span',
@@ -28,19 +26,13 @@ export default function createCard(wordInit, buttons, prompts) {
     { 'data-btn': 'volume' },
     `volume_up`
   );
-  const cardBody = createElement(
-    card,
-    'div',
-    [
-      'card-body',
-      'd-flex',
-      'justify-content-center',
-      'align-items-center',
-      'flex-column',
-    ],
-    {},
-    ``
-  );
+  const cardBody = createElement(card, 'div', [
+    'card-body',
+    'd-flex',
+    'justify-content-center',
+    'align-items-center',
+    'flex-column',
+  ]);
   createElement(
     cardBody,
     'span',
@@ -69,13 +61,10 @@ export default function createCard(wordInit, buttons, prompts) {
     createElement(cardBody, 'p', ['card-text', 'translate'], {}, `${word}`);
   }
   if (prompts.meaning) {
-    const sentenceTextMeaning = createElement(
-      cardBody,
-      'p',
-      ['card-text', 'card-text-meaning'],
-      {},
-      ``
-    );
+    const sentenceTextMeaning = createElement(cardBody, 'p', [
+      'card-text',
+      'card-text-meaning',
+    ]);
     sentenceTextMeaning.innerHTML = hideWord(word, textMeaning);
     if (prompts.translation) {
       createElement(
@@ -89,13 +78,10 @@ export default function createCard(wordInit, buttons, prompts) {
   }
 
   if (prompts.example) {
-    const sentenceTextExample = createElement(
-      cardBody,
-      'p',
-      ['card-text', 'card-text-example'],
-      {},
-      ``
-    );
+    const sentenceTextExample = createElement(cardBody, 'p', [
+      'card-text',
+      'card-text-example',
+    ]);
     sentenceTextExample.innerHTML = hideWord(word, textExample);
     if (prompts.translation) {
       createElement(
@@ -111,16 +97,14 @@ export default function createCard(wordInit, buttons, prompts) {
     createElement(cardBody, 'p', ['card-text'], {}, `${transcription}`);
   if (prompts.image) {
     const cardImage = createElement(cardBody, 'div', ['card-img_div'], {}, ``);
-    createElement(cardImage, 'img', ['card-img'], { src: `` }, ``);
+    createElement(cardImage, 'img', ['card-img'], { src: `` });
   }
 
-  const cardFooter = createElement(
-    card,
-    'div',
-    ['card-footer', 'd-flex', 'justify-content-between'],
-    {},
-    ``
-  );
+  const cardFooter = createElement(card, 'div', [
+    'card-footer',
+    'd-flex',
+    'justify-content-between',
+  ]);
   createElement(
     cardFooter,
     'button',
@@ -157,8 +141,7 @@ export default function createCard(wordInit, buttons, prompts) {
       cardFooter,
       'div',
       ['btn-group', 'difficulty-buttons'],
-      { role: 'group' },
-      ``
+      { role: 'group' }
     );
     createElement(
       ankibtn,

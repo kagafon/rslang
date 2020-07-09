@@ -67,19 +67,17 @@ function changeProgressBar(progressBarMain, pagination) {
 }
 
 function createLoader() {
-  const divLoad = createElement(
-    document.querySelector('body'),
-    'div',
-    ['d-flex', 'justify-content-center', 'align-items-center', 'mt-5'],
-    {},
-    ''
-  );
+  const divLoad = createElement(document.querySelector('body'), 'div', [
+    'd-flex',
+    'justify-content-center',
+    'align-items-center',
+    'mt-5',
+  ]);
   const loader = createElement(
     divLoad,
     'div',
     ['spinner-border', 'text-primary'],
-    { role: 'status' },
-    ''
+    { role: 'status' }
   );
   createElement(loader, 'span', ['sr-only'], {}, 'Loading...');
 
@@ -131,7 +129,7 @@ async function checkWordResult(wordN, result, showAnswer) {
     word.correctAnswerSeries *
     settings.learning.levels[word.group].baseInterval[word.difficulty];
   word.nextRepeat = new Date(new Date().getTime() + min * 60 * 1000);
-  stat.User.saveMainStatistics(stat);
+  User.saveMainStatistics(stat);
   return { word, stat };
 }
 

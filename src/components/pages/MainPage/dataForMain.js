@@ -1,34 +1,44 @@
 import { User, Words } from 'services/backend';
+// import DEFAULT_USER_SETTINGS from 'services/userBackend';
+
+const DEFAULT_USER_SETTINGS = {
+  username: '',
+  creationDate: new Date().getTime(),
+  lastLoginDate: null,
+  prompts: {
+    translation: true,
+    example: true,
+    meaning: true,
+    transcription: true,
+    image: true,
+  },
+  buttons: {
+    showAnswer: true,
+    removeWord: true,
+    gradeWord: true,
+  },
+  games: {
+    puzzle: { levelPages: new Array(6).fill(0) },
+    sprint: { maxScore: 0 },
+  },
+  learning: {
+    maxCardsPerDay: 50,
+    levels: Array(LEVELS_COUNT)
+      .fill(null)
+      .map(() => ({
+        newWordsPerDay: 10,
+        currentWordNumber: 0,
+        baseInterval: { new: 60, easy: 60, medium: 60, hard: 60 },
+      })),
+  },
+};
 
 export async function getSettings() {
-  const settings = {
-    prompts: {
-      translation: true,
-      example: true,
-      meaning: true,
-      transcription: true,
-      image: true,
-    },
-    buttons: {
-      showAnswer: true,
-      removeWord: true,
-      gradeWord: true,
-    },
-    learning: {
-      maxCardsPerDay: 50,
-      levels: Array(6)
-        .fill(null)
-        .map(() => ({
-          newWordsPerDay: 10,
-          baseInterval: { new: 1800, easy: 1800, medium: 1800, hard: 1800 },
-        })),
-    },
-  };
   try {
     const user = await User.getCurrentUser();
     return user.settings;
   } catch (e) {
-    return settings;
+    return DEFAULT_USER_SETTINGS;
   }
 }
 
@@ -43,17 +53,6 @@ export async function getUserWords(preloads) {
     let newWords = data[0];
     const learnedWords = data[1];
     const learnedTodyUserWords = data[2].passedCards || 0;
-    // data[2].filter((word) => {
-    //   const now = new Date();
-    //   const wordDate = new Date(word.lastRepeat);
-    //   if (
-    //     now.getDate() === wordDate.getDate() &&
-    //     now.getMonth() === wordDate.getMonth() &&
-    //     now.getFullYear() === wordDate.getFullYear()
-    //   ) {
-    //     return true;
-    //   }
-    // });
     let allWords = learnedWords.concat(newWords);
     if (!settings.lastLoginDate && allWords.length === 0) {
       await Promise.all([
@@ -64,10 +63,6 @@ export async function getUserWords(preloads) {
         Words.addUserWordsFromGroup(4, Math.floor(Math.random() * 29), 8),
         Words.addUserWordsFromGroup(5, Math.floor(Math.random() * 29), 8),
       ]);
-      // const newData = await Promise.all([
-      //   Words.getTodayUserWords(),
-      //   Words.getNewUserWords(true),
-      // ]);
       allWords = await Words.getTodayUserWords();
       newWords = await Words.getNewUserWords(true);
     } else if (allWords.length === 0) throw new Error();
