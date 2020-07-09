@@ -329,4 +329,8 @@ export default class User {
       }
     }
   }
+
+  static getDefaultUserSettings() {
+    return DEFAULT_USER_SETTINGS;
+  }
 }

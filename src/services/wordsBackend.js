@@ -1,11 +1,14 @@
 import {
   getWords,
+  getWordsFrom,
   getUserWords,
   addUserWord,
   updateUserWord,
   getUserWordById,
 } from './dataBackend';
 import { APPLICATION, FILE_BASE_URL } from './config';
+
+import User from './userBackend';
 
 const WORDS_TOTAL = 3600;
 const LEARN_LEVEL_CUP = 20;
@@ -166,9 +169,30 @@ export default class Words {
     );
   }
 
-  static async addUserWordsFromGroup(group, page, count) {
-    const wordsToLoad = await Words.getWordsForRound(group, page, count);
-    return Promise.allSettled(wordsToLoad.map((x) => Words.addUserWord(x.id)));
+  static async addNextUserWordsFromGroup(group, count) {
+    const {
+      currentWordNumber,
+    } = User.getCurrentUser().settings.learning.levels[group];
+    const wordsToLoad = await getWordsFrom(
+      group,
+      User.getCurrentUser().settings.learning.levels[group].currentWordNumber ||
+        0,
+      count
+    );
+    if (currentWordNumber)
+      User.getCurrentUser().settings.learning.levels[
+        group
+      ].currentWordNumber += count;
+    else {
+      User.getCurrentUser().settings.learning.levels[
+        group
+      ].currentWordNumber = count;
+    }
+
+    return Promise.allSettled([
+      ...wordsToLoad.map((x) => Words.addUserWord(x.id)),
+      User.saveSettings(),
+    ]);
   }
 
   static getUserWords(query, preload) {
@@ -213,6 +237,17 @@ export default class Words {
   static getLearnedUserWords(todayOnly, preload) {
     return Words.getUserWords(
       `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":null}}${
+        todayOnly
+          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
+          : ''
+      }]}`,
+      preload
+    );
+  }
+
+  static getUserWordsByDifficulty(todayOnly, difficulty, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":"${difficulty}"}${
         todayOnly
           ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
           : ''

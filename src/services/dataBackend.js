@@ -79,6 +79,26 @@ const getWords = (
   ).then(wrapResponse);
 };
 
+const getWordsFrom = (
+  group,
+  skip,
+  wordsPerPage = 20,
+  maxWordsInSentence = 1000
+) => {
+  return fetch(
+    `${DATA_BASE_URL}/words?skip=${
+      skip || 0
+    }&group=${group}&wordsPerExampleSentenceLTE=${maxWordsInSentence}&wordsPerPage=${wordsPerPage}`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  ).then(wrapResponse);
+};
+
 const getUserWords = (id, token, filter, wordsPerPage = 50) => {
   return fetch(
     `${DATA_BASE_URL}/users/${id}/aggregatedWords?filter=${filter}&wordsPerPage=${wordsPerPage}`,
@@ -193,6 +213,7 @@ export {
   getUser,
   addUser,
   getWords,
+  getWordsFrom,
   getSettings,
   setSettings,
   getStatistics,

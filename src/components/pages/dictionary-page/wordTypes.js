@@ -1,5 +1,5 @@
 export default {
-//  '': { class: 'secondary', title: 'Все' },
+  //  '': { class: 'secondary', title: 'Все' },
   new: { class: 'primary', title: 'Новое', selected: true },
   easy: { class: 'success', title: 'Легко', selected: true },
   medium: { class: 'info', title: 'Хорошо', selected: true },

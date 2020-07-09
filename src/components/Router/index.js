@@ -1,5 +1,5 @@
-/* eslint-disable import/no-cycle */
-import MainPage from 'components/pages/MainPage';
+import MainPage from 'components/pages/MainPage/MainPage';
+import MainPageGame from 'components/pages/MainPage/MainPageGame';
 import Router from 'components/Router/Router';
 import StatisticsPage from 'components/statisticPage/StatisticsPage';
 import promoPage from 'components/promo-page/promo-page';
@@ -20,6 +20,15 @@ const routes = [
     title: 'Учить слова',
     ClassConstructor: MainPage,
     needAuthorization: true,
+    image: 'assets/images/backgrounds/main-page.jpg',
+    color: 'rgba(83, 140, 173, 0.49)',
+  },
+  {
+    name: 'main-page-game',
+    title: 'Main Game',
+    excludeFromMenu: true,
+    ClassConstructor: MainPageGame,
+    needAuthorization: false,
     image: 'assets/images/backgrounds/main-page.jpg',
     color: 'rgba(83, 140, 173, 0.49)',
   },
