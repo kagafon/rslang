@@ -164,17 +164,7 @@ export default class Statisctic {
       level
     ];
 
-    if (level === 0 && page === 29) {
-      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
-    } else if (level === 1 && page === 29) {
-      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
-    } else if (level === 2 && page === 29) {
-      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
-    } else if (level === 3 && page === 29) {
-      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
-    } else if (level === 4 && page === 29) {
-      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
-    } else if (level === 5 && page === 29) {
+    if (page === 29) {
       User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
     } else {
       User.getCurrentUser().settings.games.audioCall.levelPages[level] += 1;
