@@ -1,11 +1,14 @@
 import {
   getWords,
+  getWordsFrom,
   getUserWords,
   addUserWord,
   updateUserWord,
   getUserWordById,
 } from './dataBackend';
 import { APPLICATION, FILE_BASE_URL } from './config';
+
+import User from './userBackend';
 
 const WORDS_TOTAL = 3600;
 const LEARN_LEVEL_CUP = 20;
@@ -14,25 +17,26 @@ const userWordFields = [
   { name: 'difficulty', default: 'new' },
   {
     name: 'creationDate',
-    get: (x) => (x ? null : new Date(x)),
+    get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
-    default: `${new Date().getTime()}`,
+    default: new Date(),
   },
   {
     name: 'lastRepeat',
     get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
-    default: 'null',
+    default: null,
   },
-  { name: 'repeatTimes', default: '0' },
+  { name: 'repeatTimes', default: 0 },
   {
     name: 'nextRepeat',
     get: (x) => (x ? new Date(x) : null),
     set: (x) => x.getTime(),
-    default: `${new Date().getTime()}`,
+    default: new Date(),
   },
-  { name: 'correctAnswers', default: '0' },
-  { name: 'totalAnswers', default: '0' },
+  { name: 'correctAnswers', default: 0 },
+  { name: 'totalAnswers', default: 0 },
+  { name: 'correctAnswerSeries', default: 0 },
 ];
 
 const getUserInfo = () => {
@@ -93,10 +97,16 @@ const preloadData = async (words, preloadFields) => {
   return words;
 };
 export default class Words {
-  static getWordsForRound(group, page, wordsPerPage, preload) {
+  static getWordsForRound(
+    group,
+    page,
+    wordsPerPage,
+    preload,
+    maxWordsInSentence = 1000
+  ) {
     return (group >= 0
-      ? getWords(group, page, wordsPerPage)
-      : Words.getTodayUserWords()
+      ? getWords(group, page, wordsPerPage, maxWordsInSentence)
+      : Words.getAllUserWords(true)
     ).then(async (words) => {
       const wordsToReturn = words
         .sort(() => Math.random() - 0.5)
@@ -117,7 +127,18 @@ export default class Words {
           token,
           wordId,
           userWordFields.reduce(
-            (acc, x) => Object.assign(acc, { [x.name]: x.default }),
+            (acc, x) =>
+              Object.assign(
+                acc,
+                x.default !== null && x.default !== undefined
+                  ? {
+                      [x.name]: (x.set
+                        ? x.set(x.default)
+                        : x.default
+                      ).toString(),
+                    }
+                  : {}
+              ),
             {}
           )
         );
@@ -132,20 +153,46 @@ export default class Words {
       word.id,
       userWordFields.reduce(
         (acc, x) =>
-          Object.assign(acc, {
-            [x.name]:
-              word[x.name] !== undefined
-                ? JSON.stringify(word[x.name])
-                : x.default,
-          }),
+          Object.assign(
+            acc,
+            word[x.name] !== null && word[x.name] !== undefined
+              ? {
+                  [x.name]: (x.set
+                    ? x.set(word[x.name])
+                    : word[x.name]
+                  ).toString(),
+                }
+              : {}
+          ),
         {}
       )
     );
   }
 
-  static async addUserWordsFromGroup(group, page, count) {
-    const wordsToLoad = await Words.getWordsForRound(group, page, count);
-    return Promise.allSettled(wordsToLoad.map((x) => Words.addUserWord(x.id)));
+  static async addNextUserWordsFromGroup(group, count) {
+    const {
+      currentWordNumber,
+    } = User.getCurrentUser().settings.learning.levels[group];
+    const wordsToLoad = await getWordsFrom(
+      group,
+      User.getCurrentUser().settings.learning.levels[group].currentWordNumber ||
+        0,
+      count
+    );
+    if (currentWordNumber)
+      User.getCurrentUser().settings.learning.levels[
+        group
+      ].currentWordNumber += count;
+    else {
+      User.getCurrentUser().settings.learning.levels[
+        group
+      ].currentWordNumber = count;
+    }
+
+    return Promise.allSettled([
+      ...wordsToLoad.map((x) => Words.addUserWord(x.id)),
+      User.saveSettings(),
+    ]);
   }
 
   static getUserWords(query, preload) {
@@ -165,13 +212,51 @@ export default class Words {
     );
   }
 
-  static getAllUserWords(preload) {
-    return Words.getUserWords('{"userWord":{"$ne":null}}', preload);
+  static getAllUserWords(excludeDeleted, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}}${
+        excludeDeleted ? `, {"userWord.difficulty" :{"$ne": "deleted"}}` : ''
+      }]}`,
+      preload
+    );
   }
 
   static getTodayUserWords(preload) {
     return Words.getUserWords(
       `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}]}`,
+      preload
+    );
+  }
+
+  static getNewUserWords(todayOnly, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":null}${
+        todayOnly
+          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
+          : ''
+      }]}`,
+      preload
+    );
+  }
+
+  static getLearnedUserWords(todayOnly, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":{"$ne":"deleted"}}, {"userWord.optional.lastRepeat":{"$ne":null}}${
+        todayOnly
+          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
+          : ''
+      }]}`,
+      preload
+    );
+  }
+
+  static getUserWordsByDifficulty(todayOnly, difficulty, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}},{"userWord.difficulty":"${difficulty}"}${
+        todayOnly
+          ? `, {"userWord.optional.nextRepeat" :{"$lte": "${new Date().getTime()}"}}`
+          : ''
+      }]}`,
       preload
     );
   }
@@ -185,7 +270,7 @@ export default class Words {
           unwindWord(preloadedWords[0])
         );
       }
-      return words[0];
+      return unwindWord(words[0]);
     });
   }
 }

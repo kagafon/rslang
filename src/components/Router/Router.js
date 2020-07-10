@@ -52,10 +52,12 @@ export default class Router {
           'transitionend',
           this.transitionEndHandler
         );
+        if (this.pageObject && this.pageObject.beforeClose) {
+          this.pageObject.beforeClose();
+        }
         this.container.style.opacity = '0';
-
         document.body.style.backgroundImage = `url(${
-          preparedRoutes[routeName].imageSrc || preparedRoutes[routeName].image
+          route.imageSrc || route.image
         })`;
         this.navbar.style.backgroundColor = `${route.color}`;
         this.currentRoute = route;
@@ -65,15 +67,15 @@ export default class Router {
     }
   }
 
-  transitionEndCallback() {
+  async transitionEndCallback() {
     this.container.removeEventListener(
       'transitionend',
       this.transitionEndHandler
     );
     this.container.textContent = '';
-    const route = new this.currentRoute.ClassConstructor();
-    this.container.appendChild(route.init());
-    if (route.postInit) route.postInit();
+    this.pageObject = new this.currentRoute.ClassConstructor();
+    this.container.appendChild(await this.pageObject.init());
+    if (this.pageObject.postInit) this.pageObject.postInit();
     this.container.style.opacity = '1';
   }
 
@@ -97,7 +99,7 @@ export default class Router {
         'aria-expanded': 'false',
         'aria-label': 'Toggle navigation',
       },
-      'RS Lang'
+      ''
     );
     createElement(menuBtn, 'span', ['navbar-toggler-icon']);
 
@@ -118,6 +120,7 @@ export default class Router {
     const onClickHandler = (pageName, event) => {
       event.preventDefault();
       this.draw(pageName);
+      collapseArea.classList.remove('show');
     };
 
     this.menuItems = this.routes

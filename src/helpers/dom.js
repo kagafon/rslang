@@ -3,7 +3,7 @@ const createElement = (parent, tag, classes, attributes, text) => {
   if (classes && classes.length > 0) elem.classList.add(...classes);
   if (attributes)
     Object.keys(attributes).forEach((x) => elem.setAttribute(x, attributes[x]));
-  if (text) elem.innerText = text;
+  if (text || text === 0) elem.innerText = text;
   if (parent) parent.appendChild(elem);
   return elem;
 };
