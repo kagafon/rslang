@@ -1,8 +1,6 @@
-/* eslint-disable import/no-duplicates */
 /* eslint-disable import/no-cycle */
-import { Words } from 'services/backend';
 import store from 'components/games-englishPuzzle/app/storage';
-import { User } from 'services/backend';
+import { User, Words } from 'services/backend';
 import Button from './components/main/button/button';
 import Hints from './components/main/header/hints/hints';
 
@@ -11,7 +9,9 @@ export default class Service {
   static async wordRequest(level = 0) {
     try {
       this.spinnerOn();
-      const page = User.getCurrentUser().settings.games.puzzle.levelPages[0];
+      const page = User.getCurrentUser().settings.games.puzzle.levelPages[
+        level
+      ];
       const words = await Words.getWordsForRound(+level, page, 10, [], 10);
       return words;
     } catch (error) {
