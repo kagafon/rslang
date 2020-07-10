@@ -37,6 +37,7 @@ export default class StartPage {
 
           store.setState({ requestWords: words });
           store.setState({ groupe: +item.dataset.num });
+          store.setState({ level: +item.dataset.num });
           store.setState({ round: 0 });
           store.setState({ correctChoice: 0 });
           store.setState({ health: 5 });

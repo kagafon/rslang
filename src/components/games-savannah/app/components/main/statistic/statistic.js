@@ -152,11 +152,49 @@ export default class Statistic {
     } catch (error) {}
   }
 
+  static rebootStatictic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
+  }
+
   static postGametStatistic() {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
+
+    this.userPage();
+    User.saveSettings();
     User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
+  }
+
+  static userPage() {
+    const stage = store.getState();
+
+    const { level } = stage;
+    const page = User.getCurrentUser().settings.games.savannah.levelPages[
+      level
+    ];
+
+    if (level === 0 && page === 44) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else if (level === 1 && page === 39) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else if (level === 2 && page === 39) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else if (level === 3 && page === 24) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else if (level === 4 && page === 24) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else if (level === 5 && page === 24) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] += 1;
+    }
   }
 
   static init() {
@@ -166,5 +204,6 @@ export default class Statistic {
     this.playAudio();
     this.reboot();
     this.postGametStatistic();
+    this.rebootStatictic();
   }
 }
