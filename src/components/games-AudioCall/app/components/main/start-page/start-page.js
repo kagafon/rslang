@@ -40,7 +40,7 @@ export default class StartPage {
         try {
           const words = await Service.wordsRequest(+item.dataset.num);
           store.setState({ requestWords: words });
-
+          store.setState({ level: +item.dataset.num });
           store.setState({ groupe: item.dataset.num });
           store.setState({ round: 0 });
           store.setState({ correctChoice: 0 });

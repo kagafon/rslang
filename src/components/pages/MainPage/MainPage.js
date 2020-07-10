@@ -115,9 +115,24 @@ class MainPage {
         default:
           icon = 'reply_all';
       }
-      createElement(centerDiv, 'span', ['material-icons'], {}, `${icon}`);
-      createElement(centerDiv, 'span', [], {}, `${el.text}`);
-      createElement(centerDiv, 'span', [], { id: `${el.state}` });
+      createElement(
+        centerDiv,
+        'span',
+        ['material-icons'],
+        { 'data-words': `${el.state}` },
+        `${icon}`
+      );
+      createElement(
+        centerDiv,
+        'span',
+        [],
+        { 'data-words': `${el.state}` },
+        `${el.text}`
+      );
+      createElement(centerDiv, 'span', [], {
+        id: `${el.state}`,
+        'data-words': `${el.state}`,
+      });
     });
   }
 
