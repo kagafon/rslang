@@ -52,6 +52,9 @@ export default class Router {
           'transitionend',
           this.transitionEndHandler
         );
+        if (this.pageObject && this.pageObject.beforeClose) {
+          this.pageObject.beforeClose();
+        }
         this.container.style.opacity = '0';
         document.body.style.backgroundImage = `url(${
           route.imageSrc || route.image
@@ -64,15 +67,15 @@ export default class Router {
     }
   }
 
-  transitionEndCallback() {
+  async transitionEndCallback() {
     this.container.removeEventListener(
       'transitionend',
       this.transitionEndHandler
     );
     this.container.textContent = '';
-    const route = new this.currentRoute.ClassConstructor();
-    this.container.appendChild(route.init());
-    if (route.postInit) route.postInit();
+    this.pageObject = new this.currentRoute.ClassConstructor();
+    this.container.appendChild(await this.pageObject.init());
+    if (this.pageObject.postInit) this.pageObject.postInit();
     this.container.style.opacity = '1';
   }
 

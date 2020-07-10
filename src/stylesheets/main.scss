@@ -1,6 +1,7 @@
 @import '~bootswatch/dist/materia/variables';
 @import '~bootstrap/scss/bootstrap';
 @import '~bootswatch/dist/materia/bootswatch';
+@import '~swiper/swiper';
 @import 'swiper/css/swiper';
 @import 'variables';
 @import 'toaster/toaster';
@@ -16,6 +17,9 @@
 @import 'game-AudioCall/style.scss';
 @import './game-englishPuzzle/style.scss';
 @import 'game-savannah/style.scss';
+@import './main-page/startMain';
+@import 'game-sprint/style.scss';
+@import 'game-speakIt/main';
 
 body {
   background-repeat: no-repeat;

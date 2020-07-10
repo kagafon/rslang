@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "deploy": "npm run build && netlify deploy --prod",
-    "lint": "node node_modules/eslint/bin/eslint.js ./src",
+    "lint": "node node_modules/eslint/bin/eslint.js ./src --fix",
     "test": "jest --testMatch \"<rootDir>/test/*.test.js\""
   },
   "jest": {
@@ -60,6 +60,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@material/animation": "^7.0.0",
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.3",
     "bootswatch": "^4.5.0",
