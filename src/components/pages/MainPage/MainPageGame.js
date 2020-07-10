@@ -146,7 +146,7 @@ class MainPageGame {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
-        if (stat.passedCards !== this.settings.learning.maxCardsPerDay) {
+        if (stat.passedCards === this.settings.learning.maxCardsPerDay) {
           showStat(
             ' Поздравляю! Серия завершена. Вы выполнили дневную норму по изучению слов.',
             [
