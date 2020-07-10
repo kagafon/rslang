@@ -47,7 +47,7 @@ export default class WordDetails {
             createElement(parent, 'div', ['progress']),
             'div',
             ['progress-bar', 'progress-bar-striped', 'bg-info'],
-            { style: `width: ${word.learnLevel || 0}%;` }
+            { style: `width: ${word.progress || 0}%;` }
           ),
       },
       { title: 'Повторов', name: 'repeatTimes' },
