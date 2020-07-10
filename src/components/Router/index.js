@@ -11,6 +11,7 @@ import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';
+import AppPuzzle from 'components/games-englishPuzzle/app/app';
 import AppSavannah from 'components/games-savannah/app/app';
 import SpeakIt from 'components/pages/mini-games/speakit';
 
@@ -53,7 +54,7 @@ const routes = [
   {
     name: 'engpuz-page',
     title: 'English puzzle',
-    ClassConstructor: MainPage,
+    ClassConstructor: AppPuzzle,
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
