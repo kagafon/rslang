@@ -9,6 +9,7 @@ import {
 } from './dataBackend';
 
 import { APPLICATION, LEVELS_COUNT } from './config';
+import Words from './wordsBackend';
 
 let user = null;
 
@@ -33,7 +34,20 @@ const DEFAULT_USER_SETTINGS = {
     gradeWord: true,
   },
   games: {
-    puzzle: { levelPages: new Array(LEVELS_COUNT).fill(0) },
+    audioCall: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Аудио вызов',
+    },
+    savannah: { levelPages: new Array(LEVELS_COUNT).fill(0), name: 'Саванна' },
+    phraseWizard: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Мастер фраз',
+    },
+    puzzle: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'English Puzzle',
+      max: [45, 40, 40, 25, 25, 25],
+    },
     sprint: { maxScore: 0 },
   },
   learning: {
@@ -317,6 +331,21 @@ export default class User {
         throw err;
       }
     }
+    const today = getToday();
+
+    if (
+      !user.settings.lastLoginDate ||
+      user.settings.lastLoginDate / (3600 * 1000 * 24) < today
+    ) {
+      await Promise.allSettled(
+        user.settings.learning.levels.map((x, idx) =>
+          Words.addNextUserWordsFromGroup(idx, x.newWordsPerDay)
+        )
+      );
+    }
+    user.settings.lastLoginDate = new Date().getTime();
+    User.saveSettings();
+
     try {
       user.stats = await User.getMainStatistics();
     } catch (err) {

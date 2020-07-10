@@ -106,7 +106,7 @@ export default class Words {
   ) {
     return (group >= 0
       ? getWords(group, page, wordsPerPage, maxWordsInSentence)
-      : Words.getAllUserWords()
+      : Words.getAllUserWords(true)
     ).then(async (words) => {
       const wordsToReturn = words
         .sort(() => Math.random() - 0.5)
@@ -212,8 +212,13 @@ export default class Words {
     );
   }
 
-  static getAllUserWords(preload) {
-    return Words.getUserWords('{"userWord":{"$ne":null}}', preload);
+  static getAllUserWords(excludeDeleted, preload) {
+    return Words.getUserWords(
+      `{"$and": [{"userWord":{"$ne":null}}${
+        excludeDeleted ? `, {"userWord.difficulty" :{"$ne": "deleted"}}` : ''
+      }]}`,
+      preload
+    );
   }
 
   static getTodayUserWords(preload) {

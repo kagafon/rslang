@@ -1,14 +1,13 @@
-// eslint-disable-next-line import/no-cycle
-import RusWords from 'components/games-AudioCall/app/components/main/words/words';
-// eslint-disable-next-line import/no-cycle
-import Button from 'components/games-AudioCall/app/components/main/button/button';
-import Header from 'components/games-AudioCall/app/components/main/header/header';
-import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voice';
-import Service from 'components/games-AudioCall/app/service';
-import store from 'components/games-AudioCall/app/components/storage';
+/* eslint-disable import/no-cycle */
+import Service from 'components/games-englishPuzzle/app/service';
+import store from 'components/games-englishPuzzle/app/storage';
+import Header from 'components/games-englishPuzzle/app/components/main/header/header';
+import ResultsBlock from 'components/games-englishPuzzle/app/components/main/results-block/results-block';
+import SourceData from 'components/games-englishPuzzle/app/components/main/source-data/source-data';
+import Button from 'components/games-englishPuzzle/app/components/main/button/button';
+import Hints from 'components/games-englishPuzzle/app/components/main/header/hints/hints';
 import Toaster from 'components/Toaster';
-// eslint-disable-next-line import/no-cycle
-import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
+import Statisctic from 'components/games-englishPuzzle/app/components/main/statistic/statistic';
 
 export default class StartPage {
   static render(container) {
@@ -16,10 +15,10 @@ export default class StartPage {
     intro.classList.add('intro');
     intro.innerHTML = `
      <div class="title">
-         <span>Аудиовызов</span>
+         <span>English-puzzle</span>
      </div>
      <div class="subTitle">
-         <span>Тренировка Аудиовызов развивает словарный запас.
+         <span>Тренировка English-puzzle развивает словарный запас.
          Чем больше слов ты знаешь, тем больше очков опыта получишь.</span>
      </div>
      <span class="level-select">Выберите уровень</span>
@@ -38,12 +37,16 @@ export default class StartPage {
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
         try {
-          const words = await Service.wordsRequest(+item.dataset.num);
+          const words = await Service.wordRequest(+item.dataset.num);
           store.setState({ requestWords: words });
-
           store.setState({ groupe: item.dataset.num });
-          store.setState({ round: 0 });
-          store.setState({ correctChoice: 0 });
+          store.setState({ solution: 'yes' });
+          store.setState({ level: +item.dataset.num });
+          store.setState({ correctChoice: 9 });
+          store.setState({ appendCard: '' });
+          store.setState({ autoPlay: 'yes' });
+          store.setState({ background: 'none' });
+          store.setState({ wordsCount: 0 });
 
           if (words.length < 10) {
             Toaster.createToast(
@@ -54,16 +57,16 @@ export default class StartPage {
           } else {
             intro.remove();
             Header.init();
-            Voice.init();
-            RusWords.init();
+            ResultsBlock.init();
+            SourceData.init();
             Button.init();
+            Service.puzzleDrop();
+            Service.hintsClick();
+            Hints.btnTranslate();
             Statisctic.rebootStatictic();
           }
         } catch (error) {
-          if (
-            error.message === 'Failed to fetch' ||
-            error.message === 'NetworkError when attempting to fetch resource.'
-          ) {
+          if (error.message.search('fetch') > -1) {
             Toaster.createToast('отсутсвует соединение с интернетом', 'danger');
           } else {
             Toaster.createToast('необходимо авторизоваться', 'danger');
