@@ -22,7 +22,22 @@ export async function getUserWords(preloads) {
     const learnedWords = data[1];
     const learnedTodyUserWords = data[2].passedCards || 0;
     const hardWords = data[3];
+    const numberWords = settings.learning.maxCardsPerDay;
+    const numberNewWords = settings.learning.levels
+      .map((el) => {
+        return el.newWordsPerDay;
+      })
+      .reduce((el, acc) => {
+        return Number(el) + Number(acc);
+      });
+    newWords =
+      newWords.length > numberNewWords
+        ? newWords.slice(0, numberNewWords)
+        : newWords;
+
     let allWords = learnedWords.concat(newWords);
+    allWords =
+      allWords.length > numberWords ? allWords.slice(0, numberWords) : allWords;
     if (!settings.lastLoginDate && allWords.length === 0) {
       await Promise.all([
         Words.addNextUserWordsFromGroup(0, 8),
@@ -35,8 +50,7 @@ export async function getUserWords(preloads) {
       allWords = await Words.getTodayUserWords();
       newWords = await Words.getNewUserWords(true);
     } else if (allWords.length === 0) throw new Error();
-    // newWords =
-    console.error(settings);
+
     const words = {
       newWords,
       learnedWords,
@@ -46,7 +60,6 @@ export async function getUserWords(preloads) {
     };
     return { words, settings };
   } catch (e) {
-    console.error(e);
     throw new Error(e);
   }
 }
