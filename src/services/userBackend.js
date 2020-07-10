@@ -9,6 +9,7 @@ import {
 } from './dataBackend';
 
 import { APPLICATION, LEVELS_COUNT } from './config';
+import Words from './wordsBackend';
 
 let user = null;
 
@@ -19,6 +20,7 @@ const getToday = () => {
 const DEFAULT_USER_SETTINGS = {
   username: '',
   creationDate: new Date().getTime(),
+  lastLoginDate: null,
   prompts: {
     translation: true,
     example: true,
@@ -32,7 +34,20 @@ const DEFAULT_USER_SETTINGS = {
     gradeWord: true,
   },
   games: {
-    puzzle: { levelPages: new Array(LEVELS_COUNT).fill(0) },
+    audioCall: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Аудио вызов',
+    },
+    savannah: { levelPages: new Array(LEVELS_COUNT).fill(0), name: 'Саванна' },
+    phraseWizard: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Мастер фраз',
+    },
+    puzzle: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'English Puzzle',
+      max: [45, 40, 40, 25, 25, 25],
+    },
     sprint: { maxScore: 0 },
   },
   learning: {
@@ -48,7 +63,7 @@ const DEFAULT_USER_SETTINGS = {
 };
 
 const DEFAULT_STATISTICS = {
-  wordsLearned: 0,
+  learnedWords: 0,
 };
 
 export default class User {
@@ -167,6 +182,7 @@ export default class User {
       if (err.code === 404) {
         stats = {
           ...DEFAULT_STATISTICS,
+          optional: {},
         };
       } else throw err;
     }
@@ -230,8 +246,12 @@ export default class User {
     } else {
       stats.optional[game] = JSON.parse(stats.optional[game]);
     }
-
-    stats.optional[game].r.push({ d, c, t });
+    const foundItem = stats.optional[game].r.find((x) => x.d === d);
+    if (foundItem) {
+      Object.assign(foundItem, { c, t });
+    } else {
+      stats.optional[game].r.push({ d, c, t });
+    }
 
     stats.optional[game] = JSON.stringify(stats.optional[game]);
     delete stats.id;
@@ -262,14 +282,19 @@ export default class User {
     userInfo = JSON.parse(userInfo);
 
     const settingsToSave = {
-      wordsPerDay: 1,
-      optional: { ...DEFAULT_USER_SETTINGS, ...user.settings, ...settings },
+      ...DEFAULT_USER_SETTINGS,
+      ...user.settings,
+      ...settings,
     };
-    Object.keys(settingsToSave.optional).forEach((x) => {
-      settingsToSave.optional[x] = JSON.stringify(settingsToSave.optional[x]);
+
+    await setSettings(userInfo.userId, userInfo.token, {
+      wordsPerDay: 1,
+      optional: Object.keys(settingsToSave).reduce(
+        (acc, x) => ({ ...acc, [x]: JSON.stringify(settingsToSave[x]) }),
+        {}
+      ),
     });
-    await setSettings(userInfo.userId, userInfo.token, settingsToSave);
-    user.settings = settings;
+    user.settings = settingsToSave;
   }
 
   static async loadSettings() {
@@ -306,6 +331,21 @@ export default class User {
         throw err;
       }
     }
+    const today = getToday();
+
+    if (
+      !user.settings.lastLoginDate ||
+      user.settings.lastLoginDate / (3600 * 1000 * 24) < today
+    ) {
+      await Promise.allSettled(
+        user.settings.learning.levels.map((x, idx) =>
+          Words.addNextUserWordsFromGroup(idx, x.newWordsPerDay)
+        )
+      );
+    }
+    user.settings.lastLoginDate = new Date().getTime();
+    User.saveSettings();
+
     try {
       user.stats = await User.getMainStatistics();
     } catch (err) {
@@ -317,5 +357,9 @@ export default class User {
         throw err;
       }
     }
+  }
+
+  static getDefaultUserSettings() {
+    return DEFAULT_USER_SETTINGS;
   }
 }

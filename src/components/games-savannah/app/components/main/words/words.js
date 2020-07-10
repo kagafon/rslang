@@ -27,6 +27,8 @@ export default class RusWords {
     const stage = store.getState();
     item.classList.add('correct');
 
+    document.removeEventListener('keydown', this.keyboardChoice, false);
+
     answer.textContent = '';
 
     if (stage.volume !== 'off') {
@@ -40,6 +42,11 @@ export default class RusWords {
         this.clearWords();
         RusWords.wordGeneration();
       }, 1000);
+    } else {
+      setTimeout(() => {
+        Service.spinnerOn();
+        Statistic.init();
+      }, 1000);
     }
   }
 
@@ -49,13 +56,17 @@ export default class RusWords {
     const health = document.querySelector('.health');
     const wordsCard = document.querySelectorAll('.wrapper-words');
 
+    document.removeEventListener('keydown', this.keyboardChoice, false);
+
     wordsCard.forEach((i) => {
       if (i.children[0].textContent === stage.word.wordTranslate) {
         i.classList.add('correct');
       }
     });
 
-    health.remove();
+    try {
+      health.remove();
+    } catch (error) {}
 
     item.classList.add('cancel');
     answer.textContent = '';
@@ -69,6 +80,11 @@ export default class RusWords {
         this.clearWords();
         RusWords.wordGeneration();
       }, 1000);
+    } else {
+      setTimeout(() => {
+        Service.spinnerOn();
+        Statistic.init();
+      }, 1000);
     }
   }
 
@@ -79,71 +95,57 @@ export default class RusWords {
       item.addEventListener('click', () => {
         const state = store.getState();
         store.setState({ round: state.round + 1 });
-
         if (item.children[0].textContent === state.word.wordTranslate) {
           store.setState({ correctChoice: state.correctChoice + 1 });
           statiscticStore.setLearnedState([state.word]);
-
           this.rightChoice(item);
         } else {
           store.setState({ health: state.health - 1 });
           statiscticStore.setUnexploredState([state.word]);
-
           this.incorrectChoice(item);
         }
-
-        setTimeout(() => {
-          if (state.round === 9 || state.health === 1) {
-            Service.spinnerOn();
-            Statistic.init();
-          }
-        }, 1000);
       });
     });
+    document.addEventListener('keydown', this.keyboardChoice, false);
+  }
 
-    document.addEventListener('keypress', (event) => {
-      const stage = store.getState();
-      const target = event.key;
+  static keyboardChoice(event) {
+    const stage = store.getState();
+    const target = event.key;
 
-      store.setState({ round: stage.round + 1 });
+    const arrWords = document.querySelectorAll('.wrapper-words');
 
-      let word;
+    store.setState({ round: stage.round + 1 });
 
-      switch (target) {
-        case '1':
-          word = arrWords[0].children[0].textContent;
-          break;
-        case '2':
-          word = arrWords[1].children[0].textContent;
-          break;
-        case '3':
-          word = arrWords[2].children[0].textContent;
-          break;
-        case '4':
-          word = arrWords[3].children[0].textContent;
-          break;
-        default:
-      }
+    let word;
 
-      if (word === stage.word.wordTranslate) {
-        store.setState({ correctChoice: stage.correctChoice + 1 });
-        statiscticStore.setLearnedState([stage.word]);
+    switch (target) {
+      case '1':
+        word = arrWords[0].children[0].textContent;
+        break;
+      case '2':
+        word = arrWords[1].children[0].textContent;
+        break;
+      case '3':
+        word = arrWords[2].children[0].textContent;
+        break;
+      case '4':
+        word = arrWords[3].children[0].textContent;
+        break;
+      default:
+    }
 
-        this.rightChoice(arrWords[+target - 1]);
-      } else {
-        store.setState({ health: stage.health - 1 });
-        statiscticStore.setUnexploredState([stage.word]);
+    if (word === stage.word.wordTranslate) {
+      store.setState({ correctChoice: stage.correctChoice + 1 });
+      statiscticStore.setLearnedState([stage.word]);
 
-        this.incorrectChoice(arrWords[+target - 1]);
-      }
+      RusWords.rightChoice(arrWords[+target - 1]);
+    } else {
+      store.setState({ health: stage.health - 1 });
+      statiscticStore.setUnexploredState([stage.word]);
 
-      setTimeout(() => {
-        if (stage.round === 9 || stage.health === 1) {
-          Service.spinnerOn();
-          Statistic.init();
-        }
-      }, 1000);
-    });
+      RusWords.incorrectChoice(arrWords[+target - 1]);
+    }
   }
 
   static wordsTranslate(text) {
@@ -159,6 +161,8 @@ export default class RusWords {
       const wordsCard = document.querySelectorAll('.words');
 
       const arrWords = stage.requestWords;
+
+      document.addEventListener('keydown', this.keyboardChoice, false);
 
       store.setState({ word: arrWords[stage.round] });
       this.wordsTranslate(arrWords[stage.round].wordTranslate);

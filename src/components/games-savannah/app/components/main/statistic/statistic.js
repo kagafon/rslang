@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import Service from 'components/games-savannah/app/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-savannah/app/components/storage';
@@ -5,6 +6,8 @@ import statisticStore from 'components/games-savannah/app/components/statistic-s
 // eslint-disable-next-line import/no-cycle
 import StartPage from 'components/games-savannah/app/components/main/start-page/start-page';
 import { User } from 'services/backend';
+// eslint-disable-next-line no-restricted-imports
+import RusWords from '../words/words';
 
 export default class Statistic {
   static render() {
@@ -12,6 +15,16 @@ export default class Statistic {
     const header = document.querySelector('.header');
     const stage = store.getState();
     const description = this.gradationResult(stage.correctChoice);
+
+    const statistic = statisticStore.getState();
+
+    let learned = statistic.learned.length;
+    let unexplored = statistic.unexplored.length;
+
+    if (learned === 0 && unexplored === 0) {
+      unexplored = 10;
+      learned = 0;
+    }
 
     header.innerHTML = '';
     wrapper.innerHTML = '';
@@ -21,18 +34,16 @@ export default class Statistic {
     statisticBlock.innerHTML = `
      <div class="statistic">
         <span class="statistic-title">${description}</span>
-        <span class="statistic-subtitle">${stage.correctChoice} слов изучено, ${
-      10 - stage.correctChoice
-    } не изучено</span>
+        <span class="statistic-subtitle">${learned} слов изучено, ${unexplored} не изучено</span>
         <div class="final-slider">
         <div class="final-error">
         <span> ОШИБОК: </span>
-        ${10 - stage.correctChoice}
+        ${unexplored}
       </div>
         <div class="final invalid"></div>
         <div class="final-line"></div>
         <div class="final-correct">ЗНАЮ: 
-          <span> ${stage.correctChoice}</span>
+          <span> ${learned}</span>
         </div>
         <div class="final valid"></div>
       </div>
@@ -124,15 +135,21 @@ export default class Statistic {
   }
 
   static reboot() {
-    const bntReboot = document.querySelector('.final-btn');
+    try {
+      const bntReboot = document.querySelector('.final-btn');
+      document.removeEventListener('keydown', RusWords.keyboardChoice, false);
 
-    bntReboot.addEventListener('click', () => {
-      document.querySelector('.wrapper').innerHTML = '';
-      createElement(document.querySelector('.wrapper'), 'div', ['answerBlock']);
+      bntReboot.addEventListener('click', () => {
+        const wrapper = document.querySelector('.wrapper');
+        wrapper.innerHTML = '';
+        createElement(document.querySelector('.wrapper'), 'div', [
+          'answerBlock',
+        ]);
 
-      statisticStore.clearState();
-      StartPage.render(document.querySelector('.game-container'));
-    });
+        statisticStore.clearState();
+        StartPage.render(document.querySelector('.game-container'));
+      });
+    } catch (error) {}
   }
 
   static postGametStatistic() {

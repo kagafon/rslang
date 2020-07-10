@@ -24,8 +24,10 @@ export default class Animate {
       store.setState({ health: stage.health - 1 });
 
       const health = document.querySelector('.health');
-      health.remove();
-      answer.textContent = '';
+      try {
+        health.remove();
+        answer.textContent = '';
+      } catch (error) {}
 
       if (stage.volume !== 'off') {
         const audio = new Audio();

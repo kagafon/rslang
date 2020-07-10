@@ -24,7 +24,7 @@ export default class App {
       'div',
       ['answerBlock']
     );
-
+   
     return this.gameContainer;
   }
 

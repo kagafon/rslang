@@ -1,0 +1,109 @@
+@import './main-page/mainPageGame';
+.main-page {
+  margin-top: 50px;
+  padding: 0 200px;
+  .loader {
+    margin-top: 200px;
+  }
+  .jumbotron {
+    width: 100%;
+    background-color: rgba(83, 140, 173, 0.49);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    .div-level {
+      width: 100%;
+      margin-top: 10px;
+    }
+    p {
+      font-size: 18px;
+      color: #fff;
+      margin: 0 5px 0 5px;
+    }
+    label {
+      color: #fff;
+    }
+  }
+
+  .progress {
+    height: 25px;
+    width: 245px;
+    border-radius: 0.3rem;
+  }
+
+  .lang-image {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-image: url('/assets/images/united-states-of-america-flag-button-square-xs.png');
+  }
+
+  .jumbotron-level {
+    width: 30%;
+    height: 260px;
+    margin: 0 10%;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+      0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    margin-bottom: 25px;
+    transition: background-color $page-transition-delay ease,
+      box-shadow $page-transition-delay ease;
+    &:hover {
+      background-color: rgb(83, 140, 173);
+      cursor: pointer;
+      box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+    span {
+      text-align: center;
+    }
+    .text-center {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      background-color: rgba(161, 196, 216, 0.79);
+    }
+  }
+
+  @media (max-width: 965px) {
+    .main-page {
+      padding: 0;
+    }
+    .div-level2 {
+      flex-direction: column;
+      align-items: center;
+    }
+    .jumbotron-level {
+      width: 60%;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .main-page {
+      padding: 0;
+    }
+    .div-level {
+      flex-direction: column;
+    }
+    .jumbotron-level {
+      width: 80%;
+    }
+  }
+}
+@media (max-width: 1200px) {
+  .main-page {
+    padding: 0 150px;
+  }
+}
+
+@media (max-width: 965px) {
+  .main-page {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 550px) {
+  .main-page {
+    padding: 0;
+  }
+}
