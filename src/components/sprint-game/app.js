@@ -1,5 +1,10 @@
+/* eslint-disable no-undef */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable import/no-cycle */
 import { createElement } from 'helpers/dom';
 import StartPage from 'components/sprint-game/component/start-page/start-page';
+import Buttons from './component/gameBlock/button/button';
+import GameBlock from './component/gameBlock/gameBlock';
 
 export default class AppSprint {
   init() {
@@ -25,6 +30,11 @@ export default class AppSprint {
     );
 
     return this.gameContainer;
+  }
+
+  beforeClose() {
+    document.removeEventListener('keyup', Buttons.keyUpHandler);
+    GameBlock.resetTimeout();
   }
 
   postInit() {

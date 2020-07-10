@@ -126,6 +126,15 @@ export default class Statistic {
     });
   }
 
+  static clearStatistic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
+  }
+
   static sendGameStatistic() {
     const stage = store.getState();
     const date = new Date();
@@ -144,5 +153,6 @@ export default class Statistic {
     this.learnedWords();
     this.reboot();
     this.sendGameStatistic();
+    this.clearStatistic();
   }
 }

@@ -9,11 +9,11 @@ export default class Timer {
     ]);
     const count = createElement(timer, 'div', ['count']);
     const time = createElement(count, 'span', ['time']);
-    this.startСountdown(3, 0, time);
+    this.startСount(3, 0, time);
     return timer;
   }
 
-  static startСountdown(from, to, time) {
+  static startСount(from, to, time) {
     function startTimer() {
       setTimeout(function go() {
         time.textContent = from;
