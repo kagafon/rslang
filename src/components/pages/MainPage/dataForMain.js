@@ -22,22 +22,9 @@ export async function getUserWords(preloads) {
     const learnedWords = data[1];
     const learnedTodyUserWords = data[2].passedCards || 0;
     const hardWords = data[3];
-    const numberWords = settings.learning.maxCardsPerDay;
-    const numberNewWords = settings.learning.levels
-      .map((el) => {
-        return el.newWordsPerDay;
-      })
-      .reduce((el, acc) => {
-        return Number(el) + Number(acc);
-      });
-    newWords =
-      newWords.length > numberNewWords
-        ? newWords.slice(0, numberNewWords)
-        : newWords;
 
     let allWords = learnedWords.concat(newWords);
-    allWords =
-      allWords.length > numberWords ? allWords.slice(0, numberWords) : allWords;
+
     if (!settings.lastLoginDate && allWords.length === 0) {
       await Promise.all([
         Words.addNextUserWordsFromGroup(0, 8),
