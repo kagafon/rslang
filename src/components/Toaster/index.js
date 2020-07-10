@@ -14,7 +14,7 @@ class Toaster {
       role: 'alert',
       'aria-live': 'assertive',
       'aria-atomic': 'true',
-      'data-delay': 2000,
+      'data-delay': 3000,
     });
     if (type)
       toast.classList.add(
