@@ -147,20 +147,23 @@ class MainPageGame {
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
         if (stat.passedCards === this.settings.learning.maxCardsPerDay) {
-          showStat('Серия завершена', [
-            { text: 'Карточек завершено', value: stat.passedCards },
-            {
-              text: 'Правильные ответы',
-              value: `${Math.floor(
-                (stat.correctAnswers / stat.passedCards) * 100
-              )}%`,
-            },
-            { text: 'Новые слова', value: stat.learnedWords },
-            {
-              text: 'Самая длинная серия правильных ответов',
-              value: stat.answerSeries,
-            },
-          ]);
+          showStat(
+            ' Поздравляю! Серия завершена. Вы выполнили дневную норму по изучению слов.',
+            [
+              { text: 'Карточек завершено', value: stat.passedCards },
+              {
+                text: 'Правильные ответы',
+                value: `${Math.floor(
+                  (stat.correctAnswers / stat.passedCards) * 100
+                )}%`,
+              },
+              { text: 'Новые слова', value: stat.learnedWords },
+              {
+                text: 'Самая длинная серия правильных ответов',
+                value: stat.answerSeries,
+              },
+            ]
+          );
         }
       }
       if (this.translations.length !== 0) {
