@@ -20,7 +20,7 @@ const routes = [
     title: 'Учить слова',
     ClassConstructor: MainPage,
     needAuthorization: true,
-    image: 'assets/images/backgrounds/main-page.jpg',
+    image: '/assets/images/backgrounds/main-page.jpg',
     color: 'rgba(83, 140, 173, 0.49)',
   },
   {
@@ -29,7 +29,7 @@ const routes = [
     excludeFromMenu: true,
     ClassConstructor: MainPageGame,
     needAuthorization: false,
-    image: 'assets/images/backgrounds/main-page.jpg',
+    image: '/assets/images/backgrounds/main-page.jpg',
     color: 'rgba(83, 140, 173, 0.49)',
   },
   {
@@ -37,7 +37,7 @@ const routes = [
     title: 'Мини-игры',
     ClassConstructor: GamesPage,
     needAuthorization: false,
-    image: 'assets/images/backgrounds/game-page.jpg',
+    image: '/assets/images/backgrounds/game-page.jpg',
     color: 'rgba(69, 28, 78, 0.66)',
   },
   {
@@ -47,7 +47,7 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/speakit-page.jpg',
+    image: '/assets/images/backgrounds/speakit-page.jpg',
     color: 'rgba(69, 28, 78, 0.66)',
   },
   {
@@ -57,7 +57,7 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/engpuz-page.jpg',
+    image: '/assets/images/backgrounds/engpuz-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
   },
   {
@@ -67,7 +67,7 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/savannah-page.jpg',
+    image: '/assets/images/backgrounds/savannah-page.jpg',
     color: 'rgba(69, 28, 78, 0.66)',
   },
   {
@@ -77,7 +77,7 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/audiocall-page.jpg',
+    image: '/assets/images/backgrounds/audiocall-page.jpg',
     color: 'rgba(124, 55, 73, 0.79)',
   },
   {
@@ -87,7 +87,7 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/sprint-page.jpg',
+    image: '/assets/images/backgrounds/sprint-page.jpg',
     color: 'rgba(146, 85, 215, 0.57)',
   },
   {
@@ -97,7 +97,7 @@ const routes = [
     needAuthorization: false,
     excludeFromMenu: true,
     menuItem: 'game-page',
-    image: 'assets/images/backgrounds/phrasewizard-page.jpg',
+    image: '/assets/images/backgrounds/phrasewizard-page.jpg',
     color: 'rgba(83, 140, 173, 0.49)',
   },
   {
@@ -105,7 +105,7 @@ const routes = [
     title: 'Статистика',
     ClassConstructor: StatisticsPage,
     needAuthorization: false,
-    image: 'assets/images/backgrounds/statistics-page.jpg',
+    image: '/assets/images/backgrounds/statistics-page.jpg',
     color: 'rgba(146, 85, 215, 0.57)',
   },
   {
@@ -114,7 +114,7 @@ const routes = [
     ClassConstructor: authorizationPage,
     needAuthorization: false,
     hideWhenAuthorized: true,
-    image: 'assets/images/backgrounds/authorization-page.jpg',
+    image: '/assets/images/backgrounds/authorization-page.jpg',
     color: 'rgba(182, 74, 90, 0.66)',
   },
   {
@@ -122,7 +122,7 @@ const routes = [
     title: 'Настройки',
     ClassConstructor: SettingsPage,
     needAuthorization: false,
-    image: 'assets/images/backgrounds/settings-page.jpg',
+    image: '/assets/images/backgrounds/settings-page.jpg',
     color: 'rgba(121, 42, 121, 0.69)',
   },
   {
@@ -130,7 +130,7 @@ const routes = [
     title: 'Промо',
     ClassConstructor: promoPage,
     needAuthorization: false,
-    image: 'assets/images/backgrounds/promo-page.jpg',
+    image: '/assets/images/backgrounds/promo-page.jpg',
     color: 'rgba(124, 55, 73, 0.79)',
   },
   {
@@ -138,13 +138,13 @@ const routes = [
     title: 'О команде',
     ClassConstructor: teamPage,
     needAuthorization: false,
-    image: 'assets/images/backgrounds/team-page.jpg',
+    image: '/assets/images/backgrounds/team-page.jpg',
     color: 'rgba(255, 108, 64, 0.57)',
   },
   {
     name: 'dictionary-page',
     title: 'Словарь',
-    image: 'assets/images/backgrounds/dictionary-page.jpg',
+    image: '/assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgba(101, 99, 209, 0.78)',
     ClassConstructor: DictionaryPage,
     needAuthorization: false,
