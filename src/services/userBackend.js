@@ -37,8 +37,13 @@ const DEFAULT_USER_SETTINGS = {
     audioCall: {
       levelPages: new Array(LEVELS_COUNT).fill(0),
       name: 'Аудио вызов',
+      max: new Array(LEVELS_COUNT).fill(30),
     },
-    savannah: { levelPages: new Array(LEVELS_COUNT).fill(0), name: 'Саванна' },
+    savannah: {
+      levelPages: new Array(LEVELS_COUNT).fill(0),
+      name: 'Саванна',
+      max: new Array(LEVELS_COUNT).fill(30),
+    },
     phraseWizard: {
       levelPages: new Array(LEVELS_COUNT).fill(0),
       name: 'Мастер фраз',
