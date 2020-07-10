@@ -7,6 +7,8 @@ import Voice from 'components/games-AudioCall/app/components/main/voiceBlock/voi
 import Service from 'components/games-AudioCall/app/service';
 import store from 'components/games-AudioCall/app/components/storage';
 import Toaster from 'components/Toaster';
+// eslint-disable-next-line import/no-cycle
+import Statisctic from 'components/games-AudioCall/app/components/main/statistic/statistic';
 
 export default class StartPage {
   static render(container) {
@@ -55,6 +57,7 @@ export default class StartPage {
             Voice.init();
             RusWords.init();
             Button.init();
+            Statisctic.rebootStatictic();
           }
         } catch (error) {
           if (

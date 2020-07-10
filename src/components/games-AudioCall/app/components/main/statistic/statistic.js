@@ -135,6 +135,16 @@ export default class Statisctic {
     });
   }
 
+  static rebootStatictic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
+  }
+
   static postGametStatistic() {
     const stage = store.getState();
     const date = new Date();
@@ -149,5 +159,6 @@ export default class Statisctic {
     this.playAudio();
     this.reboot();
     this.postGametStatistic();
+    this.rebootStatictic();
   }
 }
