@@ -57,7 +57,7 @@
     cursor: pointer;
     text-align: center;
     text-decoration: underline;
-    box-shadow: inset 3px -21px 12px -22px rgba(0,0,0,0.67);
+    box-shadow: inset 3px -21px 12px -22px rgba(0, 0, 0, 0.67);
     &.active {
       background-color: rgba(182, 74, 90, 0.66);
       border-radius: 10px 10px 0 0;
@@ -111,7 +111,7 @@
   }
 
   input:focus {
-    box-shadow: inset 0px 0px 5px rgba(0,0,0,0.7);
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.7);
     outline: none;
   }
   button {

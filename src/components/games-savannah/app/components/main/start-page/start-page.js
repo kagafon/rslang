@@ -32,24 +32,34 @@ export default class StartPage {
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
-        const words = await Service.wordsRequest(+item.dataset.num);
+        try {
+          const words = await Service.wordsRequest(+item.dataset.num);
 
-        store.setState({ requestWords: words });
-        store.setState({ groupe: +item.dataset.num });
-        store.setState({ round: 0 });
-        store.setState({ correctChoice: 0 });
-        store.setState({ health: 5 });
-        store.setState({ volume: 'on' });
+          store.setState({ requestWords: words });
+          store.setState({ groupe: +item.dataset.num });
+          store.setState({ round: 0 });
+          store.setState({ correctChoice: 0 });
+          store.setState({ health: 5 });
+          store.setState({ volume: 'on' });
 
-        if (words.length < 10) {
-          Toaster.createToast(
-            'Недостаточно слов для игры (необходимо минимум 10 слов)',
-            'danger'
-          );
+          if (words.length < 10) {
+            Toaster.createToast(
+              'Недостаточно слов для игры (необходимо минимум 10 слов)',
+              'danger'
+            );
+            Service.spinnerOff();
+          } else {
+            intro.remove();
+            Timer.init();
+          }
+        } catch (error) {
+          if (error.message.search('fetch') > -1) {
+            Toaster.createToast('отсутсвует соединение с интернетом', 'danger');
+          } else {
+            Toaster.createToast('необходимо авторизоваться', 'danger');
+          }
+
           Service.spinnerOff();
-        } else {
-          intro.remove();
-          Timer.init();
         }
       });
     });

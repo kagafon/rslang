@@ -1,0 +1,141 @@
+@import './main-page/modal';
+
+.main-page-game {
+  margin-top: 100px;
+  .swiper-container-main {
+    max-width: 700px;
+    width: 100%;
+  }
+  .swiper-pagination {
+    position: relative;
+    margin-top: 45px;
+    color: #fff;
+  }
+
+  .progress {
+    width: 300px;
+    margin-bottom: 25px;
+  }
+
+  .card_size {
+    max-width: 550px;
+    width: 75%;
+    height: 100%;
+    margin: 0 auto;
+    transition: opacity $page-transition-delay ease;
+    button {
+      margin-bottom: 5px;
+    }
+    hr {
+      width: 100%;
+    }
+    p {
+      text-align: center;
+    }
+  }
+  .volume {
+    cursor: pointer;
+    color: #35c8c7;
+    text-align: center;
+    transition: opacity $page-transition-delay ease;
+    &.off {
+      opacity: 0.3;
+    }
+  }
+  .card-img_div {
+    border-radius: 0.25rem;
+  }
+  .card_img {
+    width: 70%;
+    height: 70%;
+  }
+
+  .card-text {
+    transition: font-size $page-transition-delay ease;
+    &.translate {
+      color: hsl(106, 62%, 30%);
+      display: none;
+      transition: display $page-transition-delay ease;
+    }
+  }
+
+  .input-background_back {
+    background-color: #e0f3f9;
+  }
+
+  .input-word {
+    padding-right: 0.55rem;
+    padding-left: 0.67rem;
+    z-index: 500;
+    transition: opacity $page-transition-delay ease;
+    overflow: hidden;
+    &.hidden1 {
+      opacity: 0.5;
+    }
+    &.hidden2 {
+      opacity: 0;
+    }
+  }
+
+  .letter_error {
+    color: #f97070;
+    font-size: inherit;
+  }
+  .letter_success {
+    color: hsl(106, 62%, 30%);
+    font-size: inherit;
+  }
+
+  .answer_success {
+    background-color: #d7f5e4;
+  }
+  .answer_error {
+    background-color: #f5d7d7;
+  }
+
+  .form-control {
+    text-align: center;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.385rem 0.65rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background: transparent;
+    z-index: 1000;
+    font-size: 20px;
+    border: none;
+    &:focus {
+      background-color: #fff0;
+      box-shadow: none;
+    }
+    &.success {
+      color: hsl(106, 62%, 30%);
+    }
+  }
+
+  .input-background,
+  .input-word {
+    text-align: center;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.385rem 0.65rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff0;
+    position: absolute;
+    font-size: 20px;
+    top: 68px;
+    border-radius: 0.25rem;
+    transition: background-color $page-transition-delay ease;
+  }
+
+  .container-disable {
+    user-select: none;
+  }
+
+  @media (max-width: 625px) {
+    .card-footer,
+    .card-header {
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+}

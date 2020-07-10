@@ -67,14 +67,14 @@ export default class Router {
     }
   }
 
-  transitionEndCallback() {
+  async transitionEndCallback() {
     this.container.removeEventListener(
       'transitionend',
       this.transitionEndHandler
     );
     this.container.textContent = '';
     this.pageObject = new this.currentRoute.ClassConstructor();
-    this.container.appendChild(this.pageObject.init());
+    this.container.appendChild(await this.pageObject.init());
     if (this.pageObject.postInit) this.pageObject.postInit();
     this.container.style.opacity = '1';
   }
