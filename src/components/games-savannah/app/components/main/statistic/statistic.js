@@ -180,17 +180,7 @@ export default class Statistic {
       level
     ];
 
-    if (level === 0 && page === 44) {
-      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
-    } else if (level === 1 && page === 39) {
-      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
-    } else if (level === 2 && page === 39) {
-      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
-    } else if (level === 3 && page === 24) {
-      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
-    } else if (level === 4 && page === 24) {
-      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
-    } else if (level === 5 && page === 24) {
+    if (page === 29) {
       User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
     } else {
       User.getCurrentUser().settings.games.savannah.levelPages[level] += 1;
