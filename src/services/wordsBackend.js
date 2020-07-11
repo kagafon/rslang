@@ -11,7 +11,7 @@ import { APPLICATION, FILE_BASE_URL } from './config';
 import User from './userBackend';
 
 const WORDS_TOTAL = 3600;
-const LEARN_LEVEL_CUP = 20;
+const LEARN_LEVEL_CUP = 10;
 
 const userWordFields = [
   { name: 'difficulty', default: 'new' },
@@ -46,16 +46,10 @@ const getUserInfo = () => {
 };
 
 const unwindWord = (word) => {
-  const answers = (word.correctAnswers || 0) * 2 - (word.totalAnswers || 0);
-
   const retValue = {
     ...word.userWord,
     ...word,
     id: word.userWord.word,
-    progress:
-      answers > LEARN_LEVEL_CUP
-        ? 100
-        : Math.floor((answers * 100) / LEARN_LEVEL_CUP),
   };
   userWordFields.forEach((x) => {
     if (word.userWord.optional[x.name] === undefined) {
@@ -70,6 +64,13 @@ const unwindWord = (word) => {
       retValue[x.name] = x.get ? x.get(val) : val;
     }
   });
+  const answers = (retValue.correctAnswers || 0) * 2 - (retValue.totalAnswers || 0);
+
+  retValue.progress =
+    answers > LEARN_LEVEL_CUP
+      ? 100
+      : Math.floor((answers * 100) / LEARN_LEVEL_CUP);
+
   delete retValue.optional;
   delete retValue.userWord;
   return retValue;
@@ -106,7 +107,7 @@ export default class Words {
   ) {
     return (group >= 0
       ? getWords(group, page, wordsPerPage, maxWordsInSentence)
-      : Words.getAllUserWords(true)
+      : Words.getAllUserWords()
     ).then(async (words) => {
       const wordsToReturn = words
         .sort(() => Math.random() - 0.5)
@@ -212,13 +213,8 @@ export default class Words {
     );
   }
 
-  static getAllUserWords(excludeDeleted, preload) {
-    return Words.getUserWords(
-      `{"$and": [{"userWord":{"$ne":null}}${
-        excludeDeleted ? `, {"userWord.difficulty" :{"$ne": "deleted"}}` : ''
-      }]}`,
-      preload
-    );
+  static getAllUserWords(preload) {
+    return Words.getUserWords('{"userWord":{"$ne":null}}', preload);
   }
 
   static getTodayUserWords(preload) {
