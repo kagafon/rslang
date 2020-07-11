@@ -1,6 +1,5 @@
 const DATA_BASE_URL = 'https://kagafon-learn-words.herokuapp.com';
-const FILE_BASE_URL =
-  'https://raw.githubusercontent.com/irinainina/rslang/rslang-data/data/';
+const FILE_BASE_URL = 'https://kagafon-rslang-data.netlify.app/';
 const APPLICATION = 'rslang';
 const LEVELS_COUNT = 6;
 
