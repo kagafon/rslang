@@ -105,8 +105,8 @@ export default class Buttons {
 
   static rightChoice() {
     const state = store.getState();
-    EngWords.init();
-    RusWords.init();
+    EngWords.insertText();
+    RusWords.insertWordTranslate();
     document.querySelector('.checkOk').style.opacity = '1';
     document.querySelector('.checkFalse').style.opacity = '0';
     document.querySelector('.game-block').style.borderColor = 'green';
@@ -118,8 +118,8 @@ export default class Buttons {
 
   static unCorrectChoice() {
     const state = store.getState();
-    EngWords.init();
-    RusWords.init();
+    EngWords.insertText();
+    RusWords.insertWordTranslate();
     const pointText = document.querySelector('.points-text');
     const dotsBlock = document.querySelector('.dotsBlock');
     const checkOk = document.querySelector('.checkOk');
