@@ -12,7 +12,7 @@ export default class componentTeam {
                                 <h3 class="person__title">Константин Aгафонов</h3>
                                 <h5 class="person__position">Team Lead</h5>
                                 <p class="person__phrase">Суровый руководитель и "мозг" проекта.</p>
-                                <p class="person__contribution">Руководит проектом, весь back-end держится на нём, а также игра "SpeakIt".</p>
+                                <p class="person__contribution">Руководитель проекта, отвечает за back-end приложения, разработчик игры "SpeakIt".</p>
                             </div>
                             <a class="git-link" href="https://github.com/kagafon"><img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png"></a>
 
@@ -23,7 +23,7 @@ export default class componentTeam {
                                 <h3 class="person__title">Ирина Блоцкая</h3>
                                 <h5 class="person__position">Дизайнер-разработчик</h5>
                                 <p class="person__phrase">Красота стилевых форм и упорядоченность одним взмахом.</p>
-                                <p class="person__contribution">Отвечает за весь дизайн проекта. Главная страница полностью на её совести.</p>
+                                <p class="person__contribution">Отвечает за дизайн проекта. Разработчик основной игры проекта "Учить слова".</p>
                             </div>
                             <a class="git-link" href="https://github.com/CharlieBlbl"><img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png"></a>
                         </div>    
