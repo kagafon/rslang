@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import Service from 'components/games-AudioCall/app/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-AudioCall/app/components/storage';
@@ -149,7 +150,25 @@ export default class Statisctic {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
+
+    this.userPage();
+    User.saveSettings();
     User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
+  }
+
+  static userPage() {
+    const stage = store.getState();
+
+    const { level } = stage;
+    const page = User.getCurrentUser().settings.games.audioCall.levelPages[
+      level
+    ];
+
+    if (page === 29) {
+      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
+    } else {
+      User.getCurrentUser().settings.games.audioCall.levelPages[level] += 1;
+    }
   }
 
   static init() {

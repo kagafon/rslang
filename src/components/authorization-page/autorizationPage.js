@@ -14,6 +14,22 @@ export default class authorizationPage {
       ''
     );
 
+    const autologinBackdround = createElement(
+      parent,
+      'div',
+      ['autologin-background'],
+      {},
+      ''
+    );
+
+    const autologinSpinner = createElement(
+      autologinBackdround,
+      'div',
+      ['spinner-border', 'spin-autolog'],
+      {},
+      ''
+    );
+
     const formContainer = createElement(
       parent,
       'div',
@@ -324,6 +340,7 @@ export default class authorizationPage {
       { 'aria-hidden': 'true' },
       '&times;'
     );
+    this.callAutoLogin(errorLogin, divToast, autologinBackdround);
     this.hideToast(spanToast, divToast);
     this.hideToast(spanToast, divLoginToast);
     this.checkPassword(inputPassword, inputConfirmPassword, button, divToast);
@@ -344,7 +361,6 @@ export default class authorizationPage {
       divSpinner,
       divToast
     );
-    this.callAutoLogin(errorLogin, divToast);
     this.addHandlers(formContainerHeader);
     return parent;
   }
@@ -364,12 +380,12 @@ export default class authorizationPage {
     });
   }
 
-  async callAutoLogin(err, toast) {
+  async callAutoLogin(err, toast, background) {
     try {
-      const login = await User.autoLogin();
+      await User.autoLogin();
       Router.draw('main-page');
     } catch (error) {
-      console.log(error);
+      background.style.display = 'none';
     }
   }
 
