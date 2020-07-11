@@ -2,6 +2,7 @@ import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
 
 import Toaster from 'components/Toaster';
+import { LEVELS_COUNT } from 'services/config';
 import ControlBlock from './ControlBlock';
 import TextControl from './TextControl';
 import ToggleControl from './ToggleControl';
@@ -11,7 +12,6 @@ import ControlsContainer from './ControlsContainer';
 import LabelControl from './LabelControl';
 import Modal from './Modal';
 import ButtonControl from './ButtonControl';
-import { LEVELS_COUNT } from '../../../services/config';
 
 export default class SettingsPage {
   constructor() {
@@ -234,13 +234,14 @@ export default class SettingsPage {
 
     this.container.addEventListener('submit', async (evt) => {
       evt.preventDefault();
+
       if (
-        Object.keys(this.user.settings.prompts).every(
+        ['translation', 'meaning', 'example'].every(
           (x) => !this.user.settings.prompts[x]
         )
       ) {
         Toaster.createToast(
-          'Хотя бы одна подсказка должна быть выбрана',
+          'Хотя бы одна следующих подсказок должна быть выбрана: Перевод, Значение, Пример',
           'warning'
         );
         return;
