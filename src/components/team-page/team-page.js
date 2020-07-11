@@ -12,7 +12,7 @@ export default class componentTeam {
                                 <h3 class="person__title">Константин Aгафонов</h3>
                                 <h5 class="person__position">Team Lead</h5>
                                 <p class="person__phrase">Суровый руководитель и "мозг" проекта.</p>
-                                <p class="person__contribution">Руководитель проекта, отвечает за back-end приложения, разработчик игры "SpeakIt".</p>
+                                <p class="person__contribution">Руководитель проекта. Отвечает за back-end приложения. Разработчик игры "SpeakIt".</p>
                             </div>
                             <a class="git-link" href="https://github.com/kagafon"><img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png"></a>
 
@@ -23,7 +23,7 @@ export default class componentTeam {
                                 <h3 class="person__title">Ирина Блоцкая</h3>
                                 <h5 class="person__position">Дизайнер-разработчик</h5>
                                 <p class="person__phrase">Красота стилевых форм и упорядоченность одним взмахом.</p>
-                                <p class="person__contribution">Отвечает за дизайн проекта. Разработчик основной игры проекта "Учить слова".</p>
+                                <p class="person__contribution">Отвечает за дизайн проекта. Разработчик основной игры приложения "Учить слова".</p>
                             </div>
                             <a class="git-link" href="https://github.com/CharlieBlbl"><img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png"></a>
                         </div>    
@@ -52,7 +52,7 @@ export default class componentTeam {
                             <div class="describe-person">
                                 <h3 class="person__title">Роман Левкович</h3>
                                 <h5 class="person__position">Разработчик</h5>
-                                <p class="person__phrase">Уверенный любитель статистики и анализа</p>
+                                <p class="person__phrase">Уверенный любитель статистики и анализа.</p>
                                 <p class="person__contribution">Отвечает за страницу статистики и стилизацию страниц "О команде", "Промо", "Авторизация".</p>
                             </div>
                             <a class="git-link" href="https://github.com/RamanLiaukovich"><img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png"></a>
@@ -63,7 +63,7 @@ export default class componentTeam {
                                 <h3 class="person__title">Алексей Стельмах</h3>
                                 <h5 class="person__position">Разработчик</h5>
                                 <p class="person__phrase">Эксперт по презентабельному виду и системности подхода.</p>
-                                <p class="person__contribution">Отвечает за страницы авторизации и "О команде", промо-страницу, а также создатель игры "Спринт".</p>
+                                <p class="person__contribution">Отвечает за создание страниц  "О команде", "Промо", "Авторизация". Создатель игры "Спринт".</p>
                             </div>
                             <a class="git-link" href="https://github.com/AlexeiStel"><img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png"></a>
                         </div>
