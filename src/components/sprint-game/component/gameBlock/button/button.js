@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
 import store from 'components/sprint-game/component/storage';
 import EngWords from 'components/sprint-game/component/gameBlock/engWords/engWords';
@@ -8,14 +7,14 @@ import ButtonsArrow from 'components/sprint-game/component/gameBlock/buttonArrow
 
 export default class Buttons {
   static render() {
-    const buttonFalse = createElement(
+    createElement(
       document.querySelector('.game-block'),
       'button',
       ['button', 'button-false'],
       {},
       'Неверно'
     );
-    const buttonTrue = createElement(
+    createElement(
       document.querySelector('.game-block'),
       'button',
       ['button', 'button-true'],
@@ -80,7 +79,7 @@ export default class Buttons {
       document.querySelector('.checkFalse').style.opacity = '0';
       document.querySelector('.checkOk').style.opacity = '0';
       document.querySelector('.points-text').style.opacity = '0';
-    }, 500);
+    }, 200);
     if (
       rusBlock.textContent === stage.requestWords[stage.round].wordTranslate &&
       event.keyCode === 39
@@ -106,13 +105,12 @@ export default class Buttons {
 
   static rightChoice() {
     const state = store.getState();
-    EngWords.init();
-    RusWords.init();
+    EngWords.insertText();
+    RusWords.insertWordTranslate();
     document.querySelector('.checkOk').style.opacity = '1';
     document.querySelector('.checkFalse').style.opacity = '0';
     document.querySelector('.game-block').style.borderColor = 'green';
     document.querySelector('.points-text').style.opacity = '1';
-
     store.setState({ correctChoice: state.correctChoice + 1 });
     statisticStore.setLearnedState([state.word]);
     this.countPoints();
@@ -120,14 +118,14 @@ export default class Buttons {
 
   static unCorrectChoice() {
     const state = store.getState();
-    EngWords.init();
-    RusWords.init();
+    EngWords.insertText();
+    RusWords.insertWordTranslate();
     const pointText = document.querySelector('.points-text');
     const dotsBlock = document.querySelector('.dotsBlock');
     const checkOk = document.querySelector('.checkOk');
     const dot = document.querySelectorAll('.dots');
 
-    pointText.textContent = '';
+    pointText.textContent = '0';
     document.querySelector('.checkOk').style.opacity = '0';
     document.querySelector('.checkFalse').style.opacity = '1';
     document.querySelector('.game-block').style.borderColor = 'red';
