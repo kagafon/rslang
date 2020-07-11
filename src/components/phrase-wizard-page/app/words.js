@@ -28,16 +28,16 @@ export default class GameWords {
     imagePhrase.src = word.imageSrc;
     imagePhrase.alt = word.word;
     imagePhrase.classList.add('ph-wiz-image');
-    wrapper.append(imagePhrase);
-    this.wordsTranslate = createElement(wrapper, 'div', ['translate', 'ph-wiz'], {}, this.startPrase.textExampleTranslate);
-    this.wordsTranslate.classList.remove('show-oneself');
-
+    
     wordsArray.forEach(template => {
       this.template = template.replace(/[a-zA-Z]/g, "•");
       createElement(wordsBlock, 'span', ['temlate-words'], {style: 'color: black'}, this.template);
 
     });
-    wrapper.append(wordsBlock);
+
+    wrapper.append(imagePhrase);
+    this.wordsTranslate = createElement(wrapper, 'div', ['translate', 'ph-wiz'], {}, this.startPrase.textExampleTranslate);
+    this.wordsTranslate.classList.remove('show-oneself');
     this.gameWords = wordsArray;
     this.game();
   }
