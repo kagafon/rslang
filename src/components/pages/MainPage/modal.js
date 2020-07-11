@@ -63,6 +63,13 @@ class Modal {
     text.forEach((el) => {
       createElement(this.modalBody, 'p', [], {}, `${el.text}: ${el.value}`);
     });
+    this.btnContinue = createElement(
+      this.modalBody,
+      'button',
+      ['btn', 'btn-primary', 'btn-sm'],
+      { value: 1, tabindex: -1, type: 'submit', id: 'submitt1' },
+      `Продолжить`
+    );
   }
 
   show() {
@@ -73,12 +80,15 @@ class Modal {
     this.buttonClose.addEventListener('click', () => {
       this.modal.parentNode.removeChild(this.modal);
     });
+    this.btnContinue.addEventListener('click', () => {
+      this.modal.parentNode.removeChild(this.modal);
+    });
   }
 
   init(head, text) {
     this.create();
-    this.addHideHandler();
     this.setText(head, text);
+    this.addHideHandler();
     this.show();
   }
 }

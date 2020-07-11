@@ -131,6 +131,11 @@
     user-select: none;
   }
 
+  .submit-correct {
+    transition: display $page-transition-delay ease;
+    display: none;
+  }
+
   @media (max-width: 625px) {
     .card-footer,
     .card-header {

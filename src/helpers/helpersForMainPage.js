@@ -2,6 +2,7 @@ import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
 import modal from 'components/pages/MainPage/modal';
 import store from 'components/pages/MainPage/Store';
+import { Words } from 'services/backend';
 
 function showWord(word, sentence) {
   return sentence.replace('[...]', word);
@@ -88,6 +89,14 @@ function showStat(head, stat) {
   modal.init(head, stat);
 }
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 async function checkWordResult(wordN, result, showAnswer) {
   const word = wordN;
   const stat = await User.getMainStatistics();
@@ -97,6 +106,7 @@ async function checkWordResult(wordN, result, showAnswer) {
   stat.learnedWords = stat.learnedWords || 0;
   stat.answerSeries = stat.answerSeries || 0;
   stat.answerCount = stat.answerCount || 0;
+
   if (result === 'no') {
     word.totalAnswers += 1;
     word.correctAnswerSeries = 0;
@@ -129,11 +139,14 @@ async function checkWordResult(wordN, result, showAnswer) {
     word.correctAnswerSeries *
     settings.learning.levels[word.group].baseInterval[word.difficulty];
   word.nextRepeat = new Date(new Date().getTime() + min * 60 * 1000);
+  word.repeatTimes += 1;
   User.saveMainStatistics(stat);
+  Words.updateUserWord(word);
   return { word, stat };
 }
 
 export {
+  shuffle,
   showWord,
   hideWord,
   playAudio,
