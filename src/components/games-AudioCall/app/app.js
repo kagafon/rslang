@@ -24,8 +24,14 @@ export default class App {
       'div',
       ['answerBlock']
     );
-   
+
     return this.gameContainer;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  beforeClose() {
+    const audio = document.querySelector('audio');
+    audio.pause();
   }
 
   postInit() {
