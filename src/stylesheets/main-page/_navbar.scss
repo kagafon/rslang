@@ -7,7 +7,8 @@
 .navbar-main {
   position: fixed;
   width: 100%;
-  background-color: rgba(83, 140, 173, 0.49);
+  background-color: rgb(83, 140, 173);
+  opacity: 0.49;
 }
 
 .navbar-brand {
@@ -33,6 +34,51 @@
 .navbar-dark .navbar-nav .nav-link.active {
   color: $menu-active-color;
 }
+.navbar-opacity_authorization-page {
+  opacity: 0.66;
+}
+.navbar-opacity_main-page {
+  opacity: 0.49;
+}
+.navbar-opacity_main-page-game {
+  opacity: 0.49;
+}
+.navbar-opacity_game-page {
+  opacity: 0.66;
+}
+.navbar-opacity_speakit-page {
+  opacity: 0.66;
+}
+.navbar-opacity_engpuz-page {
+  opacity: 0.57;
+}
+.navbar-opacity_savannah-page {
+  opacity: 0.66;
+}
+.navbar-opacity_audiocall-page {
+  opacity: 0.79;
+}
+.navbar-opacity_sprint-page {
+  opacity: 0.57;
+}
+.navbar-opacity_phrasewizard-page {
+  opacity: 0.49;
+}
+.navbar-opacity_statistics-page {
+  opacity: 0.57;
+}
+.navbar-opacity_dictionary-page {
+  opacity: 0.78;
+}
+.navbar-opacity_settings-page {
+  opacity: 0.69;
+}
+.navbar-opacity_promo-page {
+  opacity: 0.79;
+}
+.navbar-opacity_team-page {
+  opacity: 0.57;
+}
 .navbar {
   @media (max-width: 991.98px) {
     .show,
@@ -54,5 +100,11 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar {
+    opacity: 1;
   }
 }

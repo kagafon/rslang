@@ -119,9 +119,6 @@ async function checkWordResult(wordN, result, showAnswer) {
         : stat.answerCount;
     stat.answerCount = 0;
   } else if (result === 'yes') {
-    if (!word.lastRepeat) {
-      stat.learnedWords += 1;
-    }
     if (
       word.correctAnswers === 0 ||
       word.correctAnswers === word.totalAnswers
@@ -134,6 +131,9 @@ async function checkWordResult(wordN, result, showAnswer) {
     word.totalAnswers += 1;
     word.correctAnswerSeries += 1;
   }
+  if (!word.lastRepeat) {
+    stat.learnedWords += 1;
+  }
   word.lastRepeat = new Date();
   const min =
     word.correctAnswerSeries *
@@ -142,6 +142,7 @@ async function checkWordResult(wordN, result, showAnswer) {
   word.repeatTimes += 1;
   User.saveMainStatistics(stat);
   Words.updateUserWord(word);
+  console.error(stat.correctAnswer);
   return { word, stat };
 }
 
