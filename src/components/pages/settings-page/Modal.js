@@ -41,7 +41,7 @@ export default class IntervalsWindow {
     this.modal = new Modal(this.modal);
   }
 
-  show(title, labels, names, source, max, min) {
+  show(title, labels, names, source, max, min, shift = 0) {
     this.title.innerText = title;
     this.modalBody.innerText = '';
     this.source = source;
@@ -55,7 +55,7 @@ export default class IntervalsWindow {
         min: min[idx],
       }).render(this.modalBody);
       control.addEventListener('change', (evt) => {
-        this.source[names[idx]] = evt.currentTarget.value;
+        this.source[names[idx]] = shift + parseInt(evt.currentTarget.value, 10);
       });
       return control;
     });

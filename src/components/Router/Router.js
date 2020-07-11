@@ -119,7 +119,12 @@ export default class Router {
 
     const onClickHandler = (pageName, event) => {
       event.preventDefault();
-      this.draw(pageName);
+      if (pageName === 'logout') {
+        User.logout();
+        this.draw(DEFAULT_AUTH_ROUTE);
+      } else {
+        this.draw(pageName);
+      }
       collapseArea.classList.remove('show');
     };
 

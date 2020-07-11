@@ -173,7 +173,8 @@ export default class SettingsPage {
                   this.user.settings.games[x].levelPages,
                   this.user.settings.games[x].max ||
                     new Array(LEVELS_COUNT).fill(60),
-                  new Array(LEVELS_COUNT).fill(1)
+                  new Array(LEVELS_COUNT).fill(1),
+                  -1
                 ),
                 ClassName: ButtonControl,
               })),

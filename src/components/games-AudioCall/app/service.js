@@ -1,12 +1,15 @@
-import { Words } from 'services/backend';
+import { Words, User } from 'services/backend';
 
 export default class Service {
   // eslint-disable-next-line consistent-return
   static async wordsRequest(level = 0) {
     try {
       this.spinnerOn();
-      const rndPage = this.randomInteger(0, 29);
-      const words = await Words.getWordsForRound(+level, rndPage, 20, [
+      const page = User.getCurrentUser().settings.games.audioCall.levelPages[
+        level
+      ];
+
+      const words = await Words.getWordsForRound(+level, page, 20, [
         'image',
         'audio',
       ]);
@@ -15,11 +18,6 @@ export default class Service {
     } catch (error) {
       Service.spinnerOff();
     }
-  }
-
-  static randomInteger(min, max) {
-    const rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
   }
 
   static spinnerOn() {
