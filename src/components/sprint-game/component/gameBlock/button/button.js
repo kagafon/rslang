@@ -32,12 +32,19 @@ export default class Buttons {
         const stage = store.getState();
         store.setState({ round: stage.round + 1 });
         audioSrc.play();
-        setTimeout(() => {
-          document.querySelector('.game-block').style.borderColor = 'violet';
-          document.querySelector('.checkFalse').style.opacity = '0';
-          document.querySelector('.checkOk').style.opacity = '0';
-          document.querySelector('.points-text').style.opacity = '0';
-        }, 500);
+
+        this.timer = setTimeout(() => {
+          if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+          } else {
+            document.querySelector('.game-block').classList.add = 'violet';
+            document.querySelector('.checkFalse').style.opacity = '0';
+            document.querySelector('.checkOk').style.opacity = '0';
+            document.querySelector('.points-text').style.opacity = '0';
+          }
+        }, 200);
+
         if (
           rusBlock.textContent ===
             stage.requestWords[stage.round].wordTranslate &&
@@ -74,12 +81,19 @@ export default class Buttons {
     const stage = store.getState();
     store.setState({ round: stage.round + 1 });
     audioSrc.play();
-    setTimeout(() => {
-      document.querySelector('.game-block').style.borderColor = 'violet';
-      document.querySelector('.checkFalse').style.opacity = '0';
-      document.querySelector('.checkOk').style.opacity = '0';
-      document.querySelector('.points-text').style.opacity = '0';
+
+    this.timer = setTimeout(() => {
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      } else {
+        document.querySelector('.game-block').classList.add = 'violet';
+        document.querySelector('.checkFalse').style.opacity = '0';
+        document.querySelector('.checkOk').style.opacity = '0';
+        document.querySelector('.points-text').style.opacity = '0';
+      }
     }, 200);
+
     if (
       rusBlock.textContent === stage.requestWords[stage.round].wordTranslate &&
       event.keyCode === 39

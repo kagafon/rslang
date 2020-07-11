@@ -35,7 +35,6 @@ export default class GameBlock {
         isTime = false;
         clearInterval(timerId);
         time.style.display = 'none';
-        Toaster.createToast('Игра окончена', 'danger');
         store.setState({ points: points.textContent });
         Statistic.init();
         document.removeEventListener('keyup', Buttons.keyUpHandler);
@@ -52,7 +51,7 @@ export default class GameBlock {
 
   static init() {
     this.render();
-    this.startСountdown(60, 0);
+    this.startСountdown(10, 0);
     Volume.init();
     Dots.init();
     Image.init();

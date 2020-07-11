@@ -43,12 +43,11 @@
     position: absolute;
     top: 50%;
     text-align: center;
-    background: whitesmoke;
+    background: rgba(211, 209, 209, 0.6);
     max-width: 565px;
     width: 100%;
     height: auto;
     margin: -150px auto 0;
-    opacity: 0.7;
     border-radius: 10px;
     right: 0;
     left: 0;
@@ -191,7 +190,7 @@
     border: 10px violet solid;
     border-radius: 20px;
     margin:  0 auto;
-    background: whitesmoke;
+    background: rgba(252, 249, 249, 0.747);
   }
 
 
@@ -330,7 +329,7 @@
     border-radius: 5px;
     width: 40px;
     height: 40px;
-    background: whitesmoke;
+    background: rgba(252, 249, 249, 0.747);
     margin: 10px 40px;
     opacity: 0.7;
   }
