@@ -8,28 +8,32 @@ export default class Router {
   constructor(routes) {
     this.routes = routes;
     this.currentRoute = null;
-    this.createLayout();
 
     this.transitionEndHandler = this.transitionEndCallback.bind(this);
-
-    Promise.allSettled(
-      routes.map((x) => {
-        preparedRoutes[x.name] = { ...x };
-        return fetch(x.image)
-          .then((resp) => resp.blob())
-          .then((image) => {
-            preparedRoutes[x.name].imageSrc = URL.createObjectURL(image);
-          });
-      })
-    );
   }
 
-  draw(routeName) {
+  async init() {
+    await Promise.allSettled(
+      this.routes.map((x) => {
+        preparedRoutes[x.name] = { ...x };
+        return x.image
+          ? fetch(x.image)
+              .then((resp) => resp.blob())
+              .then((image) => {
+                preparedRoutes[x.name].imageSrc = URL.createObjectURL(image);
+              })
+          : null;
+      })
+    );
+    this.createLayout();
+  }
+
+  draw(routeName, useTransition = true) {
     try {
-      let route = this.routes.find((el) => el.name === routeName);
+      let route = preparedRoutes[routeName];
       const user = User.getCurrentUser();
       if (route.needAuthorization && !user) {
-        route = this.routes.find((el) => el.name === DEFAULT_AUTH_ROUTE);
+        route = preparedRoutes[DEFAULT_AUTH_ROUTE];
       }
       if (!this.currentRoute || this.currentRoute.name !== route.name) {
         this.menuItems.forEach((item) => {
@@ -48,19 +52,25 @@ export default class Router {
             }
           }
         });
-        this.container.addEventListener(
-          'transitionend',
-          this.transitionEndHandler
-        );
-        if (this.pageObject && this.pageObject.beforeClose) {
-          this.pageObject.beforeClose();
+
+        this.currentRoute = route;
+
+        if (useTransition) {
+          this.container.addEventListener(
+            'transitionend',
+            this.transitionEndHandler
+          );
+          if (this.pageObject && this.pageObject.beforeClose) {
+            this.pageObject.beforeClose();
+          }
+          this.container.style.opacity = '0';
+        } else {
+          this.transitionEndHandler();
         }
-        this.container.style.opacity = '0';
         document.body.style.backgroundImage = `url(${
           route.imageSrc || route.image
         })`;
         this.navbar.style.backgroundColor = `${route.color}`;
-        this.currentRoute = route;
       }
     } catch (err) {
       this.container.textContent = '';
