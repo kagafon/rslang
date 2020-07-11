@@ -22,9 +22,7 @@ export async function getUserWords(preloads) {
     const learnedWords = data[1];
     const learnedTodyUserWords = data[2].passedCards || 0;
     const hardWords = data[3];
-
     let allWords = learnedWords.concat(newWords);
-
     if (!settings.lastLoginDate && allWords.length === 0) {
       await Promise.all([
         Words.addNextUserWordsFromGroup(0, 8),
