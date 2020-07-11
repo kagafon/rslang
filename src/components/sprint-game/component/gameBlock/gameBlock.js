@@ -52,7 +52,7 @@ export default class GameBlock {
 
   static init() {
     this.render();
-    this.startСountdown(20, 0);
+    this.startСountdown(60, 0);
     Volume.init();
     Dots.init();
     Image.init();

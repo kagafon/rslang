@@ -3,6 +3,7 @@
 /* eslint-disable import/no-cycle */
 import { createElement } from 'helpers/dom';
 import StartPage from 'components/sprint-game/component/start-page/start-page';
+import Timer from 'components/sprint-game/component/timer/timer';
 import Buttons from './component/gameBlock/button/button';
 import GameBlock from './component/gameBlock/gameBlock';
 
@@ -34,6 +35,7 @@ export default class AppSprint {
 
   beforeClose() {
     document.removeEventListener('keyup', Buttons.keyUpHandler);
+    Timer.resetTime();
     GameBlock.resetTimeout();
   }
 
