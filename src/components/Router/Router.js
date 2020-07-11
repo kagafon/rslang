@@ -15,11 +15,13 @@ export default class Router {
     Promise.allSettled(
       routes.map((x) => {
         preparedRoutes[x.name] = { ...x };
-        return fetch(x.image)
-          .then((resp) => resp.blob())
-          .then((image) => {
-            preparedRoutes[x.name].imageSrc = URL.createObjectURL(image);
-          });
+        return x.image
+          ? fetch(x.image)
+              .then((resp) => resp.blob())
+              .then((image) => {
+                preparedRoutes[x.name].imageSrc = URL.createObjectURL(image);
+              })
+          : null;
       })
     );
   }
