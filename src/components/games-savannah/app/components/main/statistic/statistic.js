@@ -7,6 +7,8 @@ import statisticStore from 'components/games-savannah/app/components/statistic-s
 import StartPage from 'components/games-savannah/app/components/main/start-page/start-page';
 import { User } from 'services/backend';
 // eslint-disable-next-line no-restricted-imports
+import Toaster from 'components/Toaster';
+// eslint-disable-next-line no-restricted-imports
 import RusWords from '../words/words';
 
 export default class Statistic {
@@ -163,13 +165,17 @@ export default class Statistic {
   }
 
   static postGametStatistic() {
-    const stage = store.getState();
-    const date = new Date();
-    const { correctChoice } = stage;
+    try {
+      const stage = store.getState();
+      const date = new Date();
+      const { correctChoice } = stage;
 
-    this.userPage();
-    User.saveSettings();
-    User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
+      this.userPage();
+      User.saveSettings();
+      User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
+    } catch (error) {
+      Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
+    }
   }
 
   static userPage() {
