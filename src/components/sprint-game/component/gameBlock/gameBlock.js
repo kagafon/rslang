@@ -2,7 +2,6 @@
 import { createElement } from 'helpers/dom';
 import Statistic from 'components/sprint-game/component/statistic/statistic';
 import store from 'components/sprint-game/component/storage';
-import Toaster from 'components/Toaster/index';
 import Dots from './dots/dots';
 import EngWords from './engWords/engWords';
 import RusWords from './rusWords/rusWords';
@@ -31,11 +30,10 @@ export default class GameBlock {
 
     timerId = setInterval(function () {
       time.textContent = `0${current}`.slice(-2);
-      if (isTime && current < 1) {
+      if (isTime && current === to) {
         isTime = false;
         clearInterval(timerId);
         time.style.display = 'none';
-        Toaster.createToast('Игра окончена', 'danger');
         store.setState({ points: points.textContent });
         Statistic.init();
         document.removeEventListener('keyup', Buttons.keyUpHandler);
