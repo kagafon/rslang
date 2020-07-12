@@ -60,8 +60,18 @@ export default class Animate {
       });
     });
 
-    document.addEventListener('keypress', () => {
-      anim.cancel();
+    document.addEventListener('keypress', ({ key }) => {
+      if (key === '1' || key === '2' || key === '3' || key === '4') {
+        anim.cancel();
+      }
+    });
+
+    const menuLink = document.querySelectorAll('.nav-link');
+
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        anim.cancel();
+      });
     });
   }
 }

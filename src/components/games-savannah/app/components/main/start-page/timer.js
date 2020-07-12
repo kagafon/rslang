@@ -38,6 +38,18 @@ export default class Timer {
     }
     const sec = setInterval(tick, 1000);
     tick();
+
+    const menuLink = document.querySelectorAll('.nav-link');
+
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        clearInterval(sec);
+      });
+    });
+  }
+
+  static resetTimer() {
+    clearInterval(this.initializeTimer());
   }
 
   static init() {
