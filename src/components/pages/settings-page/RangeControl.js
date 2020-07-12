@@ -12,6 +12,7 @@ export default class RangeControl extends BaseControl {
     max,
     min,
     preprocessValue,
+    shift,
   }) {
     super();
     this.container = createElement(null, 'div', ['form-group']);
@@ -25,7 +26,7 @@ export default class RangeControl extends BaseControl {
       ['form-control-range', 'form-control-range-sm'],
       {
         id: name,
-        value: value !== undefined ? value : source[name],
+        value: (value !== undefined ? value : source[name]) - (shift || 0),
         type: 'range',
         autocomplete: 'off',
         ...(readonly ? { readonly } : {}),
@@ -38,13 +39,13 @@ export default class RangeControl extends BaseControl {
       'div',
       ['text-primary', 'text-center', 'flex-fill', 'h5', 'mb-0', 'ml-2'],
       { style: 'min-width: 20px;' },
-      value !== undefined ? value : source[name]
+      (value !== undefined ? value : source[name]) - (shift || 0)
     );
     this.control.addEventListener('input', (evt) => {
       valueContainer.innerText = evt.currentTarget.value;
       this.source[name] = preprocessValue
-        ? preprocessValue(evt.currentTarget.value)
-        : evt.currentTarget.value;
+        ? preprocessValue(parseInt(evt.currentTarget.value, 10) + (shift || 0))
+        : parseInt(evt.currentTarget.value, 10) + (shift || 0);
     });
   }
 }
