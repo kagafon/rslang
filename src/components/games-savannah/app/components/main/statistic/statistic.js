@@ -172,7 +172,12 @@ export default class Statistic {
 
       this.userPage();
       User.saveSettings();
-      User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
+      await User.saveGameStatistics(
+        'savannah',
+        date.getTime(),
+        +correctChoice,
+        10
+      );
     } catch (error) {
       Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
     }
