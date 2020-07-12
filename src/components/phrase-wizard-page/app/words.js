@@ -37,6 +37,8 @@ export default class GameWords {
 
     wrapper.append(imagePhrase);
     this.wordsTranslate = createElement(wrapper, 'div', ['translate', 'ph-wiz'], {}, this.startPrase.textExampleTranslate);
+    const inputForDisplayKeyboard = createElement(wrapper, 'input', ['input', 'ph-wiz']);
+    inputForDisplayKeyboard.focus();
     this.wordsTranslate.classList.remove('show-oneself');
     this.gameWords = wordsArray;
     this.game();
