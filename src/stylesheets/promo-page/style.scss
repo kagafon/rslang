@@ -89,35 +89,6 @@
     }
   }
 
-  .swiper-container {
-    margin: 0 auto 30px;
-    max-width: 700px;
-    width: 90%;
-    height: 300px;
-  }
-  .swiper-slide {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 18px;
-
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-  }
-  .swiper-button-prev:hover,
-  .swiper-button-next:hover {
-    transform: scale(1.2);
-  }
   .discribe-game {
     display: flex;
     flex-wrap: wrap;
@@ -182,8 +153,6 @@
     font-size: 2.5rem;
     margin: 10px 0 0 5%;
   }
-////////////
-
 
   .learn-r {
     background-color: rgba(124, 55, 73, 0.75);
