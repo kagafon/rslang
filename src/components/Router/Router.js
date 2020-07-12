@@ -71,9 +71,9 @@ export default class Router {
           route.imageSrc || route.image
         })`;
         this.navbar.style.backgroundColor = `${route.color}`;
-        this.navbar.classList.add(`navbar-opacity_${route.name}`);
       }
     } catch (err) {
+      console.error(err);
       this.container.textContent = '';
     }
   }
