@@ -33,7 +33,6 @@ export default class StartPage {
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
         try {
-          // console.log(document.documentElement.clientWidth);
           const words = await Service.wordsRequest(+item.dataset.num);
 
           store.setState({ requestWords: words });
