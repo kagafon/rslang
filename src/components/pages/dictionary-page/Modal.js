@@ -50,6 +50,12 @@ export default class WordDetails {
             { style: `width: ${word.progress || 0}%;` }
           ),
       },
+      {
+        title: 'Группа/Сложность',
+        name: 'group',
+        element: (parent, word) =>
+          createElement(parent, 'div', [], {}, word.group + 1),
+      },
       { title: 'Повторов', name: 'repeatTimes' },
       {
         title: 'Посл. показ',
