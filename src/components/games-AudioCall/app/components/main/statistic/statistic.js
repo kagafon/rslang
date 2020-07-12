@@ -155,7 +155,12 @@ export default class Statisctic {
 
       this.userPage();
       User.saveSettings();
-      User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
+      await User.saveGameStatistics(
+        'audiocall',
+        date.getTime(),
+        +correctChoice,
+        10
+      );
     } catch (error) {
       Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
     }
