@@ -2,7 +2,7 @@ import { createElement } from 'helpers/dom';
 import store from 'components/pages/MainPage/Store';
 import router from 'components/Router/';
 import { getUserWords } from 'components/pages/MainPage/dataForMain';
-import { createLoader } from 'helpers/helpersForMainPage';
+import { createLoader, shuffle } from 'helpers/helpersForMainPage';
 class MainPage {
   create() {
     this.container = createElement(
@@ -56,7 +56,7 @@ class MainPage {
         'aria-valuemin': '0',
         'aria-valuemax': '100',
       },
-      '0%'
+      ''
     );
 
     const words = [
@@ -115,9 +115,24 @@ class MainPage {
         default:
           icon = 'reply_all';
       }
-      createElement(centerDiv, 'span', ['material-icons'], {}, `${icon}`);
-      createElement(centerDiv, 'span', [], {}, `${el.text}`);
-      createElement(centerDiv, 'span', [], { id: `${el.state}` });
+      createElement(
+        centerDiv,
+        'span',
+        ['material-icons'],
+        { 'data-words': `${el.state}` },
+        `${icon}`
+      );
+      createElement(
+        centerDiv,
+        'span',
+        [],
+        { 'data-words': `${el.state}` },
+        `${el.text}`
+      );
+      createElement(centerDiv, 'span', [], {
+        id: `${el.state}`,
+        'data-words': `${el.state}`,
+      });
     });
   }
 
@@ -152,28 +167,32 @@ class MainPage {
         learnedTodyUserWords,
         hardWords,
       } = data.words;
-      this.newWords = newWords;
-      this.learnedWords = learnedWords;
-      this.allWords = allWords;
+      this.newWords = shuffle(newWords);
+      this.learnedWords = shuffle(learnedWords);
+      this.allWords = shuffle(allWords);
       this.learnedTodyUserWords = learnedTodyUserWords;
-      this.hardWords = hardWords;
+      this.hardWords = shuffle(hardWords);
       let preloads = [];
       const { image, example, meaning } = data.settings.prompts;
       if (image) preloads.push('image');
       preloads.push('audio');
       if (example) preloads.push('audioExample');
       if (meaning) preloads.push('audioMeaning');
-
       store.setState({ userSettings: data.settings, userPreloads: preloads });
 
       const pr = Math.floor(
         (this.learnedTodyUserWords / data.settings.learning.maxCardsPerDay) *
           100
       );
-      this.progressText.textContent = `Пройдено   слов: ${pr}%`;
-      this.progressBar.style.width = `${pr}%`;
-      this.progressBar.textContent = `${pr}%`;
-      this.progressBar.ariaValuenow = `${pr}`;
+      if (pr <= 100) {
+        this.progressText.textContent = `Пройдено   слов: ${pr}%`;
+        this.progressBar.style.width = `${pr}%`;
+        this.progressBar.ariaValuenow = `${pr}`;
+      } else {
+        this.progressText.textContent = `Пройдено   слов: 100%`;
+        this.progressBar.style.width = `100%`;
+        this.progressBar.ariaValuenow = `100`;
+      }
 
       const buttonsWords = this.container.querySelectorAll('div[data-words]');
       buttonsWords.forEach((el) => {

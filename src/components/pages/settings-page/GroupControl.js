@@ -55,8 +55,8 @@ export default class GroupControl extends BaseControl {
     this.control.addEventListener('input', (evt) => {
       valueContainer.innerText = evt.currentTarget.value;
       this.source.newWordsPerDay = preprocessValue
-        ? preprocessValue(evt.currentTarget.value)
-        : evt.currentTarget.value;
+        ? preprocessValue(parseInt(evt.currentTarget.value, 10))
+        : parseInt(evt.currentTarget.value, 10);
     });
   }
 }

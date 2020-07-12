@@ -2,6 +2,7 @@ import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
 
 import Toaster from 'components/Toaster';
+import { LEVELS_COUNT } from 'services/config';
 import ControlBlock from './ControlBlock';
 import TextControl from './TextControl';
 import ToggleControl from './ToggleControl';
@@ -10,6 +11,7 @@ import GroupControl from './GroupControl';
 import ControlsContainer from './ControlsContainer';
 import LabelControl from './LabelControl';
 import Modal from './Modal';
+import ButtonControl from './ButtonControl';
 
 export default class SettingsPage {
   constructor() {
@@ -150,18 +152,32 @@ export default class SettingsPage {
             ],
           },
           {
-            label: 'Раунды в English Puzzle',
+            label: 'Раунды',
             ClassName: ControlsContainer,
-            items: [45, 40, 40, 25, 25, 25].map((x, idx) => ({
-              label: `Сложность ${idx + 1}`,
-              name: idx,
-              value: this.user.settings.games.puzzle.levelPages[idx] + 1,
-              source: this.user.settings.games.puzzle.levelPages,
-              preprocessValue: (y) => y - 1,
-              max: x,
-              min: 1,
-              ClassName: RangeControl,
-            })),
+            items: Object.keys(this.user.settings.games)
+              .filter((x) => this.user.settings.games[x].levelPages)
+              .map((x) => ({
+                label: this.user.settings.games[x].name,
+                onClick: this.modal.show.bind(
+                  this.modal,
+                  `Раунды ${this.user.settings.games[x].name}`,
+                  [
+                    'Сложность 1',
+                    'Сложность 2',
+                    'Сложность 3',
+                    'Сложность 4',
+                    'Сложность 5',
+                    'Сложность 6',
+                  ],
+                  [0, 1, 2, 3, 4, 5],
+                  this.user.settings.games[x].levelPages,
+                  this.user.settings.games[x].max ||
+                    new Array(LEVELS_COUNT).fill(60),
+                  new Array(LEVELS_COUNT).fill(1),
+                  -1
+                ),
+                ClassName: ButtonControl,
+              })),
           },
         ],
       },
@@ -218,6 +234,19 @@ export default class SettingsPage {
 
     this.container.addEventListener('submit', async (evt) => {
       evt.preventDefault();
+
+      if (
+        ['translation', 'meaning', 'example'].every(
+          (x) => !this.user.settings.prompts[x]
+        )
+      ) {
+        Toaster.createToast(
+          'Хотя бы одна следующих подсказок должна быть выбрана: Перевод, Значение, Пример',
+          'warning'
+        );
+        return;
+      }
+
       this.showSpinner();
       try {
         await User.saveSettings(this.user.settings);
