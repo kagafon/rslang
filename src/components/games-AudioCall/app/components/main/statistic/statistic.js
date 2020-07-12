@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-cycle
+import Toaster from 'components/Toaster';
 import Service from 'components/games-AudioCall/app/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-AudioCall/app/components/storage';
@@ -146,14 +147,18 @@ export default class Statisctic {
     });
   }
 
-  static postGametStatistic() {
-    const stage = store.getState();
-    const date = new Date();
-    const { correctChoice } = stage;
+  static async postGametStatistic() {
+    try {
+      const stage = store.getState();
+      const date = new Date();
+      const { correctChoice } = stage;
 
-    this.userPage();
-    User.saveSettings();
-    User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
+      this.userPage();
+      User.saveSettings();
+      User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
+    } catch (error) {
+      Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
+    }
   }
 
   static userPage() {
