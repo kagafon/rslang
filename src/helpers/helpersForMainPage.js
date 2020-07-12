@@ -132,7 +132,6 @@ async function checkWordResult(wordN, result, showAnswer) {
     settings.learning.levels[word.group].baseInterval[word.difficulty];
   word.nextRepeat = new Date(new Date().getTime() + min * 60 * 1000);
   word.repeatTimes += 1;
-  console.error(stat);
   try {
     await User.saveMainStatistics(stat);
     await Words.updateUserWord(word);

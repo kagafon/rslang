@@ -371,7 +371,6 @@ class MainPageGame {
       await this.addAction();
       this.setLongWord();
     } catch (e) {
-      console.error(e);
       router.draw('main-page');
     }
   }

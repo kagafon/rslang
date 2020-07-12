@@ -25,7 +25,6 @@ const routes = [
     hideWhenAuthorized: true,
     image: '/assets/images/backgrounds/authorization-page.jpg',
     color: 'rgb(182, 74, 90)',
-    opacity: '0.66',
   },
   {
     name: 'main-page',
@@ -34,7 +33,6 @@ const routes = [
     needAuthorization: true,
     image: '/assets/images/backgrounds/main-page.jpg',
     color: 'rgb(83, 140, 173)',
-    opacity: '0.49',
   },
   {
     name: 'main-page-game',
@@ -44,7 +42,6 @@ const routes = [
     needAuthorization: false,
     image: '/assets/images/backgrounds/main-page.jpg',
     color: 'rgb(83, 140, 173)',
-    opacity: '0.49',
   },
   {
     name: 'game-page',
@@ -53,7 +50,6 @@ const routes = [
     needAuthorization: true,
     image: '/assets/images/backgrounds/game-page.jpg',
     color: 'rgb(69, 28, 78)',
-    opacity: '0.66',
   },
   {
     name: 'speakit-page',
@@ -64,7 +60,6 @@ const routes = [
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/speakit-page.jpg',
     color: 'rgb(69, 28, 78)',
-    opacity: '0.66',
   },
   {
     name: 'engpuz-page',
@@ -75,7 +70,6 @@ const routes = [
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/engpuz-page.jpg',
     color: 'rgb(255, 108, 64)',
-    opacity: '0.57',
   },
   {
     name: 'savannah-page',
@@ -86,7 +80,6 @@ const routes = [
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/savannah-page.jpg',
     color: 'rgb(69, 28, 78)',
-    opacity: '0.66',
   },
   {
     name: 'audiocall-page',
@@ -97,7 +90,6 @@ const routes = [
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/audiocall-page.jpg',
     color: 'rgb(124, 55, 73)',
-    opacity: '0.79',
   },
   {
     name: 'sprint-page',
@@ -108,7 +100,6 @@ const routes = [
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/sprint-page.jpg',
     color: 'rgb(146, 85, 215)',
-    opacity: '0.57',
   },
   {
     name: 'phrasewizard-page',
@@ -119,7 +110,6 @@ const routes = [
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/phrasewizard-page.jpg',
     color: 'rgb(83, 140, 173)',
-    opacity: '0.49',
   },
   {
     name: 'statistics-page',
@@ -128,14 +118,12 @@ const routes = [
     needAuthorization: true,
     image: '/assets/images/backgrounds/statistics-page.jpg',
     color: 'rgb(146, 85, 215)',
-    opacity: '0.57',
   },
   {
     name: 'dictionary-page',
     title: 'Словарь',
     image: '/assets/images/backgrounds/dictionary-page.jpg',
     color: 'rgb(101, 99, 209)',
-    opacity: '0.78',
     ClassConstructor: DictionaryPage,
     needAuthorization: true,
   },
@@ -146,7 +134,6 @@ const routes = [
     needAuthorization: true,
     image: '/assets/images/backgrounds/settings-page.jpg',
     color: 'rgb(121, 42, 121)',
-    opacity: '0.69',
   },
   {
     name: 'promo-page',
@@ -155,7 +142,6 @@ const routes = [
     needAuthorization: false,
     image: '/assets/images/backgrounds/promo-page.jpg',
     color: 'rgb(124, 55, 73)',
-    opacity: '0.79',
   },
   {
     name: 'team-page',
@@ -164,7 +150,6 @@ const routes = [
     needAuthorization: false,
     image: '/assets/images/backgrounds/team-page.jpg',
     color: 'rgb(255, 108, 64)',
-    opacity: '0.57',
   },
   {
     name: 'logout',
