@@ -164,7 +164,7 @@ export default class Statistic {
     });
   }
 
-  static postGametStatistic() {
+  static async postGametStatistic() {
     try {
       const stage = store.getState();
       const date = new Date();
