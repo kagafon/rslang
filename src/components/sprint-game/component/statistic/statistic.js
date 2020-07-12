@@ -7,6 +7,7 @@ import statisticStore from 'components/sprint-game/component/statistic-storage';
 import StartPage from 'components/sprint-game/component/start-page/start-page';
 // eslint-disable-next-line import/no-cycle
 import { User } from 'services/backend';
+import Toaster from 'components/Toaster/index';
 
 export default class Statistic {
   static render() {
@@ -135,16 +136,20 @@ export default class Statistic {
     });
   }
 
-  static sendGameStatistic() {
+  static async sendGameStatistic() {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
-    User.saveGameStatistics(
-      'sprint',
-      date.getTime(),
-      +correctChoice,
-      stage.round
-    );
+    try {
+      await User.saveGameStatistics(
+        'sprint',
+        date.getTime(),
+        +correctChoice,
+        stage.round
+      );
+    } catch (err) {
+      Toaster.createToast(`Ошибка сохранения результата: ${err}`, 'warning');
+    }
   }
 
   static init() {
