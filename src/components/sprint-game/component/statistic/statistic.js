@@ -39,6 +39,7 @@ export default class Statistic {
         </div>
         <div class="final valid"></div>
         </div>
+       
         <button type="button" class="btn btn-primary final-btn">Начать заново</button>
      </div>
      
@@ -125,6 +126,15 @@ export default class Statistic {
     });
   }
 
+  static clearStatistic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
+  }
+
   static sendGameStatistic() {
     const stage = store.getState();
     const date = new Date();
@@ -143,5 +153,6 @@ export default class Statistic {
     this.learnedWords();
     this.reboot();
     this.sendGameStatistic();
+    this.clearStatistic();
   }
 }

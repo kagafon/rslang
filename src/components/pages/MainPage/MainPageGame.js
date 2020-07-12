@@ -137,8 +137,7 @@ class MainPageGame {
     this.inputBackground.classList.remove('answer_success', 'answer_error');
     if (this.input.value === word) {
       this.input.disabled = 'disabled';
-      this.submittBtn.style.userSelect = 'none';
-      this.submittBtnAnswer.style.userSelect = 'none';
+      this.submittBtn.classList.add('submit-correct');
       if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
         const dataUpdate = await checkWordResult(this.wordInput, 'no', true);
         this.wordInput = dataUpdate.word;
@@ -146,7 +145,10 @@ class MainPageGame {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
-        if (stat.passedCards === this.settings.learning.maxCardsPerDay) {
+        if (
+          Number(stat.passedCards) ===
+          Number(this.settings.learning.maxCardsPerDay)
+        ) {
           showStat(
             ' Поздравляю! Серия завершена. Вы выполнили дневную норму по изучению слов.',
             [
@@ -206,19 +208,7 @@ class MainPageGame {
         this.inputWord.classList.add('hidden1');
       }, 3000);
       this.input.blur();
-
-      if (
-        (!store.getState().isAudioPlay && store.getState().isAudioPlayButton) ||
-        store.getState().isAudioPlayButton
-      ) {
-        store.setState({ isAudioPlay: true });
-        await playAudio(this.audio, this.audioSrc);
-        if (this.textMeaning) await playAudio(this.audio, this.audioMeaningSrc);
-        if (this.textExample) await playAudio(this.audio, this.audioExampleSrc);
-        store.setState({ isAudioPlay: false });
-      }
     }
-    Words.updateUserWord(this.wordInput);
   }
 
   addInputHandler() {
@@ -358,6 +348,10 @@ class MainPageGame {
       Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
     }
+  }
+
+  beforeClose() {
+    this.audio.muted = true;
   }
 }
 
