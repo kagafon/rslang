@@ -23,7 +23,7 @@ export default class Buttons {
     );
   }
 
-  static toNextWord() {
+  static clickButtons() {
     const button = document.querySelectorAll('.button');
     const rusBlock = document.querySelector('.rusWord');
     const audioSrc = document.querySelector('.audio2');
@@ -32,17 +32,18 @@ export default class Buttons {
         const stage = store.getState();
         store.setState({ round: stage.round + 1 });
         audioSrc.play();
+        if (this.timer) {
+          clearTimeout(this.timer);
+          this.timer = null;
+        }
 
         this.timer = setTimeout(() => {
-          if (this.timer) {
-            clearTimeout(this.timer);
-            this.timer = null;
-          } else {
-            document.querySelector('.game-block').classList.add = 'violet';
+          try {
+            document.querySelector('.game-block').style.borderColor = 'violet';
             document.querySelector('.checkFalse').style.opacity = '0';
             document.querySelector('.checkOk').style.opacity = '0';
             document.querySelector('.points-text').style.opacity = '0';
-          }
+          } catch (error) {}
         }, 200);
 
         if (
@@ -82,16 +83,18 @@ export default class Buttons {
     store.setState({ round: stage.round + 1 });
     audioSrc.play();
 
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+
     this.timer = setTimeout(() => {
-      if (this.timer) {
-        clearTimeout(this.timer);
-        this.timer = null;
-      } else {
-        document.querySelector('.game-block').classList.add = 'violet';
+      try {
+        document.querySelector('.game-block').style.borderColor = 'violet';
         document.querySelector('.checkFalse').style.opacity = '0';
         document.querySelector('.checkOk').style.opacity = '0';
         document.querySelector('.points-text').style.opacity = '0';
-      }
+      } catch (error) {}
     }, 200);
 
     if (
@@ -362,7 +365,7 @@ export default class Buttons {
 
   static init() {
     this.render();
-    this.toNextWord();
+    this.clickButtons();
     ButtonsArrow.init();
     document.removeEventListener('keyup', this.keyUpHandler);
     document.addEventListener('keyup', this.keyUpHandler);

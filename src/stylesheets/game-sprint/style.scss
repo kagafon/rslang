@@ -187,12 +187,11 @@
     width: 100%;
     max-width: 450px;
     height: 380px;
-    border: 10px violet solid;
     border-radius: 20px;
     margin:  0 auto;
     background: rgba(252, 249, 249, 0.747);
+    border: 10px violet solid;
   }
-
 
   .dotsBlock {
     height: 80px;
@@ -384,7 +383,7 @@
     border-radius: 10px;
     background-color: rgba(252, 249, 249, 0.747);
     margin: 100px auto 0;
-    z-index: 100000;
+    z-index: 1025;
   }
 
   .statistic {

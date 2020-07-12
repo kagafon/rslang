@@ -30,7 +30,7 @@ export default class GameBlock {
 
     timerId = setInterval(function () {
       time.textContent = `0${current}`.slice(-2);
-      if (isTime && current < 1) {
+      if (isTime && current === to) {
         isTime = false;
         clearInterval(timerId);
         time.style.display = 'none';
