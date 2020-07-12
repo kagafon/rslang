@@ -45,7 +45,7 @@ export default class promoPage {
       'h4',
       ['promo-text-small'],
       {},
-      'Ты расширишь свой словарный запас на 4000 слов, используя современную методику обучения!'
+      'Ты расширишь свой словарный запас на 4000 слов, используя современную методику обучения.'
     );
 
     const GetStartButton = createElement(
@@ -74,7 +74,7 @@ export default class promoPage {
       'h4',
       ['video-link'],
       {},
-      'Посмотри как это выглядит.'
+      'Посмотри как это выглядит'
     );
 
     const headerArrow = createElement(
@@ -154,7 +154,7 @@ export default class promoPage {
       'h4',
       ['interval-more-info'],
       {},
-      'Узнать подробнее'
+      'Подробнее'
     );
 
     const advantageContainer2 = createElement(
@@ -226,14 +226,14 @@ export default class promoPage {
       'h3',
       ['advantage-title'],
       {},
-      'Лучшее приложение 2020 года!'
+      'Лучшее приложение 2020 года!*'
     );
     const TeamPageLink = createElement(
       advantageContainer4,
       'h4',
       ['our-team'],
       { id: 'our-team-link'},
-      'по мнению нашей команды'
+      '*по мнению нашей команды'
     );
 
 
@@ -261,9 +261,6 @@ export default class promoPage {
       ''
     );
 
-
-
-
     const divRule = createElement(describeGame, 'div', ['learn-r'], {}, '');
     const intervaRuleContainer = createElement(divRule, 'div', ['interval-container'], {}, '');
     const titleRule = createElement(
@@ -271,52 +268,52 @@ export default class promoPage {
       'h3',
       ['rule-title'],
       {},
-      'Правило интервального повторения'
+      'Методика интервального повторения'
     );
     const pRule = createElement(
       intervaRuleContainer,
       'p',
       ['rule-describe'],
       {},
-      'Изучение новых слов.'
+      'Для более качественного заучивания применяется динамическое определение цикла повторения, в зависимости от выбранного пользователем в настройках базового интервала для каждой группы слов и для каждого уровня сложности слова (так же определяемого пользователем). Слово будет повторно предложено к изучению через промежуток времени N*T, где N - длина серии правильных ответов для слова, T - базовый интервал, зависящий от группы слова и его сложности. Если слово не угадано, то оно будет повторно предложено к изучению на ближайшей тренировке. '
     );
-    const olRule = createElement(intervaRuleContainer, 'ul', ['describe'], {}, '');
-    const liRule = createElement(
-      olRule,
-      'li',
-      ['describe'],
-      { type: 'circle' },
-      'Если Вы угадали слово, то оно повторится повториться(для закрепления материала):'
-    );
-    const olliRule = createElement(liRule, 'ol', ['describe'], {}, '');
-    const olliRule1 = createElement(
-      olliRule,
-      'li',
-      ['describe'],
-      { type: 'square' },
-      'Сложное слово - через день'
-    );
-    const olliRule3 = createElement(
-      olliRule,
-      'li',
-      ['describe'],
-      { type: 'square' },
-      'Среднее - через три дня'
-    );
-    const olliRule5 = createElement(
-      olliRule,
-      'li',
-      ['describe'],
-      { type: 'square' },
-      'Легкое - через семь дней'
-    );
-    const olliRule4 = createElement(
-      olRule,
-      'li',
-      ['describe'],
-      { type: 'circle' },
-      'Не угадали - слово повториться через час.'
-    );
+    // const olRule = createElement(intervaRuleContainer, 'ul', ['describe'], {}, '');
+    // const liRule = createElement(
+    //   olRule,
+    //   'li',
+    //   ['describe'],
+    //   { type: 'circle' },
+    //   'Если Вы угадали слово, то оно повторится повториться(для закрепления материала):'
+    // );
+    // const olliRule = createElement(liRule, 'ol', ['describe'], {}, '');
+    // const olliRule1 = createElement(
+    //   olliRule,
+    //   'li',
+    //   ['describe'],
+    //   { type: 'square' },
+    //   'Сложное слово - через день'
+    // );
+    // const olliRule3 = createElement(
+    //   olliRule,
+    //   'li',
+    //   ['describe'],
+    //   { type: 'square' },
+    //   'Среднее - через три дня'
+    // );
+    // const olliRule5 = createElement(
+    //   olliRule,
+    //   'li',
+    //   ['describe'],
+    //   { type: 'square' },
+    //   'Легкое - через семь дней'
+    // );
+    // const olliRule4 = createElement(
+    //   olRule,
+    //   'li',
+    //   ['describe'],
+    //   { type: 'circle' },
+    //   'Не угадали - слово повториться через час.'
+    // );
     const GamesRule = createElement(divRule, 'div', ['games-rule'], {}, '');
     const titleAllRule = createElement(
       GamesRule,
@@ -330,7 +327,7 @@ export default class promoPage {
       'p',
       ['rule-describe'],
       {},
-      'На стартовой странице каждой игры пользователь выбирает уровень сложности. В "изучаемые слова" можно играть только, если количество изученных слов больше 10.'
+      'На стартовой странице каждой игры пользователь может выбирать уровень сложности либо использование изучаемых в основном приложении слов. Последний режим может быть использован только если количество изучаемых слов больше количества необходимых для одного раунда.'
     );
     const divLearn = createElement(divRule, 'div', ['new-words-rule'], {}, '');
     const titleLearn = createElement(
@@ -345,7 +342,7 @@ export default class promoPage {
       'p',
       ['rule-describe'],
       {},
-      'В настройках приложения пользователь указывает интенсивность ежедневного обучения. Карточки с обучающими словами содержат перевод слова, произношение и пример использования.'
+      'В настройках приложения пользователь может выбрать интенсивность ежедневного обучения. Карточки с обучающими словами содержат подсказки: перевод слова, произношение и пример использования. Отображение подсказок так же настраивается пользователем.'
     );
     const gamesContainer = createElement(describeGame, 'div', ['games-container'], {}, '');
     const gamesContainerHeader = createElement(gamesContainer, 'div', ['games-container-header'], {id: 'games-container-header'}, '');
@@ -364,7 +361,7 @@ export default class promoPage {
       'p',
       ['game-describe'],
       {},
-      `Игрок нажимает на слово, чтобы услышать его звучание. Затем произносит это слово в микрофон до достижения правильного варианта.`
+      `Игра поддерживает два режима: изучение произношения и тренировка. В первом пользователь может прослушать звучание слов, получить их перевод и ассоциативное изображение. Во втором - должен правильно произнести слова. Корректность произношения определяется встроенным алгоритмом распознавания речи.`
     );
     const divPuzzle = createElement(gamesContainer, 'div', ['game', 'hidden'], {}, '');
     const titlePuzzle = createElement(
@@ -418,16 +415,16 @@ export default class promoPage {
       'p',
       ['game-describe'],
       {},
-      'Составьте фразу по первым буквам произнесенных слов.'
+      'Игра рассчитана на тренировку восприятия английского языка на слух, даже если вы не уверены как именно пишется слово, главное понимать с какой буквы оно начинается. Даже в случае ошибки вы сможете увидеть слово полностью. Нажимая на клавиатуре первые буквы слова в произносимой фразе будут выводиться соответствующее буквам слова. Всегда можно прослушать фразу ещё раз нажав на кнопку-динамик. Если часть предложения кажется трудной можно перейти к следующему - это не будет ошибкой.'
     );
     const divSprint = createElement(gamesContainer, 'div', ['game', 'hidden'], {}, '');
-    const titleSprint = createElement(divSprint, 'h3', ['game-title'], {}, 'Sprint');
+    const titleSprint = createElement(divSprint, 'h3', ['game-title'], {}, 'Спринт');
     const pSprint = createElement(
       divSprint,
       'p',
       ['game-describe'],
       {},
-      'Дано слово и перевод, а также два варианта ответа - верно или нет. Игрок выбирает один из них.'
+      'В игре необходимо выбрать соответствует ли перевод показанному слову на английском.  За правильные ответы начисляются баллы. Чем  длиннее цепочка правильных ответов - тем больше баллов.'
     );
     GetStartButton.addEventListener('click', () => {
       Router.draw('authorization-page');
@@ -445,10 +442,10 @@ export default class promoPage {
       document.querySelector("#main-container > div > div.discribe-game > div.video-container").scrollIntoView({block: "center", behavior: "smooth"});
     });
     intarvalMoreInfo.addEventListener('click', () => {
-      document.querySelector("#main-container > div > div.discribe-game > div.learn-r").scrollIntoView({block: "center", behavior: "smooth"});
+      document.querySelector("#main-container > div > div.discribe-game > div.learn-r").scrollIntoView({block: "start", behavior: "smooth"});
     })
     headerArrow.addEventListener('click', () => {
-      document.querySelector("#main-container > div > div.discribe-game > div.advantages-container").scrollIntoView({block: "center", behavior: "smooth"});
+      document.querySelector("#main-container > div > div.discribe-game > div.advantages-container").scrollIntoView({block: "start", behavior: "smooth"});
     })
 
     return this.parent;

@@ -94,6 +94,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 105vh auto 10px auto;
+    max-height: calc(100vh - #{$main-menu-height});
+    overflow-y: auto;
   }
 
   .advantages-container {
@@ -128,6 +130,10 @@
     &:hover {
       color: #f18640;
     }
+  }
+
+  .our-team {
+    font-size: 10px;
   }
 
   .advantage-container {
