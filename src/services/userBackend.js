@@ -146,7 +146,7 @@ export default class User {
             ),
           }),
         ]);
-        user = new User(userInfo.userId, email, settingsToUse);
+        await User.fillUser({ ...userInfo, email });
         return user;
       })
       .catch((err) => {

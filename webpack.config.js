@@ -100,7 +100,7 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
         title: 'RS Lang',
         template: './src/html/index.html',
-        /* favicon: 'src/html/favicon.ico', */
+        favicon: 'src/html/favicon.ico',
         meta: {
           charset: 'UTF-8',
           viewport: 'width=device-width, initial-scale=1.0',

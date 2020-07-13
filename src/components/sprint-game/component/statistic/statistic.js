@@ -7,6 +7,7 @@ import statisticStore from 'components/sprint-game/component/statistic-storage';
 import StartPage from 'components/sprint-game/component/start-page/start-page';
 // eslint-disable-next-line import/no-cycle
 import { User } from 'services/backend';
+import Toaster from 'components/Toaster/index';
 
 export default class Statistic {
   static render() {
@@ -39,6 +40,7 @@ export default class Statistic {
         </div>
         <div class="final valid"></div>
         </div>
+       
         <button type="button" class="btn btn-primary final-btn">Начать заново</button>
      </div>
      
@@ -125,16 +127,29 @@ export default class Statistic {
     });
   }
 
-  static sendGameStatistic() {
+  static clearStatistic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
+  }
+
+  static async sendGameStatistic() {
     const stage = store.getState();
     const date = new Date();
     const { correctChoice } = stage;
-    User.saveGameStatistics(
-      'sprint',
-      date.getTime(),
-      +correctChoice,
-      stage.round
-    );
+    try {
+      await User.saveGameStatistics(
+        'sprint',
+        date.getTime(),
+        +correctChoice,
+        stage.round
+      );
+    } catch (err) {
+      Toaster.createToast(`Ошибка сохранения результата: ${err}`, 'warning');
+    }
   }
 
   static init() {
@@ -143,5 +158,6 @@ export default class Statistic {
     this.learnedWords();
     this.reboot();
     this.sendGameStatistic();
+    this.clearStatistic();
   }
 }

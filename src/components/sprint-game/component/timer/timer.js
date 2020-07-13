@@ -2,6 +2,7 @@
 import GameBlock from 'components/sprint-game/component/gameBlock/gameBlock';
 import { createElement } from 'helpers/dom';
 
+let timeId;
 export default class Timer {
   static init() {
     const timer = createElement(document.querySelector('.main'), 'div', [
@@ -9,24 +10,26 @@ export default class Timer {
     ]);
     const count = createElement(timer, 'div', ['count']);
     const time = createElement(count, 'span', ['time']);
-    this.startСountdown(3, 0, time);
+    this.startСount(3, 0, time);
     return timer;
   }
 
-  static startСountdown(from, to, time) {
-    function startTimer() {
-      setTimeout(function go() {
-        time.textContent = from;
-        if (from > to) {
-          setTimeout(go, 1000);
-        } else if (from < 1) {
-          time.style.display = 'none';
-          GameBlock.init();
-        }
-        from -= 1;
-      }, 1000);
-    }
-    startTimer();
-    return this.time;
+  static startСount(from, to, time) {
+    let current = from;
+
+    timeId = setInterval(function () {
+      time.textContent = `${current}`;
+      if (current === to) {
+        clearInterval(timeId);
+        time.style.display = 'none';
+        GameBlock.init();
+      }
+      current -= 1;
+    }, 1000);
+    return timeId;
+  }
+
+  static resetTime() {
+    clearTimeout(timeId);
   }
 }

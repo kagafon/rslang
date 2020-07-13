@@ -56,9 +56,9 @@ export default function createCard(wordInit, buttons, prompts) {
     `${word}`
   );
   createElement(cardBody, 'hr', ['my-3'], {}, ``);
-  createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
+
   if (prompts.translation) {
-    createElement(cardBody, 'p', ['card-text', 'translate'], {}, `${word}`);
+    createElement(cardBody, 'p', ['card-text'], {}, `${wordTranslate}`);
   }
   if (prompts.meaning) {
     const sentenceTextMeaning = createElement(cardBody, 'p', [
