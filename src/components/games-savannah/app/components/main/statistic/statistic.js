@@ -137,7 +137,7 @@ export default class Statistic {
   static reboot() {
     try {
       const bntReboot = document.querySelector('.final-btn');
-      document.removeEventListener('keydown', RusWords.keyboardChoice, false);
+      document.removeEventListener('keypress', RusWords.keyboardChoice, false);
 
       bntReboot.addEventListener('click', () => {
         const wrapper = document.querySelector('.wrapper');
@@ -150,6 +150,17 @@ export default class Statistic {
         StartPage.render(document.querySelector('.game-container'));
       });
     } catch (error) {}
+  }
+
+  static rebootStatictic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+    document.removeEventListener('keypress', RusWords.keyboardChoice, false);
+
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
   }
 
   static postGametStatistic() {
