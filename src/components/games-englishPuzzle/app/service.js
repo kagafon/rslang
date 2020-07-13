@@ -189,8 +189,7 @@ export default class Service {
         arrWord[i].classList.remove('mistake');
         arrWord[i].classList.remove('result');
         arrWord[i].classList.add('correct');
-        document.querySelector('.btn-check').style.display = 'none';
-        document.querySelector('.btn-continue').style.display = 'block';
+        this.correctBit();
       } else {
         document.querySelector('.btn-i-dont-know').style.display = 'block';
         document.querySelector('.btn-continue').style.display = 'none';
@@ -219,6 +218,16 @@ export default class Service {
         const description = document.querySelector('.source-line');
         description.textContent = stage.imgDescription;
       }, 1500);
+    }
+  }
+
+  static correctBit() {
+    const resultLineActive = document.querySelector('.line-active');
+    const mistakeArray = resultLineActive.querySelectorAll('.mistake');
+
+    if (mistakeArray.length === 0) {
+      document.querySelector('.btn-check').style.display = 'none';
+      document.querySelector('.btn-continue').style.display = 'block';
     }
   }
 

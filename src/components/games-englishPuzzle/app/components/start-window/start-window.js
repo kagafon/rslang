@@ -36,6 +36,8 @@ export default class StartPage {
     `;
     container.append(intro);
 
+    const userDisplay = window.innerWidth;
+
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
         try {
@@ -56,7 +58,9 @@ export default class StartPage {
               'danger'
             );
             Service.spinnerOff();
-          } else {
+          }
+
+          if (words.length >= 10 && userDisplay > 768) {
             intro.remove();
             Header.init();
             ResultsBlock.init();
@@ -66,6 +70,12 @@ export default class StartPage {
             Service.hintsClick();
             Hints.btnTranslate();
             Statisctic.rebootStatictic();
+          } else {
+            Toaster.createToast(
+              'разрешение вашего экрана не поддерживается',
+              'danger'
+            );
+            Service.spinnerOff();
           }
         } catch (error) {
           if (error.message.search('fetch') > -1) {
