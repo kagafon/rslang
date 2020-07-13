@@ -23,7 +23,7 @@ export default class Results {
       Service.wordsRequest(PhraseWizard.levelRound);
     });
     const date = new Date();
-    User.saveGameStatistics('phrase-wizard', date.getTime(), Statisctic.correct, Results.sumAnswers);
+    User.saveGameStatistics('phraseWizard', date.getTime(), Statisctic.correct, Results.sumAnswers);
     Service.spinnerOff();
   }
 

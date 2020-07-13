@@ -4,8 +4,11 @@ import Service from 'components/sprint-game/component/service';
 
 export default class RusWords {
   static render() {
-    const stage = store.getState();
     createElement(document.querySelector('.game-block'), 'div', ['rusWord']);
+  }
+
+  static insertWordTranslate() {
+    const stage = store.getState();
     const rusWord = document.querySelector('.rusWord');
     const rndNum = Service.randomInteger(stage.round, stage.round + 2);
     rusWord.textContent = stage.requestWords[rndNum].wordTranslate;
@@ -13,5 +16,6 @@ export default class RusWords {
 
   static init() {
     this.render();
+    this.insertWordTranslate();
   }
 }

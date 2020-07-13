@@ -9,6 +9,7 @@ export default class Service {
       const page = User.getCurrentUser().settings.games.savannah.levelPages[
         level
       ];
+
       const words = await Words.getWordsForRound(+level, page, 20, [
         'image',
         'audio',

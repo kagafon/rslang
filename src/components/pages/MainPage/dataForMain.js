@@ -35,6 +35,7 @@ export async function getUserWords(preloads) {
       allWords = await Words.getTodayUserWords();
       newWords = await Words.getNewUserWords(true);
     } else if (allWords.length === 0) throw new Error();
+
     const words = {
       newWords,
       learnedWords,
@@ -44,7 +45,6 @@ export async function getUserWords(preloads) {
     };
     return { words, settings };
   } catch (e) {
-    console.error(e);
     throw new Error(e);
   }
 }

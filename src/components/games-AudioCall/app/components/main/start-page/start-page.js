@@ -15,6 +15,7 @@ export default class StartPage {
     const intro = document.createElement('div');
     intro.classList.add('intro');
     intro.innerHTML = `
+    <div class="intro-placeholder">
      <div class="title">
          <span>Аудиовызов</span>
      </div>
@@ -30,7 +31,8 @@ export default class StartPage {
          <button data-num="3" type="button" class="btn btn-primary start">4</button>
          <button data-num="4" type="button" class="btn btn-primary start">5</button>
          <button data-num="5" type="button" class="btn btn-primary start">6</button>
-         <button data-num="-1" type="button" class="btn btn-primary start learn">Изучаемые слова</button>
+     </div>
+     <button data-num="-1" type="button" class="btn btn-primary start learn">Изучаемые слова</button>
      </div>
     `;
     container.append(intro);
@@ -40,7 +42,7 @@ export default class StartPage {
         try {
           const words = await Service.wordsRequest(+item.dataset.num);
           store.setState({ requestWords: words });
-
+          store.setState({ level: +item.dataset.num });
           store.setState({ groupe: item.dataset.num });
           store.setState({ round: 0 });
           store.setState({ correctChoice: 0 });

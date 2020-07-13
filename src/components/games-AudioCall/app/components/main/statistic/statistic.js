@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-cycle
+import Toaster from 'components/Toaster';
 import Service from 'components/games-AudioCall/app/service';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-AudioCall/app/components/storage';
@@ -145,11 +147,38 @@ export default class Statisctic {
     });
   }
 
-  static postGametStatistic() {
+  static async postGametStatistic() {
+    try {
+      const stage = store.getState();
+      const date = new Date();
+      const { correctChoice } = stage;
+
+      this.userPage();
+      User.saveSettings();
+      await User.saveGameStatistics(
+        'audiocall',
+        date.getTime(),
+        +correctChoice,
+        10
+      );
+    } catch (error) {
+      Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
+    }
+  }
+
+  static userPage() {
     const stage = store.getState();
-    const date = new Date();
-    const { correctChoice } = stage;
-    User.saveGameStatistics('audiocall', date.getTime(), +correctChoice, 10);
+
+    const { level } = stage;
+    const page = User.getCurrentUser().settings.games.audioCall.levelPages[
+      level
+    ];
+
+    if (page === 29) {
+      User.getCurrentUser().settings.games.audioCall.levelPages[level] = 0;
+    } else {
+      User.getCurrentUser().settings.games.audioCall.levelPages[level] += 1;
+    }
   }
 
   static init() {
