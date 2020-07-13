@@ -149,7 +149,12 @@ export default class Statisctic {
 
       this.userPage();
       User.saveSettings();
-      User.saveGameStatistics('engpuz', date.getTime(), +correctChoice, 10);
+      await User.saveGameStatistics(
+        'engpuz',
+        date.getTime(),
+        +correctChoice,
+        10
+      );
     } catch (error) {
       Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
     }
