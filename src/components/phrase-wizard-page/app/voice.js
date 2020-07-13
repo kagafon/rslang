@@ -17,14 +17,14 @@ export default class Voice {
 
   static autoPlayAudio() {
     const btnAudio = document.querySelector('.audio');
-    const playAudio = document.querySelector('audio');
+    this.playAudio = document.querySelector('audio');
 
     btnAudio.classList.add('audio-animation');
-    playAudio.src = GameWords.startPrase.audioExampleSrc;
+    this.playAudio.src = GameWords.startPrase.audioExampleSrc;
     
-    playAudio.play();
+    this.playAudio.play();
 
-    playAudio.onended = () => {
+    this.playAudio.onended = () => {
       btnAudio.classList.remove('audio-animation');
     };
   }
@@ -34,11 +34,11 @@ export default class Voice {
 
     btnAudio.addEventListener('click', () => {
       btnAudio.classList.add('audio-animation');
-      const playAudio = document.querySelector('audio');
-      playAudio.src = GameWords.startPrase.audioExampleSrc;
-      playAudio.play();
+      this.playAudio = document.querySelector('audio');
+      this.playAudio.src = GameWords.startPrase.audioExampleSrc;
+      this.playAudio.play();
 
-      playAudio.onended = () => {
+      this.playAudio.onended = () => {
         btnAudio.classList.remove('audio-animation');
       };
     });
