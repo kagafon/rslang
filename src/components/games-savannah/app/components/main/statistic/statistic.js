@@ -156,7 +156,7 @@ export default class Statistic {
 
   static rebootStatictic() {
     const menuLink = document.querySelectorAll('.nav-link');
-    document.removeEventListener('keypress', RusWords.keyboardChoice, false);
+    document.removeEventListener('keydown', RusWords.keyboardChoice, false);
 
     menuLink.forEach((item) => {
       item.addEventListener('click', () => {
@@ -185,7 +185,6 @@ export default class Statistic {
   }
 
   static userPage() {
-  static postGametStatistic() {
     const stage = store.getState();
 
     const { level } = stage;
