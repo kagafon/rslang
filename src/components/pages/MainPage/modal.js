@@ -1,4 +1,5 @@
 import { createElement } from 'helpers/dom';
+import router from 'components/Router/';
 
 class Modal {
   create() {
@@ -12,7 +13,6 @@ class Modal {
         id: 'exampleModal',
         'aria-labelledby': 'exampleModalLabel',
         'aria-hidden': 'true',
-        show: true,
       },
       ``
     );
@@ -57,19 +57,40 @@ class Modal {
     return this.modal;
   }
 
-  setText(head, text) {
+  setText(head, text, buttons) {
     this.title.textContent = head;
     createElement(this.modalBody, 'div', ['modal-img'], {}, ``);
     text.forEach((el) => {
-      createElement(this.modalBody, 'p', [], {}, `${el.text}: ${el.value}`);
+      if (el.value) {
+        createElement(this.modalBody, 'p', [], {}, `${el.text}: ${el.value}`);
+      } else {
+        createElement(this.modalBody, 'p', [], {}, `${el.text}`);
+      }
     });
-    this.btnContinue = createElement(
-      this.modalBody,
-      'button',
-      ['btn', 'btn-primary', 'btn-sm'],
-      { value: 1, tabindex: -1, type: 'submit', id: 'submitt1' },
-      `Продолжить`
-    );
+    if (buttons.action === 'close') {
+      const btnContinue = createElement(
+        this.modalBody,
+        'button',
+        ['btn', 'btn-primary', 'btn-sm'],
+        { value: 1, tabindex: -1, type: 'submit', id: 'submitt1' },
+        `Продолжить`
+      );
+      btnContinue.addEventListener('click', () => {
+        this.modal.parentNode.removeChild(this.modal);
+      });
+    } else if (buttons.action === 'draw') {
+      const btnPage = createElement(
+        this.modalBody,
+        'button',
+        ['btn', 'btn-primary', 'btn-sm'],
+        { value: 1, tabindex: -1, type: 'submit', id: 'submitt1' },
+        `${buttons.button}`
+      );
+      btnPage.addEventListener('click', () => {
+        router.draw(`${buttons.page}`);
+        this.modal.parentNode.removeChild(this.modal);
+      });
+    }
   }
 
   show() {
@@ -80,14 +101,11 @@ class Modal {
     this.buttonClose.addEventListener('click', () => {
       this.modal.parentNode.removeChild(this.modal);
     });
-    this.btnContinue.addEventListener('click', () => {
-      this.modal.parentNode.removeChild(this.modal);
-    });
   }
 
-  init(head, text) {
+  init(head, text, buttons) {
     this.create();
-    this.setText(head, text);
+    this.setText(head, text, buttons);
     this.addHideHandler();
     this.show();
   }
