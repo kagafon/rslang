@@ -115,36 +115,38 @@ export default class RusWords {
 
     const arrWords = document.querySelectorAll('.wrapper-words');
 
-    store.setState({ round: stage.round + 1 });
+    if (target === '1' || target === '2' || target === '3' || target === '4') {
+      store.setState({ round: stage.round + 1 });
 
-    let word;
+      let word;
 
-    switch (target) {
-      case '1':
-        word = arrWords[0].children[0].textContent;
-        break;
-      case '2':
-        word = arrWords[1].children[0].textContent;
-        break;
-      case '3':
-        word = arrWords[2].children[0].textContent;
-        break;
-      case '4':
-        word = arrWords[3].children[0].textContent;
-        break;
-      default:
-    }
+      switch (target) {
+        case '1':
+          word = arrWords[0].children[0].textContent;
+          break;
+        case '2':
+          word = arrWords[1].children[0].textContent;
+          break;
+        case '3':
+          word = arrWords[2].children[0].textContent;
+          break;
+        case '4':
+          word = arrWords[3].children[0].textContent;
+          break;
+        default:
+      }
 
-    if (word === stage.word.wordTranslate) {
-      store.setState({ correctChoice: stage.correctChoice + 1 });
-      statiscticStore.setLearnedState([stage.word]);
+      if (word === stage.word.wordTranslate) {
+        store.setState({ correctChoice: stage.correctChoice + 1 });
+        statiscticStore.setLearnedState([stage.word]);
 
-      RusWords.rightChoice(arrWords[+target - 1]);
-    } else {
-      store.setState({ health: stage.health - 1 });
-      statiscticStore.setUnexploredState([stage.word]);
+        RusWords.rightChoice(arrWords[+target - 1]);
+      } else {
+        store.setState({ health: stage.health - 1 });
+        statiscticStore.setUnexploredState([stage.word]);
 
-      RusWords.incorrectChoice(arrWords[+target - 1]);
+        RusWords.incorrectChoice(arrWords[+target - 1]);
+      }
     }
   }
 

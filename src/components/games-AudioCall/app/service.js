@@ -5,7 +5,8 @@ export default class Service {
   static async wordsRequest(level = 0) {
     try {
       this.spinnerOn();
-      const page = User.getCurrentUser().settings.games.audioCall.levelPages[
+
+      const page = User.getCurrentUser().settings.games.savannah.levelPages[
         level
       ];
 

@@ -10,6 +10,7 @@ export default class StartPage {
     intro.classList.add('intro');
 
     intro.innerHTML = `
+    <div class="intro-placeholder">
      <div class="title">
        <span>Саванна</span>
      </div>
@@ -25,7 +26,8 @@ export default class StartPage {
         <button data-num="3" type="button" class="btn btn-primary start">4</button>
         <button data-num="4" type="button" class="btn btn-primary start">5</button>
         <button data-num="5" type="button" class="btn btn-primary start">6</button>
-        <button data-num="-1" type="button" class="btn btn-primary start learn-words">Изучаемые слова</button>
+     </div>
+     <button data-num="-1" type="button" class="btn btn-primary start learn-words">Изучаемые слова</button>
      </div>
     `;
     container.append(intro);
@@ -37,6 +39,7 @@ export default class StartPage {
 
           store.setState({ requestWords: words });
           store.setState({ groupe: +item.dataset.num });
+          store.setState({ level: +item.dataset.num });
           store.setState({ round: 0 });
           store.setState({ correctChoice: 0 });
           store.setState({ health: 5 });
