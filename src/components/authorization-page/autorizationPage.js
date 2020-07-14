@@ -343,7 +343,16 @@ export default class authorizationPage {
     this.callAutoLogin(errorLogin, divToast, autologinBackdround);
     this.hideToast(spanToast, divToast);
     this.hideToast(spanToast, divLoginToast);
-    this.checkPassword(inputPassword, inputConfirmPassword, button, divToast);
+    button.addEventListener('click', () => {
+      event.preventDefault();
+      this.checkPassword(inputPassword, inputConfirmPassword, divToast,
+        inputEmail,
+        inputPassword,
+        inputUsername,
+        error,
+        divSpinner,
+        divToast);
+    });
     this.toLogin(
       inputLoginEmail,
       inputLoginPassword,
@@ -352,32 +361,40 @@ export default class authorizationPage {
       divLoginSpinner,
       divLoginToast
     );
-    this.toRegistrate(
-      inputEmail,
-      inputPassword,
-      inputUsername,
-      button,
-      error,
-      divSpinner,
-      divToast
-    );
+    
     this.addHandlers(formContainerHeader);
     return parent;
   }
 
-  checkPassword(password, confirmPassword, button, toast) {
-    button.addEventListener('click', () => {
+  checkPassword(password, confirmPassword, toast, inputEmail,
+    inputPassword,
+    inputUsername,
+    error,
+    divSpinner,
+    divToast) {
       const regex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
       if (password.value !== confirmPassword.value) {
+        console.log("Пароли не совпадают")
+        toast.style.display = 'block';
         toast.innerHTML = `<p>Пароли не совпадают. Введите идентичные пароли!</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
       } else if (!regex.test(password.value)) {
+        console.log("Символы")
+        toast.style.display = 'block';
         toast.innerHTML = `<p>Пароль не соответствует требованию. Введите новый пароль</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else {
+        this.toRegistrate(
+          inputEmail,
+          inputPassword,
+          inputUsername,
+          error,
+          divSpinner,
+          divToast
+        );
       }
-    });
   }
 
   async callAutoLogin(err, toast, background) {
@@ -430,28 +447,33 @@ export default class authorizationPage {
     });
   }
 
-  toRegistrate(email, password, name, button, err, spinner, toast) {
-    button.addEventListener('click', function sendFormRegistrate(event) {
-      event.preventDefault();
+  toRegistrate(email, password, name, err, spinner, toast) {
       spinner.style.display = 'block';
       const mail = email.value;
       const pass = password.value;
-      async function getRegistration() {
-        try {
-          const userInfo = await User.createUserAndLogin(mail, pass, {
-            username: name.value,
-          });
-          Router.draw('main-page');
-        } catch (error) {
-          spinner.style.display = 'none';
-          toast.style.display = 'block';
-          toast.innerHTML = `<p>Что-то пошло не так. Повторите процедуру регистрации</p>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      if(mail === '' || pass === '' || name.value === '') {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
+        toast.innerHTML = `<p>Заполните все поля.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else {
+        async function getRegistration() {
+          try {
+            const userInfo = await User.createUserAndLogin(mail, pass, {
+              username: name.value,
+            });
+            Router.draw('main-page');
+          } catch (error) {
+            spinner.style.display = 'none';
+            toast.style.display = 'block';
+            toast.innerHTML = `<p>Что-то пошло не так. Повторите процедуру регистрации</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="span-close">&times;</span></button>`;
+          }
         }
+        getRegistration();
       }
-      getRegistration();
-    });
   }
 
   hideToast(button, toast) {
