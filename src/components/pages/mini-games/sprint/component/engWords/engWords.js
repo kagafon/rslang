@@ -1,5 +1,5 @@
 import { createElement } from 'helpers/dom';
-import store from 'components/sprint-game/component/storage';
+import store from 'components/pages/mini-games/sprint/component/storage';
 
 export default class EngWords {
   static init() {

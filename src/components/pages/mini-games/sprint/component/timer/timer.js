@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import GameBlock from 'components/sprint-game/component/gameBlock/gameBlock';
+import GameBlock from 'components/pages/mini-games/sprint/component/gameBlock';
 import { createElement } from 'helpers/dom';
 
 let timeId;

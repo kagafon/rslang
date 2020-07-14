@@ -2,14 +2,8 @@ import { createElement } from 'helpers/dom';
 
 export default class ButtonsArrow {
   static init() {
-    const buttonLeft = createElement(document.querySelector('.main'), 'btn', [
-      'btn',
-      'btn-false',
-    ]);
-    const buttonRight = createElement(document.querySelector('.main'), 'btn', [
-      'btn',
-      'btn-true',
-    ]);
+    createElement(document.querySelector('.main'), 'btn', ['btn', 'btn-false']);
+    createElement(document.querySelector('.main'), 'btn', ['btn', 'btn-true']);
     this.pressKeyBoard();
   }
 

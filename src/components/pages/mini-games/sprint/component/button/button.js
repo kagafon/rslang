@@ -1,9 +1,9 @@
 import { createElement } from 'helpers/dom';
-import store from 'components/sprint-game/component/storage';
-import EngWords from 'components/sprint-game/component/gameBlock/engWords/engWords';
-import RusWords from 'components/sprint-game/component/gameBlock/rusWords/rusWords';
-import statisticStore from 'components/sprint-game/component/statistic-storage';
-import ButtonsArrow from 'components/sprint-game/component/gameBlock/buttonArrow/buttonArrow';
+import store from 'components/pages/mini-games/sprint/component/storage';
+import EngWords from 'components/pages/mini-games/sprint/component/engWords/engWords';
+import RusWords from 'components/pages/mini-games/sprint/component/rusWords/rusWords';
+import statisticStore from 'components/pages/mini-games/sprint/component/statistic-storage';
+import ButtonsArrow from 'components/pages/mini-games/sprint/component/buttonArrow/buttonArrow';
 
 export default class Buttons {
   static render() {
