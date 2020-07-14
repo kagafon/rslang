@@ -370,28 +370,45 @@ export default class authorizationPage {
     inputPassword,
     inputUsername,
     error,
-    divSpinner,
+    spinner,
     divToast) {
       const regex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
-      if (password.value !== confirmPassword.value) {
-        console.log("Пароли не совпадают")
+      const regMail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      const mail = inputEmail.value;
+      const pass = inputPassword.value;
+      const name = inputUsername.value;
+      spinner.style.display = 'block';
+      if(mail === '' || pass === '' || name === '') {
+        spinner.style.display = 'none';
         toast.style.display = 'block';
-        toast.innerHTML = `<p>Пароли не совпадают. Введите идентичные пароли!</p>
+        toast.innerHTML = `<p>Заполните все поля.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else if (!regMail.test(mail)) {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
+        toast.innerHTML = `<p>Введите корректный адресс электронной почты.</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
       } else if (!regex.test(password.value)) {
-        console.log("Символы")
+        spinner.style.display = 'none';
         toast.style.display = 'block';
         toast.innerHTML = `<p>Пароль не соответствует требованию. Введите новый пароль</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else if (password.value !== confirmPassword.value) {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
+        toast.innerHTML = `<p>Пароли не совпадают. Введите идентичные пароли!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
       } else {
         this.toRegistrate(
-          inputEmail,
-          inputPassword,
-          inputUsername,
+          mail,
+          pass,
+          name,
           error,
-          divSpinner,
+          spinner,
           divToast
         );
       }
@@ -447,17 +464,8 @@ export default class authorizationPage {
     });
   }
 
-  toRegistrate(email, password, name, err, spinner, toast) {
+  toRegistrate(mail, pass, name, err, spinner, toast) {
       spinner.style.display = 'block';
-      const mail = email.value;
-      const pass = password.value;
-      if(mail === '' || pass === '' || name.value === '') {
-        spinner.style.display = 'none';
-        toast.style.display = 'block';
-        toast.innerHTML = `<p>Заполните все поля.</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" class="span-close">&times;</span></button>`;
-      } else {
         async function getRegistration() {
           try {
             const userInfo = await User.createUserAndLogin(mail, pass, {
@@ -473,7 +481,7 @@ export default class authorizationPage {
           }
         }
         getRegistration();
-      }
+      
   }
 
   hideToast(button, toast) {
