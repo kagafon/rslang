@@ -8,13 +8,12 @@ import {
   changeProgressBar,
   createLoader,
   checkWordResult,
-  showStat,
 } from 'helpers/helpersForMainPage';
 import store from 'components/pages/MainPage/Store';
 import Swiper from 'swiper';
 import optionsForSwiper from 'components/pages/MainPage/Swiper';
 import { Words } from 'services/backend';
-
+import modal from 'components/pages/MainPage/modal';
 import Toaster from 'components/Toaster';
 import router from 'components/Router/';
 
@@ -135,21 +134,35 @@ class MainPageGame {
     this.inputWord.innerHTML = '';
     this.inputWord.classList.remove('hidden1', 'hidden2');
     this.inputBackground.classList.remove('answer_success', 'answer_error');
-    if (this.input.value === word) {
+    if (this.input.value.toLowerCase() === word.toLowerCase()) {
       this.input.disabled = 'disabled';
       this.submittBtn.classList.add('submit-correct');
       if (event.submitter.innerText === 'ПОКАЗАТЬ ОТВЕТ') {
+        store.setState({ correctAnswersThisCards: false });
         const dataUpdate = await checkWordResult(this.wordInput, 'no', true);
         this.wordInput = dataUpdate.word;
+        if (this.progressBar.style.width === '100%') {
+          modal.init(
+            'Слова в этой группе закончились',
+            [
+              {
+                text:
+                  'Вы можете перейти к мини-играм, чтобы тренироваться было веселее!',
+              },
+            ],
+            { button: 'мини-игры', action: 'draw', page: 'game-page' }
+          );
+        }
       } else {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
+        store.setState({ correctAnswersThisCards: true });
         this.wordInput = dataUpdate.word;
         const stat = dataUpdate.stat;
         if (
           Number(stat.passedCards) ===
           Number(this.settings.learning.maxCardsPerDay)
         ) {
-          showStat(
+          modal.init(
             ' Поздравляю! Серия завершена. Вы выполнили дневную норму по изучению слов.',
             [
               { text: 'Карточек завершено', value: stat.passedCards },
@@ -164,7 +177,19 @@ class MainPageGame {
                 text: 'Самая длинная серия правильных ответов',
                 value: stat.answerSeries,
               },
-            ]
+            ],
+            { button: 'далее', action: 'close' }
+          );
+        } else if (this.progressBar.style.width === '100%') {
+          modal.init(
+            'Слова в этой группе закончились',
+            [
+              {
+                text:
+                  'Вы можете перейти к мини-играм, чтобы тренироваться было веселее!',
+              },
+            ],
+            { button: 'мини-игры', action: 'draw', page: 'game-page' }
           );
         }
       }
@@ -199,6 +224,7 @@ class MainPageGame {
         }, 5000);
       }
     } else {
+      store.setState({ correctAnswersThisCards: false });
       const dataUpdate = await checkWordResult(this.wordInput, 'no', false);
       this.wordInput = dataUpdate.word;
       this.inputBackground.classList.add('answer_error');
@@ -345,13 +371,14 @@ class MainPageGame {
       await this.addAction();
       this.setLongWord();
     } catch (e) {
-      Toaster.createToast(`ошибка загрузки`, 'danger');
       router.draw('main-page');
     }
   }
 
   beforeClose() {
-    this.audio.muted = true;
+    if (this.audio) {
+      this.audio.muted = true;
+    }
   }
 }
 

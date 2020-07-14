@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-cycle
 import Service from 'components/games-englishPuzzle/app/service';
+import Toaster from 'components/Toaster';
 import { createElement } from 'helpers/dom';
 import store from 'components/games-englishPuzzle/app/storage';
 import statisticStore from 'components/games-englishPuzzle/app/statistic-storage';
@@ -140,14 +141,23 @@ export default class Statisctic {
     });
   }
 
-  static postGametStatistic() {
-    const stage = store.getState();
-    const date = new Date();
-    const { correctChoice } = stage;
+  static async postGametStatistic() {
+    try {
+      const stage = store.getState();
+      const date = new Date();
+      const { correctChoice } = stage;
 
-    this.userPage();
-    User.saveSettings();
-    User.saveGameStatistics('engpuz', date.getTime(), +correctChoice, 10);
+      this.userPage();
+      User.saveSettings();
+      await User.saveGameStatistics(
+        'engpuz',
+        date.getTime(),
+        +correctChoice,
+        10
+      );
+    } catch (error) {
+      Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
+    }
   }
 
   static userPage() {

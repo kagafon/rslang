@@ -1,6 +1,7 @@
 import { createElement } from 'helpers/dom';
 import Service from 'components/phrase-wizard-page/app/service';
 import Statisctic from 'components/phrase-wizard-page/app/statisctic';
+import GameWords from 'components/phrase-wizard-page/app/words';
 
 export default class PhraseWizard {
   init() {
@@ -70,6 +71,10 @@ export default class PhraseWizard {
     }
 
     return gameBox;
+  }
+
+  beforeClose() {
+    document.removeEventListener('keydown', GameWords.keyListener);
   }
   
 }
