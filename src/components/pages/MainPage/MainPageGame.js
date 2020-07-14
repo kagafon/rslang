@@ -7,6 +7,7 @@ import {
   volumeOff,
   changeProgressBar,
   createLoader,
+  endSlideModal,
   checkWordResult,
 } from 'helpers/helpersForMainPage';
 import store from 'components/pages/MainPage/Store';
@@ -141,18 +142,6 @@ class MainPageGame {
         store.setState({ correctAnswersThisCards: false });
         const dataUpdate = await checkWordResult(this.wordInput, 'no', true);
         this.wordInput = dataUpdate.word;
-        if (this.progressBar.style.width === '100%') {
-          modal.init(
-            'Слова в этой группе закончились',
-            [
-              {
-                text:
-                  'Вы можете перейти к мини-играм, чтобы тренироваться было веселее!',
-              },
-            ],
-            { button: 'мини-игры', action: 'draw', page: 'game-page' }
-          );
-        }
       } else {
         const dataUpdate = await checkWordResult(this.wordInput, 'yes');
         store.setState({ correctAnswersThisCards: true });
@@ -162,6 +151,7 @@ class MainPageGame {
           Number(stat.passedCards) ===
           Number(this.settings.learning.maxCardsPerDay)
         ) {
+          store.setState({ maxCardsPerDayModal: true });
           modal.init(
             ' Поздравляю! Серия завершена. Вы выполнили дневную норму по изучению слов.',
             [
@@ -179,17 +169,6 @@ class MainPageGame {
               },
             ],
             { button: 'далее', action: 'close' }
-          );
-        } else if (this.progressBar.style.width === '100%') {
-          modal.init(
-            'Слова в этой группе закончились',
-            [
-              {
-                text:
-                  'Вы можете перейти к мини-играм, чтобы тренироваться было веселее!',
-              },
-            ],
-            { button: 'мини-игры', action: 'draw', page: 'game-page' }
           );
         }
       }
@@ -213,12 +192,14 @@ class MainPageGame {
           await playAudio(this.audio, this.audioExampleSrc);
         }
         store.setState({ isAudioPlay: false });
+        if (endSlideModal(this.progressBar)) return;
         this.swiper.slideNext();
         await this.updateSlide();
       } else {
         if (this.textMeaning) this.textMeaning.innerHTML = `${textMeaning}`;
         if (this.textExample) this.textExample.innerHTML = `${textExample}`;
         setTimeout(async () => {
+          if (endSlideModal(this.progressBar)) return;
           this.swiper.slideNext();
           await this.updateSlide();
         }, 5000);
@@ -360,6 +341,7 @@ class MainPageGame {
       await Promise.all([this.create(), this.createSwiper()]);
       return this.container;
     } catch (e) {
+      Toaster.createToast(`Error: ${e}`, 'danger');
       router.draw('main-page');
       return this.container;
     }
@@ -371,6 +353,8 @@ class MainPageGame {
       await this.addAction();
       this.setLongWord();
     } catch (e) {
+      // console.error(e);
+      Toaster.createToast(`Error: ${e}`, 'danger');
       router.draw('main-page');
     }
   }
