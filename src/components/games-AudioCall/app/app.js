@@ -31,7 +31,9 @@ export default class App {
   // eslint-disable-next-line class-methods-use-this
   beforeClose() {
     const audio = document.querySelector('audio');
-    audio.pause();
+    if (audio) {
+      audio.pause();
+    }
   }
 
   postInit() {
