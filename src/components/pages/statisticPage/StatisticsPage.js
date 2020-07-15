@@ -1,6 +1,6 @@
 import { createElement } from 'helpers/dom';
-import GameStatisticsCreation from 'components/statisticPage/GameStatisticsCreation';
-import MainStatisticsCreation from 'components/statisticPage/MainStatisticsCreation';
+import GameStatisticsCreation from 'components/pages/statisticPage/GameStatisticsCreation';
+import MainStatisticsCreation from 'components/pages/statisticPage/MainStatisticsCreation';
 
 class StatisticsPage {
   create() {

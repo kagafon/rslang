@@ -1,5 +1,5 @@
 import { User } from 'services/backend';
-import MainChart from 'components/statisticPage/MainChart';
+import MainChart from 'components/pages/statisticPage/MainChart';
 
 class MainStatisticsCreation {
   create(popCanvas) {

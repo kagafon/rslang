@@ -387,7 +387,7 @@ export default class authorizationPage {
       } else if (!regMail.test(mail)) {
         spinner.style.display = 'none';
         toast.style.display = 'block';
-        toast.innerHTML = `<p>Введите корректный адресс электронной почты.</p>
+        toast.innerHTML = `<p>Введите корректный адрес электронной почты.</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
       } else if (!regex.test(password.value)) {
