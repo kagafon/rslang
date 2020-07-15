@@ -1,6 +1,6 @@
-import Statisctic from 'components/phrase-wizard-page/app/statisctic';
-import Service from 'components/phrase-wizard-page/app/service';
-import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
+import Statisctic from 'components/pages/phrase-wizard-page/app/statisctic';
+import Service from 'components/pages/phrase-wizard-page/app/service';
+import PhraseWizard from 'components/pages/phrase-wizard-page/PhraseWizardGame';
 import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
 import Toaster from 'components/Toaster';

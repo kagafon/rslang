@@ -1,8 +1,8 @@
 import { createElement } from 'helpers/dom';
-import GameWords from 'components/phrase-wizard-page/app/words';
-import Service from 'components/phrase-wizard-page/app/service';
-import Results from 'components/phrase-wizard-page/app/results';
-import Voice from 'components/phrase-wizard-page/app/voice';
+import GameWords from 'components/pages/phrase-wizard-page/app/words';
+import Service from 'components/pages/phrase-wizard-page/app/service';
+import Results from 'components/pages/phrase-wizard-page/app/results';
+import Voice from 'components/pages/phrase-wizard-page/app/voice';
 
 export default class Button {
   static render() {
@@ -24,7 +24,7 @@ export default class Button {
       document.querySelector('.translate').remove();
       document.querySelector('.input.ph-wiz').remove();
       if (GameWords.round < 10) {
-        GameWords.init();
+          GameWords.init(); 
       }else if (GameWords.round === 10) {
         Results.init();
       }

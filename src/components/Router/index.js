@@ -8,7 +8,7 @@ import authorizationPage from 'components/pages/authorization-page/autorizationP
 import teamPage from 'components/pages/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
 import AppSprint from 'components/pages/mini-games/sprint/app';
-import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
+import PhraseWizard from 'components/pages/phrase-wizard-page/PhraseWizardGame';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
 import App from 'components/games-AudioCall/app/app';
