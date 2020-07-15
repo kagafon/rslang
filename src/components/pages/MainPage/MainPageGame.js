@@ -284,7 +284,6 @@ class MainPageGame {
     try {
       Words.updateUserWord(word);
     } catch (e) {
-      console.error(e);
       Toaster.createToast(`ошибка сохранения`, 'danger');
     }
   }
@@ -353,7 +352,6 @@ class MainPageGame {
       await this.addAction();
       this.setLongWord();
     } catch (e) {
-      // console.error(e);
       Toaster.createToast(`Error: ${e}`, 'danger');
       router.draw('main-page');
     }
