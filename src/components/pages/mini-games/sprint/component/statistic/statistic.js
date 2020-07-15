@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
-import Service from 'components/sprint-game/component/service';
+import Service from 'components/pages/mini-games/sprint/component/service';
 import { createElement } from 'helpers/dom';
-import store from 'components/sprint-game/component/storage';
-import statisticStore from 'components/sprint-game/component/statistic-storage';
+import store from 'components/pages/mini-games/sprint/component/storage';
+import statisticStore from 'components/pages/mini-games/sprint/component/statistic-storage';
 // eslint-disable-next-line import/no-cycle
-import StartPage from 'components/sprint-game/component/start-page/start-page';
+import StartPage from 'components/pages/mini-games/sprint/component/start-page/start-page';
 // eslint-disable-next-line import/no-cycle
 import { User } from 'services/backend';
 import Toaster from 'components/Toaster/index';

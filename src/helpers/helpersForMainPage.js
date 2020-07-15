@@ -1,6 +1,5 @@
 import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
-import modal from 'components/pages/MainPage/modal';
 import store from 'components/pages/MainPage/Store';
 import { Words } from 'services/backend';
 
@@ -85,10 +84,6 @@ function createLoader() {
   return divLoad;
 }
 
-function showStat(head, stat) {
-  modal.init(head, stat);
-}
-
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -119,13 +114,7 @@ async function checkWordResult(wordN, result, showAnswer) {
         : stat.answerCount;
     stat.answerCount = 0;
   } else if (result === 'yes') {
-    if (!word.lastRepeat) {
-      stat.learnedWords += 1;
-    }
-    if (
-      word.correctAnswers === 0 ||
-      word.correctAnswers === word.totalAnswers
-    ) {
+    if (store.getState().correctAnswersThisCards) {
       stat.correctAnswers += 1;
     }
     stat.passedCards += 1;
@@ -134,15 +123,23 @@ async function checkWordResult(wordN, result, showAnswer) {
     word.totalAnswers += 1;
     word.correctAnswerSeries += 1;
   }
+  if (!word.lastRepeat) {
+    stat.learnedWords += 1;
+  }
   word.lastRepeat = new Date();
   const min =
     word.correctAnswerSeries *
     settings.learning.levels[word.group].baseInterval[word.difficulty];
   word.nextRepeat = new Date(new Date().getTime() + min * 60 * 1000);
   word.repeatTimes += 1;
-  User.saveMainStatistics(stat);
-  Words.updateUserWord(word);
-  return { word, stat };
+  try {
+    await User.saveMainStatistics(stat);
+    await Words.updateUserWord(word);
+  } catch (e) {
+    Toaster.createToast(`Ошибка сохранения результата: ${e}`, 'warning');
+  } finally {
+    return { word, stat };
+  }
 }
 
 export {
@@ -156,5 +153,4 @@ export {
   changeProgressBar,
   createLoader,
   checkWordResult,
-  showStat,
 };

@@ -21,6 +21,7 @@ const state = {
   againWords: [],
   complexWords: [],
   easyWords: [],
+  correctAnswersThisCards: true,
 };
 
 export default new Store(state);

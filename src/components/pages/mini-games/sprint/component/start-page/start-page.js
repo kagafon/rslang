@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
-import store from 'components/sprint-game/component/storage';
-import Timer from 'components/sprint-game/component/timer/timer';
-import Service from 'components/sprint-game/component/service';
+import store from 'components/pages/mini-games/sprint/component/storage';
+import Timer from 'components/pages/mini-games/sprint/component/timer/timer';
+import Service from 'components/pages/mini-games/sprint/component/service';
 import Toaster from 'components/Toaster/index';
 
 export default class StartPage {

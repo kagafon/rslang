@@ -14,6 +14,7 @@ export default class StartPage {
     const intro = document.createElement('div');
     intro.classList.add('intro');
     intro.innerHTML = `
+    <div class="intro-placeholder">
      <div class="title">
          <span>English-puzzle</span>
      </div>
@@ -29,10 +30,12 @@ export default class StartPage {
          <button data-num="3" type="button" class="btn btn-primary start">4</button>
          <button data-num="4" type="button" class="btn btn-primary start">5</button>
          <button data-num="5" type="button" class="btn btn-primary start">6</button>
-         <button data-num="-1" type="button" class="btn btn-primary start learn">Изучаемые слова</button>
+     </div>
      </div>
     `;
     container.append(intro);
+
+    const userDisplay = window.innerWidth;
 
     document.querySelectorAll('.start').forEach((item) => {
       item.addEventListener('click', async () => {
@@ -54,7 +57,9 @@ export default class StartPage {
               'danger'
             );
             Service.spinnerOff();
-          } else {
+          }
+
+          if (words.length >= 10 && userDisplay > 768) {
             intro.remove();
             Header.init();
             ResultsBlock.init();
@@ -64,6 +69,12 @@ export default class StartPage {
             Service.hintsClick();
             Hints.btnTranslate();
             Statisctic.rebootStatictic();
+          } else {
+            Toaster.createToast(
+              'разрешение вашего экрана не поддерживается',
+              'danger'
+            );
+            Service.spinnerOff();
           }
         } catch (error) {
           if (error.message.search('fetch') > -1) {

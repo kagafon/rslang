@@ -2,12 +2,12 @@
 import MainPage from 'components/pages/MainPage/MainPage';
 import MainPageGame from 'components/pages/MainPage/MainPageGame';
 import Router from 'components/Router/Router';
-import StatisticsPage from 'components/statisticPage/StatisticsPage';
+import StatisticsPage from 'components/pages/statisticPage/StatisticsPage';
 import promoPage from 'components/promo-page/promo-page';
-import authorizationPage from 'components/authorization-page/autorizationPage';
-import teamPage from 'components/team-page/team-page';
+import authorizationPage from 'components/pages/authorization-page/autorizationPage';
+import teamPage from 'components/pages/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
-import AppSprint from 'components/sprint-game/app';
+import AppSprint from 'components/pages/mini-games/sprint/app';
 import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
@@ -24,7 +24,7 @@ const routes = [
     needAuthorization: false,
     hideWhenAuthorized: true,
     image: '/assets/images/backgrounds/authorization-page.jpg',
-    color: 'rgba(182, 74, 90, 0.66)',
+    color: 'rgb(182, 74, 90)',
   },
   {
     name: 'main-page',
@@ -32,7 +32,7 @@ const routes = [
     ClassConstructor: MainPage,
     needAuthorization: true,
     image: '/assets/images/backgrounds/main-page.jpg',
-    color: 'rgba(83, 140, 173, 0.49)',
+    color: 'rgb(83, 140, 173)',
   },
   {
     name: 'main-page-game',
@@ -41,7 +41,7 @@ const routes = [
     ClassConstructor: MainPageGame,
     needAuthorization: false,
     image: '/assets/images/backgrounds/main-page.jpg',
-    color: 'rgba(83, 140, 173, 0.49)',
+    color: 'rgb(83, 140, 173)',
   },
   {
     name: 'game-page',
@@ -49,7 +49,7 @@ const routes = [
     ClassConstructor: GamesPage,
     needAuthorization: true,
     image: '/assets/images/backgrounds/game-page.jpg',
-    color: 'rgba(69, 28, 78, 0.66)',
+    color: 'rgb(69, 28, 78)',
   },
   {
     name: 'speakit-page',
@@ -59,7 +59,7 @@ const routes = [
     excludeFromMenu: true,
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/speakit-page.jpg',
-    color: 'rgba(69, 28, 78, 0.66)',
+    color: 'rgb(69, 28, 78)',
   },
   {
     name: 'engpuz-page',
@@ -69,7 +69,7 @@ const routes = [
     excludeFromMenu: true,
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/engpuz-page.jpg',
-    color: 'rgba(255, 108, 64, 0.57)',
+    color: 'rgb(255, 108, 64)',
   },
   {
     name: 'savannah-page',
@@ -79,7 +79,7 @@ const routes = [
     excludeFromMenu: true,
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/savannah-page.jpg',
-    color: 'rgba(69, 28, 78, 0.66)',
+    color: 'rgb(69, 28, 78)',
   },
   {
     name: 'audiocall-page',
@@ -89,7 +89,7 @@ const routes = [
     excludeFromMenu: true,
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/audiocall-page.jpg',
-    color: 'rgba(124, 55, 73, 0.79)',
+    color: 'rgb(124, 55, 73)',
   },
   {
     name: 'sprint-page',
@@ -99,7 +99,7 @@ const routes = [
     excludeFromMenu: true,
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/sprint-page.jpg',
-    color: 'rgba(146, 85, 215, 0.57)',
+    color: 'rgb(146, 85, 215)',
   },
   {
     name: 'phrasewizard-page',
@@ -109,7 +109,7 @@ const routes = [
     excludeFromMenu: true,
     menuItem: 'game-page',
     image: '/assets/images/backgrounds/phrasewizard-page.jpg',
-    color: 'rgba(83, 140, 173, 0.49)',
+    color: 'rgb(83, 140, 173)',
   },
   {
     name: 'statistics-page',
@@ -117,13 +117,13 @@ const routes = [
     ClassConstructor: StatisticsPage,
     needAuthorization: true,
     image: '/assets/images/backgrounds/statistics-page.jpg',
-    color: 'rgba(146, 85, 215, 0.57)',
+    color: 'rgb(146, 85, 215)',
   },
   {
     name: 'dictionary-page',
     title: 'Словарь',
     image: '/assets/images/backgrounds/dictionary-page.jpg',
-    color: 'rgba(101, 99, 209, 0.78)',
+    color: 'rgb(101, 99, 209)',
     ClassConstructor: DictionaryPage,
     needAuthorization: true,
   },
@@ -133,7 +133,7 @@ const routes = [
     ClassConstructor: SettingsPage,
     needAuthorization: true,
     image: '/assets/images/backgrounds/settings-page.jpg',
-    color: 'rgba(121, 42, 121, 0.69)',
+    color: 'rgb(121, 42, 121)',
   },
   {
     name: 'promo-page',
@@ -141,7 +141,7 @@ const routes = [
     ClassConstructor: promoPage,
     needAuthorization: false,
     image: '/assets/images/backgrounds/promo-page.jpg',
-    color: 'rgba(124, 55, 73, 0.79)',
+    color: 'rgb(124, 55, 73)',
   },
   {
     name: 'team-page',
@@ -149,7 +149,7 @@ const routes = [
     ClassConstructor: teamPage,
     needAuthorization: false,
     image: '/assets/images/backgrounds/team-page.jpg',
-    color: 'rgba(255, 108, 64, 0.57)',
+    color: 'rgb(255, 108, 64)',
   },
   {
     name: 'logout',

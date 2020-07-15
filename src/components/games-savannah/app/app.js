@@ -2,6 +2,8 @@
 import { createElement } from 'helpers/dom';
 // eslint-disable-next-line import/no-cycle
 import StartPage from 'components/games-savannah/app/components/main/start-page/start-page';
+import Timer from 'components/games-savannah/app/components/main/start-page/timer';
+import RusWords from 'components/games-savannah/app/components/main/words/words';
 
 export default class App {
   init() {
@@ -27,6 +29,11 @@ export default class App {
     createElement(this.gameContainer, 'div', ['wrapper']);
 
     return this.gameContainer;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  beforeClose() {
+    document.removeEventListener('keydown', RusWords.keyboardChoice, false);
   }
 
   postInit() {
