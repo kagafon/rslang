@@ -1,5 +1,5 @@
 import { User } from 'services/backend';
-import GameChart from 'components/statisticPage/GameChart';
+import GameChart from 'components/pages/statisticPage/GameChart';
 class GameStatisticsCreation {
   create(popCanvas, period, game) {
     const myChart = null;

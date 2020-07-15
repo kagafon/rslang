@@ -343,7 +343,16 @@ export default class authorizationPage {
     this.callAutoLogin(errorLogin, divToast, autologinBackdround);
     this.hideToast(spanToast, divToast);
     this.hideToast(spanToast, divLoginToast);
-    this.checkPassword(inputPassword, inputConfirmPassword, button, divToast);
+    button.addEventListener('click', () => {
+      event.preventDefault();
+      this.checkPassword(inputPassword, inputConfirmPassword, divToast,
+        inputEmail,
+        inputPassword,
+        inputUsername,
+        error,
+        divSpinner,
+        divToast);
+    });
     this.toLogin(
       inputLoginEmail,
       inputLoginPassword,
@@ -352,32 +361,57 @@ export default class authorizationPage {
       divLoginSpinner,
       divLoginToast
     );
-    this.toRegistrate(
-      inputEmail,
-      inputPassword,
-      inputUsername,
-      button,
-      error,
-      divSpinner,
-      divToast
-    );
+    
     this.addHandlers(formContainerHeader);
     return parent;
   }
 
-  checkPassword(password, confirmPassword, button, toast) {
-    button.addEventListener('click', () => {
+  checkPassword(password, confirmPassword, toast, inputEmail,
+    inputPassword,
+    inputUsername,
+    error,
+    spinner,
+    divToast) {
       const regex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
-      if (password.value !== confirmPassword.value) {
-        toast.innerHTML = `<p>Пароли не совпадают. Введите идентичные пароли!</p>
+      const regMail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      const mail = inputEmail.value;
+      const pass = inputPassword.value;
+      const name = inputUsername.value;
+      spinner.style.display = 'block';
+      if(mail === '' || pass === '' || name === '') {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
+        toast.innerHTML = `<p>Заполните все поля.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else if (!regMail.test(mail)) {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
+        toast.innerHTML = `<p>Введите корректный адрес электронной почты.</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
       } else if (!regex.test(password.value)) {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
         toast.innerHTML = `<p>Пароль не соответствует требованию. Введите новый пароль</p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else if (password.value !== confirmPassword.value) {
+        spinner.style.display = 'none';
+        toast.style.display = 'block';
+        toast.innerHTML = `<p>Пароли не совпадают. Введите идентичные пароли!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" class="span-close">&times;</span></button>`;
+      } else {
+        this.toRegistrate(
+          mail,
+          pass,
+          name,
+          error,
+          spinner,
+          divToast
+        );
       }
-    });
   }
 
   async callAutoLogin(err, toast, background) {
@@ -430,28 +464,24 @@ export default class authorizationPage {
     });
   }
 
-  toRegistrate(email, password, name, button, err, spinner, toast) {
-    button.addEventListener('click', function sendFormRegistrate(event) {
-      event.preventDefault();
+  toRegistrate(mail, pass, name, err, spinner, toast) {
       spinner.style.display = 'block';
-      const mail = email.value;
-      const pass = password.value;
-      async function getRegistration() {
-        try {
-          const userInfo = await User.createUserAndLogin(mail, pass, {
-            username: name.value,
-          });
-          Router.draw('main-page');
-        } catch (error) {
-          spinner.style.display = 'none';
-          toast.style.display = 'block';
-          toast.innerHTML = `<p>Что-то пошло не так. Повторите процедуру регистрации</p>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true" class="span-close">&times;</span></button>`;
+        async function getRegistration() {
+          try {
+            const userInfo = await User.createUserAndLogin(mail, pass, {
+              username: name.value,
+            });
+            Router.draw('main-page');
+          } catch (error) {
+            spinner.style.display = 'none';
+            toast.style.display = 'block';
+            toast.innerHTML = `<p>Что-то пошло не так. Повторите процедуру регистрации</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" class="span-close">&times;</span></button>`;
+          }
         }
-      }
-      getRegistration();
-    });
+        getRegistration();
+      
   }
 
   hideToast(button, toast) {
