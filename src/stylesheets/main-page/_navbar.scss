@@ -2,12 +2,13 @@
   transition: background-color $page-transition-delay ease;
   user-select: none;
   z-index: 1001;
+  opacity: 0.66;
 }
 
 .navbar-main {
   position: fixed;
   width: 100%;
-  background-color: rgba(83, 140, 173, 0.49);
+  background-color: rgb(83, 140, 173);
 }
 
 .navbar-brand {
@@ -33,6 +34,7 @@
 .navbar-dark .navbar-nav .nav-link.active {
   color: $menu-active-color;
 }
+
 .navbar {
   @media (max-width: 991.98px) {
     .show,
@@ -54,5 +56,11 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar {
+    opacity: 1;
   }
 }

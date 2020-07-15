@@ -9,4 +9,10 @@ export default {
     type: 'fraction',
   },
   preventInteractionOnTransition: true,
+  on: {
+    transitionEnd: () => {
+      const input = document.querySelector('.swiper-slide-active input');
+      if (input) input.focus();
+    },
+  },
 };

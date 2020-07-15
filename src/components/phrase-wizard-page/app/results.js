@@ -3,6 +3,7 @@ import Service from 'components/phrase-wizard-page/app/service';
 import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
+import Toaster from 'components/Toaster';
 
 export default class Results {
   static init() {
@@ -23,8 +24,14 @@ export default class Results {
       Service.wordsRequest(PhraseWizard.levelRound);
     });
     const date = new Date();
-    User.saveGameStatistics('phraseWizard', date.getTime(), Statisctic.correct, Results.sumAnswers);
-    Service.spinnerOff();
+    async function writeResult() {
+      try {
+        await User.saveGameStatistics('phraseWizard', date.getTime(), Statisctic.correct, Results.sumAnswers);
+      } catch (error) {
+        Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
+      }
+    }
+    writeResult().then(Service.spinnerOff());
   }
 
 }

@@ -7,6 +7,8 @@ import statisticStore from 'components/games-savannah/app/components/statistic-s
 import StartPage from 'components/games-savannah/app/components/main/start-page/start-page';
 import { User } from 'services/backend';
 // eslint-disable-next-line no-restricted-imports
+import Toaster from 'components/Toaster';
+// eslint-disable-next-line no-restricted-imports
 import RusWords from '../words/words';
 
 export default class Statistic {
@@ -137,7 +139,7 @@ export default class Statistic {
   static reboot() {
     try {
       const bntReboot = document.querySelector('.final-btn');
-      document.removeEventListener('keydown', RusWords.keyboardChoice, false);
+      document.removeEventListener('keypress', RusWords.keyboardChoice, false);
 
       bntReboot.addEventListener('click', () => {
         const wrapper = document.querySelector('.wrapper');
@@ -152,11 +154,49 @@ export default class Statistic {
     } catch (error) {}
   }
 
-  static postGametStatistic() {
+  static rebootStatictic() {
+    const menuLink = document.querySelectorAll('.nav-link');
+    document.removeEventListener('keydown', RusWords.keyboardChoice, false);
+
+    menuLink.forEach((item) => {
+      item.addEventListener('click', () => {
+        statisticStore.clearState();
+      });
+    });
+  }
+
+  static async postGametStatistic() {
+    try {
+      const stage = store.getState();
+      const date = new Date();
+      const { correctChoice } = stage;
+
+      this.userPage();
+      User.saveSettings();
+      await User.saveGameStatistics(
+        'savannah',
+        date.getTime(),
+        +correctChoice,
+        10
+      );
+    } catch (error) {
+      Toaster.createToast(`Ошибка сохранения результата: ${error}`, 'warning');
+    }
+  }
+
+  static userPage() {
     const stage = store.getState();
-    const date = new Date();
-    const { correctChoice } = stage;
-    User.saveGameStatistics('savannah', date.getTime(), +correctChoice, 10);
+
+    const { level } = stage;
+    const page = User.getCurrentUser().settings.games.savannah.levelPages[
+      level
+    ];
+
+    if (page === 29) {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] = 0;
+    } else {
+      User.getCurrentUser().settings.games.savannah.levelPages[level] += 1;
+    }
   }
 
   static init() {
@@ -166,5 +206,6 @@ export default class Statistic {
     this.playAudio();
     this.reboot();
     this.postGametStatistic();
+    this.rebootStatictic();
   }
 }
