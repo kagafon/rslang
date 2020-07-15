@@ -13,7 +13,7 @@ export default class GameWords {
     Button.init();
     setTimeout(() => {
       Service.spinnerOff();
-    }, 400);
+    }, 600);
   }
 
   static render(word) {
