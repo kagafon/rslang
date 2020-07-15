@@ -1,4 +1,9 @@
 .promo-page {
+  #main-container > div {
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
   .promo-header {
     width: 100%;
     position: absolute;
@@ -15,18 +20,15 @@
 
   .promo-header-video {
     width: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    position: relative;
     z-index: 0;
+    margin-top: -90vh;  
   }
 
   .promo-title {
-    position: absolute;
+    z-index: 1;
+    position: relative;
     width: 35%;
-    top: 22%;
     left: 7%;
   }
 
@@ -72,6 +74,7 @@
   }
 
   .learn-more {
+    z-index: 1;
     position: relative;
     margin: 0 auto;
     font-size: 2rem;
@@ -93,9 +96,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 105vh auto 10px auto;
-    max-height: calc(100vh - #{$main-menu-height});
-    overflow-y: auto;
+    margin: 20px auto 20px auto;
   }
 
   .advantages-container {
@@ -313,6 +314,8 @@
     margin: 20px auto 10px auto;
     display: inlinegrid;
     align-self: end;
+    width: 100%;
+    text-align: center;
     &:hover {
         filter: brightness(0.7);
       }
@@ -328,12 +331,6 @@
     }
   }
 
-  @media all and (max-width: 1125px) {
-    .discribe-game {
-      margin: 75vh auto 20px auto;
-    }
-  }
-  
   @media all and (max-width: 1025px) {
     .promo-title {
       width: 50%;
@@ -374,10 +371,6 @@
 
     .learn-more {
       display: none;
-    }
-
-    .discribe-game {
-      margin: 30px auto 10px auto;
     }
 
     .advantages-wrapper {

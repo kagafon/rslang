@@ -4,24 +4,24 @@ import Router from 'components/Router';
 
 export default class promoPage {
   init() {
-    this.parent = createElement(null, 'div', ['parent', 'promo-page'], {}, '');
+    this.parent = createElement(null, 'div', ['parent', 'promo-page'], {style: 'max-height: calc(100vh - 80px); overflow-y: auto;'}, '');
 
-    const headerPromoVideo = createElement(
+    const headerArrow = createElement(
       this.parent,
-      'video',
-      ['promo-header-video'],
-      {autoplay: '', muted: '', loop: '', preload: 'true',},
+      'div',
+      ['learn-more'],
+      {},
       ''
     );
 
     createElement(
-      headerPromoVideo,
-      'source',
-      [],
-      {src: 'assets/images/promo-page/video.mp4',
-       type: 'video/mp4;'},
-      ''
+      headerArrow,
+      'h3',
+      ['learn-more-title'],
+      {},
+      'Узнать больше'
     );
+    createElement(headerArrow, 'span', ['material-icons'], {}, 'expand_more');
 
     const headerPromoTitle = createElement(
       this.parent,
@@ -75,23 +75,22 @@ export default class promoPage {
       'Посмотри как это выглядит'
     );
 
-    const headerArrow = createElement(
+    const headerPromoVideo = createElement(
       this.parent,
-      'div',
-      ['learn-more'],
-      {},
+      'video',
+      ['promo-header-video'],
+      {autoplay: '', muted: '', loop: '', preload: 'true',},
       ''
     );
 
     createElement(
-      headerArrow,
-      'h3',
-      ['learn-more-title'],
-      {},
-      'Узнать больше'
+      headerPromoVideo,
+      'source',
+      [],
+      {src: 'assets/images/promo-page/video.mp4',
+       type: 'video/mp4;'},
+      ''
     );
-    createElement(headerArrow, 'span', ['material-icons'], {}, 'expand_more');
-
 
     const describeGame = createElement(
       this.parent,
