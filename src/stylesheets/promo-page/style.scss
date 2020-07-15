@@ -160,6 +160,23 @@
     margin: 10px 0 0 5%;
   }
 
+  .video-player {
+    position: relative;
+    margin: 10px auto 30px auto;
+    text-align: center;
+    width: 95%;
+    padding-bottom: 54%;
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 10px auto;
+      border-radius: 10px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
   .learn-r {
     background-color: rgba(124, 55, 73, 0.75);
     padding: 10px;
@@ -290,6 +307,24 @@
         display: block;
         transform: none;
       }
+    }
+  }
+  .github-link {
+    margin: 20px auto 10px auto;
+    display: inlinegrid;
+    align-self: end;
+    &:hover {
+        filter: brightness(0.7);
+      }
+    img {
+      &:first-child {
+        width: 35px;
+        margin-right: 5px;
+      }
+      width: 100px;
+      margin: 0 auto 10px auto;
+      filter: drop-shadow(2px 4px 6px black);
+      
     }
   }
 

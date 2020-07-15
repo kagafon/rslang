@@ -3,7 +3,7 @@ import MainPage from 'components/pages/MainPage/MainPage';
 import MainPageGame from 'components/pages/MainPage/MainPageGame';
 import Router from 'components/Router/Router';
 import StatisticsPage from 'components/statisticPage/StatisticsPage';
-import promoPage from 'components/promo-page/promo-page';
+import promoPage from 'components/pages/promo-page/promo-page';
 import authorizationPage from 'components/authorization-page/autorizationPage';
 import teamPage from 'components/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';

@@ -1,8 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { createElement } from 'helpers/dom';
 import Router from 'components/Router';
-import Swiper from 'swiper';
-import optionsForSwiper from './optionsForSwiper';
 
 export default class promoPage {
   init() {
@@ -233,7 +231,7 @@ export default class promoPage {
       'h4',
       ['our-team'],
       { id: 'our-team-link'},
-      '*по мнению нашей команды'
+      '*по мнению разработчиков'
     );
 
 
@@ -253,13 +251,14 @@ export default class promoPage {
       'Видео о работе приложения'
     );
 
-    createElement(
+    const videoPlayer = createElement(
       videoContainer,
-      'video',
+      'div',
       ['video-player'],
       {},
       ''
     );
+    videoPlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/dtqjQ1Qupww" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
     const divRule = createElement(describeGame, 'div', ['learn-r'], {}, '');
     const intervaRuleContainer = createElement(divRule, 'div', ['interval-container'], {}, '');
@@ -275,45 +274,8 @@ export default class promoPage {
       'p',
       ['rule-describe'],
       {},
-      'Для более качественного заучивания применяется динамическое определение цикла повторения, в зависимости от выбранного пользователем в настройках базового интервала для каждой группы слов и для каждого уровня сложности слова (так же определяемого пользователем). Слово будет повторно предложено к изучению через промежуток времени N*T, где N - длина серии правильных ответов для слова, T - базовый интервал, зависящий от группы слова и его сложности. Если слово не угадано, то оно будет повторно предложено к изучению на ближайшей тренировке. '
+      'Для более качественного заучивания применяется динамическое определение цикла повторения, в зависимости от выбранного пользователем в настройках базового интервала для каждой группы слов и для каждого уровня сложности слова (так же определяемого пользователем). Слово будет повторно предложено к изучению через промежуток времени N*T, где N - длина серии правильных ответов для слова, T - базовый интервал, зависящий от группы слова и его сложности. Если слово не угадано, то оно будет повторно предложено к изучению на ближайшей тренировке.'
     );
-    // const olRule = createElement(intervaRuleContainer, 'ul', ['describe'], {}, '');
-    // const liRule = createElement(
-    //   olRule,
-    //   'li',
-    //   ['describe'],
-    //   { type: 'circle' },
-    //   'Если Вы угадали слово, то оно повторится повториться(для закрепления материала):'
-    // );
-    // const olliRule = createElement(liRule, 'ol', ['describe'], {}, '');
-    // const olliRule1 = createElement(
-    //   olliRule,
-    //   'li',
-    //   ['describe'],
-    //   { type: 'square' },
-    //   'Сложное слово - через день'
-    // );
-    // const olliRule3 = createElement(
-    //   olliRule,
-    //   'li',
-    //   ['describe'],
-    //   { type: 'square' },
-    //   'Среднее - через три дня'
-    // );
-    // const olliRule5 = createElement(
-    //   olliRule,
-    //   'li',
-    //   ['describe'],
-    //   { type: 'square' },
-    //   'Легкое - через семь дней'
-    // );
-    // const olliRule4 = createElement(
-    //   olRule,
-    //   'li',
-    //   ['describe'],
-    //   { type: 'circle' },
-    //   'Не угадали - слово повториться через час.'
-    // );
     const GamesRule = createElement(divRule, 'div', ['games-rule'], {}, '');
     const titleAllRule = createElement(
       GamesRule,
@@ -376,7 +338,7 @@ export default class promoPage {
       'p',
       ['game-describe'],
       {},
-      'Игроку дано предложение на русском языке. Необходимо сделать его перевод из приведенных слов на английском.'
+      'Дано предложение на английском языке, где слова находятся в случайном порядке. необходимо составить эти слова в верном порядке.'
     );
     const divSavanna = createElement(gamesContainer, 'div', ['game', 'hidden'], {}, '');
     const titleSavanna = createElement(
@@ -415,7 +377,7 @@ export default class promoPage {
       'p',
       ['game-describe'],
       {},
-      'Игра рассчитана на тренировку восприятия английского языка на слух, даже если вы не уверены как именно пишется слово, главное понимать с какой буквы оно начинается. Даже в случае ошибки вы сможете увидеть слово полностью. Нажимая на клавиатуре первые буквы слова в произносимой фразе будут выводиться соответствующее буквам слова. Всегда можно прослушать фразу ещё раз нажав на кнопку-динамик. Если часть предложения кажется трудной можно перейти к следующему - это не будет ошибкой.'
+      'Игра рассчитана на тренировку восприятия английского языка на слух, даже если вы не уверены как именно пишется слово, главное понимать с какой буквы оно начинается. Даже в случае ошибки вы сможете увидеть слово полностью. Нажимая на клавиатуре первую букву каждого слова в загаданной фразе будет выводиться соответствующее по очереди слово. Всегда можно прослушать фразу ещё раз нажав на кнопку-динамик. Если часть предложения кажется трудной можно перейти к следующему - это не будет ошибкой.'
     );
     const divSprint = createElement(gamesContainer, 'div', ['game', 'hidden'], {}, '');
     const titleSprint = createElement(divSprint, 'h3', ['game-title'], {}, 'Спринт');
@@ -426,6 +388,9 @@ export default class promoPage {
       {},
       'В игре необходимо выбрать соответствует ли перевод показанному слову на английском.  За правильные ответы начисляются баллы. Чем  длиннее цепочка правильных ответов - тем больше баллов.'
     );
+
+    const gitHubLink = createElement(describeGame, 'a', ['github-link'], {href: 'https://github.com/kagafon/rslang'}, '');
+    gitHubLink.innerHTML = `<img src="../../assets/images/team-page/GitHub-Mark-Light-32px.png"><img src="../../assets/images/team-page/GitHub_Logo_White.png">`
     GetStartButton.addEventListener('click', () => {
       Router.draw('authorization-page');
     });
