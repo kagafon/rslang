@@ -1,7 +1,7 @@
 import { createElement } from 'helpers/dom';
-import Service from 'components/phrase-wizard-page/app/service';
-import Statisctic from 'components/phrase-wizard-page/app/statisctic';
-import GameWords from 'components/phrase-wizard-page/app/words';
+import Service from 'components/pages/phrase-wizard-page/app/service';
+import Statisctic from 'components/pages/phrase-wizard-page/app/statisctic';
+import GameWords from 'components/pages/phrase-wizard-page/app/words';
 
 export default class PhraseWizard {
   init() {

@@ -1,4 +1,4 @@
-import GameWords from 'components/phrase-wizard-page/app/words';
+import GameWords from 'components/pages/phrase-wizard-page/app/words';
 
 export default class Voice {
   static render() {

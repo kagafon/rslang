@@ -1,8 +1,8 @@
-import Service from 'components/phrase-wizard-page/app/service';
-import Voice from 'components/phrase-wizard-page/app/voice';
+import Service from 'components/pages/phrase-wizard-page/app/service';
+import Voice from 'components/pages/phrase-wizard-page/app/voice';
 import { createElement } from 'helpers/dom';
-import Statisctic from 'components/phrase-wizard-page/app/statisctic';
-import Button from 'components/phrase-wizard-page/app/button';
+import Statisctic from 'components/pages/phrase-wizard-page/app/statisctic';
+import Button from 'components/pages/phrase-wizard-page/app/button';
 
 export default class GameWords {
   static init(){
