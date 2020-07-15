@@ -73,7 +73,6 @@ export default class Router {
         this.navbar.style.backgroundColor = `${route.color}`;
       }
     } catch (err) {
-      console.error(err);
       this.container.textContent = '';
     }
   }
