@@ -2,6 +2,7 @@ import { createElement } from 'helpers/dom';
 import { User } from 'services/backend';
 import store from 'components/pages/MainPage/Store';
 import { Words } from 'services/backend';
+import modal from 'components/pages/MainPage/modal';
 
 function showWord(word, sentence) {
   return sentence.replace('[...]', word);
@@ -92,6 +93,27 @@ function shuffle(array) {
   return array;
 }
 
+function endSlideModal(progressBar) {
+  if (!store.getState().maxCardsPerDayModal) {
+    if (progressBar.style.width === '100%') {
+      modal.init(
+        'Слова в этой группе закончились',
+        [
+          {
+            text:
+              'Вы можете перейти к мини-играм, чтобы тренироваться было веселее!',
+          },
+        ],
+        { button: 'мини-игры', action: 'draw', page: 'game-page' }
+      );
+      store.setState({ maxCardsPerDayModal: false });
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 async function checkWordResult(wordN, result, showAnswer) {
   const word = wordN;
   const stat = await User.getMainStatistics();
@@ -152,5 +174,6 @@ export {
   volumeUp,
   changeProgressBar,
   createLoader,
+  endSlideModal,
   checkWordResult,
 };
