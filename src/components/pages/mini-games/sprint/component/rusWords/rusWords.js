@@ -1,6 +1,6 @@
 import { createElement } from 'helpers/dom';
-import store from 'components/sprint-game/component/storage';
-import Service from 'components/sprint-game/component/service';
+import store from 'components/pages/mini-games/sprint/component/storage';
+import Service from 'components/pages/mini-games/sprint/component/service';
 
 export default class RusWords {
   static render() {

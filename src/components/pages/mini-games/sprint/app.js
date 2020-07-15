@@ -2,10 +2,10 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-cycle */
 import { createElement } from 'helpers/dom';
-import StartPage from 'components/sprint-game/component/start-page/start-page';
-import Timer from 'components/sprint-game/component/timer/timer';
-import Buttons from './component/gameBlock/button/button';
-import GameBlock from './component/gameBlock/gameBlock';
+import StartPage from './component/start-page/start-page';
+import Timer from './component/timer/timer';
+import Buttons from './component/button/button';
+import GameBlock from './component/gameBlock';
 
 export default class AppSprint {
   init() {

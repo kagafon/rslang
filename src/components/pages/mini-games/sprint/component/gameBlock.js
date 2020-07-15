@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { createElement } from 'helpers/dom';
-import Statistic from 'components/sprint-game/component/statistic/statistic';
-import store from 'components/sprint-game/component/storage';
+import Statistic from 'components/pages/mini-games/sprint/component/statistic/statistic';
+import store from 'components/pages/mini-games/sprint/component/storage';
 import Dots from './dots/dots';
 import EngWords from './engWords/engWords';
 import RusWords from './rusWords/rusWords';

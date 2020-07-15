@@ -14,12 +14,12 @@ export default class Volume {
       {},
       'volume_up'
     );
-    const audioSrc1 = createElement(audioIcon, 'audio', ['audio', 'audio1'], {
+    createElement(audioIcon, 'audio', ['audio', 'audio1'], {
       preload: true,
       muted: true,
       src: 'assets/images/sprint-game/Piu.mp3',
     });
-    const audioSrc2 = createElement(audioIcon, 'audio', ['audio', 'audio2'], {
+    createElement(audioIcon, 'audio', ['audio', 'audio2'], {
       preload: true,
       src: 'assets/images/sprint-game/whoosh.mp3',
     });

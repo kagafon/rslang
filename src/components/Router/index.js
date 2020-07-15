@@ -7,7 +7,7 @@ import promoPage from 'components/promo-page/promo-page';
 import authorizationPage from 'components/pages/authorization-page/autorizationPage';
 import teamPage from 'components/pages/team-page/team-page';
 import GamesPage from 'components/mini-games-page/MiniGamesPage';
-import AppSprint from 'components/sprint-game/app';
+import AppSprint from 'components/pages/mini-games/sprint/app';
 import PhraseWizard from 'components/phrase-wizard-page/PhraseWizardGame';
 import DictionaryPage from 'components/pages/dictionary-page';
 import SettingsPage from 'components/pages/settings-page';
