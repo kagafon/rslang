@@ -78,12 +78,15 @@
     }
   }
 
+  @media (max-width: 675px) {
+    .div-level {
+      flex-direction: column;
+    }
+  }
+
   @media (max-width: 550px) {
     .main-page {
       padding: 0;
-    }
-    .div-level {
-      flex-direction: column;
     }
     .jumbotron-level {
       width: 80%;
