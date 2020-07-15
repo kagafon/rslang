@@ -1,0 +1,357 @@
+
+.box-games.ph-wiz {
+
+  margin-top: 0.8rem;
+  display: flex;
+  height: 100%;
+  justify-content:center;
+  align-items:center;
+    
+.wrapper.ph-wiz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1440px;
+  transition: 0.2s linear;
+}
+
+.wrapper img{
+  max-width: 400px;
+  border-radius: 8%;
+}
+
+.spinner {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 4rem;
+  height: 4rem;
+  z-index: 100;
+}
+
+.spinner-border {
+  position: absolute;
+  top: 45%;
+  left: 48%;
+  width: 35px;
+  height: 35px;
+}
+
+// Start Page ________________________________
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 5rem;
+  padding: 1.2rem;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 5px;
+  width: 40rem;
+  text-align: center;
+  right: 0;
+  left: 0;
+}
+
+.title.ph-wiz {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 60px;
+  color: #9e2ba8;
+  opacity: 0.8;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 13px;
+}
+
+.subTitle.ph-wiz {
+  max-width: 565px;
+  margin: 0 auto 30px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 300;
+  color: rgb(0, 2, 150);
+  opacity: 0.8;
+}
+
+.level-select.ph-wiz {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 60px;
+  color: #9e2ba8;
+  opacity: 0.8;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 5px;
+}
+
+.start {
+  width: 120px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.start:last-child {
+  width: 190px !important;
+}
+
+// Header _____________________________
+
+.top-block.ph-wiz {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1440px;
+  height: 20px;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  .btn.btn-primary.ph-wiz {
+    width: 100px;
+  }
+}
+
+// navBarBlock__________________________
+
+.temlate-words {
+  background-color: rgba(255, 255, 255, 0.35);
+  margin: 1rem 0.5rem 0 0.5rem;
+  font-size: 2rem;
+  letter-spacing: 0.7rem;
+  border-radius: 7%;
+}
+.navBarBlock {
+  display: flex;
+  position: fixed;
+  width: 100%;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #09f1d2;
+  height: 5px;
+}
+
+
+// Audio____________________________________
+
+.audio {
+  width: 100px;
+  height: 100px;
+  margin: 50px auto;
+  border-radius: 100px;
+  background-color: #0753f87c;
+  transition: 0.3s linear;
+  &:hover {
+    box-shadow: 0px 0px 15px 30px #0975f185;
+  }
+  cursor: pointer;
+}
+
+.audio-animation {
+  animation: radial-pulse 1s infinite;
+}
+
+@keyframes radial-pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 0 40px rgba(0, 0, 0, 0);
+  }
+}
+
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.54);
+}
+.material-icons.md-correct {
+  color: rgba(34, 247, 6, 0.726);
+}
+.material-icons.md-cancel {
+  color: rgba(250, 6, 6, 0.712);
+}
+
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 0.678);
+}
+.material-icons.md-light.md-inactive {
+  color: rgba(255, 255, 255, 0.678);
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; 
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  outline: none;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+.wordsblock {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  margin-top: -2rem;
+  margin-bottom: 2rem
+}
+
+.translate.ph-wiz {
+  opacity: 0;
+  position: relative;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.5);
+  top: -5rem;
+  max-width: 350px;
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align: center;
+}
+
+.translate.ph-wiz.show-oneself {
+  opacity: 100%;
+}
+
+.temlate-words.correct {
+  letter-spacing: 0.4rem;
+  background-color: rgba(139, 248, 124, 0.726);
+}
+
+.temlate-words.incorrect {
+  letter-spacing: 0.4rem;
+  background-color: rgba(248, 143, 124, 0.726);
+}
+
+.wrapper-words {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin: 50px 50px 0px 50px;
+  outline: none;
+}
+
+.words {
+  color: #ffffff;
+  font-size: 18px;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.input.ph-wiz {
+  z-index: 1;
+  opacity: 0;
+  position: relative;
+  top: -16rem;
+  height: 14rem;
+  width: 20rem;
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-22 {
+  font-size: 22px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+.material-icons.md-100 {
+  font-size: 100px;
+}
+
+// Button______________________________
+
+.btnBlock {
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  margin-top: 50px;
+}
+
+.btn.ph-wiz{
+  width: 15%;
+  background-color: #070bf8;
+  &:hover {
+    background-color: #16018d;
+  }
+}
+
+.next {
+  display: none;
+}
+
+.words-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background-size: cover;
+}
+
+.translate-block {
+  text-align: start;
+  color: #ffffff;
+  font-size: 1rem;
+  margin-top: 20px;
+  vertical-align: middle;
+}
+
+div.result-ph-wiz {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 10px 10px 17px 0px rgba(0,0,0,0.5);
+  background-color: rgba(252, 252, 252, 0.75);
+  border-radius: 8%;
+  font-size: 1.2rem;
+  min-width: 280px;
+  margin: auto;
+  color: black;
+}
+
+.result-ph-wiz {
+  margin-top: 0.8rem;
+  margin-left: 1.2rem;
+}
+
+b.result-ph-wiz {
+  margin: 1.2rem;
+}
+
+.result.btn {
+  margin-top: 2rem;
+  width: 100px;
+}
+
+}

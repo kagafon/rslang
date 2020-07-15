@@ -1,0 +1,53 @@
+.modal {
+  opacity: 0;
+
+  &.back {
+    margin-top: 5rem;
+    background-color: #00000085;
+  }
+
+  &.show {
+    display: block;
+    opacity: 1;
+    transition: opacity $page-transition-delay ease;
+  }
+  &.hide {
+    opacity: 0;
+    display: none;
+  }
+  .modal-close {
+    cursor: pointer;
+  }
+  .modal-view {
+    background-color: #45aabc;
+    color: #235874;
+    text-align: center;
+    font-size: 16px;
+    height: 386px;
+  }
+  .modal-body-back {
+    background: linear-gradient(
+        rgba(8, 15, 26, 0.69) 0%,
+        rgba(17, 17, 46, 0.16) 100%
+      ),
+      url('/assets/images/main-page/image1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  p {
+    margin-top: 32px;
+  }
+  p:nth-child(2) {
+    color: #81ccff;
+  }
+  p:nth-child(3) {
+    color: #6dff46;
+  }
+  p:nth-child(4) {
+    color: #ff6e4f;
+  }
+  p:nth-child(5) {
+    color: #d456c0;
+  }
+}

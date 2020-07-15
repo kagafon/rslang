@@ -1,0 +1,96 @@
+.team-page {
+  margin: 0 auto;
+
+  .svg {
+    color: white;
+    width: 300px;
+    height: 200px;
+    margin: -30px 0 0;
+  }
+  .title {
+    font-family: 'roboto', sans-serif;
+    font-weight: 900;
+    font-size: 70px;
+    text-align: center;
+    margin-top: 30px;
+  }
+  .team {
+    margin: 50px auto 0 auto;
+    display: flex;
+    max-width: 1100px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .person {
+    border-radius: 10px;
+    background: rgba(255, 108, 64, 0.77);
+    font-size: 30px;
+    width: 300px;
+    min-height: 350px;
+    margin: 70px 10px;
+    font-family: 'roboto', sans-serif;
+    display: grid;
+    grid-template-rows: 100px;       
+    color: white;
+    box-shadow: 0px 8px 25px 0px rgba(0,0,0,0.8);
+  }
+  .describe-person {
+    margin: 0 20px;
+  }
+  .person__image {
+    background-color: #fddac5;
+    width: 200px;
+    border-radius: 50%;
+    box-shadow: 0px 8px 25px 0px rgba(0,0,0,0.75);
+    height: 200px;
+    margin: -100px auto 0 50px;
+  }
+
+  .person__title {
+    text-align: center;
+    color: white;
+    font-family: 'roboto', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 15px 0 5px 0;
+    text-shadow: 1px 1px 8px black;
+  }
+  .person__position {
+    text-align: center;
+    font-family: 'roboto', sans-serif;
+    font-size: 17px;
+    color: #2e112d;
+    box-shadow: 0px 1px 0px 0px white;
+    height: 30px;
+  }
+  .person__phrase,
+  .person__contribution {
+    margin: 15px 0 10px 0;
+    font-family: 'roboto', sans-serif;
+    font-size: 18px;
+    color: white;
+  }
+
+  .git-link {
+    margin: 5px auto;
+    display: inlinegrid;
+    align-self: end;
+    &:hover {
+        filter: brightness(0.7);
+      }
+    img {
+      &:first-child {
+        width: 35px;
+        margin-right: 5px;
+      }
+      width: 100px;
+      margin: 0 auto 10px auto;
+      filter: drop-shadow(2px 4px 6px black);
+      
+    }
+  }
+
+  .footer-title {
+    text-align: center;
+  }
+}

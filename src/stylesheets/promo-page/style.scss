@@ -1,0 +1,435 @@
+.promo-page {
+  #main-container > div {
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .promo-header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    background-image: url(../assets/images/backgrounds/promo-image.png);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+  }
+
+  .promo-header-video {
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    margin-top: -90vh;  
+  }
+
+  .promo-title {
+    z-index: 1;
+    position: relative;
+    width: 35%;
+    left: 7%;
+  }
+
+  .promo-text {
+    filter: drop-shadow(2px 4px 6px black);
+    color: white;
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  .promo-text-small {
+    filter: drop-shadow(2px 4px 6px black);
+    color: white;
+    margin: 35px 0;
+    font-size: 1.5rem;
+  }
+
+  .get-start-button {
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 20px;
+    font-size: 1.5rem;
+    background-color: rgba(124, 55, 73, 0.75);
+    color: white;
+    &:hover {
+      background-color: #c16358;
+    }
+  }
+  
+  .video-link-container {
+    filter: drop-shadow(2px 4px 6px black);
+    color: white;
+    display: flex;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .video-link {
+    margin-left: 10px;
+  }
+
+  .learn-more {
+    z-index: 1;
+    position: relative;
+    margin: 0 auto;
+    font-size: 2rem;
+    top: 75vh;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    filter: drop-shadow(2px 4px 6px black);
+    &:hover {
+      color: rgba(124, 55, 73, 0.9);
+    }
+    span {
+      font-size: 3rem;
+      margin-top: -15px;
+    }
+  }
+
+  .discribe-game {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px auto 20px auto;
+  }
+
+  .advantages-container {
+    background-color: rgba(124, 55, 73, 0.75);
+    padding: 10px;
+    z-index: 1;
+    border-radius: 10px;
+    max-width: 1200px;
+    width: 90%;
+    color: white;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+  .advantages-title {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .advantages-wrapper {
+    display: flex;
+  }
+
+  .advantage-img {
+    display: block;
+    height: 90px;
+    margin: 10px auto;
+  }
+
+  .interval-more-info, .our-team {
+    margin-top: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: #f18640;
+    }
+  }
+
+  .our-team {
+    font-size: 10px;
+  }
+
+  .advantage-container {
+    display: grid;
+    margin: 10px;
+    width: 30%;
+    text-align: center;
+  }
+
+  .video-container {
+    margin: 20px auto;
+    background-color: rgba(124, 55, 73, 0.75);
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1;
+    max-width: 1200px;
+    width: 90%;
+    color: white;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+
+  .video-title {
+    font-size: 2.5rem;
+    margin: 10px 0 0 5%;
+  }
+
+  .video-player {
+    position: relative;
+    margin: 10px auto 30px auto;
+    text-align: center;
+    width: 95%;
+    padding-bottom: 54%;
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 10px auto;
+      border-radius: 10px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .learn-r {
+    background-color: rgba(124, 55, 73, 0.75);
+    padding: 10px;
+    z-index: 1;
+    border-radius: 10px;
+    display: grid;
+    grid-template-areas: 
+      'interval new-words-rule'
+      'interval games-rule';
+    margin: 10px auto;
+    max-width: 1200px;
+    width: 90%;
+    color: white;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+    ul li {
+      list-style: none;
+      font-size: 1.5rem;
+    }
+  }
+
+  .rule-title {
+    font-size: 2rem;
+    text-align: center;
+    margin: 10px;
+    box-shadow: 0px 10px 0px -9px rgba(255,255,255,1);
+    padding-bottom: 10px;
+  }
+
+  .rule-describe {
+    font-size: 1.5rem;
+
+  }
+  .interval-container {
+    margin: 10px;
+    background-color: rgba(124, 55, 73, 0.75);
+    z-index: 1;
+    border-radius: 10px;
+    grid-area: interval;
+    padding: 10px;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+
+  .games-rule {
+    margin: 10px;
+    background-color: rgba(124, 55, 73, 0.75);
+    z-index: 1;
+    border-radius: 10px;
+    grid-area: games-rule;
+    padding: 10px;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+
+  .new-words-rule {
+    margin: 10px;
+    background-color: rgba(124, 55, 73, 0.75);
+    z-index: 1;
+    border-radius: 10px;
+    grid-area: new-words-rule;
+    padding: 10px;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+
+  .games-container {
+    margin: 10px auto;
+    background-color: rgba(124, 55, 73, 0.75);
+    padding: 10px;
+    z-index: 1;
+    border-radius: 10px;
+    max-width: 1200px;
+    width: 90%;
+    color: white;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+
+
+  .games-container-title {
+    font-size: 2.5rem;
+    margin-right: 10px;
+  }
+
+  .game {
+    margin: 10px auto;
+    background-color: rgba(124, 55, 73, 0.75);
+    padding: 10px;
+    z-index: 1;
+    border-radius: 10px;
+    width: 95%;
+    display: flex;
+    box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.8);
+  }
+
+
+  
+  .game-title {
+    font-size: 1.5rem;
+    margin: auto 0 auto 20px;
+    width: 30%;
+  }
+
+  .game-describe {
+    font-size: 1.5rem;
+    width: 100%;
+    font-weight: 400;
+    margin: auto;
+    padding-left: 15px;
+    letter-spacing: 1px;
+    box-shadow: -6px 0px 0px -5px rgba(255, 255, 255, 0.75);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .games-container-header {
+    display: flex;
+    margin: 10px auto 0 5%;
+    cursor: pointer;
+    &:hover {
+      color: #f18640;
+    }
+    span {
+      font-size: 2.5rem;
+      margin-top: 7px;
+      position: relative;
+      transform: rotate(180deg) translateY(10px);
+      transition: rotate 1s ease-in-out;
+      &.hidden:not(.game) {
+        display: block;
+        transform: none;
+      }
+    }
+  }
+  .github-link {
+    margin: 20px auto 10px auto;
+    display: inlinegrid;
+    align-self: end;
+    width: 100%;
+    text-align: center;
+    &:hover {
+        filter: brightness(0.7);
+      }
+    img {
+      &:first-child {
+        width: 35px;
+        margin-right: 5px;
+      }
+      width: 100px;
+      margin: 0 auto 10px auto;
+      filter: drop-shadow(2px 4px 6px black);
+      
+    }
+  }
+
+  @media all and (max-width: 1025px) {
+    .promo-title {
+      width: 50%;
+    }
+
+
+    .learn-more {
+      display: none;
+    }
+
+  }
+  @media all and (max-width: 900px) {
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      font-size: 1rem;
+    }
+
+    video {
+      display: none;
+    }
+
+    .promo-title {
+      top: 0;
+      left: 0;
+      text-align: center;
+      width: 90%;
+      position: relative;
+      margin: 20px auto 10px auto;
+
+    }
+
+    .video-link-container {
+      display: block;
+    }
+
+    .learn-more {
+      display: none;
+    }
+
+    .advantages-wrapper {
+      display: block;
+      width: 100%;
+    }
+
+    .advantages-container {
+      margin: 20px 0;
+      height: fit-content;
+      width: 100%;
+      text-align: center;
+    }
+
+    .advantage-container {
+      margin: 10px 0;
+      width: 100%;
+    }
+
+    .advantages-title, 
+    .video-title,
+    .rule-title,
+    .games-container-title {
+      font-size: 1.5rem;
+    }
+
+    #games-container-arrow {
+      display: none;
+    }
+
+
+    .rule-describe,
+    .game-describe {
+      font-size: 1rem;
+    }
+
+    .learn-r {
+      display: block;
+    }
+
+    .learn-r ul {
+      padding: 0;
+    }
+
+    .learn-r ul li {
+      font-size: 1rem;
+    }
+    .game {
+      display: block;
+    }
+
+    .game-title {
+      margin: auto;
+      width: fit-content;
+      box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.75);
+    }
+
+    .game-describe {
+      box-shadow: none;
+    }
+  }
+}
