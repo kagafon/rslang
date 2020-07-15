@@ -11,7 +11,9 @@ export default class GameWords {
     this.render(this.startPrase);
     Voice.init();
     Button.init();
-    Service.spinnerOff();
+    setTimeout(() => {
+      Service.spinnerOff();
+    }, 400);
   }
 
   static render(word) {

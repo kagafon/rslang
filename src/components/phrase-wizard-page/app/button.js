@@ -24,7 +24,7 @@ export default class Button {
       document.querySelector('.translate').remove();
       document.querySelector('.input.ph-wiz').remove();
       if (GameWords.round < 10) {
-        GameWords.init();
+          GameWords.init(); 
       }else if (GameWords.round === 10) {
         Results.init();
       }
