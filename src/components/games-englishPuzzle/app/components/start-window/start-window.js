@@ -31,7 +31,6 @@ export default class StartPage {
          <button data-num="4" type="button" class="btn btn-primary start">5</button>
          <button data-num="5" type="button" class="btn btn-primary start">6</button>
      </div>
-     <button data-num="-1" type="button" class="btn btn-primary start learn">Изучаемые слова</button>
      </div>
     `;
     container.append(intro);
